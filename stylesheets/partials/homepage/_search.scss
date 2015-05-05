@@ -1,0 +1,79 @@
+@import "../components/search";
+
+/*Search Box*/
+.search-container {
+    background-color: $light-gray;
+    background: rgba(230, 230, 230, 0.89); //TODO: Make this a Variable
+    margin: 40px auto;
+    max-width: 900px;
+    width: 80%;
+}
+
+.search-input-container {
+  @extend .clearfix;
+}
+
+@media only screen and (max-width: 992px) {
+  .carousel-wrapper .search-container {
+    background:none;
+    position: relative;
+    left: 0;
+
+    -webkit-transform: none;
+       -moz-transform: none;
+        -ms-transform: none;
+         -o-transform: none;
+            transform: none;
+  }
+
+  .alert {
+    margin:-20px 20px 0;
+  }
+
+  .search-container{
+    margin:20px auto;
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .search{
+    padding:0;
+
+    .inline-list li a{
+      padding:10px 0;
+    }
+  }
+  .alert {
+    font-size: .9em;
+    margin: -20px 0 20px;
+
+    h1 {
+      line-height: 1.5;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .homepage .search .search-button {
+    padding: 9.5px 5px;
+  }
+  .search {
+    .search-button {
+      padding: 10px 5px;
+      height: auto;
+    }
+
+    .search-input {
+      height: auto;
+      padding: 11px 10px;
+    }
+  }
+  .search-input-container {
+    font-size: .95em;
+  }
+}
+
+
+
+    

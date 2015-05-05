@@ -1,0 +1,61 @@
+@import "primaryFooter";
+@import "secondaryFooter";
+@import "../components/translateLinks";
+@import "../components/countyAddress";
+
+.footer {
+	background: $darker-gray;
+	color:$light-gray;
+	font-size:.85em;
+
+	a {
+		color: $light-gray;
+		text-decoration: underline;
+		&:hover{
+			color:$white;
+		}
+	}
+	
+	h2 {
+		color: $white;
+	}
+
+	h2, img {
+		border: none;
+	}
+
+	ul, ol {
+		list-style-type: none;
+	}
+
+	ul, ol, img {
+		padding: 0;
+		margin: 0;
+	}
+	.county-awards-list-item {
+		padding-top: 15px;
+	}
+	.county-links-list {
+		text-align: right;
+	}
+	
+}
+
+@media only screen and (max-width: 992px) {
+	.footer {
+		.copyright {
+			padding-left: 10px;
+			margin-bottom: 10px;
+		}
+		.county-links {
+			padding: 0 5px;
+		}
+		.county-links-list {
+			text-align: left;
+
+			li:first-child {
+				padding-left: 5px;
+			}
+		}
+	}
+}

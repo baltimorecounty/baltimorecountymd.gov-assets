@@ -1,0 +1,26 @@
+/*Alert Box*/
+.alert{
+  padding: 10px;
+
+  a{
+    text-decoration:none;
+
+    &:hover {
+      color:#003399;
+    }
+  }
+
+  h1{
+    font-family:$default-font-family;
+    font-weight:bold;
+    border-top:none;
+    border-bottom:none;
+    margin: 0;
+  }
+  
+  background-color:$gold;
+  font-family:$default-font-family;
+  font-size:.6em;
+  margin:-20px 0 10px;
+  text-align:center;
+}

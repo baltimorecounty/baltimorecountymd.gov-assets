@@ -1,0 +1,33 @@
+button {
+
+    background: $gold;
+    cursor: pointer;
+    font-family: $default-font-family;
+    font-size: 1.1em;
+    font-weight: 700;
+    padding: 0 20px;
+}
+
+.btn-link {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	text-decoration: underline;
+}
+
+.link-btn {
+	background: $gold;
+	  border: 1px solid $dark-gray;
+	  padding: 10px;
+	  color: $dark-gray;
+	  text-decoration:none;
+	  font-weight:700;
+	  font-family:Arial;
+	  font-size:1.1em;
+
+	  &:hover {
+	  	background: lighten($gold, 20);
+	  	color: $dark-gray;
+	  }
+}

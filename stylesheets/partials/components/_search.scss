@@ -1,0 +1,53 @@
+.search {
+  padding: 20px;
+}
+.search-form {
+  display: table;
+  width: 100%;
+
+  .search-label {
+    position: absolute; 
+    left: -999em;
+  }
+  .table-cell {
+    display: table-cell;
+    width: 100%;
+  }
+
+  .search-input, .search-button {
+    border: 1px solid #999;
+  }
+
+  .search-input { 
+    padding: 20px;
+    width: 99%;
+  }
+
+  .search-button {
+    @extend button;
+
+    margin: 0;
+    padding: 18.5px 20px;
+  }
+}
+/*Google Autocomplete links*/
+.gsc-completion-title {
+  color: $navy !important;
+}
+
+@media only screen and (max-width: 400px) {
+  .homepage {
+    input::-webkit-input-placeholder {
+      color: transparent;
+    }
+    input::-moz-placeholder {
+      color: transparent;
+    }
+    input:-moz-placeholder {   /* Older versions of Firefox */
+      color: transparent;
+    }
+    input:-ms-input-placeholder { 
+      color: transparent;
+    }
+  }
+}

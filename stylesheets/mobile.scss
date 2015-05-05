@@ -1,0 +1,125 @@
+
+/*Resets*/
+//@import "partials/base/normalize";
+
+/* Modules and Variables */
+@import "partials/base/base";
+
+/* Base*/	
+@import "partials/base/grid";
+@import "partials/base/typography";
+@import "partials/base/header";
+@import "partials/base/nav";
+@import "partials/base/brand";
+@import "partials/base/footer";
+
+/*Components*/
+@import "partials/components/secondaryNav";
+@import "partials/components/textResizer";
+@import "partials/components/alert";
+@import "partials/components/buttons";
+@import "partials/components/fullSite";
+@import "partials/components/skipNav";
+@import "partials/components/social";
+
+/*Include the homepage search styles*/
+@import "partials/homepage/search";
+
+
+html, body {
+	font-size: .95em;
+}
+.agency-page img {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+#maincontainer #calloutarea p {
+  margin: 10px 0 15px;
+}
+
+textarea,
+input[type="search"],
+input[type="text"],
+input[type="button"],
+input[type="submit"] {
+	-webkit-appearance: none;
+     -webkit-border-radius: 0;
+     border-radius: 0;
+}
+
+
+.callout_box {
+	width: 100%;
+
+	h2 {
+		clear: both;
+	}
+}
+
+/*Blog Fixes*/
+.seBlogViewHeaderInfo{display:none;}
+.seBlogViewPostTitle{font-size: 21px;line-height: 1.2em;text-decoration:none;color:#444;font-weight:bold;margin: 10px 0 20px;}
+.seBlogViewPostTitle a{text-decoration:none;}
+.postTitle{font-size: 21px;line-height: 1.2em;text-decoration:none;color:#444;}
+.seBlogViewHeaderDesc{display:none;}
+
+/*Form fixes*/
+@media only screen and (max-width: 500px) {
+	fieldset {
+		float : left;
+		width : 100% !important;
+		height : auto;
+		border-bottom : 1px solid #a9a9a9;
+		border-top : 1px solid #a9a9a9;
+		border-left-style : none;
+		border-right-style : none;
+		padding-bottom : 20px;
+		padding-top : 20px;
+		margin : 20px 0;
+		display : block;
+	}
+	.seInput {
+		width : 100% !important;
+	}
+	.seTextarea {
+		width : 100% !important;
+	}
+	.seText {
+		font-family : Arial, Helvetica, sans-serif;
+		font-size : 11px;
+		font-style : normal;
+		color : #000000;
+		padding-top : 5px;
+		text-align : right;
+		padding-bottom : 5px;
+		font-weight : bold;
+		width : 100% !important;
+	}
+	.seElementRow {
+		width : 100% !important;
+	}
+	.seFieldCell {
+		width : 100% !important;
+	}
+	.vertical {
+		width : 100% !important;
+		text-align : left;
+		font-family : Arial, Helvetica, sans-serif;
+		font-size : 11px;
+		color : #000000;
+		height : auto;
+		font-weight : bold;
+	}
+	select {
+		width : 100% !important;
+	}
+}
+
+@media only screen and (max-width: 480px){
+    .homepage .brand .brand-heading {
+    	font-size: 1.55em;
+    }
+}
+

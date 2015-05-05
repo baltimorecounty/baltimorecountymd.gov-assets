@@ -1,0 +1,23 @@
+.county-executive{
+	.social-media-list{
+		text-align:left;
+	}
+}
+.county-executive-about-list {
+	padding: 0px 0 20px;
+	
+	.county-executive-about-list-item {
+		padding: 0 10px;
+
+		&:first-child {
+			border-right: 1px solid $navy;
+			padding-left: 0;
+		}
+	}
+
+}
+@media only screen and (max-width: 992px) {
+	.county-executive .social-media-list-item {
+		margin-right: 25px;
+	}
+}

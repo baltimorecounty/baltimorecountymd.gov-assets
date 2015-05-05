@@ -1,0 +1,31 @@
+@import "../components/search";
+
+.search-internal {
+  padding: 1.5px 0;
+    .search-input, .search-button {
+      border: 1px solid #999;
+      height: auto;
+    }
+
+    .search-input {
+      font-size: 1.2em;
+      padding: 8px 10px;
+    }
+
+    .search-button {
+      border-radius: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.1em;
+      font-weight: 700;
+      padding: 9px 10px;
+    }
+}
+
+.gsc-completion-container {
+  font-size: 1.2em !important;
+  font-weight: normal !important;
+}
+
+.gssb_a table, .gssb_a table tr, .gssb_a table tr td {
+  padding: 2.5px 5px !important;
+}

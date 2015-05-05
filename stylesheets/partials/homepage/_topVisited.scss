@@ -1,0 +1,83 @@
+/*Popular Services*/
+.top-visited {
+  @extend .clearfix;
+  padding-top: 20px;
+}
+.top-visited-label {
+  display: block;
+  float: left;
+  font-weight: bold;
+  margin:-2px 0 0;
+  width: 12.5%;
+}
+.top-visited-list {
+  display: table;
+  float: left;
+
+  width: 87.5%;
+
+  padding: 1.5px 0;
+
+  li {
+    border-right: 1px solid $navy;
+    display: table-cell;
+    padding: 0 10px;
+    text-align: center;
+    
+    &:last-child {
+      border: none;
+    }
+
+    a:hover {
+      color: $light-blue;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1100px) {
+  .top-visited-list li a {
+      line-height: 18px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .top-visited-label {
+    border-top:5px solid darken($light-gray, 20);
+    border-bottom:1px solid darken($light-gray, 20); 
+    padding:10px;
+    width:100%;
+  }
+  
+  .top-visited-list {
+    margin: 10px auto 0;
+    width: 100%;
+
+    li:first-child {
+      padding-left: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .top-visited-label {
+    background-color: #ccc;
+    padding:10px;
+    width:100%;
+  }
+
+  .top-visited-list li {
+    border-bottom: 1px solid $dark-gray;
+    border-right: none;
+    display: block;
+    text-align:left;
+    padding:0;
+
+    a {
+      line-height: 18px;
+    }
+  }
+
+  .top-visited-list {
+    width:100%;
+  }
+}

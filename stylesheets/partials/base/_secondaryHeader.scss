@@ -1,0 +1,32 @@
+.secondary-header {
+  background: $darker-gray;
+  font-size:.85em;
+  padding: 10px 0;
+  width: 100%;
+
+  a {
+    color: $light-gray;
+    display: block;
+    line-height: 11px;
+    text-decoration: underline;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .page-tools {
+    text-align:right;
+
+    a, ul {
+      display: inline-block;
+      margin-top: -6px;
+    }
+  }
+  
+  .subscribe {
+    border-right: 1px solid $light-gray;
+    display: inline-block;
+    padding-right: 10px;
+  }
+}

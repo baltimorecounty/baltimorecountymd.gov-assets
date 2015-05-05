@@ -1,0 +1,172 @@
+.carousel-wrapper {
+  position: relative;
+
+  .search-container {
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+
+    -moz-transform:    translateX(-50%);
+    -o-transform:      translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform:         translateX(-50%);
+  }  
+}
+
+.carousel {
+  margin: 0;
+
+  a {
+    color: $gold;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  img {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  h2 {
+    border: none;
+    color: $white;
+
+    font-size: 2.3em;
+
+    margin: 10px 0;
+    text-transform: uppercase;
+  }
+
+  .carousel-item {
+    position: relative;
+  }
+  .carousel-image {
+    width: 100%;
+  }
+  .carousel-message {
+    position: absolute;
+    bottom: 0;
+
+    background-color: #333;
+    background: rgba(#444,.9);
+    color: $white;
+    padding: 20px 40px;
+    width: 100%;
+
+  }
+}
+
+.carousel-container {
+  background: white;
+}
+/*Plugin Specific Overrides*/
+.slick-dots {
+  bottom: 25px;
+  right: 50px;
+  text-align: right;
+}
+
+.slick-dots li button:before {
+  position: absolute;
+  top: 0;
+  right: 50px;
+  width: 20px;
+  height: 20px;
+  font-family: "slick";
+  line-height: 52px;
+
+  opacity: 0.25;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .carousel {
+    h2 {
+      font-size: 1.75em;
+      margin: 0;
+    }
+  }
+  /*Plugin Specific Overrides*/
+  .slick-dots {
+    display: none !important; /*Overriding an element style attr added by slick */
+  }
+  .slick-prev, .slick-next {
+    top: 30%;
+  }
+  .slick-prev {
+    left: 25px;
+  }
+  .slick-next {
+    right: 25px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .carousel-item img {
+    min-height: 520px;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .carousel-item img {
+    min-height: 426px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .carousel-item img {
+    min-height: 339px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .carousel-item img {
+    min-height: 254px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+    .carousel {
+    a {
+      color: $navy;
+      &:hover {
+        color: $light-blue;
+      }
+    }
+    .carousel-message{
+      background: white;
+      color: $dark-gray;
+      position:relative;
+      padding: 20px 20px 0;
+
+      h2 {
+        color: $dark-gray;
+        font-size: 1.5em;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 600px) {
+  /*Plugin Specific Overrides*/
+  .slick-prev, .slick-next {
+    top: 25%;
+  }
+  .slick-prev {
+    left: 10px;
+  }
+  .slick-next {
+    right: 10px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  /*Plugin Specific Overrides*/
+  .slick-prev, .slick-next {
+    height: 58.5px; /*3/4 of the original height of 78px*/
+    width: 33.75px; /*3/4 of the original height of 78px*/
+    top: 15%;
+  }
+}
+

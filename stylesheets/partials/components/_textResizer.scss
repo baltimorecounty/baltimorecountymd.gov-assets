@@ -1,0 +1,50 @@
+/*Resizer Container Class*/
+.resizer {
+  display: inline-block;
+}
+
+/*Resizer Links included in the Secondary Header*/
+.resizer-list {
+  margin: 0;
+  
+  li, li:first-child {
+    padding: 0 5px;
+  }
+  button {
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    
+    &.active {
+      color: white;
+    }
+  }
+}
+.resizer-item {
+  color: $light-gray;
+  font-weight: bold;
+  text-decoration: underline;
+
+  &:hover {
+    color: white;
+  }
+}
+.resizer-item-smaller {
+  font-size: 1.6em;
+}
+.resizer-item-default {
+  font-size: 2.2em;
+}
+.resizer-item-larger {
+  font-size: 2.8em;
+}
+
+/*Text Resizer Classes to be applied to the main content*/
+.large-text {
+  font-size: 1.25em;
+  line-height: 27px;
+}
+
+.largest-text {
+  font-size: 1.45em;
+  line-height: 30px;
+}

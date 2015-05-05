@@ -1,0 +1,53 @@
+.secondary-nav {
+    background: $darker-gray;
+    z-index: 999;
+    
+    .secondary-nav-list {
+      padding: 12px 0 13px;
+      
+      .secondary-nav-list-item {
+        border-right: 1px solid $light-gray;
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          border: none;
+          padding-right: 0;
+        }
+
+      }
+    }
+  }
+
+@media only screen and (max-width: 767px) {
+  .homepage {
+    .secondary-nav {
+      font-size:.85em;
+      padding: 10px 30px;
+
+      a {
+        color: $light-gray;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 767px) {
+  .homepage {
+    .secondary-nav {
+      display: none;
+
+      &.mobile-menu-visible {
+        display: block;
+      }
+    }
+  }
+  
+}

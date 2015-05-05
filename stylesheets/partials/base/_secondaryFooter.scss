@@ -1,0 +1,17 @@
+.secondary-footer {
+	background: $red;
+	color: $white;
+	padding: 20px 0;
+	
+	a {
+		color: white;
+	}
+	.county-links-list-item {
+		border-right: 1px solid $white;
+		padding: 0 5px;
+
+		&:last-child {
+			border-right:none;
+		}
+	}
+}

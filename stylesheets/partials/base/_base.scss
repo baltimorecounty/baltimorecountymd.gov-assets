@@ -1,0 +1,42 @@
+@import "../../modules/all";
+html {
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;         /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;
+}
+
+html, body {
+	background: $light-gray;
+	color: $base-font-color;
+	font-family: $default-font-family;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+
+
+img {
+	border: 1px solid $img-border-gray;
+	margin: 5px;
+	padding: 5px;
+}
+
+/*Remove IOS Broder Radius*/
+
+textarea,
+input,
+input[type="search"],
+input[type="text"],
+input[type="button"],
+input[type="submit"] {
+     -webkit-border-radius: 0;
+     border-radius: 0;
+}

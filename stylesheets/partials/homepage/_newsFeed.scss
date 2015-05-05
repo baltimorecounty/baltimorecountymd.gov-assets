@@ -1,0 +1,119 @@
+/*Contains the styles for Baltimore County Now*/
+
+.news-feed {
+  border-right:3px dotted $light-gray;
+}
+.news {
+  .news-headline {
+    font-weight: 900;
+  }
+}
+.feedDetails {
+  h1, .description {
+    display:none;
+  }
+}
+.feedItems{
+  .item {
+    float: left;
+    margin: 0 0 20px;
+    padding: 0 1.5em 0 0;
+    width: 50%;
+
+    &:nth-child(3) {
+      clear:both;
+    }
+  }
+  .pub-date{
+    font-weight:900;
+    display:table;
+    margin:0 0 5px;
+  }
+  .title{
+    font-family:Patua One;
+    color: $dark-gray;
+    font-weight:normal;
+    font-size:1.3em;
+    margin: 10px 0 5px;
+  }
+  h3 a{
+    color:$dark-gray;
+    text-decoration:none;
+  }
+  h3 a:hover{
+    text-decoration:none;
+  }
+}
+.feedItems{
+  margin:0;
+  padding:0;
+  list-style-type:none;
+}
+
+.county-photo-feed {
+  padding: 0;
+
+  .county-photo-container {
+    @extend .clearfix;
+    padding: 0 10px 0 0;
+  }
+
+	.county-photo-feed-item {
+
+    width: 100%;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+}
+
+/*Clear News Feed*/
+.SESyndicationModule {
+  @extend .clearfix;
+  margin-bottom: 20px;
+}
+
+/*This is based on Site Executive Structure, we do not want to show the extra
+information on the homepage*/
+.news-feed .item {
+  .extras {
+    display: none;
+  }
+}
+
+.news-feed-read-more{
+  display:block;
+  margin:30px 0 15px;
+    
+}
+@media only screen and (max-width: 992px) {
+  .news-feed {
+    border: none;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .county-photo-feed-headline {
+    display: none;
+  }
+  .feedItems {
+    .item {
+      float: none;
+      padding: 0 1.5em 0 0;
+      width: 100%;
+
+      .description p {
+        display: none;
+      }
+
+      .title{
+        margin: 10px 0 0;
+      }
+    }
+  }
+
+  .news-feed-read-more {
+    margin: 0 0 20px;
+  }
+  
+}

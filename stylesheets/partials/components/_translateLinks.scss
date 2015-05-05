@@ -1,0 +1,37 @@
+$flag-sprite: "/sebin/x/a/footer-flags-sprite.jpg";
+
+.translate-page-list-item {
+	background-image: url($flag-sprite);
+	height: 11px;
+	margin-bottom: 10px;
+	width: 17px;
+
+	a {
+		line-height: 11px;
+		padding-left: 25px;
+		vertical-align: top;
+	}
+}
+
+.translate-page-list-item-american {
+	background-position: 0 bottom;
+}
+
+.translate-page-list-item-arabic {
+	background-position: -17px 0;
+}
+.translate-page-list-item-chinese {
+	background-position: -34px 0;
+}
+
+.translate-page-list-item-french {
+	background-position: -51px 0;
+}
+
+.translate-page-list-item-russian {
+	background-position: -68px 0;
+}
+
+.translate-page-list-item-spanish { 
+	background-position: -85px 0;
+}

@@ -1,0 +1,43 @@
+.inline-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+
+	li {
+		display: inline-block;
+
+		padding: 0 10px; //Default padding
+		
+		&:first-child {
+			padding-left: 0;
+		}
+
+		a {
+			display: block;
+			line-height: 12px; //TODO: Remove this line-height, should go on the list
+		}
+	}
+}
+
+/*Typography*/
+.uppercase{
+    text-transform:uppercase;
+}
+.smaller-text{
+    font-size:65%;
+}
+
+/*Clearfix*/
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+ 
+.clearfix:after {
+    clear: both;
+}
+ 
+.clearfix {
+    *zoom: 1;
+}

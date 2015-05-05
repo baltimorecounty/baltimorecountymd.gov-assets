@@ -1,0 +1,74 @@
+/*Resets*/
+@import "partials/base/normalize";
+
+/* Modules and Variables */
+@import "partials/base/base";
+
+/* Third Party */
+@import "vendor/slick-carousel";
+@import "vendor/reView";
+
+/* Base*/	
+@import "partials/base/grid";
+@import "partials/base/typography";
+@import "partials/base/header";
+@import "partials/base/nav";
+@import "partials/base/brand";
+@import "partials/base/footer";
+
+/*Components*/
+@import "partials/components/secondaryNav";
+@import "partials/components/textResizer";
+@import "partials/components/alert";
+@import "partials/components/buttons";
+@import "partials/components/fullSite";
+@import "partials/components/skipNav";
+@import "partials/components/social";
+
+/*Hompage Specific*/
+@import "partials/homepage/carousel";
+@import "partials/homepage/search";
+@import "partials/homepage/topVisited";
+@import "partials/homepage/newsFeed";
+@import "partials/homepage/countyInformation";
+@import "partials/homepage/electedOfficials";
+
+
+// html, body {
+// 	overflow-x: hidden;
+// }
+
+/*
+Fix for the google custome search autocomplete positioning.
+We only want this fix on the hompage
+*/
+.gssb_c {
+	
+	z-index: 5000;
+	left: 50% !important;
+	-webkit-transform: translateX(-50%) !important;
+       -moz-transform: translateX(-50%) !important;
+        -ms-transform: translateX(-50%) !important;
+         -o-transform: translateX(-50%) !important;
+	transform: translateX(-50%) !important;
+	margin-left: -56px !important;
+}
+.gsc-completion-container table {
+	font-size: 16px !important;
+}
+.gssb_a table, .gssb_a table tr, .gssb_a table tr td {
+	padding: 5px 10px !important;
+}
+
+@media only screen and (max-width: 400px) {
+	.gssb_c {
+		z-index: 5000;
+		left: 20px !important;
+		-webkit-transform: none !important;
+       -moz-transform: none !important;
+        -ms-transform: none !important;
+         -o-transform: none !important;
+		transform: none !important;
+		margin-left: 0 !important;
+	}
+}

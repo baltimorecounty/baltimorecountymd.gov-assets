@@ -1,0 +1,17 @@
+.primary-footer {
+	padding: 20px 15px;
+
+	h2 {
+		margin: 0;
+	}
+
+	.county-help-list-item a {
+		line-height: 24px;
+	}
+}
+@media only screen and (max-width: 992px) {
+	.primary-footer .social-media-list {
+		padding: 20px 0 0;
+		text-align: left;
+	}
+}

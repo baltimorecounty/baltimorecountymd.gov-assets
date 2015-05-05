@@ -1,0 +1,28 @@
+@import "countyExecutive";
+
+.elected-officials {
+	img {
+		margin: 0 0 20px;
+		width: 100%;
+	}
+	
+
+	.social-media-list {
+		margin-bottom: 20px;
+	}
+}
+
+.county-executive, .county-council {
+	padding-right: 0;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+	.elected-officials {
+		.county-executive {
+			padding-left: 0;
+		}
+		.county-council {
+			padding-right: 15px;
+		}
+	}
+}

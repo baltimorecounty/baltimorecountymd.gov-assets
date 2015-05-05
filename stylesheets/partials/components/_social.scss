@@ -1,0 +1,112 @@
+$icon-sprite: "//staging.baltimorecountymd.gov/homepageredesign/assets/img/social-icons-sprite.png";
+
+.social-media-list {
+	list-style-type: none;
+	text-align: center;
+
+	h1, a {
+		color: $white;
+	}
+
+	li {
+		padding-left: 0;
+	}
+}
+.social-media-list-item {
+	background-image: url($icon-sprite);
+	height: 37px;
+	width: 37px;
+
+	margin-right: 25px;
+
+	a {
+		border: none;
+		text-decoration: none;
+
+		height: 38px;
+		width: 38px;	
+	}
+}
+.social-media-list-item-facebook {
+	background-position: 0 0;
+	&:hover {
+		background-position: 0 -37px;
+	}
+}
+.social-media-list-item-twitter {
+	background-position: -38px 0;
+	&:hover {
+		background-position: -38px -37px;
+	}
+}
+.social-media-list-item-photos {
+	background-position: -76px 0;
+	&:hover {
+		background-position: -76px -37px;
+	}
+}
+.social-media-list-item-youtube {
+	background-position: -114px 0;
+	&:hover {
+		background-position: -114px -37px;
+	}
+}
+.social-media-list-item-bcnow {
+	background-position: -152px 0;
+	&:hover {
+		background-position: -152px -37px;
+	}
+}
+
+.social-media-list-gold {
+	.social-media-list-item-facebook {
+		background-position: 0 -74px;
+
+		&:hover {
+			background-position: 0 -111px;
+		}
+	}
+	.social-media-list-item-twitter {
+		background-position: -38px -74px;
+
+		&:hover {
+			background-position: -38px -111px;
+		}
+	}
+	.social-media-list-item-photos {
+		background-position: -76px -74px;
+
+		&:hover {
+			background-position: -76px -111px;
+		}
+	}
+	.social-media-list-item-youtube {
+		background-position: -114px -74px;
+
+		&:hover {
+			background-position: -114px -111px;
+		}
+	}
+	.social-media-list-item-bcnow {
+		background-position: -152px -74px;
+
+		&:hover {
+			background-position: -152px -111px;
+		}
+	}
+}
+@media only screen and (max-width: 1200px) {
+	.social-media-list-item {
+		margin-right: 20px;
+	}
+}
+@media only screen and (max-width: 1100px) {
+	.social-media-list-item {
+		margin-right: 15px;
+	}
+}
+@media only screen and (max-width: 400px) {
+	.social-media-list-item {
+		margin-right: 10px;
+	}
+}
