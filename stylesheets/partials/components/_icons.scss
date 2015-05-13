@@ -1,0 +1,36 @@
+.icon-small {
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+}
+.icon-extra-large {
+  border-radius: 10px;
+  color: $lightest-gray;
+  padding: 20px;
+}
+.icon-success, .icon-open {
+  background: green;
+  
+  &.icon-small {
+    padding: 5px 7px;
+  }
+}
+.icon-closed, .icon-cancelled {
+  background: red;
+
+  &.icon-extra-large {
+    padding: 10px 20px;
+  }
+}
+.icon-modified {
+  color: goldenrod;
+}
+.icon-external, .icon-seewebsite {
+  color: #002280;
+}
+.icon-modified, .icon-external {
+  &.icon-small {
+    font-size: 2.5em;
+    padding: 0 4px;
+  }
+}
