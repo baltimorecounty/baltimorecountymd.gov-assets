@@ -106,23 +106,23 @@
   }
 }
 
-@media only screen and (max-width: 1200px) {
-  .carousel-item img {
+@media only screen and (min-width: 1000px) {
+  .carousel-container {
     min-height: 520px;
   }
 }
 @media only screen and (max-width: 1000px) {
-  .carousel-item img {
+  .carousel-container {
     min-height: 426px;
   }
 }
 @media only screen and (max-width: 800px) {
-  .carousel-item img {
+  .carousel-container {
     min-height: 339px;
   }
 }
 @media only screen and (max-width: 600px) {
-  .carousel-item img {
+  .carousel-container {
     min-height: 254px;
   }
 }
