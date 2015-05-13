@@ -1,0 +1,29 @@
+@import '../../../modules/colors';
+@import '../../components/heroUnit';
+@import '../../components/icons';
+
+.closings {
+	margin-bottom: 40px;
+}
+.county-closings-image-container {
+	text-align: center;
+}
+
+// #county-closings {
+// 	table-layout: fixed;
+// }
+
+/*jQuery Datatable Specific Code*/
+table.dataTable thead th, table.dataTable thead td  {
+  text-align: left;
+}
+.dataTables_wrapper .dataTables_filter {
+  background: $lightest-gray;
+  float: none;
+  padding: 20px;
+  text-align: left;
+  
+  input {
+    width: 90%;
+  }
+}
