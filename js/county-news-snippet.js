@@ -63,7 +63,7 @@ var ShowNews = (function ($) {
             var excerpt = getExcerpt($newsItemDesc),
                 excerptText = trimExceprtText(excerpt, 50);
 
-            $newsItemDesc.html(excerptText);
+            $newsItemDesc.html("<p>" + excerptText + "</p>");
         });
     },
     trimExceprtText = function (excerpt, limit) {
