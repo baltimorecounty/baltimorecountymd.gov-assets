@@ -3,14 +3,12 @@
 }
 
 @media only screen and (max-width: 767px) {
-	.homepage {
-		.hamburger-nav {
-			display: block;
-			position: absolute;
-		  	z-index: 999;
-		  	top: 17.5px;
-		  	right: 0;
-		  	padding: 10px;
-		}
+	.hamburger-nav {
+		display: block;
+		position: absolute;
+	  	z-index: 999;
+	  	top: 17.5px;
+	  	right: 0;
+	  	padding: 10px;
 	}
 }
