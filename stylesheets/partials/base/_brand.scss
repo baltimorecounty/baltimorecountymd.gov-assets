@@ -39,14 +39,11 @@
 
 }
 @media only screen and (min-width: 992px) and (max-width: 1120px) {
-  .homepage {
     .brand .brand-heading {
       font-size: 1.4em;
     }
-  }
 }
 @media only screen and (max-width: 480px){
-  .homepage {
     .brand {
       padding: 0 0 0 5px;
 
@@ -64,6 +61,5 @@
       }
 
     }
-  }
     
 }
