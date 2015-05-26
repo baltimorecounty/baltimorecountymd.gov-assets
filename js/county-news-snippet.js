@@ -28,13 +28,15 @@ var ShowNews = (function ($) {
         var supportsCustomElements = !! $('seml', $newsItemDesc).html().length,
             excerptHtml = supportsCustomElements ? $newsItemDesc.children().html() : $newsItemDesc.html(),
             htmlArray = removeUnwantedItems($.parseHTML(excerptHtml));
-
         return supportsCustomElements ? htmlArray[1].textContent : htmlArray[2].innerText;
     },
     removeUnwantedItems = function (htmlArray) {
         for (var i = 0, len = htmlArray.length; i < len; i++) {
-            var item = htmlArray[i];
-            if (item && ((item.tagName === 'IMG' || item.tagName === 'UL') || (item.children[0] && item.children[0].tagName === 'IMG'))) {
+            var item = htmlArray[i],
+                isBadItem = item && (item.tagName === 'IMG' || item.tagName === 'UL' || (item.innerHTML && item.innerHTML.indexOf('seimage') > 0)),
+                isBadChildItem = item && (item.children && item.children[0] && item.children[0].tagName === 'IMG'),
+                    isBadElement = item && item.tagName === undefined;
+            if (isBadItem || isBadChildItem || isBadElement) {
                 htmlArray.splice(i, 1);
             }
         }
