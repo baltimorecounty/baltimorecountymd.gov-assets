@@ -13,6 +13,7 @@ Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, fli
 
 ###Dependencies
 [jQuery](https://jquery.com/)
+
 [handlebars](http://handlebarsjs.com/)
 
 ###Options
