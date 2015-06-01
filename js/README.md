@@ -6,7 +6,7 @@ This folder contains Javascript files used on the Baltimore County Governement W
 
 The CMS (Site Executive) allows us to inlcude an rss feed on any page.  However, it includes the entire feed.  We only want to display a snippet.  This script is responsible for formatting the feed as we desire.
 
-##Flick Feed
+##Flickr Feed
 **filename**: flickr-feed.js
 
 Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
