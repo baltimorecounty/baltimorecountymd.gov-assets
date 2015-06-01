@@ -11,6 +11,19 @@ The CMS (Site Executive) allows us to inlcude an rss feed on any page.  However,
 
 Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
 
+###Dependencies
+[jQuery](https://jquery.com/)
+[handlebars](http://handlebarsjs.com/)
+
+###Options
+Option | Type | Default | Description | Required
+------ | ---- | ------- | ----------- | --------
+apiKey | string | n/a |  [Get your key](https://www.flickr.com/services/api/misc.api_keys.html) | Yes
+nsid | string | n/a | [Get your nsid](http://idgettr.com/) | Yes
+searchTags | string (comma seperated) | "" | Should contain at least one tag | Yes
+template | string | "" | [Learn more about handlesbar templates](http://handlebarsjs.com/) | Yes
+$container | jquery object | n/a | Element that will contain the feed | Yes
+
 ###Usage
 ```javascript
 var $flickFeedContainer = $('.county-photo-feed');
