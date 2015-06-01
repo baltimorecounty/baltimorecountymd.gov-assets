@@ -12,7 +12,7 @@ The CMS (Site Executive) allows us to inlcude an rss feed on any page.  However,
 Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
 
 ###Usage
-```
+```javascript
 var $flickFeedContainer = $('.county-photo-feed');
 
 var photoFeed = new Flickr({
