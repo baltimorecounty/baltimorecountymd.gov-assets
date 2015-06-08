@@ -1,0 +1,11 @@
+/*HACK - .callout is the desired class, .callout_box is the old SE way*/
+.callout, .callout_box {
+	border: 2px solid $red;
+	margin: 10px 0;
+	max-width: 480px; /*HACK - width is set specifically from original templates*/
+	width: 100%;
+
+	img {
+		width: 100%;
+	}
+}
