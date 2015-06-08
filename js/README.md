@@ -2,21 +2,21 @@
 This folder contains Javascript files used on the Baltimore County Governement Website
 
 ##County News Snippet
+The CMS (Site Executive) allows us to inlcude an rss feed on any page.  However, it includes the entire feed.  We only want to display a snippet.  This script is responsible for formatting the feed as we desire.
+
 **filename**: county-news-snippet.js  
 **usage**: homepage.min.js  
 ###Dependencies
 * [jQuery](https://jquery.com/)
 
-The CMS (Site Executive) allows us to inlcude an rss feed on any page.  However, it includes the entire feed.  We only want to display a snippet.  This script is responsible for formatting the feed as we desire.
-
 ##Flickr Feed
+Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
+
 **filename**: flickr-feed.js  
 **usage**: homepage.min.js  
 ###Dependencies
 * [jQuery](https://jquery.com/)
 * [handlebars](http://handlebarsjs.com/)
-
-Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
 
 ###Options
 Option | Type | Default | Description | Required
@@ -40,46 +40,48 @@ var photoFeed = new Flickr({
 });
 ```
 ##Homepage Template
+Specific to the baltimorecoutymd.gov homepage.  Initializes the county flickr feed, slick carousel and Google Analytics Event Tracking.  It also adds functionality to the site's hamburger menu.
+
 **filename**: homepage-template.js  
 **usage**: n/a
 
-Specific to the baltimorecoutymd.gov homepage.  Initializes the county flickr feed, slick carousel and Google Analytics Event Tracking.  It also adds functionality to the site's hamburger menu.
-
 ##Inside Template
+Specific to the baltimorecoutymd.gov inside templates.  Initializes events for Google Analytics Event Tracking, site hamburger menu and adds the website url to our feedback form, which is included on most of the inside pages.
+
 **filename**: inside-template.js  
 **usage**: n/a
 
-Specific to the baltimorecoutymd.gov inside templates.  Initializes events for Google Analytics Event Tracking, site hamburger menu and adds the website url to our feedback form, which is included on most of the inside pages.
-
 ##Skip Nav
+Specific to the baltimorecoutymd.gov website.  Fallback script for our Skip Nav Link that is displayed on the screen using CSS.
+
 **filename**: skip-nav.js  
 **usage**: template.min.js  
 ###Dependencies
 * [jQuery](https://jquery.com/)
 
-Specific to the baltimorecoutymd.gov website.  Fallback script for our Skip Nav Link that is displayed on the screen using CSS.
-
 ##Text Resizer
+Tool used through the baltimorecoutymd.gov website.  Is located near the top of the screen on larger screen devices. Allows the user toincrease the size of the text on the site.
+
 **filename**: text-resizer.js  
 **usage**: template.min.js  
 ###Dependencies
 * [jQuery](https://jquery.com/)
 
-Tool used through the baltimorecoutymd.gov website.  Is located near the top of the screen on larger screen devices. Allows the user toincrease the size of the text on the site.
-
 ##Google Analytics
+Contains google specific code to report analytics to Google Analytics.
+
 **filename**: bc-google-analytics.js  
 **usage**: template.min.js
 
-Contains google specific code to report analytics to Google Analytics.
+
 
 ##Google Analytics Custom Events
+Contains events that will trigger event tracking in Google Analytics.  We are responsible for maintaining the events we want to track in this file. 
+
 **filename**: bc-google-analytics-custom-events.js  
 **usage**: template.min.js    
 ###Dependencies
 * [jQuery](https://jquery.com/)
-
-Contains events that will trigger event tracking in Google Analytics.  We are responsible for maintaining the events we want to track in this file. 
 
 Currently we are tracking:
 * Search button selected throughout the .gov website.
