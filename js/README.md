@@ -3,19 +3,20 @@ This folder contains Javascript files used on the Baltimore County Governement W
 
 ##County News Snippet
 **filename**: county-news-snippet.js  
-**usage**: homepage.min.js
+**usage**: homepage.min.js  
+###Dependencies
+* [jQuery](https://jquery.com/)
 
 The CMS (Site Executive) allows us to inlcude an rss feed on any page.  However, it includes the entire feed.  We only want to display a snippet.  This script is responsible for formatting the feed as we desire.
 
 ##Flickr Feed
 **filename**: flickr-feed.js  
-**usage**: homepage.min.js
-
-Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
-
+**usage**: homepage.min.js  
 ###Dependencies
 * [jQuery](https://jquery.com/)
 * [handlebars](http://handlebarsjs.com/)
+
+Gets a feed of flickr images by tag.  The flickr objects requires an apiKey, flickr nsid, search tags and allows you to pass in a template so that you can dislay the data as you wish.
 
 ###Options
 Option | Type | Default | Description | Required
@@ -52,13 +53,17 @@ Specific to the baltimorecoutymd.gov inside templates.  Initializes events for G
 
 ##Skip Nav
 **filename**: skip-nav.js  
-**usage**: template.min.js
+**usage**: template.min.js  
+###Dependencies
+* [jQuery](https://jquery.com/)
 
 Specific to the baltimorecoutymd.gov website.  Fallback script for our Skip Nav Link that is displayed on the screen using CSS.
 
 ##Text Resizer
 **filename**: text-resizer.js  
-**usage**: template.min.js
+**usage**: template.min.js  
+###Dependencies
+* [jQuery](https://jquery.com/)
 
 Tool used through the baltimorecoutymd.gov website.  Is located near the top of the screen on larger screen devices. Allows the user toincrease the size of the text on the site.
 
@@ -70,8 +75,9 @@ Contains google specific code to report analytics to Google Analytics.
 
 ##Google Analytics Custom Events
 **filename**: bc-google-analytics-custom-events.js  
-**usage**: template.min.js
-
+**usage**: template.min.js  
+###Dependencies
+* [jQuery](https://jquery.com/)
 Contains events that will trigger event tracking in Google Analytics.  We are responsible for maintaining the events we want to track in this file. 
 
 Currently we are tracking:
