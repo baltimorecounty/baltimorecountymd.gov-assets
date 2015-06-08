@@ -27,3 +27,24 @@ table.dataTable thead th, table.dataTable thead td  {
     width: 90%;
   }
 }
+@media screen and (max-width: 500px) {
+  table.dataTable {
+    font-size: 16px;
+  }
+  table.dataTable.stripe, table.dataTable.display {
+    tbody tr.odd, tbody tr.even {
+      &.cancelled, &.closed {
+      background-color: rgba($icon-error-color, .8);
+      }
+      &.open {
+        background-color: rgba($icon-success-color, .8);
+      }
+      &.modified {
+        background-color: rgba($icon-warning-color, .8);
+      }
+      &.see-website {
+        //background-color: rgba($icon-link-color, .8);
+      }
+    }
+}
+}
