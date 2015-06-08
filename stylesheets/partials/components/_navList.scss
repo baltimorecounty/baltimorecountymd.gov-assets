@@ -1,0 +1,90 @@
+.nav-list {
+	line-height: 1.7em;
+	margin-bottom: 20px;
+	
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.title, &.in-this-section table tr:first-child td:first-child {
+		  padding: 5px 10px;
+		  border-top: 6px solid #cacaca;
+		  font-weight: bold;
+		  text-transform: uppercase;
+		  border-bottom: 1px solid #adadad;
+		  background-image: none;
+	}
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+	
+	table {
+		border-collapse: collapse;
+		width: 100%;
+		
+		/*HACK - removes breaks inserted by Site Executive*/
+		br {
+			display: none;
+		}
+
+		a {
+			background: url(/sebin/q/r/most-requested-arrow.gif) 
+						no-repeat
+						left 
+						center;
+			background-position-x: 5px;
+			border-bottom: 1px solid #ADADAD;
+			display: block;
+			padding: 5px 0 5px 30px;
+
+			&:hover {
+				  margin: 0;
+				  padding: 5px 0 5px 30px;
+				  text-decoration: underline;
+				  display: block;
+				  background: url(/sebin/m/n/most-requested-arrow-hover.gif) no-repeat left center;
+				  background-position-x: 5px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.nav-list table li, .nav-list table td, .title, .nav-list in-this-section table tr:first-child td:first-child {
+		// padding-left: 10px;
+	}
+}
+
+/*
+<table width="218" cellspacing="2" cellpadding="2" border="0">
+			<tbody><tr>
+				<td bgcolor="#C0C0C0" class="whatsheredisplaynone">What's New</td>
+			</tr>
+			<tr>
+				
+					<td bgcolor="#C0C0C0" width="218" class="smalltext">
+						
+							<a class="smalltext" href="http://www.baltimorecountymd.gov/Agencies/publicworks/roadclosures/">Current Road Closures</a><br>
+							
+
+
+							<a class="smalltext" href="http://www.baltimorecountymd.gov/Agencies/emergency_prep/">Emergency Preparedness</a><br>
+							
+
+
+							<a class="smalltext" href="http://www.chart.state.md.us/">State Road Conditions</a><br>
+							
+
+
+							<a class="smalltext" href="http://www.baltimorecountymd.gov/Agencies/publicworks/SnowFighter/">Winter Storm Operations</a><br>
+							
+
+
+					</td>
+				
+			</tr>
+			</tbody></table>
+*/
