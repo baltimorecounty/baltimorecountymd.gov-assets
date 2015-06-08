@@ -78,6 +78,7 @@ Contains google specific code to report analytics to Google Analytics.
 **usage**: template.min.js    
 ###Dependencies
 * [jQuery](https://jquery.com/)
+
 Contains events that will trigger event tracking in Google Analytics.  We are responsible for maintaining the events we want to track in this file. 
 
 Currently we are tracking:
