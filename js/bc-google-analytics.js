@@ -6,4 +6,4 @@
 
 	ga('create', 'UA-716612-1', 'auto');
 	ga('send', 'pageview');
-})(jQuery);
+})();
