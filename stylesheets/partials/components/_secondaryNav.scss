@@ -22,7 +22,6 @@
   }
 
 @media only screen and (max-width: 767px) {
-  .homepage {
     .secondary-nav {
       font-size:.85em;
       padding: 10px 30px;
@@ -35,12 +34,9 @@
         }
       }
     }
-  }
-  
 }
 
 @media only screen and (max-width: 767px) {
-  .homepage {
     .secondary-nav {
       display: none;
 
@@ -48,6 +44,4 @@
         display: block;
       }
     }
-  }
-  
 }

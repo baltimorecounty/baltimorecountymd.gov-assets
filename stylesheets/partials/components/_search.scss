@@ -28,6 +28,7 @@
 
     margin: 0;
     padding: 18.5px 20px;
+    vertical-align: baseline;
   }
 }
 /*Google Autocomplete links*/
@@ -36,7 +37,6 @@
 }
 
 @media only screen and (max-width: 400px) {
-  .homepage {
     input::-webkit-input-placeholder {
       color: transparent;
     }
@@ -49,5 +49,4 @@
     input:-ms-input-placeholder { 
       color: transparent;
     }
-  }
 }
