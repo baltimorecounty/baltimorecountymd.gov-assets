@@ -54,9 +54,6 @@ var ShowNews = (function ($) {
                     }
                 }
             }
-          
-          console.log(htmlArray);
-          
             return htmlArray;
         }
         return [];
