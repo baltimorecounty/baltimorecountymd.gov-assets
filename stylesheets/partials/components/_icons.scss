@@ -9,24 +9,24 @@
   padding: 20px;
 }
 .icon-success, .icon-open {
-  background: green;
+  background: $icon-success-color;
   
   &.icon-small {
     padding: 5px 7px;
   }
 }
 .icon-closed, .icon-cancelled {
-  background: red;
+  background: $icon-error-color;
 
   &.icon-extra-large {
     padding: 10px 20px;
   }
 }
 .icon-modified {
-  color: goldenrod;
+  color: $icon-warning-color;
 }
 .icon-external, .icon-seewebsite {
-  color: #002280;
+  color: $icon-link-color;
 }
 .icon-modified, .icon-external {
   &.icon-small {
