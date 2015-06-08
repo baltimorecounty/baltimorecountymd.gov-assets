@@ -14,7 +14,7 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .carousel-wrapper .search-container {
+  .search-container {
     background:none;
     position: relative;
     left: 0;
@@ -55,12 +55,12 @@
 }
 
 @media only screen and (max-width: 400px) {
-  .homepage .search .search-button {
+  .search .search-button {
     padding: 9.5px 5px;
   }
   .search {
     .search-button {
-      padding: 10px 5px;
+      padding: 8.5px 5px;
       height: auto;
     }
 
