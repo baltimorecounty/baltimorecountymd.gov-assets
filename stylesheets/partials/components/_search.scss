@@ -36,7 +36,41 @@
   color: $navy !important;
 }
 
+/*Search Iframe for inside pages at smaller screens*/
+#search-frame {
+  border: none;
+  position: absolute;
+  height: 750px;
+  width: 100%;
+  z-index: 9999;
+}
+
+
+@media only screen and (max-width: 991px) {
+  .search-container.inside-template {
+    height: 60px;
+  }
+}
+
+@media only screen and (max-width: 461px) {
+  .search-container.inside-template {
+    height: 40px;
+  }
+}
+
 @media only screen and (max-width: 400px) {
+    .search-form {
+      .search-input {
+        padding: 11px 10px;
+      }
+      .search-button {
+          font-size: 1em;
+          font-weight: 700;
+          padding: 11px 5px;
+          vertical-align: initial;
+      }
+    }
+
     input::-webkit-input-placeholder {
       color: transparent;
     }
