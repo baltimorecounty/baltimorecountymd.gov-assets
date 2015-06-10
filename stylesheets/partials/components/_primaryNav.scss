@@ -103,9 +103,6 @@
 }
 
 @media only screen and (min-width: 767px) and (max-width: 992px) {
-    .primary-nav{
-      width:100%;
-    }
     .primary-nav .primary-nav-item {
       .primary-nav-item__headline {
         font-size: 1.5em;
@@ -114,9 +111,6 @@
     .primary-nav .primary-nav-item a{
       background: url($little-arrow) no-repeat scroll 12.5px 22px rgba(0, 0, 0, 0);
       padding: 20px 0 20px 40px;
-    }
-    .primary-nav .primary-nav-item{
-      margin: 0 0 5px;
     }
 }
 
