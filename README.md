@@ -2,7 +2,8 @@
 Assets used on the [Baltimore County Website](https://www.baltimorecountymd.gov/index.html)
 
 ##Building Files for Distribution
-1. Install [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
+1. If you haven't already, [clone this repository](https://help.github.com/articles/working-with-repositories/)
+2. Install [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 2. Open terminal or command prompt to the root of your local repository
 3. Run the 'gulp' command
 
