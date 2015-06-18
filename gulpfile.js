@@ -12,12 +12,6 @@ var concatFiles = function(files, name, dest) {
 	    .pipe(gulp.dest(dest));
 };
 
-gulp.task('sass', function () {
-  gulp.src('./stylesheets/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./dist/css'));
-});
-
 gulp.task('concatHomepageJs', function() {
 	var files = ['./js/lib/jQuery.min.js', './js/lib/slick.min.js', './js/lib/handlebars.js', './js/lib/picturefill.min.js', './js/flickr-feed.js', './js/county-news-snippet.js', './js/homepage-template.js'];
 	return concatFiles(files, 'homepage.js');
@@ -38,6 +32,16 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
         }
     }))
     .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('sass', function () {
+  gulp.src('./stylesheets/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('sass:watch', function () {
+  gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
 });
 
 gulp.task('default', ['compressFiles', 'sass'], function() {
