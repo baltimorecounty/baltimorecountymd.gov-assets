@@ -3,7 +3,8 @@ Assets used on the [Baltimore County Website](https://www.baltimorecountymd.gov/
 
 ##Building Files for Distribution
 ###Setup
-You will need to do these steps the first time you setup the project  
+You will need to do these steps the first time you setup the project
+
 1. [Clone this repository](https://help.github.com/articles/working-with-repositories/)
 2. Install [Node](https://nodejs.org/download/)
 3. Install [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
