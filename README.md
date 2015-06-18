@@ -9,15 +9,15 @@ You will need to do these steps the first time you setup the project.
 2. Install [Node](https://nodejs.org/download/)
 3. Install [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 4. Open terminal or command prompt to the root of your local repository
-5. Run 'npm install --save-dev gulp'
-6. Run 'npm install --save-dev gulp-concat'
-7. Run 'npm install --save-dev gulp-uglify'
-8. Run 'npm install --save-dev gulp-rename'
-9. Run 'npm install --save-dev gulp-sass'
+5. Run ``npm install --save-dev gulp``
+6. Run ``npm install --save-dev gulp-concat``
+7. Run ``npm install --save-dev gulp-uglify``
+8. Run ``npm install --save-dev gulp-rename``
+9. Run ``npm install --save-dev gulp-sass``
 
 ###Build
 1. Open terminal or command prompt to the root of your local repository
-2. Run the 'gulp' command
+2. Run the ``gulp`` command
 
 **This process above will do the following.**
 
