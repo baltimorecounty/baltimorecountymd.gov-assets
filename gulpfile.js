@@ -32,7 +32,8 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
   return gulp.src('./dist/js/*.js')
     .pipe(uglify())
     .pipe(rename(function (path) {
-        if(path.extname === '.js') {
+    	/*Ensure we are only renaming the new Uncompressed JS files*/
+        if(path.basename.indexOf('min') < 0) {
             path.basename += '.min';
         }
     }))
