@@ -3,7 +3,7 @@ Assets used on the [Baltimore County Website](https://www.baltimorecountymd.gov/
 
 ##Building Files for Distribution
 ###Setup
-You will need to do these steps the first time you setup the project
+You will need to do these steps the first time you setup the project.
 
 1. [Clone this repository](https://help.github.com/articles/working-with-repositories/)
 2. Install [Node](https://nodejs.org/download/)
@@ -20,6 +20,7 @@ You will need to do these steps the first time you setup the project
 2. Run the 'gulp' command
 
 **This process above will do the following.**
+
 1. Compile and Minfiy all sass stylesheets to css and place them in the 'dist/css' folder
 2. Create Homepage and Template Js Files into the 'dist/js' folder
 3. Copy and Minify Homepage and Template Js Files into the 'dist/js' folder
