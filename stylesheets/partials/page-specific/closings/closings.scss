@@ -9,10 +9,6 @@
 	text-align: center;
 }
 
-// #county-closings {
-// 	table-layout: fixed;
-// }
-
 /*jQuery Datatable Specific Code*/
 table.dataTable thead th, table.dataTable thead td  {
   text-align: left;
@@ -28,23 +24,25 @@ table.dataTable thead th, table.dataTable thead td  {
   }
 }
 @media screen and (max-width: 500px) {
+  .closings {
+    margin-bottom: 0;
+  }
   table.dataTable {
     font-size: 16px;
   }
+  
+  $closings-stripe-opacity: .5;
   table.dataTable.stripe, table.dataTable.display {
-    tbody tr.odd, tbody tr.even {
-      &.cancelled, &.closed {
-      background-color: rgba($icon-error-color, .8);
+    tbody tr.odd, tbody tr.even, tbody tr.odd > .sorting_1, tbody tr.even > .sorting_1 {
+      &.cancelled > td, &.closed > td {
+        background-color: rgba($icon-error-color, $closings-stripe-opacity);
       }
-      &.open {
-        background-color: rgba($icon-success-color, .8);
+      &.open > td {
+        background-color: rgba($icon-success-color, $closings-stripe-opacity);
       }
-      &.modified {
-        background-color: rgba($icon-warning-color, .8);
-      }
-      &.see-website {
-        //background-color: rgba($icon-link-color, .8);
+      &.modified > td {
+        background-color: rgba($icon-warning-color, $closings-stripe-opacity);
       }
     }
-}
+  }
 }
