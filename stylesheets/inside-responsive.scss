@@ -23,13 +23,15 @@
 @import "partials/homepage/search";
 @import "partials/inside/search";
 
-
 @import "vendor/reView";
 
 .agency-page img {
 	border: none;
 	padding: 0;
 	margin: 0;
+}
+#backgroundgradient {
+	max-width: 1000px;
 }
 #maincontainer #calloutarea p {
   margin: 10px 0 15px;
