@@ -1216,10 +1216,6 @@ a.skip:hover {
         background: url(/sebin/m/n/most-requested-arrow-hover.gif) no-repeat left center;
         background-position-x: 5px; }
 
-@media screen and (max-width: 767px) {
-  .nav-list table a {
-    padding-left: 40px; } }
-
 /*HACK - .callout is the desired class, .callout_box is the old SE way*/
 .callout, .callout_box {
   border: 2px solid #c51110;
@@ -1980,6 +1976,9 @@ a.skip:hover {
   border: none;
   padding: 0;
   margin: 0; }
+
+#backgroundgradient {
+  max-width: 1000px; }
 
 #maincontainer #calloutarea p {
   margin: 10px 0 15px; }
