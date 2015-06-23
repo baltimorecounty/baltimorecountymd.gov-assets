@@ -1,0 +1,70 @@
+/*Blog Generic*/
+.seBlogViewHeader {
+  display: none;
+}
+.seBlogViewPostTitle {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 8px 8px 0;
+  border-top: 6px solid #CACACA;
+}
+.seBlogViewPostDate {
+  margin: 0 0 15px;
+}
+.seBlogViewPostContent {
+  padding-right: 8px;
+}
+.seBlogViewPostKeywords {
+  float: none;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 11px;
+  font-style: italic;
+  height: auto;
+  margin-bottom: 10px;
+  padding: 3px;
+}
+.seBlogViewCommentSummary {
+  display: none;
+}
+/*Blog Exceprt*/
+#SEBlogViewHeader {
+  display: none;
+}
+#SEBlogViewMainWrapper {
+  float: none;
+}
+#SEBlogViewAuxArea > div {
+	margin-bottom: 20px;
+}
+#SEBlogViewSmallCal table {
+	width: 100%;
+}
+#SEBlogViewLinks {
+  clear: right;
+  padding: 0;
+
+  img {
+  	height: 14px !important;
+  	width: 14px !important;
+  }
+}
+.postTitle {
+	border-top: 6px solid #CACACA;
+  color: #444;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1.2em;
+  margin: 10px 0 20px;
+  padding: 8px 8px 8px 0;
+  text-decoration: none;
+}
+#mainContent .postTitle a {
+  text-decoration: none;
+  font-size: 1.2em;
+}
+.postDate, .postAuthor, .postKeywords, .postCommentSummary {
+  display: none;
+}
+.postContent {
+  display: table;
+}
