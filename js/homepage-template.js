@@ -31,4 +31,20 @@
         $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
     });
 
+   	/*Lazy Load Images*/
+
+    function deferImages() {
+	    var imgDefer = document.getElementsByTagName('img');
+	    for (var i = 0; i < imgDefer.length; i++) {
+	        if (imgDefer[i].getAttribute('data-src')) {
+	            imgDefer[i].setAttribute('src', imgDefer[i].getAttribute('data-src'));
+	        }
+	        if (imgDefer[i].getAttribute('data-srcset')) {
+	            imgDefer[i].setAttribute('srcset', imgDefer[i].getAttribute('data-srcset'));
+	        }
+	    }
+	}
+
+	window.onload = deferImages;
+
 })(jQuery, Flickr);
