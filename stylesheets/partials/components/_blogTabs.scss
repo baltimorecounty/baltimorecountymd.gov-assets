@@ -1,0 +1,106 @@
+.blog-tabs {
+  background-color: #C51110;
+  background-position: center top;
+  background-repeat: repeat-x;
+  border-top: 6px solid #C51110;
+  display: inline-block;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 1.5em;
+  margin: 0 0 5px;
+  width: 100%;
+	
+  ul {
+  	list-style-type: none;
+  	margin: 0 0 0 20px;
+  	padding: 0;
+	
+  	li {
+  		display: inline-block;
+  		list-style-type: none;
+
+  		a {
+		  color: white !important;
+		  display: inline-block;
+		  font-weight: normal;
+		  padding: 5px 20px 7px;
+		  text-decoration: none;
+		  
+		  br {
+		  	height: 0;
+		  }
+
+		  &:hover {
+			text-decoration: none !important;
+		  }
+		  &.active {
+		  	background-color: white;
+		  	cursor: default;
+		  	font-weight: 700;
+
+		  	&:hover {
+		  		background-color: white;
+		  	}
+		  }
+
+  		}
+  	}
+  }
+} //Blog tabs should eventually be the class for the ul and not a div
+.blog-tabs--snowfighter {
+	background-color: $snowfighter-color;
+	border-top: 6px solid $snowfighter-color;
+
+	ul li a {
+		&:hover {
+		  background-color: $snowfighter-hover-color;	
+		}
+		&.active {
+		  color: $snowfighter-color !important;
+		}
+	}
+}
+.blog-tabs--police {
+	background-color: $police-color;
+	border-top: 6px solid $police-color;
+
+	ul li a {
+		&:hover {
+		  background-color: $police-hover-color;	
+		}
+		&.active {
+		  color: $police-color !important;
+		}
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.blog-tabs ul {
+		margin: 0;
+
+		li {
+			font-size: .8em;
+
+			a {
+				display: block;
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
+	}
+}
+@media screen and (max-width: 500px) {
+	.blog-tabs {
+		border-top: 0;
+	}
+	.blog-tabs ul li {
+		border-bottom: 1px solid white;
+		display: block;
+		width: 100%;
+	}
+	.blog-tabs--snowfighter ul li a.active {
+		border-bottom: 1px solid $snowfighter-color;
+	}
+	.blog-tabs--snowfighter ul li a.active {
+		border-bottom: 1px solid $police-color;
+	}
+}
