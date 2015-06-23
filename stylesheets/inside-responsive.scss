@@ -10,6 +10,7 @@
 @import "partials/base/brand";
 @import "partials/base/footer";
 
+@import "partials/components/table";
 @import "partials/components/alert";
 @import "partials/components/social";
 @import "partials/components/textResizer";
@@ -21,6 +22,9 @@
 @import "partials/components/breadCrumbs";
 @import "partials/components/blog";
 @import "partials/components/blogTabs.scss";
+@import "partials/components/facebookWidget.scss";
+@import "partials/components/filter";
+@import "partials/components/videoGallery";
 
 @import "partials/inside/insideGrid";
 @import "partials/inside/rateForm";
