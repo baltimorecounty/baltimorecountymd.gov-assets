@@ -33,7 +33,6 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 		    .pipe(uglify())
 		    .pipe(gulp.dest('./dist/js'));
 });
-
 gulp.task('sass', function () {
   gulp.src('./stylesheets/*.scss')
     .pipe(sass().on('error', sass.logError))
