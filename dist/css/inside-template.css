@@ -1493,8 +1493,7 @@ a.skip:hover {
   border: none;
   position: absolute;
   height: 750px;
-  width: 100%;
-  z-index: 9999; }
+  width: 100%; }
 
 @media only screen and (max-width: 991px) {
   .search-container.inside-template {

@@ -670,6 +670,13 @@ input[type="submit"] {
   .homepage h2 {
     margin-bottom: 0; } }
 
+.page-banner {
+  border: none;
+  margin: 0;
+  padding: 0;
+  height: 100% !important;
+  width: 100%; }
+
 .primary-header {
   background: #c51110;
   color: white;
@@ -1218,13 +1225,103 @@ a.skip:hover {
 
 /*HACK - .callout is the desired class, .callout_box is the old SE way*/
 .callout, .callout_box {
-  border: 2px solid #c51110;
   margin: 10px 0;
   max-width: 480px;
   /*HACK - width is set specifically from original templates*/
   width: 100%; }
   .callout img, .callout_box img {
+    margin: 10px 0;
+    height: 100% !important;
+    width: 100% !important; }
+  .callout p, .callout_box p {
+    line-height: 1.2 !important;
+    margin: 0 !important; }
+
+.callout__title {
+  border-bottom: 1px solid #CACACA;
+  border-top: 6px solid #CACACA;
+  font-weight: bold;
+  margin: 20px 0 0;
+  padding: 3px 0;
+  text-transform: uppercase; }
+
+.callout--page {
+  border: 2px solid #c51110; }
+
+.callout--secondary {
+  border: 2px solid #dbdbdb; }
+
+.blog-tabs {
+  background-color: #C51110;
+  background-position: center top;
+  background-repeat: repeat-x;
+  border-top: 6px solid #C51110;
+  display: inline-block;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 1.5em;
+  margin: 0 0 5px;
+  width: 100%; }
+  .blog-tabs ul {
+    list-style-type: none;
+    margin: 0 0 0 20px;
+    padding: 0; }
+    .blog-tabs ul li {
+      display: inline-block;
+      list-style-type: none; }
+      .blog-tabs ul li a {
+        color: white !important;
+        display: inline-block;
+        font-weight: normal;
+        padding: 5px 20px 7px;
+        text-decoration: none; }
+        .blog-tabs ul li a br {
+          height: 0; }
+        .blog-tabs ul li a:hover {
+          text-decoration: none !important; }
+        .blog-tabs ul li a.active {
+          background-color: white;
+          cursor: default;
+          font-weight: 700; }
+          .blog-tabs ul li a.active:hover {
+            background-color: white; }
+
+.blog-tabs--snowfighter {
+  background-color: #e46418;
+  border-top: 6px solid #e46418; }
+  .blog-tabs--snowfighter ul li a:hover {
+    background-color: #ff8d00; }
+  .blog-tabs--snowfighter ul li a.active {
+    color: #e46418 !important; }
+
+.blog-tabs--police {
+  background-color: #203e6f;
+  border-top: 6px solid #203e6f; }
+  .blog-tabs--police ul li a:hover {
+    background-color: #3c74c0; }
+  .blog-tabs--police ul li a.active {
+    color: #203e6f !important; }
+
+@media screen and (max-width: 700px) {
+  .blog-tabs ul {
+    margin: 0; }
+    .blog-tabs ul li {
+      font-size: .8em; }
+      .blog-tabs ul li a {
+        display: block;
+        padding-left: 10px;
+        padding-right: 10px; } }
+
+@media screen and (max-width: 500px) {
+  .blog-tabs {
+    border-top: 0; }
+  .blog-tabs ul li {
+    border-bottom: 1px solid white;
+    display: block;
     width: 100%; }
+  .blog-tabs--snowfighter ul li a.active {
+    border-bottom: 1px solid #e46418; }
+  .blog-tabs--snowfighter ul li a.active {
+    border-bottom: 1px solid #203e6f; } }
 
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)
@@ -1867,8 +1964,7 @@ a.skip:hover {
   border: none;
   position: absolute;
   height: 750px;
-  width: 100%;
-  z-index: 9999; }
+  width: 100%; }
 
 @media only screen and (max-width: 991px) {
   .search-container.inside-template {
