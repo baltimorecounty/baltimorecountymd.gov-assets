@@ -4,6 +4,7 @@
 /* Partials */
 @import "partials/base/base";	
 @import "partials/base/typography";
+@import "partials/base/page";
 @import "partials/base/header";
 @import "partials/base/nav";
 @import "partials/base/brand";
@@ -17,6 +18,7 @@
 @import "partials/components/skipNav";
 @import "partials/components/navList";
 @import "partials/components/callout";
+@import "partials/components/blogTabs.scss";
 
 @import "partials/inside/insideGrid";
 @import "partials/inside/rateForm";
