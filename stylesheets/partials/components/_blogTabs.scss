@@ -22,7 +22,7 @@
 		  color: white !important;
 		  display: inline-block;
 		  font-weight: normal;
-		  padding: 5px 20px 7px;
+		  padding: 5px 20px 7px !important;
 		  text-decoration: none;
 		  
 		  br {
@@ -30,10 +30,12 @@
 		  }
 
 		  &:hover {
+		  	background: $red-hover;
 			text-decoration: none !important;
 		  }
 		  &.active {
 		  	background-color: white;
+		  	color: $red !important;
 		  	cursor: default;
 		  	font-weight: 700;
 
@@ -97,10 +99,23 @@
 		display: block;
 		width: 100%;
 	}
+	.blog-tabs ul li a.active {
+		border-bottom: 1px solid $red;
+	}
+	.blog-tabs ul li a.active {
+		border-bottom: 1px solid $red;
+	}
 	.blog-tabs--snowfighter ul li a.active {
 		border-bottom: 1px solid $snowfighter-color;
 	}
-	.blog-tabs--snowfighter ul li a.active {
+	.blog-tabs--police ul li a.active {
 		border-bottom: 1px solid $police-color;
 	}
+}
+//HACKS
+.report-container .report {
+	border: none !important;
+	color: $red !important;
+	cursor: default;
+	display: block !important;
 }
