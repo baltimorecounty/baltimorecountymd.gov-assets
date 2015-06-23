@@ -24,15 +24,13 @@ gulp.task('concatTemplateJs', function() {
 
 gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
 		return gulp.src('./dist/js/*.js')
-		    .pipe(uglify())
-		    .pipe(rename(function (path) {
-		    	setTimeout(function() {
-		    		/*Ensure we are only renaming the new Uncompressed JS files*/
-			        if(path.basename.indexOf('min') < 0) {
-			            path.basename += '.min';
-			        }
-		    	}, 500);
+			.pipe(rename(function (path) {
+	    		/*Ensure we are only renaming the new Uncompressed JS files*/
+		        if(path.basename.indexOf('min') === -1) {
+		            path.basename += '.min';
+		        }
 		    }))
+		    .pipe(uglify())
 		    .pipe(gulp.dest('./dist/js'));
 });
 
