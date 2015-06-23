@@ -2,7 +2,6 @@
     window.addEventListener("message",
 
     function (e) {
-        console.log(e);
         if (e.data === "search-focused") {
             $('iframe').css('z-index', 999999);
         }
