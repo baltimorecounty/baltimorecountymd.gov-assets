@@ -18,7 +18,7 @@ gulp.task('concatHomepageJs', function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['./js/skip-nav.js','./js/text-resizer.js', './js/bc-google-analytics.js', './js/bc-google-analytics-custom-events.js', './js/lib/review.js'];
+	var files = ['./js/skip-nav.js','./js/text-resizer.js', './js/bc-google-analytics.js', './js/bc-google-analytics-custom-events.js', './js/lib/review.js', './js/lib/mobile-search.js'];
   	return concatFiles(files, 'template.js');
 });
 
