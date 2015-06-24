@@ -1,0 +1,264 @@
+#SECalendarSearch {
+	background: $lightest-gray !important;
+	float : left;
+	height : 100%;
+	margin-bottom : 20px;
+	width : 176px;
+	padding : 10px;
+	border-top : 30px solid #c51110;
+}
+#calendarSearchForm {
+	margin : 120px 10px 10px;
+	border-top : 1px solid #999;
+	padding : 15px 0 0;
+}
+.SECalendarFilterSelected {
+	background-color : #990000;
+	padding : 0 5px;
+}
+.SECalendarDay.controls {
+	padding : 0;
+}
+.SECalendarDay.controls a {
+	background-image : SECalendarDay controls;
+	background-position : 5px 4px;
+	background-repeat : no-repeat;
+	display : block;
+	height : 20px;
+	overflow : hidden;
+	text-indent : -1000px;
+	width : 20px;
+}
+#SECalendarSmallCalPrevious a {
+	background-image : url("/sebin/w/v/left_arrow.gif");
+	background-position : 5px 4px;
+	background-repeat : no-repeat;
+}
+#SECalendarSmallCalMonth a {
+	background : none repeat scroll 0 0 transparent;
+	height : auto;
+	text-indent : 0;
+	width : auto;
+	color : #fff;
+	margin : 5px 0;
+}
+#SECalendarSmallCalNext a {
+	background-image : url("/sebin/i/w/right_arrow.gif");
+	background-position : 5px 4px;
+	background-repeat : no-repeat;
+}
+.SECalendarFilter {
+	background-color : #c51110;
+	color : #fff;
+	display : inline;
+	font-size : 1.1em;
+	font-weight : bold;
+	margin : 0 10px 10px;
+	padding : 8px;
+	width : 464px;
+	float : left;
+}
+#SECalendarTable .SECalendarDay.pastDayWeekend {
+	background-repeat : inherit;
+}
+#SECalendarListWrapper {
+	display : inline-table;
+	width : 100%;
+	background: none !important;
+	background-position : left top;
+	background-repeat : repeat-y;
+	margin : 0 0 30px;
+}
+.SECalendarDate {
+}
+.SECalendarListEvents {
+	float : left;
+}
+.SECalendarListEvents table {
+	width : 480px;
+	margin : 0 0 0 10px;
+}
+.SECalendarListEvents .rssLink {
+	background-image : url("/se/images/mod/semod_eventcal/rss.gif");
+	background-repeat : no-repeat;
+	display : block;
+	height : 11px;
+	overflow : hidden;
+	text-decoration : none;
+	width : 32px;
+	font-size : 0px;
+	border : 2px solid #feb30c;
+	margin : -33px 0 40px 440px;
+}
+.SECalendarListEvents td {
+	border-bottom : 1px dotted #333;
+	padding : 15px 4px;
+}
+td.SECalendarEventDate {
+	border-bottom : 1px solid #ccc;
+	font-size : 16px;
+	font-weight : bold;
+	padding : 10px 20px 10px 0;
+	border-top : 6px solid #ccc;
+}
+#SECalendarListWrapper .SECalendarSmallCal {
+	float : left;
+	margin: 5px 0 0 -178px;
+	padding : 0;
+	clear : none;
+}
+.SECalendarProperty p {
+	width : 95%;
+}
+.SECalendarPropertyLabel {
+	font-weight : bold;
+	clear : both;
+	margin : 20px 50px 0 0;
+	width : 70px;
+}
+#SECalendarEventWrapper div.SECalendarEventDetails {
+	border : 1px solid #ccc;
+	display : inline-block;
+	width : 99.8%;
+	margin : 0 0 20px;
+}
+#SECalendarEventWrapper div.SECalendarEventName h3 {
+	font-size : 1.6em;
+}
+#SECalendarEventWrapper .SECalendarBackLink {
+	margin : 0 0 20px;
+	display : block;
+}
+#SECalendarEventWrapper .SECalendarEventActions {
+	background-color : #ebebeb;
+	border-top : 3px solid #ccc;
+	padding : 15px 10px;
+	border-left : 1px solid #ccc;
+	border-right : 1px solid #ccc;
+}
+#SECalendarEventWrapper .SECalendarEventActions ul {
+	list-style-type : none;
+	display : inline;
+}
+#SECalendarEventWrapper .SECalendarEventActions ul li {
+	float : left;
+}
+#SECalendarEventWrapper .SECalendarEventActions ul li.eventDownload a {
+	background-image : url("/sebin/l/g/button-gradient.jpg");
+	background-repeat : repeat-x;
+	background-position : top;
+	border : 1px solid #999;
+	color : #000;
+	cursor : pointer;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : .9em;
+	font-weight : normal;
+	height : 22px;
+	margin : 0 25px 0 0;
+	text-align : center;
+	text-decoration : none;
+	padding : 2px 10px 3px;
+}
+#SECalendarEventWrapper .SECalendarEventActions ul li.eventReminder a {
+	border : 1px solid #999;
+	color : #000;
+	cursor : pointer;
+	font-family : Arial,Helvetica,sans-serif;
+	font-size : .9em;
+	font-weight : normal;
+	height : 22px;
+	margin : 0 25px 0 0;
+	text-align : center;
+	text-decoration : none;
+	padding : 2px 10px 3px;
+	background-image : url("/sebin/l/g/button-gradient.jpg");
+	background-position : top;
+	background-repeat : repeat-x;
+}
+#SECalendarEventWrapper .SECalendarEventActions ul li.eventShare a {
+	border : 1px solid #999;
+	color : #000;
+	cursor : pointer;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : .9em;
+	font-weight : normal;
+	height : 22px;
+	margin : 0 25px 0 0;
+	text-align : center;
+	text-decoration : none;
+	padding : 2px 10px 3px;
+	background-image : url(/sebin/l/g/button-gradient.jpg);
+	background-repeat : repeat-x;
+	background-position : top;
+}
+#SECalendarEventWrapper .SECalendarPropertyLabel {
+	margin : 20px 0 0 15px;
+	font-size : 1.1em;
+	width : 95%;
+}
+#SECalendarEventWrapper .SECalendarProperty {
+	float : left;
+	width : 99%;
+	margin : 0;
+	padding : 15px;
+}
+.SECalendarReminderName, .SECalendarReminderEmail, .SECalendarReminderOccurence, .SECalendarReminderNotification {
+	margin : 0 0 10px -50px;
+}
+.SECalendarReminderName label, .SECalendarReminderEmail label, .SECalendarReminderOccurence label {
+	font-weight : bold;
+	font-size : 1em;
+	margin : 0 0 0 50px;
+	display : inline;
+}
+.SECalendarReminderName input, .SECalendarReminderEmail input, .SECalendarReminderOccurence input {
+	margin : 0;
+}
+.SECalendarShareName, .SECalendarShareEmail, .SECalendarShareFriendEmail, .SECalendarShareMessage {
+	margin : 0 0 10px -50px;
+	padding : 10px;
+}
+.SECalendarShareName label, .SECalendarShareEmail label, .SECalendarShareFriendEmail label, .SECalendarShareMessage label {
+	margin : 0 0 0 40px;
+	display : inline;
+}
+.SECalendarSmallCal .SECalendarDay.futureDayOtherMonth {
+	background-color : #bbb;
+}
+.SECalendarSmallCal .SECalendarDay.futureDayOtherMonthWeekend {
+	background-color : #bbb;
+}
+.SECalendarSmallCal .SECalendarDay a {
+	color : #333;
+}
+.SECalendarSmallCal .SECalendarDay.SECalendarSelectedDay {
+	background-color : #feb30c;
+}
+.SECalendarSmallCal .SECalendarSelectedWeek {
+	background-color : #feb30c;
+}
+
+#SECalendarSmallCalMonth {
+	background-color : #c51110;
+}
+.SECalendarFilter a {
+	color : #fff;
+	font-weight : normal;
+	display : inline-block;
+	margin : 0 7px;
+}
+#SECalendarEventWrapper hr {
+	display : none;
+}
+#SECalendarShareEmail label {
+}
+#SECalendarReminder {
+	border-bottom : 1px solid #ccc;
+	padding : 0 0 80px;
+}
+.SECalendarReminderNotification {
+	margin : 0;
+}
+.SECalendarKeyword select, .SECalendarLocation select, .SECalendarType select, .SECalendarKeyword input {
+	width: 100% !important;
+}
