@@ -23,14 +23,11 @@ gulp.task('concatTemplateJs', function() {
 });
 
 gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
-		return gulp.src('./dist/js/*.js')
-			.pipe(rename(function (path) {
-	    		/*Ensure we are only renaming the new Uncompressed JS files*/
-		        if(path.basename.indexOf('min') === -1) {
-		            path.basename += '.min';
-		        }
-		    }))
-		    .pipe(uglify())
+		return gulp.src(['!./dist/js/*min.js', './dist/js/*.js'])
+			.pipe(uglify())
+			.pipe(rename({
+	            suffix: '.min'
+	        }))
 		    .pipe(gulp.dest('./dist/js'));
 });
 gulp.task('sass', function () {
