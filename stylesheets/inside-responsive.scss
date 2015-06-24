@@ -46,6 +46,12 @@
   margin: 10px 0 15px;
 }
 
+#mainContent a {
+	line-height: 1.3;
+}
+#centerContent a {
+	text-decoration: underline !important;
+}
 .secondary-nav .secondary-nav-list {
 	padding: 14px 0;
 }
