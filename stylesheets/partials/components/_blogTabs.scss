@@ -112,8 +112,28 @@
 		border-bottom: 1px solid $police-color;
 	}
 }
-//HACKS
-.report-container .report {
+/*
+This css enables the active tab will appear active, 
+without having an active class specified
+*/
+/*I Want TO...*/
+.apply-container .apply, 
+.followup-container .followup, 
+.pay-container .pay, 
+.report-container .report, 
+.request-container .request,
+/*I'm Looking For*/
+.allinformation-container .allinformation,
+.residentinformation-container .residentinformation,
+.businessinformation-container .businessinformation,
+.governmentinformation-container .governmentinformation,
+.visitorinformation-container .visitorinformation,
+/*I need to contatct*/
+.anagencyinformation-container .anagencyinformation,
+.myrepresentativeinformation-container .myrepresentativeinformation,
+.anemployeeinformation-container .anemployeeinformation,
+.idontknowinformation-container .idontknowinformation
+ {
 	border: none !important;
 	color: $red !important;
 	cursor: default;
