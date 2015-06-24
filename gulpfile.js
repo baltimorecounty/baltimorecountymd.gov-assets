@@ -36,11 +36,6 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('sass:watch', function () {
-  gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
-});
-
-
 gulp.task('watch', function() {
 	gulp.watch(['js/*.js', 'js/lib/*.js', 'js/page-specific/*.js'], ['compressFiles']);
 	gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
