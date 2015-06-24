@@ -3,7 +3,8 @@
 	float : left;
 	height : 100%;
 	margin-bottom : 20px;
-	width : 176px;
+	max-width : 176px !important;
+	width: 100% !important;
 	padding : 10px;
 	border-top : 30px solid #c51110;
 }
@@ -55,7 +56,8 @@
 	font-weight : bold;
 	margin : 0 10px 10px;
 	padding : 8px;
-	width : 464px;
+	max-width : 524px !important;
+	width: 100% !important;
 	float : left;
 }
 #SECalendarTable .SECalendarDay.pastDayWeekend {
@@ -69,26 +71,24 @@
 	background-repeat : repeat-y;
 	margin : 0 0 30px;
 }
-.SECalendarDate {
-}
 .SECalendarListEvents {
 	float : left;
-}
-.SECalendarListEvents table {
-	width : 480px;
-	margin : 0 0 0 10px;
+	position: relative;
+
+	table {
+		margin : 0 0 0 10px;
+		max-width : 524px !important;
+		table-layout: fixed;
+		width: 100% !important;
+		word-wrap: break-word;
+		
+	}
 }
 .SECalendarListEvents .rssLink {
-	background-image : url("/se/images/mod/semod_eventcal/rss.gif");
-	background-repeat : no-repeat;
-	display : block;
-	height : 11px;
-	overflow : hidden;
-	text-decoration : none;
-	width : 32px;
-	font-size : 0px;
-	border : 2px solid #feb30c;
-	margin : -33px 0 40px 440px;
+	margin : 0 !important;
+	  position: absolute;
+	  right: 10px;
+	  top: -30px;
 }
 .SECalendarListEvents td {
 	border-bottom : 1px dotted #333;
@@ -103,7 +103,7 @@ td.SECalendarEventDate {
 }
 #SECalendarListWrapper .SECalendarSmallCal {
 	float : left;
-	margin: 5px 0 0 -178px;
+	margin: 5px 0 0 -175px !important;
 	padding : 0;
 	clear : none;
 }
@@ -230,6 +230,7 @@ td.SECalendarEventDate {
 }
 .SECalendarSmallCal .SECalendarDay a {
 	color : #333;
+	text-decoration: underline !important;
 }
 .SECalendarSmallCal .SECalendarDay.SECalendarSelectedDay {
 	background-color : #feb30c;
@@ -250,8 +251,6 @@ td.SECalendarEventDate {
 #SECalendarEventWrapper hr {
 	display : none;
 }
-#SECalendarShareEmail label {
-}
 #SECalendarReminder {
 	border-bottom : 1px solid #ccc;
 	padding : 0 0 80px;
@@ -261,4 +260,10 @@ td.SECalendarEventDate {
 }
 .SECalendarKeyword select, .SECalendarLocation select, .SECalendarType select, .SECalendarKeyword input {
 	width: 100% !important;
+}
+#maincontainer #SECalendarListWrapper .SECalendarFilter a, #maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a {
+  color: white;
+}
+.SECalendarSmallCal .SECalendarDay.pastDay {
+	padding: 0 3px;
 }
