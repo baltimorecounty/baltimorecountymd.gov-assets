@@ -150,3 +150,17 @@ function ReView(){this.mode="default";this.v=new Viewport;this.v.viewport();this
 "core";reView.success()},reView.failure)}else this.failure()};this.setDefault=function(){if(this.mode==="default")this.success();else if(this.v.bSupported){try{sessionStorage.setItem("reViewMode","default")}catch(a){}this.v.setDefault(function(){reView.mode="default";reView.success()},reView.failure)}else this.failure()};this.success=function(){var a=reView;a.v.bSupported&&a.updateAnchors();a.successPolicy!==void 0&&a.successPolicy()};this.updateAnchors=function(){var a=document.getElementsByClassName("reView"),
 b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-coreText")?a[b].getAttribute("data-coreText"):"Default View";else for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-defaultText")?a[b].getAttribute("data-defaultText"):"Core View"};return!0};
 }
+(function ($) {
+    window.addEventListener("message",
+
+    function (e) {
+        if (e.data === "search-focused") {
+            $('iframe').css('z-index', 999999);
+        }
+        if (e.data === "search-blurred") {
+            $('iframe').css('z-index', 0);
+        }
+    },
+    false);
+
+})(jQuery);
