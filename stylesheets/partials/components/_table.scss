@@ -1,4 +1,8 @@
 #BACO_table {
 	table-layout: fixed;
 	width: 100% !important;
+
+	p {
+		word-wrap: break-word;
+	}
 }
