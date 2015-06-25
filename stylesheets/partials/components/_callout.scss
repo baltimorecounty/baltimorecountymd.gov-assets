@@ -29,3 +29,13 @@
 .callout--secondary {
 	border: 2px solid $light-gray;
 }
+
+@media screen and (max-width: 992px) {
+	#calloutarea {
+		float: none !important;
+
+		p {
+			clear: both;
+		}
+	}
+}
