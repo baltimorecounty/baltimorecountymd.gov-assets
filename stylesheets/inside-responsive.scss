@@ -9,6 +9,7 @@
 @import "partials/base/nav";
 @import "partials/base/brand";
 @import "partials/base/footer";
+@import "partials/base/image";
 
 @import "partials/components/table";
 @import "partials/components/alert";
@@ -26,6 +27,7 @@
 @import "partials/components/filter";
 @import "partials/components/videoGallery";
 @import "partials/components/calendar";
+@import "partials/components/rateForm";
 
 @import "partials/inside/insideGrid";
 @import "partials/inside/rateForm";
@@ -49,8 +51,11 @@
 #mainContent a {
 	line-height: 1.3;
 }
-#centerContent a {
-	text-decoration: underline !important;
+#centerContent {
+	width: 100% !important;
+ 	a {
+		text-decoration: underline !important;
+	}
 }
 .secondary-nav .secondary-nav-list {
 	padding: 14px 0;
