@@ -20,6 +20,8 @@
 
   		a {
 		  color: white !important;
+		  border-left: none !important;
+		  border-right: none !important;
 		  display: inline-block;
 		  font-weight: normal;
 		  padding: 5px 20px 7px !important;
@@ -75,6 +77,34 @@
 	}
 }
 
+/*
+This css enables the active tab will appear active, 
+without having an active class specified
+*/
+/*I Want TO...*/
+.apply-container .apply, 
+.followup-container .followup, 
+.pay-container .pay, 
+.report-container .report, 
+.request-container .request,
+/*I'm Looking For*/
+.allinformation-container .allinformation,
+.residentinformation-container .residentinformation,
+.businessinformation-container .businessinformation,
+.governmentinformation-container .governmentinformation,
+.visitorinformation-container .visitorinformation,
+/*I need to contatct*/
+.anagency-container .anagency,
+.myrepresentative-container .myrepresentative,
+.anemployee-container .anemployee,
+.idontknow-container .idontknow
+ {
+	border: none;
+	color: $red !important;
+	cursor: default;
+	display: block !important;
+}
+
 @media screen and (max-width: 700px) {
 	.blog-tabs ul {
 		margin: 0;
@@ -99,43 +129,63 @@
 		display: block;
 		width: 100%;
 	}
-	.blog-tabs ul li a.active {
+	/*First, Active Item*/
+	.blog-tabs ul li:first-child a.active,
+	.apply-container ul li:first-child a.apply, 
+	.followup-container ul li:first-child a.followup, 
+	.pay-container ul li:first-child a.pay, 
+	.report-container ul li:first-child a.report, 
+	.request-container ul li:first-child a.request,
+	/*I'm Looking For*/
+	.allinformation-container ul li:first-child a.allinformation,
+	.residentinformation-container ul li:first-child a.residentinformation,
+	.businessinformation-container ul li:first-child a.businessinformation,
+	.governmentinformation-container ul li:first-child a.governmentinformation,
+	.visitorinformation-container ul li:first-child a.visitorinformation,
+	/*I need to contatct*/
+	.anagency-container ul li:first-child a.anagency,
+	.myrepresentative-container ul li:first-child a.myrepresentative,
+	.anemployee-container ul li:first-child a.anemployee,
+	.idontknow-container ul li:first-child a.idontknow {
+		border-top: 1px solid $red !important;
+	}
+	.blog-tabs ul li:first-child a.active {
+		border-top: 1px solid $red;
+	}
+	.blog-tabs--snowfighter ul li:first-child a.active {
+		border-top: 1px solid $snowfighter-color;
+	}
+	.blog-tabs--police ul li:first-child a.active {
+		border-top: 1px solid $police-color;
+	}
+
+	/*Last, Active Item*/
+	.blog-tabs ul li:last-child a.active,
+	.apply-container .blog-tabs ul li:last-child a.apply, 
+	.followup-container .blog-tabs ul li:last-child a.followup, 
+	.pay-container .blog-tabs ul li:last-child a.pay, 
+	.report-container .blog-tabs ul li:last-child a.report, 
+	.request-container .blog-tabs ul li:last-child a.request,
+	/*I'm Looking For*/
+	.allinformation-container .blog-tabs ul li:last-child a.allinformation,
+	.residentinformation-container .blog-tabs ul li:last-child a.residentinformation,
+	.businessinformation-container .blog-tabs ul li:last-child a.businessinformation,
+	.governmentinformation-container .blog-tabs ul li:last-child a.governmentinformation,
+	.visitorinformation-container .blog-tabs ul li:last-child a.visitorinformation,
+	/*I need to contatct*/
+	.anagency-container .blog-tabs ul li:last-child a.anagency,
+	.myrepresentative-container .blog-tabs ul li:last-child a.myrepresentative,
+	.anemployee-container .blog-tabs ul li:last-child a.anemployee,
+	.idontknow-container .blog-tabs ul li:last-child a.idontknow {
+		border-bottom: 1px solid $red !important;
+	}
+	.blog-tabs ul li:last-child a.active {
 		border-bottom: 1px solid $red;
 	}
-	.blog-tabs ul li a.active {
-		border-bottom: 1px solid $red;
-	}
-	.blog-tabs--snowfighter ul li a.active {
+	.blog-tabs--snowfighter ul li:last-child a.active {
 		border-bottom: 1px solid $snowfighter-color;
 	}
-	.blog-tabs--police ul li a.active {
+	.blog-tabs--police ul li:last-child a.active {
 		border-bottom: 1px solid $police-color;
 	}
-}
-/*
-This css enables the active tab will appear active, 
-without having an active class specified
-*/
-/*I Want TO...*/
-.apply-container .apply, 
-.followup-container .followup, 
-.pay-container .pay, 
-.report-container .report, 
-.request-container .request,
-/*I'm Looking For*/
-.allinformation-container .allinformation,
-.residentinformation-container .residentinformation,
-.businessinformation-container .businessinformation,
-.governmentinformation-container .governmentinformation,
-.visitorinformation-container .visitorinformation,
-/*I need to contatct*/
-.anagency-container .anagency,
-.myrepresentative-container .myrepresentative,
-.anemployee-container .anemployee,
-.idontknow-container .idontknow
- {
-	border: none !important;
-	color: $red !important;
-	cursor: default;
-	display: block !important;
 }
