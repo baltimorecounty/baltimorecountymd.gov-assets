@@ -73,3 +73,11 @@ input[type="submit"] {
      -webkit-border-radius: 0;
      border-radius: 0;
 }
+@media screen and (max-width: 767px) {
+	#maincontainer h1 {font-size:1.8em !important;}
+	#maincontainer h2 {font-size:1.3em !important;}
+	#maincontainer h3 {font-size:1.1em !important;}
+	#maincontainer h4 {font-size: 1em !important;}
+	#maincontainer h5 {font-size: .9em !important;}
+	#maincontainer h6 {font-size: .7em !important;}
+}
