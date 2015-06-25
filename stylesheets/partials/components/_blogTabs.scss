@@ -129,10 +129,10 @@ without having an active class specified
 .governmentinformation-container .governmentinformation,
 .visitorinformation-container .visitorinformation,
 /*I need to contatct*/
-.anagencyinformation-container .anagencyinformation,
-.myrepresentativeinformation-container .myrepresentativeinformation,
-.anemployeeinformation-container .anemployeeinformation,
-.idontknowinformation-container .idontknowinformation
+.anagency-container .anagency,
+.myrepresentative-container .myrepresentative,
+.anemployee-container .anemployee,
+.idontknow-container .idontknow
  {
 	border: none !important;
 	color: $red !important;
