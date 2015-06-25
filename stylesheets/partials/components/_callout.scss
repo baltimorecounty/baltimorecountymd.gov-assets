@@ -1,11 +1,9 @@
 /*HACK - .callout is the desired class, .callout_box is the old SE way*/
 .callout, .callout_box {
-	margin: 10px 0;
 	max-width: 480px; /*HACK - width is set specifically from original templates*/
 	width: 100%;
 
 	img {
-		margin: 10px 0;
 		height: 100% !important;
 		width: 100% !important;
 	}
