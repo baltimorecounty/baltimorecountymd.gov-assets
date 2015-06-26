@@ -570,7 +570,7 @@ html, body {
   background: #dbdbdb;
   color: #444;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: .96em !important;
   margin: 0;
   padding: 0;
   width: 100%; }
@@ -981,9 +981,20 @@ input[type="submit"] {
     .footer .county-links-list li:first-child {
       padding-left: 5px; } }
 
+.image_left {
+  border: 1px solid #ccc !important;
+  padding: 5px !important;
+  margin: 10px 0 !important; }
+
+@media screen and (max-width: 767px) {
+  .image_left {
+    float: none !important; } }
+
 #BACO_table {
   table-layout: fixed;
   width: 100% !important; }
+  #BACO_table p {
+    word-wrap: break-word; }
 
 /*Alert Box*/
 .alert {
@@ -1230,12 +1241,10 @@ a.skip:hover {
 
 /*HACK - .callout is the desired class, .callout_box is the old SE way*/
 .callout, .callout_box {
-  margin: 10px 0;
   max-width: 480px;
   /*HACK - width is set specifically from original templates*/
   width: 100%; }
   .callout img, .callout_box img {
-    margin: 10px 0;
     height: 100% !important;
     width: 100% !important; }
   .callout p, .callout_box p {
@@ -1255,6 +1264,12 @@ a.skip:hover {
 
 .callout--secondary {
   border: 2px solid #dbdbdb; }
+
+@media screen and (max-width: 992px) {
+  #calloutarea {
+    float: none !important; }
+    #calloutarea p {
+      clear: both; } }
 
 #baco_breadcrumb {
   margin: 0 0 15px;
@@ -1348,6 +1363,8 @@ a.skip:hover {
       list-style-type: none; }
       .blog-tabs ul li a {
         color: white !important;
+        border-left: none !important;
+        border-right: none !important;
         display: inline-block;
         font-weight: normal;
         padding: 5px 20px 7px !important;
@@ -1381,6 +1398,30 @@ a.skip:hover {
   .blog-tabs--police ul li a.active {
     color: #203e6f !important; }
 
+/*
+This css enables the active tab will appear active, 
+without having an active class specified
+*/
+/*I Want TO...*/
+.apply-container .apply,
+.followup-container .followup,
+.pay-container .pay,
+.report-container .report,
+.request-container .request,
+.allinformation-container .allinformation,
+.residentinformation-container .residentinformation,
+.businessinformation-container .businessinformation,
+.governmentinformation-container .governmentinformation,
+.visitorinformation-container .visitorinformation,
+.anagency-container .anagency,
+.myrepresentative-container .myrepresentative,
+.anemployee-container .anemployee,
+.idontknow-container .idontknow {
+  border: none;
+  color: #c51110 !important;
+  cursor: default;
+  display: block !important; }
+
 @media screen and (max-width: 700px) {
   .blog-tabs ul {
     margin: 0; }
@@ -1398,20 +1439,50 @@ a.skip:hover {
     border-bottom: 1px solid white;
     display: block;
     width: 100%; }
-  .blog-tabs ul li a.active {
-    border-bottom: 1px solid #c51110; }
-  .blog-tabs ul li a.active {
-    border-bottom: 1px solid #c51110; }
+  /*First, Active Item*/
+  .blog-tabs ul li a.active,
+  .apply-container ul li a.apply,
+  .followup-container ul li a.followup,
+  .pay-container ul li a.pay,
+  .report-container ul li a.report,
+  .request-container ul li a.request,
+  .allinformation-container ul li a.allinformation,
+  .residentinformation-container ul li a.residentinformation,
+  .businessinformation-container ul li a.businessinformation,
+  .governmentinformation-container ul li a.governmentinformation,
+  .visitorinformation-container ul li a.visitorinformation,
+  .anagency-container ul li a.anagency,
+  .myrepresentative-container ul li a.myrepresentative,
+  .anemployee-container ul li a.anemployee,
+  .idontknow-container ul li a.idontknow {
+    background: #F11D1B;
+    color: white !important; }
+    .blog-tabs ul li a.active:hover,
+    .apply-container ul li a.apply:hover,
+    .followup-container ul li a.followup:hover,
+    .pay-container ul li a.pay:hover,
+    .report-container ul li a.report:hover,
+    .request-container ul li a.request:hover,
+    .allinformation-container ul li a.allinformation:hover,
+    .residentinformation-container ul li a.residentinformation:hover,
+    .businessinformation-container ul li a.businessinformation:hover,
+    .governmentinformation-container ul li a.governmentinformation:hover,
+    .visitorinformation-container ul li a.visitorinformation:hover,
+    .anagency-container ul li a.anagency:hover,
+    .myrepresentative-container ul li a.myrepresentative:hover,
+    .anemployee-container ul li a.anemployee:hover,
+    .idontknow-container ul li a.idontknow:hover {
+      background: #F11D1B; }
   .blog-tabs--snowfighter ul li a.active {
-    border-bottom: 1px solid #e46418; }
+    background: #ff8d00;
+    color: white !important; }
+    .blog-tabs--snowfighter ul li a.active:hover {
+      background: #ff8d00; }
   .blog-tabs--police ul li a.active {
-    border-bottom: 1px solid #203e6f; } }
-
-.report-container .report {
-  border: none !important;
-  color: #c51110 !important;
-  cursor: default;
-  display: block !important; }
+    background: #3c74c0;
+    color: white !important; }
+    .blog-tabs--police ul li a.active:hover {
+      background: #3c74c0; } }
 
 .facebookfeedbox {
   border: 1px solid #3B5998;
@@ -1467,7 +1538,8 @@ a.skip:hover {
   text-transform: uppercase; }
 
 #filter-form {
-  margin: 0 !important; }
+  margin: 0 !important;
+  width: 100% !important; }
 
 .tulipMain {
   line-height: 1; }
@@ -1583,6 +1655,312 @@ div#tulipTVThumbs div.tulipShow {
 
 #tulipTVPlayerDiv object {
   width: 100% !important; }
+
+#SECalendarSearch {
+  background: #ebebeb !important;
+  float: left;
+  height: 100%;
+  margin-bottom: 20px;
+  max-width: 176px !important;
+  width: 100% !important;
+  padding: 10px;
+  border-top: 30px solid #c51110; }
+
+#calendarSearchForm {
+  margin: 120px 10px 10px;
+  border-top: 1px solid #999;
+  padding: 15px 0 0; }
+
+.SECalendarFilterSelected {
+  background-color: #990000;
+  padding: 0 5px; }
+
+.SECalendarDay.controls {
+  padding: 0; }
+
+.SECalendarDay.controls a {
+  background-image: SECalendarDay controls;
+  background-position: 5px 4px;
+  background-repeat: no-repeat;
+  display: block;
+  height: 20px;
+  overflow: hidden;
+  text-indent: -1000px;
+  width: 20px; }
+
+#SECalendarSmallCalPrevious a {
+  background-image: url("/sebin/w/v/left_arrow.gif");
+  background-position: 5px 4px;
+  background-repeat: no-repeat; }
+
+#SECalendarSmallCalMonth a {
+  background: none repeat scroll 0 0 transparent;
+  height: auto;
+  text-indent: 0;
+  width: auto;
+  color: #fff;
+  margin: 5px 0; }
+
+#SECalendarSmallCalNext a {
+  background-image: url("/sebin/i/w/right_arrow.gif");
+  background-position: 5px 4px;
+  background-repeat: no-repeat; }
+
+.SECalendarFilter {
+  background-color: #c51110;
+  color: #fff;
+  display: inline;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 0 10px 10px;
+  padding: 8px;
+  max-width: 524px !important;
+  width: 100% !important;
+  float: left; }
+
+#SECalendarTable .SECalendarDay.pastDayWeekend {
+  background-repeat: inherit; }
+
+#SECalendarListWrapper {
+  display: inline-table;
+  width: 100%;
+  background: none !important;
+  background-position: left top;
+  background-repeat: repeat-y;
+  margin: 0 0 30px; }
+
+.SECalendarListEvents {
+  float: left;
+  position: relative; }
+  .SECalendarListEvents table {
+    margin: 0 0 0 10px;
+    max-width: 524px !important;
+    table-layout: fixed;
+    width: 100% !important;
+    word-wrap: break-word; }
+
+.SECalendarListEvents .rssLink {
+  margin: 0 !important;
+  position: absolute;
+  right: 10px;
+  top: -30px; }
+
+.SECalendarListEvents td {
+  border-bottom: 1px dotted #333;
+  padding: 15px 4px; }
+
+td.SECalendarEventDate {
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px 10px 0;
+  border-top: 6px solid #ccc; }
+
+#SECalendarListWrapper .SECalendarSmallCal {
+  float: left;
+  margin: 5px 0 0 -175px !important;
+  padding: 0;
+  clear: none; }
+
+.SECalendarProperty p {
+  width: 95%; }
+
+.SECalendarPropertyLabel {
+  font-weight: bold;
+  clear: both;
+  margin: 20px 50px 0 0;
+  width: 70px; }
+
+#SECalendarEventWrapper div.SECalendarEventDetails {
+  border: 1px solid #ccc;
+  display: inline-block;
+  width: 99.8%;
+  margin: 0 0 20px; }
+
+#SECalendarEventWrapper div.SECalendarEventName h3 {
+  font-size: 1.6em; }
+
+#SECalendarEventWrapper .SECalendarBackLink {
+  margin: 0 0 20px;
+  display: block; }
+
+#SECalendarEventWrapper .SECalendarEventActions {
+  background-color: #ebebeb;
+  border-top: 3px solid #ccc;
+  padding: 15px 10px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; }
+
+#SECalendarEventWrapper .SECalendarEventActions ul {
+  list-style-type: none;
+  display: inline; }
+
+#SECalendarEventWrapper .SECalendarEventActions ul li {
+  float: left; }
+
+#SECalendarEventWrapper .SECalendarEventActions ul li.eventDownload a {
+  background-image: url("/sebin/l/g/button-gradient.jpg");
+  background-repeat: repeat-x;
+  background-position: top;
+  border: 1px solid #999;
+  color: #000;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .9em;
+  font-weight: normal;
+  height: 22px;
+  margin: 0 25px 0 0;
+  text-align: center;
+  text-decoration: none;
+  padding: 2px 10px 3px; }
+
+#SECalendarEventWrapper .SECalendarEventActions ul li.eventReminder a {
+  border: 1px solid #999;
+  color: #000;
+  cursor: pointer;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: .9em;
+  font-weight: normal;
+  height: 22px;
+  margin: 0 25px 0 0;
+  text-align: center;
+  text-decoration: none;
+  padding: 2px 10px 3px;
+  background-image: url("/sebin/l/g/button-gradient.jpg");
+  background-position: top;
+  background-repeat: repeat-x; }
+
+#SECalendarEventWrapper .SECalendarEventActions ul li.eventShare a {
+  border: 1px solid #999;
+  color: #000;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .9em;
+  font-weight: normal;
+  height: 22px;
+  margin: 0 25px 0 0;
+  text-align: center;
+  text-decoration: none;
+  padding: 2px 10px 3px;
+  background-image: url(/sebin/l/g/button-gradient.jpg);
+  background-repeat: repeat-x;
+  background-position: top; }
+
+#SECalendarEventWrapper .SECalendarPropertyLabel {
+  margin: 20px 0 0 15px;
+  font-size: 1.1em;
+  width: 95%; }
+
+#SECalendarEventWrapper .SECalendarProperty {
+  float: left;
+  width: 99%;
+  margin: 0;
+  padding: 15px; }
+
+.SECalendarReminderName, .SECalendarReminderEmail, .SECalendarReminderOccurence, .SECalendarReminderNotification {
+  margin: 0 0 10px -50px; }
+
+.SECalendarReminderName label, .SECalendarReminderEmail label, .SECalendarReminderOccurence label {
+  font-weight: bold;
+  font-size: 1em;
+  margin: 0 0 0 50px;
+  display: inline; }
+
+.SECalendarReminderName input, .SECalendarReminderEmail input, .SECalendarReminderOccurence input {
+  margin: 0; }
+
+.SECalendarShareName, .SECalendarShareEmail, .SECalendarShareFriendEmail, .SECalendarShareMessage {
+  margin: 0 0 10px -50px;
+  padding: 10px; }
+
+.SECalendarShareName label, .SECalendarShareEmail label, .SECalendarShareFriendEmail label, .SECalendarShareMessage label {
+  margin: 0 0 0 40px;
+  display: inline; }
+
+.SECalendarSmallCal .SECalendarDay.futureDayOtherMonth {
+  background-color: #bbb; }
+
+.SECalendarSmallCal .SECalendarDay.futureDayOtherMonthWeekend {
+  background-color: #bbb; }
+
+.SECalendarSmallCal .SECalendarDay a {
+  color: #333;
+  text-decoration: underline !important; }
+
+.SECalendarSmallCal .SECalendarDay.SECalendarSelectedDay {
+  background-color: #feb30c; }
+
+.SECalendarSmallCal .SECalendarSelectedWeek {
+  background-color: #feb30c; }
+
+#SECalendarSmallCalMonth {
+  background-color: #c51110; }
+
+.SECalendarFilter a {
+  color: #fff;
+  font-weight: normal;
+  display: inline-block;
+  margin: 0 7px; }
+
+#SECalendarEventWrapper hr {
+  display: none; }
+
+#SECalendarReminder {
+  border-bottom: 1px solid #ccc;
+  padding: 0 0 80px; }
+
+.SECalendarReminderNotification {
+  margin: 0; }
+
+.SECalendarKeyword select, .SECalendarLocation select, .SECalendarType select, .SECalendarKeyword input {
+  width: 100% !important; }
+
+#maincontainer #SECalendarListWrapper .SECalendarFilter a, #maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a {
+  color: white; }
+
+.SECalendarSmallCal .SECalendarDay.pastDay {
+  padding: 0 3px; }
+
+#RateThisPageForm fieldset {
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important; }
+
+#RateThisPageForm .seFieldCell {
+  width: auto !important; }
+
+#RateThisPageForm .seLabelCell {
+  text-align: left !important; }
+
+#RateThisPageForm .seText {
+  margin: 0 !important;
+  text-align: left !important; }
+
+#RateThisPageForm .seButton {
+  margin: 0 !important; }
+
+#RateThisPageFormPOLICE fieldset {
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important; }
+
+#RateThisPageFormPOLICE .seFieldCell {
+  width: auto !important; }
+
+#RateThisPageFormPOLICE .seLabelCell {
+  text-align: left !important;
+  width: 80px !important; }
+
+#RateThisPageFormPOLICE .seText {
+  margin: 0 !important;
+  text-align: left !important; }
+
+#RateThisPageFormPOLICE .seButton {
+  margin: 0 !important; }
+
+#mainContent input {
+  width: auto !important;
+  max-width: 100%; }
 
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)
@@ -2340,6 +2718,14 @@ div#tulipTVThumbs div.tulipShow {
 #maincontainer #calloutarea p {
   margin: 10px 0 15px; }
 
+#mainContent a {
+  line-height: 1.3; }
+
+#centerContent {
+  width: 100% !important; }
+  #centerContent a {
+    text-decoration: underline !important; }
+
 .secondary-nav .secondary-nav-list {
   padding: 14px 0; }
 
@@ -2354,3 +2740,19 @@ input[type="submit"] {
   -webkit-appearance: none;
   -webkit-border-radius: 0;
   border-radius: 0; }
+
+@media screen and (max-width: 767px) {
+  #maincontainer h1 {
+    font-size: 1.8em !important; }
+  #maincontainer h2 {
+    font-size: 1.3em !important; }
+  #maincontainer h3 {
+    font-size: 1.1em !important; }
+  #maincontainer h4 {
+    font-size: 1em !important; }
+  #maincontainer h5 {
+    font-size: .9em !important; }
+  #maincontainer h6 {
+    font-size: .7em !important; }
+  #relatedtopics {
+    display: none; } }
