@@ -1,11 +1,11 @@
 .image_left {
 	border: 1px solid $img-border-gray !important;
 	padding: 5px !important;
-	margin: 10px 0 !important;
 }
 
 @media screen and (max-width: 767px) {
 	.image_left {
 		float: none !important;
+		margin: 10px 0 !important;
 	}
 }
