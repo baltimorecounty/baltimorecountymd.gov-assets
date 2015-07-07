@@ -202,10 +202,15 @@ td.SECalendarEventDate {
 	margin : 0;
 	padding : 15px;
 }
-.SECalendarReminderName, .SECalendarReminderEmail, .SECalendarReminderOccurence, .SECalendarReminderNotification {
+.SECalendarReminderName, 
+.SECalendarReminderEmail, 
+.SECalendarReminderOccurence, 
+.SECalendarReminderNotification {
 	margin : 0 0 10px -50px;
 }
-.SECalendarReminderName label, .SECalendarReminderEmail label, .SECalendarReminderOccurence label {
+.SECalendarReminderName label, 
+.SECalendarReminderEmail label, 
+.SECalendarReminderOccurence label {
 	font-weight : bold;
 	font-size : 1em;
 	margin : 0 0 0 50px;
@@ -258,11 +263,15 @@ td.SECalendarEventDate {
 .SECalendarReminderNotification {
 	margin : 0;
 }
-.SECalendarKeyword select, .SECalendarLocation select, .SECalendarType select, .SECalendarKeyword input {
+.SECalendarKeyword select, 
+.SECalendarLocation select, 
+.SECalendarType select, 
+.SECalendarKeyword input {
 	width: 100% !important;
 }
-#maincontainer #SECalendarListWrapper .SECalendarFilter a, #maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a {
-  color: white;
+#maincontainer #SECalendarListWrapper .SECalendarFilter a, 
+#maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a {
+  color: white !important;
 }
 .SECalendarSmallCal .SECalendarDay.pastDay {
 	padding: 0 3px;
