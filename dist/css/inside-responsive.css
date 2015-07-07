@@ -1734,7 +1734,7 @@ div#tulipTVThumbs div.tulipShow {
 #SECalendarTable .SECalendarDay.pastDayWeekend {
   background-repeat: inherit; }
 
-#SECalendarListWrapper {
+#SECalendarListWrapper, #SECalendarSummaryWrapper {
   display: inline-table;
   width: 100%;
   background: none !important;
@@ -1748,7 +1748,6 @@ div#tulipTVThumbs div.tulipShow {
   .SECalendarListEvents table {
     margin: 0 0 0 10px;
     max-width: 524px !important;
-    table-layout: fixed;
     width: 100% !important;
     word-wrap: break-word; }
 
@@ -1769,7 +1768,7 @@ td.SECalendarEventDate {
   padding: 10px 20px 10px 0;
   border-top: 6px solid #ccc; }
 
-#SECalendarListWrapper .SECalendarSmallCal {
+#SECalendarListWrapper .SECalendarSmallCal, #SECalendarSummaryWrapper .SECalendarSmallCal {
   float: left;
   margin: 5px 0 0 -175px !important;
   padding: 0;
@@ -1937,11 +1936,25 @@ td.SECalendarEventDate {
   width: 100% !important; }
 
 #maincontainer #SECalendarListWrapper .SECalendarFilter a,
-#maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a {
+#maincontainer #SECalendarSummaryWrapper .SECalendarFilter a,
+#maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a,
+#maincontainer #SECalendarSummaryWrapper #SECalendarSmallCalMonth a {
   color: white !important; }
 
 .SECalendarSmallCal .SECalendarDay.pastDay {
   padding: 0 3px; }
+
+.SECalendarSummaryDateList {
+  float: left;
+  position: relative;
+  max-width: 524px;
+  width: 100%; }
+  .SECalendarSummaryDateList ul {
+    margin: 0;
+    padding-left: 20px; }
+
+.SECalendarFilter {
+  clear: none; }
 
 #RateThisPageForm fieldset {
   border: none !important;
