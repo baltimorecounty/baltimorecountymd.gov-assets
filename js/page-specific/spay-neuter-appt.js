@@ -1,11 +1,15 @@
+/*
+Used on this page
+http://www.baltimorecountymd.gov/Agencies/health/animalservices/spayneuter.html
+*/
 (function($) {
 	var locations = {
 		baldwin: {
-			href: "http://clinichq.org/Online/1238/Appointment/Create",
+			href: "https://clinichq.org/online/564cf872-6f61-476f-8ecd-61d574a8a06f",
 			address: "13800 Manor Rd Baldwin, MD 21013"
 		},
 		dundalk: {
-			href: "http://clinichq.org/Online/1239/Appointment/Create",
+			href: "https://clinichq.org/online/144afb8f-6c15-4f15-8e16-9417a4f85823",
 			address: "7702 Dunmanway Dundalk, MD 21222"
 		}
 	};
