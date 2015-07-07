@@ -13,12 +13,25 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('concatHomepageJs', function() {
-	var files = ['./js/lib/jQuery.min.js', './js/lib/slick.min.js', './js/lib/handlebars.js', './js/lib/picturefill.min.js', './js/flickr-feed.js', './js/county-news-snippet.js', './js/homepage-template.js'];
+	var files = ['./js/lib/jQuery.min.js', 
+					'./js/lib/slick.min.js', 
+					'./js/lib/handlebars.js', 
+					'./js/lib/picturefill.min.js', 
+					'./js/flickr-feed.js', 
+					'./js/county-news-snippet.js',
+					'./js/homepage-template.js'];
 	return concatFiles(files, 'homepage.js');
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['./js/skip-nav.js','./js/text-resizer.js', './js/bc-google-analytics.js', './js/bc-google-analytics-custom-events.js', './js/lib/review.js', './js/mobile-search.js'];
+	var files = ['./js/skip-nav.js',
+					'./js/text-resizer.js', 
+					'./js/bc-google-analytics.js', 
+					'./js/bc-google-analytics-custom-events.js', 
+					'./js/lib/review.js', 
+					'./js/mobile-search.js',
+					'./js/template-events.js', 
+					'./js/inside-template.js'];
   	return concatFiles(files, 'template.js');
 });
 
@@ -42,5 +55,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['compressFiles', 'sass'], function() {
-		return;
+	return;
 });
