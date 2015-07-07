@@ -26,13 +26,7 @@
 
 	});
 	
-	$(document).on('click', '.hamburger-btn', function(e) {
-        e.preventDefault();
-        $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
-    });
-
-   	/*Lazy Load Images*/
-
+	/*Lazy Load Images*/
     function deferImages() {
 	    var imgDefer = document.getElementsByTagName('img');
 	    for (var i = 0; i < imgDefer.length; i++) {
