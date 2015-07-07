@@ -196,12 +196,3 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
         });
     });
 })(jQuery, TextResizer);
-(function ($, TextResizer) {
-    $(document).on('submit', '#RateThisPageForm', function(){ 
-        document.getElementById('url').value = window.location.href;
-        
-        if ($('input#website').val().length) {
-            return false;
-        } 
-    });
-})(jQuery, TextResizer);
