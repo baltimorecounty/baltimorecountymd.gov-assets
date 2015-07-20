@@ -173,7 +173,6 @@ var getTodaysDate = function () {
                 api.column(1, {
                     page: 'current'
                 }).data().each(function (group, i) {
-                    console.log(group, i);
                     $(rows).eq(i).addClass(group.toLowerCase().replace(" ", "-"));
                     if (last !== group) {
                         //$(rows).eq(i).before(
