@@ -24,3 +24,5 @@ You will need to do these steps the first time you setup the project.
 1. Compile and Minfiy all sass stylesheets to css and place them in the 'dist/css' folder
 2. Create Homepage and Template Js Files into the 'dist/js' folder
 3. Copy and Minify Homepage and Template Js Files into the 'dist/js' folder
+
+*You may need to configure node for proxy, [here's](http://jjasonclark.com/how-to-setup-node-behind-web-proxy/) how.
