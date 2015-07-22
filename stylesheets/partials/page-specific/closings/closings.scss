@@ -37,7 +37,7 @@ table.dataTable thead th, table.dataTable thead td  {
       &.cancelled > td, &.closed > td {
         background-color: rgba($icon-error-color, $closings-stripe-opacity);
       }
-      &.open > td {
+      &.open > td, &.operating > td {
         background-color: rgba($icon-success-color, $closings-stripe-opacity);
       }
       &.modified > td {
