@@ -26,6 +26,7 @@ gulp.task('concatHomepageJs', function() {
 
 gulp.task('concatTemplateJs', function() {
 	var files = ['./js/skip-nav.js',
+					'./js/lib/bootstrap-collapse.min.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
 					'./js/bc-google-analytics-custom-events.js', 
@@ -44,6 +45,7 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 	        }))
 		    .pipe(gulp.dest('./dist/js'));
 });
+
 gulp.task('sass', function () {
   gulp.src('./stylesheets/*.scss')
     .pipe(sass().on('error', sass.logError))

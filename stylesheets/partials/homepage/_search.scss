@@ -2,11 +2,11 @@
 
 /*Search Box*/
 .search-container {
-    background-color: $light-gray;
-    background: rgba(230, 230, 230, 0.89); //TODO: Make this a Variable
-    margin: 40px auto;
-    max-width: 900px;
-    width: 80%;
+    background: #ccc none repeat scroll 0 0;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 10px 0;
+    width: 100%;
 }
 
 .search-input-container {
@@ -31,7 +31,7 @@
   }
 
   .search-container{
-    margin:20px auto;
+    margin: 0 auto;
     width: 90%;
   }
 }
@@ -41,7 +41,7 @@
     padding:0;
 
     .inline-list li a{
-      padding:10px 0;
+      padding: 10px 0;
     }
   }
   .alert {

@@ -111,10 +111,6 @@ dfn {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0; }
-
 /**
  * Address styling not present in IE 8/9.
  */
@@ -202,8 +198,7 @@ samp {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
-button,
-.search-form .search-button,
+button, .search-form .search-button,
 input,
 optgroup,
 select,
@@ -227,8 +222,7 @@ button, .search-form .search-button {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-button,
-.search-form .search-button,
+button, .search-form .search-button,
 select {
   text-transform: none; }
 
@@ -239,9 +233,9 @@ select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-button,
-.search-form .search-button,
-html input[type="button"], input[type="reset"],
+button, .search-form .search-button,
+html input[type="button"],
+input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
@@ -251,16 +245,14 @@ input[type="submit"] {
 /**
  * Re-set default cursor for disabled elements.
  */
-button[disabled],
-.search-form [disabled].search-button,
+button[disabled], .search-form [disabled].search-button,
 html input[disabled] {
   cursor: default; }
 
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-button::-moz-focus-inner,
-.search-form .search-button::-moz-focus-inner,
+button::-moz-focus-inner, .search-form .search-button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0; }
@@ -370,9 +362,9 @@ th {
   font-size: 65%; }
 
 /*Clearfix*/
-.clearfix:before,
-.search-input-container:before,
-.clearfix:after, .search-input-container:after {
+.clearfix:before, .search-input-container:before,
+.clearfix:after,
+.search-input-container:after {
   content: "";
   display: table; }
 
@@ -566,20 +558,6 @@ html {
   /* Firefox 1 - 28 */
   box-sizing: border-box; }
 
-html, body {
-  background: #dbdbdb;
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: .96em !important;
-  margin: 0;
-  padding: 0;
-  width: 100%; }
-
-img {
-  border: 1px solid #ccc;
-  margin: 5px;
-  padding: 5px; }
-
 /*Remove IOS Broder Radius*/
 textarea,
 input,
@@ -706,6 +684,10 @@ input[type="submit"] {
 
 .hamburger-nav {
   display: none; }
+  .hamburger-nav img {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ccc; }
 
 @media only screen and (max-width: 767px) {
   .hamburger-nav {
@@ -789,7 +771,11 @@ input[type="submit"] {
     font-size: 1.5em; }
   .primary-nav .primary-nav-item a {
     background: url("//baltimorecountymd.gov/sebin/l/t/little-arrow.png") no-repeat scroll 12.5px 22px transparent;
-    padding: 20px 0 20px 40px; } }
+    padding: 20px 0 20px 40px; }
+  #mainContent img {
+    max-width: 100%;
+    display: block;
+    height: auto; } }
 
 @media only screen and (min-width: 767px) and (max-width: 800px) {
   .primary-nav .primary-nav-item .primary-nav-item__headline {
@@ -878,7 +864,7 @@ input[type="submit"] {
 
 @media only screen and (max-width: 480px) {
   .brand {
-    padding: 0 0 0 5px; }
+    padding: 0 0 0 5px !important; }
     .brand .brand-heading {
       font-size: 1.4em;
       line-height: 25px;
@@ -893,7 +879,8 @@ input[type="submit"] {
   padding: 20px 15px; }
   .primary-footer h2 {
     margin: 0; }
-  .primary-footer .county-help-list-item a {
+  .primary-footer .county-help-list-item a,
+  .primary-footer .translate-page-list {
     line-height: 24px; }
 
 @media only screen and (max-width: 992px) {
@@ -904,7 +891,7 @@ input[type="submit"] {
 .secondary-footer {
   background: #c51110;
   color: #fff;
-  padding: 20px 0; }
+  padding: 10px 0; }
   .secondary-footer a {
     color: white; }
   .secondary-footer .county-links-list-item {
@@ -981,40 +968,12 @@ input[type="submit"] {
     .footer .county-links-list li:first-child {
       padding-left: 5px; } }
 
-.image_left {
-  border: 1px solid #ccc !important;
-  padding: 5px !important; }
-
 @media screen and (max-width: 767px) {
   .image_left {
     float: none !important;
     margin: 10px 0 !important; } }
 
-#BACO_table {
-  width: 100% !important; }
-  #BACO_table p {
-    word-wrap: break-word; }
-
 /*Alert Box*/
-.alert {
-  background-color: #feb30c;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 0;
-  text-align: center; }
-  .alert a {
-    color: #002280;
-    text-decoration: none; }
-    .alert a:hover {
-      color: #003399; }
-  .alert h1 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.15em;
-    font-weight: bold;
-    border: none;
-    margin: 0;
-    padding: 20px;
-    line-height: 1; }
-
 @media only screen and (max-width: 1100px) {
   .alert h1 {
     line-height: 30px; } }
@@ -1198,85 +1157,8 @@ a.skip:hover {
   width: auto;
   height: auto;
   overflow: visible;
-  transition: top 0.25s linear;
+  transition: top .25s linear;
   z-index: 9999; }
-
-.nav-list {
-  line-height: 1.7em;
-  margin-bottom: 20px; }
-  .nav-list ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0; }
-  .nav-list .title, .nav-list.in-this-section table tr:first-child td:first-child {
-    padding: 5px 10px;
-    border-top: 6px solid #cacaca;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-bottom: 1px solid #adadad;
-    background-image: none; }
-  .nav-list:last-child {
-    margin-bottom: 0; }
-  .nav-list ul li a {
-    background: url(/sebin/q/r/most-requested-arrow.gif) no-repeat left center;
-    background-position-x: 5px;
-    border-bottom: 1px solid #ADADAD;
-    color: #002280;
-    display: block;
-    padding: 5px 0 5px 30px; }
-    .nav-list ul li a:hover {
-      margin: 0;
-      padding: 5px 0 5px 30px;
-      text-decoration: underline;
-      display: block;
-      background: url(/sebin/m/n/most-requested-arrow-hover.gif) no-repeat left center;
-      background-position-x: 5px; }
-  .nav-list table {
-    border-collapse: collapse;
-    width: 100%;
-    /*HACK - removes breaks inserted by Site Executive*/ }
-    .nav-list table br {
-      display: none; }
-    .nav-list table a {
-      background: url(/sebin/q/r/most-requested-arrow.gif) no-repeat left center;
-      background-position-x: 5px;
-      border-bottom: 1px solid #ADADAD;
-      color: #002280;
-      display: block;
-      padding: 5px 0 5px 30px; }
-      .nav-list table a:hover {
-        margin: 0;
-        padding: 5px 0 5px 30px;
-        text-decoration: underline;
-        display: block;
-        background: url(/sebin/m/n/most-requested-arrow-hover.gif) no-repeat left center;
-        background-position-x: 5px; }
-
-/*HACK - .callout is the desired class, .callout_box is the old SE way*/
-.callout, .callout_box {
-  max-width: 480px;
-  /*HACK - width is set specifically from original templates*/
-  width: 100%; }
-  .callout img, .callout_box img {
-    height: 100% !important;
-    width: 100% !important; }
-  .callout p, .callout_box p {
-    line-height: 1.2 !important;
-    margin: 0 !important; }
-
-.callout__title {
-  border-bottom: 1px solid #CACACA;
-  border-top: 6px solid #CACACA;
-  font-weight: bold;
-  margin: 20px 0 0;
-  padding: 3px 0;
-  text-transform: uppercase; }
-
-.callout--page {
-  border: 2px solid #c51110; }
-
-.callout--secondary {
-  border: 2px solid #dbdbdb; }
 
 @media screen and (max-width: 992px) {
   #calloutarea {
@@ -1284,175 +1166,36 @@ a.skip:hover {
     #calloutarea p {
       clear: both; } }
 
-#baco_breadcrumb {
-  margin: 0 0 15px;
-  display: block;
-  word-wrap: break-word; }
-
 /*Blog Generic*/
-.seBlogViewHeader {
-  display: none; }
-
-.seBlogViewPostTitle {
-  font-size: 16px;
-  font-weight: bold;
-  padding: 8px 8px 8px 0;
-  border-top: 6px solid #CACACA; }
-
-.seBlogViewPostDate {
-  margin: 0 0 15px; }
-
-.seBlogViewPostContent {
-  padding-right: 8px; }
-
-.seBlogViewPostKeywords {
-  float: none;
-  font-family: Arial,Helvetica,sans-serif;
-  font-size: 11px;
-  font-style: italic;
-  height: auto;
-  margin-bottom: 10px;
-  padding: 3px; }
-
-.seBlogViewCommentSummary {
-  display: none; }
-
-/*Blog Exceprt*/
-#SEBlogViewHeader {
-  display: none; }
-
-#SEBlogViewMainWrapper {
-  float: none; }
-
-#SEBlogViewAuxArea > div {
-  margin-bottom: 20px; }
-
-#SEBlogViewSmallCal table {
-  width: 100%; }
-
-#SEBlogViewLinks {
-  clear: right;
-  padding: 0; }
-  #SEBlogViewLinks img {
-    height: 14px !important;
-    width: 14px !important; }
-
-.postTitle {
-  border-top: 6px solid #CACACA;
-  color: #444;
-  font-size: 21px;
-  font-weight: bold;
-  line-height: 1.2em;
-  margin: 10px 0 20px;
-  padding: 8px 8px 8px 0;
-  text-decoration: none; }
-
-#mainContent .postTitle a {
-  text-decoration: none;
-  font-size: 1.2em; }
-
-.postDate, .postAuthor, .postKeywords, .postCommentSummary {
-  display: none; }
-
-.postContent {
-  display: table; }
-
-.blog-tabs {
-  background-color: #C51110;
-  background-position: center top;
-  background-repeat: repeat-x;
-  border-top: 6px solid #C51110;
-  display: inline-block;
-  font-family: Arial,Helvetica,sans-serif;
-  font-size: 1.5em;
-  margin: 0 0 5px;
-  width: 100%; }
-  .blog-tabs ul {
-    list-style-type: none;
-    margin: 0 0 0 20px;
-    padding: 0; }
-    .blog-tabs ul li {
-      display: inline-block;
-      list-style-type: none; }
-      .blog-tabs ul li a {
-        color: white !important;
-        border-left: none !important;
-        border-right: none !important;
-        display: inline-block;
-        font-weight: normal;
-        padding: 5px 20px 7px !important;
-        text-decoration: none; }
-        .blog-tabs ul li a br {
-          height: 0; }
-        .blog-tabs ul li a:hover {
-          background: #F11D1B;
-          text-decoration: none !important; }
-        .blog-tabs ul li a.active {
-          background-color: white;
-          color: #c51110 !important;
-          cursor: default;
-          font-weight: 700; }
-          .blog-tabs ul li a.active:hover {
-            background-color: white; }
-
-.blog-tabs--snowfighter {
-  background-color: #e46418;
-  border-top: 6px solid #e46418; }
-  .blog-tabs--snowfighter ul li a:hover {
-    background-color: #ff8d00; }
-  .blog-tabs--snowfighter ul li a.active {
-    color: #e46418 !important; }
-
-.blog-tabs--police {
-  background-color: #203e6f;
-  border-top: 6px solid #203e6f; }
-  .blog-tabs--police ul li a:hover {
-    background-color: #3c74c0; }
-  .blog-tabs--police ul li a.active {
-    color: #203e6f !important; }
-
-/*
-This css enables the active tab will appear active, 
-without having an active class specified
-*/
-/*I Want TO...*/
-.apply-container .apply,
-.followup-container .followup,
-.pay-container .pay,
-.report-container .report,
-.request-container .request,
-.allinformation-container .allinformation,
-.residentinformation-container .residentinformation,
-.businessinformation-container .businessinformation,
-.governmentinformation-container .governmentinformation,
-.visitorinformation-container .visitorinformation,
-.anagency-container .anagency,
-.myrepresentative-container .myrepresentative,
-.anemployee-container .anemployee,
-.idontknow-container .idontknow {
-  border: none;
-  color: #c51110 !important;
-  cursor: default;
-  display: block !important; }
-
 @media screen and (max-width: 700px) {
   .blog-tabs ul {
     margin: 0; }
-    .blog-tabs ul li {
-      font-size: .8em; }
-      .blog-tabs ul li a {
-        display: block;
-        padding-left: 10px;
-        padding-right: 10px; } }
+    .blog-tabs ul li a {
+      display: block;
+      padding-left: 10px;
+      padding-right: 10px; } }
+
+@media screen and (max-width: 800px) {
+  #SECalendarSearch {
+    clear: both;
+    float: left !important;
+    max-width: 100% !important; }
+  .SECalendarSmallCal {
+    clear: both !important;
+    width: 100%; }
+  .SECalendarListEvents {
+    width: 100% !important; }
+  .SECalendarFilter {
+    max-width: 100% !important; } }
 
 @media screen and (max-width: 500px) {
   .blog-tabs {
     border-top: 0; }
+  .blog-tabs ul {
+    margin: 0 !important; }
   .blog-tabs ul li {
-    border-bottom: 1px solid white;
     display: block;
     width: 100%; }
-  /*First, Active Item*/
   .blog-tabs ul li a.active,
   .apply-container ul li a.apply,
   .followup-container ul li a.followup,
@@ -1468,8 +1211,7 @@ without having an active class specified
   .myrepresentative-container ul li a.myrepresentative,
   .anemployee-container ul li a.anemployee,
   .idontknow-container ul li a.idontknow {
-    background: #F11D1B;
-    color: white !important; }
+    background: #F11D1B; }
     .blog-tabs ul li a.active:hover,
     .apply-container ul li a.apply:hover,
     .followup-container ul li a.followup:hover,
@@ -1541,421 +1283,6 @@ without having an active class specified
     color: #fff;
     padding: 10px; }
 
-.keywordsDesc, .calDesc, .linksDesc {
-  border-bottom: 1px solid #CACACA;
-  border-top: 6px solid #CACACA;
-  font-family: Arial,Helvetica,sans-serif;
-  font-weight: bold;
-  margin: 0 0 10px;
-  padding: 3px 0;
-  text-transform: uppercase; }
-
-#filter-form {
-  margin: 0 !important;
-  width: 100% !important; }
-
-.tulipMain {
-  line-height: 1; }
-
-.tulipMain img {
-  border: none;
-  padding: 0;
-  margin: 0; }
-
-.tulipTVPlayerContainerTitle {
-  color: #feb30c;
-  font-size: 1.3em;
-  font-weight: bold;
-  margin: 10px 15px; }
-
-.tulipTVPlayerContainerDuration {
-  font-weight: bold;
-  margin: 0 5px 5px 15px;
-  border-right: 1px solid #999;
-  color: #c51110;
-  display: inline;
-  float: left;
-  padding: 0 5px 0 0; }
-
-.tulipTVPlayerContainerDate {
-  color: #c51110;
-  font-weight: bold; }
-
-.tulipTVPlayerContainerDesc {
-  color: #ccc;
-  clear: both;
-  margin: 0 0 0 15px; }
-
-#tulipTVChannelChoiceName {
-  font-size: 1.3em;
-  font-weight: bold;
-  margin: 15px 0; }
-
-.tulipTVThumbLink {
-  margin: 0 10px 20px 0;
-  display: inline; }
-
-.tulipTVThumbMeta {
-  padding: 0 0 10px; }
-
-.tulipTVThumbTitle {
-  font-weight: bold;
-  margin: 10px 0 10px 0; }
-
-.tulipTVThumbDuration {
-  display: inline;
-  float: left;
-  margin: 0 5px 5px 0;
-  padding: 0 5px 0 0;
-  font-weight: bold;
-  border-right: 1px solid #000; }
-
-.tulipTVThumbDesc {
-  margin: 7px 0 20px; }
-
-#did9206157 object {
-  padding: 10px;
-  background-color: #c51110; }
-
-#singlePlayerContainer {
-  width: 310px;
-  background-color: #dedede;
-  padding: 65px 0 15px;
-  height: auto;
-  text-align: center;
-  background-image: url(http://baltimorecountymd.gov/sebin/x/m/video_small_background.jpg);
-  background-position: top center;
-  background-repeat: no-repeat;
-  border: 1px solid #666; }
-
-div#tulipTVThumbs div.tulipShow {
-  margin: 5px;
-  padding-top: 10px;
-  border: 1px solid #999;
-  height: 250px;
-  float: left;
-  padding: 10px; }
-
-.tulipMain hr {
-  display: none; }
-
-#tulipTVPlayerContainer {
-  margin: 20px 0;
-  background-color: #000;
-  padding: 0 0 15px;
-  background-image: url("http://baltimorecountymd.gov/sebin/q/v/header_media_exec.gif");
-  background-position: top left;
-  background-repeat: no-repeat; }
-
-.tulipTVThumbDate {
-  font-weight: bold; }
-
-.vidheaderAnsweringTheCall {
-  background-image: url(http://baltimorecountymd.gov/sebin/g/w/header_answeringthecall.gif);
-  background-position: top left;
-  background-repeat: no-repeat; }
-
-.tulipShow {
-  border: 1px solid #999;
-  padding: 10px;
-  float: left;
-  height: 250px;
-  margin: 5px; }
-
-#tulipTVPlayerDiv, #tulipTVPlayerContainer {
-  max-width: 480px;
-  width: 100% !important; }
-
-#tulipTVPlayerDiv object {
-  width: 100% !important; }
-
-#SECalendarSearch {
-  background: #ebebeb !important;
-  float: left;
-  height: 100%;
-  margin-bottom: 20px;
-  max-width: 176px !important;
-  width: 100% !important;
-  padding: 10px;
-  border-top: 30px solid #c51110; }
-
-#calendarSearchForm {
-  margin: 120px 10px 10px;
-  border-top: 1px solid #999;
-  padding: 15px 0 0; }
-
-.SECalendarFilterSelected {
-  background-color: #990000;
-  padding: 0 5px; }
-
-.SECalendarDay.controls {
-  padding: 0; }
-
-.SECalendarDay.controls a {
-  background-image: SECalendarDay controls;
-  background-position: 5px 4px;
-  background-repeat: no-repeat;
-  display: block;
-  height: 20px;
-  overflow: hidden;
-  text-indent: -1000px;
-  width: 20px; }
-
-#SECalendarSmallCalPrevious a {
-  background-image: url("/sebin/w/v/left_arrow.gif");
-  background-position: 5px 4px;
-  background-repeat: no-repeat; }
-
-#SECalendarSmallCalMonth a {
-  background: none repeat scroll 0 0 transparent;
-  height: auto;
-  text-indent: 0;
-  width: auto;
-  color: #fff;
-  margin: 5px 0; }
-
-#SECalendarSmallCalNext a {
-  background-image: url("/sebin/i/w/right_arrow.gif");
-  background-position: 5px 4px;
-  background-repeat: no-repeat; }
-
-.SECalendarFilter {
-  background-color: #c51110;
-  color: #fff;
-  display: inline;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin: 0 10px 10px;
-  padding: 8px;
-  max-width: 524px !important;
-  width: 100% !important;
-  float: left; }
-
-#SECalendarTable .SECalendarDay.pastDayWeekend {
-  background-repeat: inherit; }
-
-#SECalendarListWrapper, #SECalendarSummaryWrapper {
-  display: inline-table;
-  width: 100%;
-  background: none !important;
-  background-position: left top;
-  background-repeat: repeat-y;
-  margin: 0 0 30px; }
-
-.SECalendarListEvents {
-  float: left;
-  position: relative; }
-  .SECalendarListEvents table {
-    margin: 0 0 0 10px;
-    max-width: 524px !important;
-    width: 100% !important;
-    word-wrap: break-word; }
-
-.SECalendarListEvents .rssLink {
-  margin: 0 !important;
-  position: absolute;
-  right: 10px;
-  top: -30px; }
-
-.SECalendarListEvents td {
-  border-bottom: 1px dotted #333;
-  padding: 15px 4px; }
-
-td.SECalendarEventDate {
-  border-bottom: 1px solid #ccc;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 20px 10px 0;
-  border-top: 6px solid #ccc; }
-
-#SECalendarListWrapper .SECalendarSmallCal, #SECalendarSummaryWrapper .SECalendarSmallCal {
-  float: left;
-  margin: 5px 0 0 -175px !important;
-  padding: 0;
-  clear: none; }
-
-.SECalendarProperty p {
-  width: 95%; }
-
-.SECalendarPropertyLabel {
-  font-weight: bold;
-  clear: both;
-  margin: 20px 50px 0 0;
-  width: 70px; }
-
-#SECalendarEventWrapper div.SECalendarEventDetails {
-  border: 1px solid #ccc;
-  display: inline-block;
-  width: 99.8%;
-  margin: 0 0 20px; }
-
-#SECalendarEventWrapper div.SECalendarEventName h3 {
-  font-size: 1.6em; }
-
-#SECalendarEventWrapper .SECalendarBackLink {
-  margin: 0 0 20px;
-  display: block; }
-
-#SECalendarEventWrapper .SECalendarEventActions {
-  background-color: #ebebeb;
-  border-top: 3px solid #ccc;
-  padding: 15px 10px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc; }
-
-#SECalendarEventWrapper .SECalendarEventActions ul {
-  list-style-type: none;
-  display: inline; }
-
-#SECalendarEventWrapper .SECalendarEventActions ul li {
-  float: left; }
-
-#SECalendarEventWrapper .SECalendarEventActions ul li.eventDownload a {
-  background-image: url("/sebin/l/g/button-gradient.jpg");
-  background-repeat: repeat-x;
-  background-position: top;
-  border: 1px solid #999;
-  color: #000;
-  cursor: pointer;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: .9em;
-  font-weight: normal;
-  height: 22px;
-  margin: 0 25px 0 0;
-  text-align: center;
-  text-decoration: none;
-  padding: 2px 10px 3px; }
-
-#SECalendarEventWrapper .SECalendarEventActions ul li.eventReminder a {
-  border: 1px solid #999;
-  color: #000;
-  cursor: pointer;
-  font-family: Arial,Helvetica,sans-serif;
-  font-size: .9em;
-  font-weight: normal;
-  height: 22px;
-  margin: 0 25px 0 0;
-  text-align: center;
-  text-decoration: none;
-  padding: 2px 10px 3px;
-  background-image: url("/sebin/l/g/button-gradient.jpg");
-  background-position: top;
-  background-repeat: repeat-x; }
-
-#SECalendarEventWrapper .SECalendarEventActions ul li.eventShare a {
-  border: 1px solid #999;
-  color: #000;
-  cursor: pointer;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: .9em;
-  font-weight: normal;
-  height: 22px;
-  margin: 0 25px 0 0;
-  text-align: center;
-  text-decoration: none;
-  padding: 2px 10px 3px;
-  background-image: url(/sebin/l/g/button-gradient.jpg);
-  background-repeat: repeat-x;
-  background-position: top; }
-
-#SECalendarEventWrapper .SECalendarPropertyLabel {
-  margin: 20px 0 0 15px;
-  font-size: 1.1em;
-  width: 95%; }
-
-#SECalendarEventWrapper .SECalendarProperty {
-  float: left;
-  width: 99%;
-  margin: 0;
-  padding: 15px; }
-
-.SECalendarReminderName,
-.SECalendarReminderEmail,
-.SECalendarReminderOccurence,
-.SECalendarReminderNotification {
-  margin: 0 0 10px -50px; }
-
-.SECalendarReminderName label,
-.SECalendarReminderEmail label,
-.SECalendarReminderOccurence label {
-  font-weight: bold;
-  font-size: 1em;
-  margin: 0 0 0 50px;
-  display: inline; }
-
-.SECalendarReminderName input, .SECalendarReminderEmail input, .SECalendarReminderOccurence input {
-  margin: 0; }
-
-.SECalendarShareName, .SECalendarShareEmail, .SECalendarShareFriendEmail, .SECalendarShareMessage {
-  margin: 0 0 10px -50px;
-  padding: 10px; }
-
-.SECalendarShareName label, .SECalendarShareEmail label, .SECalendarShareFriendEmail label, .SECalendarShareMessage label {
-  margin: 0 0 0 40px;
-  display: inline; }
-
-.SECalendarSmallCal .SECalendarDay.futureDayOtherMonth {
-  background-color: #bbb; }
-
-.SECalendarSmallCal .SECalendarDay.futureDayOtherMonthWeekend {
-  background-color: #bbb; }
-
-.SECalendarSmallCal .SECalendarDay a {
-  color: #333;
-  text-decoration: underline !important; }
-
-.SECalendarSmallCal .SECalendarDay.SECalendarSelectedDay {
-  background-color: #feb30c; }
-
-.SECalendarSmallCal .SECalendarSelectedWeek {
-  background-color: #feb30c; }
-
-#SECalendarSmallCalMonth {
-  background-color: #c51110; }
-
-.SECalendarFilter a {
-  color: #fff;
-  font-weight: normal;
-  display: inline-block;
-  margin: 0 7px; }
-
-#SECalendarEventWrapper hr {
-  display: none; }
-
-#SECalendarReminder {
-  border-bottom: 1px solid #ccc;
-  padding: 0 0 80px; }
-
-.SECalendarReminderNotification {
-  margin: 0; }
-
-.SECalendarKeyword select,
-.SECalendarLocation select,
-.SECalendarType select,
-.SECalendarKeyword input {
-  width: 100% !important; }
-
-#maincontainer #SECalendarListWrapper .SECalendarFilter a,
-#maincontainer #SECalendarSummaryWrapper .SECalendarFilter a,
-#maincontainer #SECalendarListWrapper #SECalendarSmallCalMonth a,
-#maincontainer #SECalendarSummaryWrapper #SECalendarSmallCalMonth a {
-  color: white !important; }
-
-.SECalendarSmallCal .SECalendarDay.pastDay {
-  padding: 0 3px; }
-
-.SECalendarSummaryDateList {
-  float: left;
-  position: relative;
-  max-width: 524px;
-  width: 100%; }
-  .SECalendarSummaryDateList ul {
-    margin: 0;
-    padding-left: 20px; }
-
-.SECalendarFilter {
-  clear: none; }
-
 #RateThisPageForm fieldset {
   border: none !important;
   margin: 0 !important;
@@ -1993,9 +1320,44 @@ td.SECalendarEventDate {
 #RateThisPageFormPOLICE .seButton {
   margin: 0 !important; }
 
-#mainContent input {
-  width: auto !important;
-  max-width: 100%; }
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/*!
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=489a67079a5ccd6b22380c5df055429c)
+ * Config saved to config.json and https://gist.github.com/489a67079a5ccd6b22380c5df055429c
+ */
+/*! 
+ * Removed everything but the collapse classes.
+ * MCS 12/1/2016
+ */
+.collapse {
+  display: none; }
+
+.collapse.in {
+  display: block; }
+
+tr.collapse.in {
+  display: table-row; }
+
+tbody.collapse.in {
+  display: table-row-group; }
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-property: height, visibility;
+  -o-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-duration: 0.35s;
+  -o-transition-duration: 0.35s;
+  transition-duration: 0.35s;
+  -webkit-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  transition-timing-function: ease; }
 
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)
@@ -2515,8 +1877,7 @@ td.SECalendarEventDate {
   .col-lg-offset-0 {
     margin-left: 0%; } }
 
-.clearfix:before,
-.search-input-container:before,
+.clearfix:before, .search-input-container:before,
 .clearfix:after,
 .search-input-container:after,
 .container:before,
@@ -2528,8 +1889,7 @@ td.SECalendarEventDate {
   content: " ";
   display: table; }
 
-.clearfix:after,
-.search-input-container:after,
+.clearfix:after, .search-input-container:after,
 .container:after,
 .container-fluid:after,
 .row:after {
@@ -2646,7 +2006,11 @@ td.SECalendarEventDate {
 
 @media only screen and (max-width: 461px) {
   .search-container.inside-template {
-    height: 40px; } }
+    height: 40px; }
+  .search-form .search-button {
+    padding: 11px 5px; }
+  .search-form .search-input {
+    padding: 11px 10px; } }
 
 @media only screen and (max-width: 400px) {
   .search-form .search-input {
@@ -2668,11 +2032,11 @@ td.SECalendarEventDate {
 
 /*Search Box*/
 .search-container {
-  background-color: #dbdbdb;
-  background: rgba(230, 230, 230, 0.89);
-  margin: 40px auto;
-  max-width: 900px;
-  width: 80%; }
+  background: #ccc none repeat scroll 0 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 10px 0;
+  width: 100%; }
 
 @media only screen and (max-width: 992px) {
   .search-container {
@@ -2687,7 +2051,7 @@ td.SECalendarEventDate {
   .alert {
     margin: -20px 20px 0; }
   .search-container {
-    margin: 20px auto;
+    margin: 0 auto;
     width: 90%; } }
 
 @media only screen and (max-width: 767px) {
@@ -2719,9 +2083,11 @@ td.SECalendarEventDate {
     border: 1px solid #999;
     height: auto; }
   .search-internal .search-input {
+    border: 1px solid #666;
     font-size: 1.2em;
-    padding: 8px 10px; }
+    padding: 9px; }
   .search-internal .search-button {
+    border: 1px solid #666;
     border-radius: 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1em;
@@ -2747,14 +2113,11 @@ td.SECalendarEventDate {
   padding: 0;
   margin: 0; }
 
-#backgroundgradient {
-  max-width: 1000px; }
+#main-content {
+  max-width: 1200px; }
 
 #maincontainer #calloutarea p {
   margin: 10px 0 15px; }
-
-#mainContent a {
-  line-height: 1.3; }
 
 #centerContent {
   width: 100% !important; }
@@ -2764,9 +2127,6 @@ td.SECalendarEventDate {
 .secondary-nav .secondary-nav-list {
   padding: 14px 0; }
 
-#backgroundshadow {
-  background: #ebebeb; }
-
 textarea,
 input[type="search"],
 input[type="text"],
@@ -2775,19 +2135,3 @@ input[type="submit"] {
   -webkit-appearance: none;
   -webkit-border-radius: 0;
   border-radius: 0; }
-
-@media screen and (max-width: 767px) {
-  #maincontainer h1 {
-    font-size: 1.8em !important; }
-  #maincontainer h2 {
-    font-size: 1.3em !important; }
-  #maincontainer h3 {
-    font-size: 1.1em !important; }
-  #maincontainer h4 {
-    font-size: 1em !important; }
-  #maincontainer h5 {
-    font-size: .9em !important; }
-  #maincontainer h6 {
-    font-size: .7em !important; }
-  #relatedtopics {
-    display: none; } }

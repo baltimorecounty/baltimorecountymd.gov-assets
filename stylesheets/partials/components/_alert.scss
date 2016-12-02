@@ -1,29 +1,5 @@
 /*Alert Box*/
-.alert{
-  a{
-    color: $navy;
-    text-decoration:none;
 
-    &:hover {
-      color: $alert-link-hover;
-    }
-  }
-
-  h1{
-    font-family:$default-font-family;
-    font-size: 1.15em;
-    font-weight:bold;
-    border:none;
-    margin: 0;
-    padding: 20px;
-    line-height:1;
-  }
-  
-  background-color:$gold;
-  font-family:$default-font-family;
-  line-height: 0;
-  text-align:center;
-}
 
 @media only screen and (max-width: 1100px) {
   .alert h1 {

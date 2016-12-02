@@ -14,6 +14,7 @@ var concatFiles = function(files, name, dest) {
 
 gulp.task('concatHomepageJs', function() {
 	var files = ['./js/lib/jQuery.min.js', 
+					'./js/lib/bootstrap-collapse.min.js',
 					'./js/lib/slick.min.js', 
 					'./js/lib/handlebars.js', 
 					'./js/lib/picturefill.min.js', 
