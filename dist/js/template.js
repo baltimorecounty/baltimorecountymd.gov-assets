@@ -536,9 +536,8 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 			var $siblings = $collapsable.siblings('a');
 			var accordionLevel = getAccordionLevel($collapsable);
 
-			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) {
+			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) 
 				$siblings.addClass('active');
-			}
 
 		});
 
@@ -548,14 +547,22 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 			var $siblings = $collapsable.siblings('a');
 			var accordionLevel = getAccordionLevel($collapsable);
 
-			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
+			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) 
 				$siblings.removeClass('active');
-			}
 		});
+		
+		// Hide all text-only nodes.
+		$('.bc-accordion-menu .panel ul li').contents().filter(textNodeFilter).parent().css('display','none');
 
 		/* Returns whether this is a parent or child accordion link. */
 		function getAccordionLevel($element) {
 			return $element.parents('ul').length + 1;
+		}
+
+		function textNodeFilter(idx, element) {
+			if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
+				return true;
+			}
 		}
 
     });
