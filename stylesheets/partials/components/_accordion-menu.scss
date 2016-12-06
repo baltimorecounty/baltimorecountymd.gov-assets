@@ -1,16 +1,11 @@
 .bc-accordion-menu {
 
-    .title {
-        display: block;
-    }
-
     .panel {
 
         a {
             background: #ebebeb;
             display: block;
             line-height: 1.7em;
-            margin-bottom: 10px;
             padding: 5px 15px;
 
             &:hover {
@@ -52,7 +47,7 @@
 
             }
 
-        }
+        }        
 
         ul {
             list-style: none;
@@ -62,6 +57,7 @@
 
                 a, a:hover, &.inactive {
                     padding: 5px 15px 5px 40px;
+                    margin-bottom: 0;
                 }
 
                 ul {
@@ -84,6 +80,10 @@
             background: #feb30c;
         }
 
+    }
+
+    & > .panel {
+        margin-bottom: 10px;
     }
 
 }

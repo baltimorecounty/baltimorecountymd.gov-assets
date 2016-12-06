@@ -1359,14 +1359,10 @@ tbody.collapse.in {
   -o-transition-timing-function: ease;
   transition-timing-function: ease; }
 
-.bc-accordion-menu .title {
-  display: block; }
-
 .bc-accordion-menu .panel a {
   background: #ebebeb;
   display: block;
   line-height: 1.7em;
-  margin-bottom: 10px;
   padding: 5px 15px; }
   .bc-accordion-menu .panel a:hover {
     background: #feb30c; }
@@ -1400,12 +1396,16 @@ tbody.collapse.in {
   list-style: none;
   padding: 0; }
   .bc-accordion-menu .panel ul li a, .bc-accordion-menu .panel ul li a:hover, .bc-accordion-menu .panel ul li.inactive {
-    padding: 5px 15px 5px 40px; }
+    padding: 5px 15px 5px 40px;
+    margin-bottom: 0; }
   .bc-accordion-menu .panel ul li ul li a, .bc-accordion-menu .panel ul li ul li a:hover, .bc-accordion-menu .panel ul li ul li.inactive {
     padding: 5px 15px 5px 60px; }
 
 .bc-accordion-menu .panel .current {
   background: #feb30c; }
+
+.bc-accordion-menu > .panel {
+  margin-bottom: 10px; }
 
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)
