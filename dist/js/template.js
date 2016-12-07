@@ -203,20 +203,87 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
         });
     });
 })(jQuery, TextResizer);
-/* https://github.com/matthewbdaly/jquery.listfilter 
- * License: GPLv2
- */
-!function(a){"use strict";var b={init:function(b){var c,d,e,f,g=this;return a.expr[":"].icontains=function(a,b,c){return(a.textContent||a.innerText||jQuery(a).text()||"").toLowerCase().indexOf(c[3].toLowerCase())>=0},g.settings=a.extend({filter:null,clearlink:null,alternate:null,alternateclass:"alternate",nofilter:"nofilter",callback:null},b),g.items=g.find("div, li, tr"),e=g.settings.filter?g.settings.filter:a("<input></input>",{type:"text"}).prependTo(this),c=g.settings.clearlink?g.settings.clearlink:a("<a>Clear</a>").insertAfter(e),g.settings.alternate&&g.items.filter(":odd").addClass(g.settings.alternateclass),e.change(function(){f=e.val(),g.items.hide(),g.settings.alternate&&g.items.removeClass(g.settings.alternateclass),d=f.length<1?g.items:g.items.filter("."+g.settings.nofilter+", :icontains("+f+")"),g.settings.alternate&&d.filter(":odd").addClass(g.settings.alternateclass),d.show(),g.settings.callback&&g.settings.callback()}).on("keyup",function(){e.change()}),c.on("click",function(){e.val("").change()}),this},refresh:function(){var a,b,c,d=this;d.items=d.find("div, li, tr"),d.settings.alternate&&(d.items.removeClass(d.settings.alternateclass),b=d.settings.filter,a=b.val(),a.length>0?(c=d.items.filter("."+d.settings.nofilter+", :icontains("+a+")"),c.filter(":odd").addClass(d.settings.alternateclass)):d.items.filter(":odd").addClass(d.settings.alternateclass))}};a.fn.listfilter=function(c){var d;return b[c]?d=b[c].apply(this,Array.prototype.slice.call(arguments,1)):"object"!=typeof c&&c?a.error("Method "+c+" not available"):d=b.init.apply(this,arguments),d?d:void 0}}(jQuery);
+var baltimoreCounty = baltimoreCounty || {};
 
-$(function() {
-    $('.bc-filter-content').listfilter({
-        'filter': $('.bc-filter-form .bc-filter-form-filter'),
-        'clearlink' : $('.bc-filter-form .bc-filter-form-clearButton'),
-        'callback': function() {
-            if ($('.bc-filter-content ul li[style="display: none;"]').length === $('.bc-filter-content ul li').length)
-                $(".bc-filter-noResults").show();
-            else    
-                $(".bc-filter-noResults").hide();
-        }
-    });
-});
+baltimoreCounty.listFilter = (function($) {
+
+    /* Private Properties ******************************************/
+
+    var that = this;
+    that.options = {};
+
+    /* Public Methods ******************************************/ 
+
+    /*
+     * Initialize the filter, and activate it.
+     */
+    function init(options) {
+        that.options.listWrapperSelector = options.listWrapper || '.bc-filter-content';
+        that.options.listSearchBoxSelector = options.searchBox || '.bc-filter-form .bc-filter-form-filter';
+        that.options.listClearButtonSelector = options.clearButton || '.bc-filter-form .bc-filter-form-clearButton';
+        that.options.listErrorMessageSelector = options.errorMessage || '.bc-filter-noResults';
+
+        that.$listWrapper = safeLoad(that.options.listWrapperSelector);
+        that.$searchBox = safeLoad(that.options.listSearchBoxSelector);
+        that.$clearButton = safeLoad(that.options.listClearButtonSelector);
+        that.$errorMessage = safeLoad(that.options.listErrorMessageSelector);
+
+        that.$errorMessage.hide();
+
+        that.$searchBox.on('keyup', function(eventObject) {
+            filterList(that.$listWrapper, $(eventObject.currentTarget).val());
+        });
+        
+        $(that.options.listClearButtonSelector).on('click', function() {
+            clearFilter(that.$listWrapper, that.$searchBox);
+        });
+    }      
+
+    /* Private Methods ******************************************/
+
+    function safeLoad(selector) {
+        var $items = $(selector);
+        if ($items.length === 0)
+            throw 'No elements for "' + selector + '" were found.';
+        return $items;
+    }
+
+    /*
+     * Filters the list based on the user's input.
+     */
+    function filterList($listWrapper, criteria) {
+        var $matches = $listWrapper.find('ul li').filter(function(idx, element) {            
+            if ($(element).text().toLowerCase().indexOf(criteria.toLowerCase()) > -1)
+                return true;
+            return false;
+        });
+
+        $listWrapper.find('li').not($matches).hide();
+        $matches.show();
+
+        var $divsWithResults = $listWrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
+
+        $listWrapper.children('div').not($divsWithResults).hide();
+        $divsWithResults.show();
+
+        if ($divsWithResults.length === 0)
+            $errorMessage.show();
+        else
+            $errorMessage.hide();
+    }
+
+    /*
+     * Clears the filter and displays all nodes in the list.
+     */
+    function clearFilter($listWrapper, $searchbox) {
+        $listWrapper.find('li, div').show();
+        $searchbox.val('');
+    }
+
+    /* Reveal! */
+
+    return {
+        init: init
+    };
+
+})(jQuery);

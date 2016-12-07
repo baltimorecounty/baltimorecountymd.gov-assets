@@ -53,25 +53,25 @@ baltimoreCounty.listFilter = (function($) {
             return false;
         });
 
-        $list.find('li').not($matches).hide();
+        $listWrapper.find('li').not($matches).hide();
         $matches.show();
 
-        var $divsWithResults = $list.children('div').find('li').not('[style="display: none;"]').closest('div');
+        var $divsWithResults = $listWrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
 
-        $list.children('div').not($divsWithResults).hide();
+        $listWrapper.children('div').not($divsWithResults).hide();
         $divsWithResults.show();
 
         if ($divsWithResults.length === 0)
-            $(that.options.listErrorMessageSelector).show();
+            $errorMessage.show();
         else
-            $(that.options.listErrorMessageSelector).hide();
+            $errorMessage.hide();
     }
 
     /*
      * Clears the filter and displays all nodes in the list.
      */
     function clearFilter($listWrapper, $searchbox) {
-        $listWrapper.find('li').show();
+        $listWrapper.find('li, div').show();
         $searchbox.val('');
     }
 
