@@ -73,8 +73,6 @@ Contains google specific code to report analytics to Google Analytics.
 **filename**: bc-google-analytics.js  
 **usage**: template.min.js
 
-
-
 ## Google Analytics Custom Events
 Contains events that will trigger event tracking in Google Analytics.  We are responsible for maintaining the events we want to track in this file.
 
@@ -87,3 +85,58 @@ Currently we are tracking:
 ### Dependencies
 * [jQuery](https://jquery.com/)
 
+
+## List Filter
+Filters unordered lists that are broken into sections.
+
+### Usage
+**Note:** You will need to use content inclusions for both the `<form>` tag and the `<script>` tag. Everything else can be directly on the page.
+
+#### HTML for the form, error message, and filterable content.
+
+```html
+<form class="bc-filter-form">
+    <label for="filter">Filter: Enter topic or keyword to filter content.</label>
+    <input id="filter" value="" type="text" class="bc-filter-form-filter" />
+    <button type="button" class="clear bc-filter-form-clearButton">Clear</button>
+</form>
+
+<div class="bc-filter-noResults" style="display: none;">No Search Results...Please Try Another Search</div>       
+
+<div id="centerContent" class="bc-filter-content">
+    <div>
+        <h2>Section Header</h2>
+        <ul>
+            <li><a href="https://www.google.com">First List Item</a></li>
+            <li><a href="https://www.google.com">Second List Item</a></li>
+            <li><a href="https://www.google.com">Third List Item</a></li>
+        </ul>
+    </div>
+</div>
+```
+
+#### HTML/JavaScript for the filter initialization. 
+
+```html
+<script>
+    baltimoreCounty.listFilter.init({
+        listWrapper: '.bc-filter-content',
+        searchBox: '.bc-filter-form .bc-filter-form-filter',
+        clearButton: '.bc-filter-form .bc-filter-form-clearButton',
+        errorMessage: '.bc-filter-noResults'
+    });     
+</script>   
+```
+
+### Options
+Option | Type | Default | Description | Required
+------ | ---- | ------- | ----------- | --------
+listWrapper|string|.bc-filter-content|jQuery selector that identifies the element that wraps the entire list.|Yes
+searchBox|string|.bc-filter-form .bc-filter-form-filter|jQuery selector that identifies the filter's search box.|Yes
+clearButton|string|.bc-filter-form .bc-filter-form-clearButton|jQuery selector that identifies the filter's "Clear" button.|Yes
+errorMessage|string|.bc-filter-noResults|jQuery selector that identifies the element to display when there are no results.|Yes
+
+**filename**: bc-list-filter.js     
+**usage**: template.min.js 
+### Dependencies
+* [jQuery](https://jquery.com/)
