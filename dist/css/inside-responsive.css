@@ -1283,6 +1283,10 @@ a.skip:hover {
     color: #fff;
     padding: 10px; }
 
+.bc-filter-content ul {
+  padding: 0;
+  list-style: none; }
+
 #RateThisPageForm fieldset {
   border: none !important;
   margin: 0 !important;

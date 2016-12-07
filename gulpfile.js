@@ -31,8 +31,10 @@ gulp.task('concatTemplateJs', function() {
 					'./js/bc-google-analytics-custom-events.js', 
 					'./js/lib/review.js', 
 					'./js/mobile-search.js',
-					'./js/template-events.js', 
-					'./js/inside-template.js'];
+					'./js/template-events.js',
+					'./js/lib/jquery.listfilter.min.js', 
+					'./js/listfilter.config.js', 
+					'./js/inside-template.js',];
   	return concatFiles(files, 'template.js');
 });
 
