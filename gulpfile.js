@@ -26,13 +26,15 @@ gulp.task('concatHomepageJs', function() {
 
 gulp.task('concatTemplateJs', function() {
 	var files = ['./js/skip-nav.js',
+					'./js/lib/bootstrap-collapse.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
 					'./js/bc-google-analytics-custom-events.js', 
 					'./js/lib/review.js', 
 					'./js/mobile-search.js',
 					'./js/template-events.js', 
-					'./js/inside-template.js'];
+					'./js/inside-template.js',
+					'./js/accordion-menu.js'];
   	return concatFiles(files, 'template.js');
 });
 
