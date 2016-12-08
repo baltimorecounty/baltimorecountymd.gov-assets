@@ -86,14 +86,13 @@ Currently we are tracking:
 * [jQuery](https://jquery.com/)
 
 
-## List Filter
-Filters unordered lists that are broken into sections.
+## Content Filter
+Filters unordered lists that are broken into sections or tables.
 
 ### Usage
 **Note:** You will need to use content inclusions for both the `<form>` tag and the `<script>` tag. Everything else can be directly on the page.
 
-#### HTML for the form, error message, and filterable content.
-
+#### HTML for the form, error message, and filterable content required for filtering a list. 
 ```html
 <form class="bc-filter-form">
     <label for="filter">Filter: Enter topic or keyword to filter content.</label>
@@ -115,6 +114,30 @@ Filters unordered lists that are broken into sections.
 </div>
 ```
 
+#### HTML for the form, error message, and filterable content required for filtering a table. 
+```html
+<form class="bc-filter-form">
+    <label for="filter">Filter: Enter topic or keyword to filter content.</label>
+    <input id="filter" value="" type="text" class="bc-filter-form-filter" />
+    <button type="button" class="clear bc-filter-form-clearButton">Clear</button>
+</form>
+
+<div class="bc-filter-noResults" style="display: none;">No Search Results...Please Try Another Search</div>       
+
+<table class="bc-filter-content">
+    <tr>
+        <th>Column Header 1</th>
+        <th>Column Header 2</th>
+        <th>Column Header 3</th>
+    </tr>
+    <tr>
+        <td><a href="https://www.google.com">First List Item</a></td>
+        <td><a href="https://www.google.com">Second List Item</a></td>
+        <td><a href="https://www.google.com">Third List Item</a></td>
+    </tr>
+</table>
+```
+
 #### HTML/JavaScript for the filter initialization. 
 
 ```html
@@ -123,7 +146,8 @@ Filters unordered lists that are broken into sections.
         listWrapper: '.bc-filter-content',
         searchBox: '.bc-filter-form .bc-filter-form-filter',
         clearButton: '.bc-filter-form .bc-filter-form-clearButton',
-        errorMessage: '.bc-filter-noResults'
+        errorMessage: '.bc-filter-noResults',
+        contentType: 'list'
     });     
 </script>   
 ```
@@ -131,10 +155,11 @@ Filters unordered lists that are broken into sections.
 ### Options
 Option | Type | Default | Description | Required
 ------ | ---- | ------- | ----------- | --------
-listWrapper|string|.bc-filter-content|jQuery selector that identifies the element that wraps the entire list.|Yes
-searchBox|string|.bc-filter-form .bc-filter-form-filter|jQuery selector that identifies the filter's search box.|Yes
-clearButton|string|.bc-filter-form .bc-filter-form-clearButton|jQuery selector that identifies the filter's "Clear" button.|Yes
-errorMessage|string|.bc-filter-noResults|jQuery selector that identifies the element to display when there are no results.|Yes
+listWrapper|string|.bc-filter-content|jQuery selector that identifies the element that wraps the entire list.|No
+searchBox|string|.bc-filter-form .bc-filter-form-filter|jQuery selector that identifies the filter's search box.|No
+clearButton|string|.bc-filter-form .bc-filter-form-clearButton|jQuery selector that identifies the filter's "Clear" button.|No
+errorMessage|string|.bc-filter-noResults|jQuery selector that identifies the element to display when there are no results.|No
+contentType|string|list|Determines whether we're filtering an unordered list or a table. Acceptable values are **list** and **table**.|No
 
 **filename**: bc-list-filter.js     
 **usage**: template.min.js 
