@@ -205,7 +205,7 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 })(jQuery, TextResizer);
 var baltimoreCounty = baltimoreCounty || {};
 
-baltimoreCounty.listFilter = (function($) {
+baltimoreCounty.contentFilter = (function($) {
 
     /* Private Properties ******************************************/
 
@@ -218,24 +218,38 @@ baltimoreCounty.listFilter = (function($) {
      * Initialize the filter, and activate it.
      */
     function init(options) {
-        that.options.listWrapperSelector = options.listWrapper || '.bc-filter-content';
-        that.options.listSearchBoxSelector = options.searchBox || '.bc-filter-form .bc-filter-form-filter';
-        that.options.listClearButtonSelector = options.clearButton || '.bc-filter-form .bc-filter-form-clearButton';
-        that.options.listErrorMessageSelector = options.errorMessage || '.bc-filter-noResults';
 
-        that.$listWrapper = safeLoad(that.options.listWrapperSelector);
-        that.$searchBox = safeLoad(that.options.listSearchBoxSelector);
-        that.$clearButton = safeLoad(that.options.listClearButtonSelector);
-        that.$errorMessage = safeLoad(that.options.listErrorMessageSelector);
+        options = options || {};
+
+        that.options.wrapperSelector = options.wrapper || '.bc-filter-content';
+        that.options.searchBoxSelector = options.searchBox || '.bc-filter-form .bc-filter-form-filter';
+        that.options.clearButtonSelector = options.clearButton || '.bc-filter-form .bc-filter-form-clearButton';
+        that.options.errorMessageSelector = options.errorMessage || '.bc-filter-noResults';
+        that.options.contentType = options.contentType || 'list';
+
+        that.$wrapper = safeLoad(that.options.wrapperSelector);
+        that.$searchBox = safeLoad(that.options.searchBoxSelector);
+        that.$clearButton = safeLoad(that.options.clearButtonSelector);
+        that.$errorMessage = safeLoad(that.options.errorMessageSelector);
+        that.contentType = that.options.contentType;
 
         that.$errorMessage.hide();
 
         that.$searchBox.on('keyup', function(eventObject) {
-            filterList(that.$listWrapper, $(eventObject.currentTarget).val());
+
+            switch (that.contentType) {
+                case 'table':
+                    filterTable(that.$wrapper, $(eventObject.currentTarget).val());
+                    break;
+                case 'list':
+                    filterList(that.$wrapper, $(eventObject.currentTarget).val());
+                    break;
+            }
+            
         });
         
-        $(that.options.listClearButtonSelector).on('click', function() {
-            clearFilter(that.$listWrapper, that.$searchBox);
+        $clearButton.on('click', function() {
+            clearFilter(that.$wrapper, that.$searchBox);
         });
     }      
 
@@ -249,34 +263,56 @@ baltimoreCounty.listFilter = (function($) {
     }
 
     /*
-     * Filters the list based on the user's input.
+     * Filters an unordered list based on the user's input.
      */
-    function filterList($listWrapper, criteria) {
-        var $matches = $listWrapper.find('ul li').filter(function(idx, element) {            
+    function filterList($wrapper, criteria) {
+        var $matches = $wrapper.find('ul li').filter(function(idx, element) {            
             if ($(element).text().toLowerCase().indexOf(criteria.toLowerCase()) > -1)
                 return true;
             return false;
         });
 
-        $listWrapper.find('li').not($matches).hide();
+        $wrapper.find('li').not($matches).hide();
         $matches.show();
 
-        var $divsWithResults = $listWrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
+        var $divsWithResults = $wrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
 
-        $listWrapper.children('div').not($divsWithResults).hide();
+        $wrapper.children('div').not($divsWithResults).hide();
         $divsWithResults.show();
 
-        if ($divsWithResults.length === 0)
+        if ($divsWithResults.length === 0) 
             $errorMessage.show();
         else
             $errorMessage.hide();
     }
 
     /*
+     * Filters an table of links and content based on the user's input.
+     */
+    function filterTable($wrapper, criteria) {
+        var $matches = $wrapper.find('tr').filter(function(idx, element) {    
+            if ($(element).text().toLowerCase().indexOf(criteria.toLowerCase()) > -1)
+                return true;
+            return false;
+        });
+
+        $wrapper.find('tr').has('td').not($matches).hide();
+        $matches.show();
+
+        if ($matches.length === 0) {
+            $errorMessage.show();
+            $wrapper.find('tr').has('th').hide();
+        } else {
+            $errorMessage.hide();
+             $wrapper.find('tr').has('th').show();
+       }
+    }
+
+    /*
      * Clears the filter and displays all nodes in the list.
      */
-    function clearFilter($listWrapper, $searchbox) {
-        $listWrapper.find('li, div').show();
+    function clearFilter($wrapper, $searchbox) {
+        $wrapper.find('li, div, tr').show();
         $searchbox.val('');
     }
 

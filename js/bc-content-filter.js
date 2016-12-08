@@ -13,6 +13,9 @@ baltimoreCounty.contentFilter = (function($) {
      * Initialize the filter, and activate it.
      */
     function init(options) {
+
+        options = options || {};
+
         that.options.wrapperSelector = options.wrapper || '.bc-filter-content';
         that.options.searchBoxSelector = options.searchBox || '.bc-filter-form .bc-filter-form-filter';
         that.options.clearButtonSelector = options.clearButton || '.bc-filter-form .bc-filter-form-clearButton';
@@ -40,7 +43,7 @@ baltimoreCounty.contentFilter = (function($) {
             
         });
         
-        $(that.options.listClearButtonSelector).on('click', function() {
+        $clearButton.on('click', function() {
             clearFilter(that.$wrapper, that.$searchBox);
         });
     }      
@@ -72,7 +75,7 @@ baltimoreCounty.contentFilter = (function($) {
         $wrapper.children('div').not($divsWithResults).hide();
         $divsWithResults.show();
 
-        if ($divsWithResults.length === 0)
+        if ($divsWithResults.length === 0) 
             $errorMessage.show();
         else
             $errorMessage.hide();
@@ -82,10 +85,7 @@ baltimoreCounty.contentFilter = (function($) {
      * Filters an table of links and content based on the user's input.
      */
     function filterTable($wrapper, criteria) {
-        var $matches = $wrapper.find('table tr').filter(function(idx, element) {    
-
-            console.log($(element).text().toLowerCase().indexOf(criteria.toLowerCase()));
-
+        var $matches = $wrapper.find('tr').filter(function(idx, element) {    
             if ($(element).text().toLowerCase().indexOf(criteria.toLowerCase()) > -1)
                 return true;
             return false;
@@ -94,17 +94,20 @@ baltimoreCounty.contentFilter = (function($) {
         $wrapper.find('tr').has('td').not($matches).hide();
         $matches.show();
 
-        if ($matches.length === 0)
+        if ($matches.length === 0) {
             $errorMessage.show();
-        else
+            $wrapper.find('tr').has('th').hide();
+        } else {
             $errorMessage.hide();
+             $wrapper.find('tr').has('th').show();
+       }
     }
 
     /*
      * Clears the filter and displays all nodes in the list.
      */
     function clearFilter($wrapper, $searchbox) {
-        $wrapper.find('li, div').show();
+        $wrapper.find('li, div, tr').show();
         $searchbox.val('');
     }
 
