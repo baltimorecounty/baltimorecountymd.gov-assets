@@ -62,12 +62,14 @@ baltimoreCounty.contentFilter = (function($) {
      */
     function findMatches($wrapper, selector, criteria) {
         var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
+
         var $matches = $wrapper.find(selector).filter(function(idx, element) {
             var selectorText = $(element).text().toLowerCase();            
             return criteriaTokens.every(function(tokenValue) {
                 return selectorText.indexOf(tokenValue) > -1;
             });
         });
+
         return $matches;
     }
 
@@ -92,6 +94,16 @@ baltimoreCounty.contentFilter = (function($) {
     }
 
     /*
+     * Since the current table stripes are based on :nth-child(), they'll get funky
+     * when the filter removes rows. So, let's reset the row striping when there's a search. 
+     * This is using inline styles since there aren't classes to represent the striping in 
+     * internal-responsive.css, and the pseudo classes are in red-inside.css.
+     */
+    function resetTableStripes($matches, selector, color) {
+        $matches.parent().children(selector).has('td').css('background-color', color);
+    }
+
+    /*
      * Filters an table of links and content based on the user's input.
      */
     function filterTable($wrapper, criteria) {
@@ -105,8 +117,11 @@ baltimoreCounty.contentFilter = (function($) {
             $wrapper.find('tr').has('th').hide();
         } else {
             $errorMessage.hide();
-             $wrapper.find('tr').has('th').show();
-       }
+            $wrapper.find('tr').has('th').show();
+        }
+
+        resetTableStripes($matches, 'tr:visible:even', '#ebebeb');
+        resetTableStripes($matches, 'tr:visible:odd', '#fff');
     }
 
     /*
