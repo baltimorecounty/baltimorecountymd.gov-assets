@@ -96,8 +96,8 @@ baltimoreCounty.contentFilter = (function($) {
     /*
      * Since the current table stripes are based on :nth-child(), they'll get funky
      * when the filter removes rows. So, let's reset the row striping when there's a search. 
-     * This is using inline styles since there aren't classes to represent the striping in 
-     * internal-responsive.css, and the pseudo classes are in red-inside.css.
+     * This is using inline styles since there's inline CSS that sets the color and 
+     * has to be overwritten.
      */
     function resetTableStripes($matches, selector, color) {
         $matches.parent().children(selector).has('td').css('background-color', color);
