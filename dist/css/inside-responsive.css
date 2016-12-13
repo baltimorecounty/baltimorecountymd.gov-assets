@@ -1166,7 +1166,6 @@ a.skip:hover {
     #calloutarea p {
       clear: both; } }
 
-/*Blog Generic*/
 @media screen and (max-width: 700px) {
   .blog-tabs ul {
     margin: 0; }
