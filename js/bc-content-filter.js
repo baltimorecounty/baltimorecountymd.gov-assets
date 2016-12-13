@@ -58,14 +58,25 @@ baltimoreCounty.contentFilter = (function($) {
     }
 
     /*
+     * Tokenized search that returns the matches found in the list or table.
+     */
+    function findMatches($wrapper, selector, criteria) {
+        var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
+        var $matches = $wrapper.find(selector).filter(function(idx, element) {
+            var selectorText = $(element).text().toLowerCase();            
+            return criteriaTokens.every(function(tokenValue) {
+                return selectorText.indexOf(tokenValue) > -1;
+            });
+        });
+
+        return $matches;
+    }
+
+    /*
      * Filters an unordered list based on the user's input.
      */
     function filterList($wrapper, criteria) {
-        var $matches = $wrapper.find('ul li').filter(function(idx, element) {            
-            if ($(element).text().toLowerCase().indexOf(criteria.toLowerCase()) > -1)
-                return true;
-            return false;
-        });
+        var $matches = findMatches($wrapper, 'ul li', criteria);
 
         $wrapper.find('li').not($matches).hide();
         $matches.show();
@@ -85,11 +96,7 @@ baltimoreCounty.contentFilter = (function($) {
      * Filters an table of links and content based on the user's input.
      */
     function filterTable($wrapper, criteria) {
-        var $matches = $wrapper.find('tr').filter(function(idx, element) {    
-            if ($(element).text().toLowerCase().indexOf(criteria.toLowerCase()) > -1)
-                return true;
-            return false;
-        });
+        var $matches = findMatches($wrapper, 'tr', criteria);
 
         $wrapper.find('tr').has('td').not($matches).hide();
         $matches.show();
