@@ -25,7 +25,8 @@ gulp.task('concatHomepageJs', function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['./js/skip-nav.js',
+	var files = ['./js/polyfills/array.some.js', 
+					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
 					'./js/bc-google-analytics-custom-events.js', 
@@ -33,8 +34,8 @@ gulp.task('concatTemplateJs', function() {
 					'./js/mobile-search.js',
 					'./js/template-events.js',
 					'./js/bc-content-filter.js', 
-					'./js/inside-template.js',];
-  	return concatFiles(files, 'template.js');
+					'./js/inside-template.js']
+	return concatFiles(files, 'template.js');
 });
 
 gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
