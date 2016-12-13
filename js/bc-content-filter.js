@@ -68,7 +68,6 @@ baltimoreCounty.contentFilter = (function($) {
                 return selectorText.indexOf(tokenValue) > -1;
             });
         });
-
         return $matches;
     }
 

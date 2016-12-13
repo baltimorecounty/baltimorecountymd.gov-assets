@@ -269,10 +269,11 @@ baltimoreCounty.contentFilter = (function($) {
         var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
         var $matches = $wrapper.find(selector).filter(function(idx, element) {
             var selectorText = $(element).text().toLowerCase();            
-            return criteriaTokens.some(function(tokenValue) {
+            return criteriaTokens.every(function(tokenValue) {
                 return selectorText.indexOf(tokenValue) > -1;
             });
         });
+        return $matches;
     }
 
     /*
