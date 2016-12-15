@@ -1959,7 +1959,10 @@ a.skip:hover {
   .social-media-list-item {
     margin-right: 10px; } }
 
-/*Hompage Specific*/
+/*Homepage Specific*/
+body {
+  background: #dbdbdb; }
+
 img {
   border: 1px solid #ccc;
   margin: 5px;
