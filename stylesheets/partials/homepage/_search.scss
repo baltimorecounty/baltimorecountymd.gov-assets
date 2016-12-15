@@ -2,11 +2,10 @@
 
 /*Search Box*/
 .search-container {
-    background: #ccc none repeat scroll 0 0;
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 10px 0;
-    width: 100%;
+    background: rgba(230, 230, 230, 0.89) none repeat scroll 0 0;
+    margin: 40px auto;
+    max-width: 900px;
+    width: 80%;
 }
 
 .search-input-container {
@@ -14,36 +13,39 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .search-container {
-    background:none;
-    position: relative;
-    left: 0;
 
-    -webkit-transform: none;
-       -moz-transform: none;
-        -ms-transform: none;
-         -o-transform: none;
-            transform: none;
-  }
+	.carousel-wrapper {
 
-  .alert {
-    margin:-20px 20px 0;
-  }
+		.search-container {
+			margin: 0;
+      		max-width: 100%;
+			position: relative;
+			width: auto;
 
-  .search-container{
-    margin: 0 auto;
-    width: 90%;
-  }
+			.search {
+				padding: 40px;
+			}
+    	}
+
+    	.alert {
+    		margin:-20px 20px 0;
+    	}
+  	}
 }
 
 @media only screen and (max-width: 767px) {
-  .search{
-    padding:0;
+	.carousel-wrapper {
+		.search-container {
+			.search {
+				padding: 20px;
 
-    .inline-list li a{
-      padding: 10px 0;
-    }
-  }
+				.inline-list li a{
+					padding: 10px 0;
+				}
+			}
+		}
+	}
+	
   .alert {
     font-size: .9em;
     margin: -20px 0 20px;
