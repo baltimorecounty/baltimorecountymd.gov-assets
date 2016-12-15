@@ -87,3 +87,13 @@ Currently we are tracking:
 ### Dependencies
 * [jQuery](https://jquery.com/)
 
+
+
+## YouTube Playlist Gallery
+Displays a video gallery of YouTube videos from an existing playlist. 
+
+**filename**: youtube-playlist-gallery.js    
+**usage**: template.min.js
+### Dependencies
+* [jQuery](https://jquery.com/)
+* [YouTube v3 API](https://developers.google.com/api-client-library/javascript/samples/samples#LoadinganAPIandMakingaRequest)
