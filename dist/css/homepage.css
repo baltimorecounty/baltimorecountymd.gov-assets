@@ -1963,6 +1963,9 @@ a.skip:hover {
 body {
   background: #dbdbdb; }
 
+.homepage #primary-nav-container {
+  padding: 0; }
+
 img {
   border: 1px solid #ccc;
   margin: 5px;
