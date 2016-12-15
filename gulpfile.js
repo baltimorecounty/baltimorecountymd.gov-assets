@@ -46,12 +46,12 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 });
 
 gulp.task('sass', function () {
-  gulp.src('./stylesheets/*.scss')
+  return gulp.src('./stylesheets/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('compressCss', function () {
+gulp.task('compressCss', ['sass'], function () {
   return gulp.src('dist/css/homepage.css')
         .pipe(cssnano())
         .pipe(rename({ suffix: '.min' }))
@@ -63,6 +63,6 @@ gulp.task('watch', function() {
 	gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
 });
 
-gulp.task('default', ['compressFiles', 'sass', 'compressCss'], function() {
+gulp.task('default', ['compressFiles', 'compressCss'], function() {
 	return;
 });
