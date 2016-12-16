@@ -1319,6 +1319,32 @@ a.skip:hover {
 #RateThisPageFormPOLICE .seButton {
   margin: 0 !important; }
 
+.youtube-playlist-item {
+  background: white;
+  box-shadow: 1px 1px 4px #999;
+  float: left;
+  margin: 1em;
+  position: relative;
+  width: 290px; }
+  .youtube-playlist-item .fa-play-circle-o {
+    text-shadow: 1px 1px 4px #000;
+    color: white;
+    /* YouTube red  #e52d27 */
+    font-size: 3em;
+    position: absolute;
+    top: 60px;
+    left: 125px;
+    z-index: 100; }
+  .youtube-playlist-item figure {
+    margin: 0; }
+    .youtube-playlist-item figure img {
+      width: 290px; }
+    .youtube-playlist-item figure figcaption {
+      padding: .5em; }
+      .youtube-playlist-item figure figcaption h4, .youtube-playlist-item figure figcaption p {
+        margin: 0;
+        padding: 0; }
+
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
