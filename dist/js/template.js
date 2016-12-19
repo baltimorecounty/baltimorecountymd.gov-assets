@@ -211,9 +211,9 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
 
     that.API_KEY = 'AIzaSyBsGskkWEi-CdCx4dze-ikK2KzE7i-O450';
     that.documentationLink = 'https://goo.gl/HbhJ1p';
-    that.options = {
+    that.defaultOptions = {
         target: '.bc-youtube-playlist-gallery',
-        playlistId: ''
+        showDescription: false
     };
 
     /*
@@ -224,16 +224,16 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
         if (!options) 
             options = that.options;
 
-        var $youtubePlaylistGalleryTarget = options.target ?  $(options.target.trim()) : $(that.options.target);
+        var $youtubePlaylistGalleryTarget = options.target ?  $(options.target.trim()) : $(that.defaultOptions.target);
         if (!$youtubePlaylistGalleryTarget.length === 0) 
             throw 'The "target" option value must be supplied. Please see documentation at ' + documentationLink + '.';
 
-        var playlistId = options.playlistId ? options.playlistId : that.options.playlistId;
+        var playlistId = options.playlistId;
         if (!playlistId || playlistId.length === 0) 
             throw 'The "playlistId" option must be supplied. Please see documentation at ' + documentationLink + '.';
 
         // A little redundant, but since null isn't quite false, let's check anyway.
-        var showDescription = options.showDescription ? options.showDescription : that.options.showDescription; 
+        var showDescription = options.showDescription ? options.showDescription : that.defaultOptions.showDescription; 
 
         getPlaylistItems(playlistId, $youtubePlaylistGalleryTarget, showDescription, generateYouTubePlaylistHtml);
     }
@@ -274,11 +274,10 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
                     html += '</div><div class="row hidden">';                
 
             html +=   '    <div class="youtube-playlist-item">'
-                    + '        <i class="fa fa-play-circle-o" aria-hidden="true"></i>'
                     + '        <figure>'
-                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '"><img src="' + playlistItems[i].snippet.thumbnails.medium.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
+                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '"><i class="fa fa-play-circle-o" aria-hidden="true"></i><img src="' + playlistItems[i].snippet.thumbnails.medium.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
                     + '            <figcaption>'
-                    + '                <h4><a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '">' + playlistItems[i].snippet.title + '</a></h4>';
+                    + '                <p><a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '">' + playlistItems[i].snippet.title + '</a></p>';
 
             if (showDescription)
                 html += '                <p>' + playlistItems[i].snippet.description + '</p>';

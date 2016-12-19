@@ -1323,31 +1323,33 @@ a.skip:hover {
   background: white;
   box-shadow: 1px 1px 4px #999;
   float: left;
-  margin: 1em;
+  margin: 10px;
   position: relative;
-  width: 265px; }
-  #mainContent .youtube-playlist-item .fa-play-circle-o {
-    text-shadow: 1px 1px 4px #000;
-    color: white;
-    /* YouTube red  #e52d27 */
-    font-size: 3em;
-    position: absolute;
-    top: 60px;
-    left: 125px;
-    z-index: 100; }
+  width: 260px; }
   #mainContent .youtube-playlist-item figure {
     margin: 0; }
+    #mainContent .youtube-playlist-item figure .fa-play-circle-o {
+      text-shadow: 1px 1px 4px #000;
+      color: white;
+      font-size: 3em;
+      left: 110px;
+      position: absolute;
+      top: 55px;
+      z-index: 100; }
     #mainContent .youtube-playlist-item figure img {
       border: 0;
       padding: 0;
-      width: 265px; }
+      width: 260px; }
     #mainContent .youtube-playlist-item figure figcaption {
       padding: .5em; }
-      #mainContent .youtube-playlist-item figure figcaption h4, #mainContent .youtube-playlist-item figure figcaption p {
+      #mainContent .youtube-playlist-item figure figcaption p {
         margin: 0;
         padding: 0; }
+    #mainContent .youtube-playlist-item figure a:hover .fa-play-circle-o {
+      color: #feb30c; }
 
 #mainContent .loadMoreButton {
+  margin-top: 1em;
   width: auto; }
 
 /*!
