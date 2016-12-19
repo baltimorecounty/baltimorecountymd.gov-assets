@@ -3,13 +3,11 @@
 
   .search-container {
     position: absolute;
-    left: 50%;
     z-index: 999;
-
-    -moz-transform:    translateX(-50%);
-    -o-transform:      translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    transform:         translateX(-50%);
+    top: auto;
+    bottom: auto;
+    left: 0;
+    right: 0;
   }  
 }
 

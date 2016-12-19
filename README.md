@@ -14,6 +14,7 @@ You will need to do these steps the first time you setup the project.
 7. Run ``npm install --save-dev gulp-uglify``
 8. Run ``npm install --save-dev gulp-rename``
 9. Run ``npm install --save-dev gulp-sass``
+10. Run ``npm install --save-dev gulp-cssnano``
 
 ###Build
 1. Open terminal or command prompt to the root of your local repository

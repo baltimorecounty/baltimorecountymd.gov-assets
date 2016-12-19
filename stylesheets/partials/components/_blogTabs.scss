@@ -1,116 +1,9 @@
-.blog-tabs {
-  background-color: #C51110;
-  background-position: center top;
-  background-repeat: repeat-x;
-  border-top: 6px solid #C51110;
-  display: inline-block;
-  font-family: Arial,Helvetica,sans-serif;
-  font-size: 1.5em;
-  margin: 0 0 5px;
-  width: 100%;
-	
-  ul {
-  	list-style-type: none;
-  	margin: 0 0 0 20px;
-  	padding: 0;
-	
-  	li {
-  		display: inline-block;
-  		list-style-type: none;
-
-  		a {
-		  color: white !important;
-		  border-left: none !important;
-		  border-right: none !important;
-		  display: inline-block;
-		  font-weight: normal;
-		  padding: 5px 20px 7px !important;
-		  text-decoration: none;
-		  
-		  br {
-		  	height: 0;
-		  }
-
-		  &:hover {
-		  	background: $red-hover;
-			text-decoration: none !important;
-		  }
-		  &.active {
-		  	background-color: white;
-		  	color: $red !important;
-		  	cursor: default;
-		  	font-weight: 700;
-
-		  	&:hover {
-		  		background-color: white;
-		  	}
-		  }
-
-  		}
-  	}
-  }
-} //Blog tabs should eventually be the class for the ul and not a div
-.blog-tabs--snowfighter {
-	background-color: $snowfighter-color;
-	border-top: 6px solid $snowfighter-color;
-
-	ul li a {
-		&:hover {
-		  background-color: $snowfighter-hover-color;	
-		}
-		&.active {
-		  color: $snowfighter-color !important;
-		}
-	}
-}
-.blog-tabs--police {
-	background-color: $police-color;
-	border-top: 6px solid $police-color;
-
-	ul li a {
-		&:hover {
-		  background-color: $police-hover-color;	
-		}
-		&.active {
-		  color: $police-color !important;
-		}
-	}
-}
-
-/*
-This css enables the active tab will appear active, 
-without having an active class specified
-*/
-/*I Want TO...*/
-.apply-container .apply, 
-.followup-container .followup, 
-.pay-container .pay, 
-.report-container .report, 
-.request-container .request,
-/*I'm Looking For*/
-.allinformation-container .allinformation,
-.residentinformation-container .residentinformation,
-.businessinformation-container .businessinformation,
-.governmentinformation-container .governmentinformation,
-.visitorinformation-container .visitorinformation,
-/*I need to contatct*/
-.anagency-container .anagency,
-.myrepresentative-container .myrepresentative,
-.anemployee-container .anemployee,
-.idontknow-container .idontknow
- {
-	border: none;
-	color: $red !important;
-	cursor: default;
-	display: block !important;
-}
 
 @media screen and (max-width: 700px) {
 	.blog-tabs ul {
 		margin: 0;
 
 		li {
-			font-size: .8em;
 
 			a {
 				display: block;
@@ -120,35 +13,53 @@ without having an active class specified
 		}
 	}
 }
+@media screen and (max-width: 800px) {	
+	#SECalendarSearch { 
+		clear: both;
+		float: left !important;
+		max-width: 100% !important;
+	}
+	.SECalendarSmallCal { 
+		clear: both !important;
+		width: 100%;
+	}
+	.SECalendarListEvents { 
+		width: 100% !important;}
+	.SECalendarFilter { 
+		max-width: 100% !important;
+	}
+}
 @media screen and (max-width: 500px) {
 	.blog-tabs {
 		border-top: 0;
 	}
+	.blog-tabs ul{
+		margin: 0 !important;
+	}
 	.blog-tabs ul li {
-		border-bottom: 1px solid white;
 		display: block;
 		width: 100%;
 	}
-	/*First, Active Item*/
+
+// First, Active Item
 	.blog-tabs ul li a.active,
 	.apply-container ul li a.apply, 
 	.followup-container ul li a.followup, 
 	.pay-container ul li a.pay, 
 	.report-container ul li a.report, 
 	.request-container ul li a.request,
-	/*I'm Looking For*/
+// I'm Looking For
 	.allinformation-container ul li a.allinformation,
 	.residentinformation-container ul li a.residentinformation,
 	.businessinformation-container ul li a.businessinformation,
 	.governmentinformation-container ul li a.governmentinformation,
 	.visitorinformation-container ul li a.visitorinformation,
-	/*I need to contatct*/
+// I need to contact
 	.anagency-container ul li a.anagency,
 	.myrepresentative-container ul li a.myrepresentative,
 	.anemployee-container ul li a.anemployee,
 	.idontknow-container ul li a.idontknow {
 		background: $red-hover;
-		color: white !important;
 
 		&:hover {
 			background: $red-hover;

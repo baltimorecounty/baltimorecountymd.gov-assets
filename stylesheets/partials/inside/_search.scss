@@ -1,16 +1,19 @@
 .search-internal {
   padding: 1.5px 0;
+    
     .search-input, .search-button {
       border: 1px solid #999;
       height: auto;
     }
 
     .search-input {
+      border: 1px solid #666;
       font-size: 1.2em;
-      padding: 8px 10px;
+      padding: 9px;
     }
 
     .search-button {
+      border:1px solid #666;
       border-radius: 0;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 1.1em;

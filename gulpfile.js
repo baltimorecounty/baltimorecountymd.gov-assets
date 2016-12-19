@@ -2,7 +2,8 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
-	sass = require('gulp-sass');
+	sass = require('gulp-sass'),
+	cssnano = require('gulp-cssnano');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || './dist/js';
@@ -43,10 +44,18 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 	        }))
 		    .pipe(gulp.dest('./dist/js'));
 });
+
 gulp.task('sass', function () {
-  gulp.src('./stylesheets/*.scss')
+  return gulp.src('./stylesheets/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('compressCss', ['sass'], function () {
+  return gulp.src('dist/css/homepage.css')
+        .pipe(cssnano())
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('watch', function() {
@@ -54,6 +63,6 @@ gulp.task('watch', function() {
 	gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
 });
 
-gulp.task('default', ['compressFiles', 'sass'], function() {
+gulp.task('default', ['compressFiles', 'compressCss'], function() {
 	return;
 });

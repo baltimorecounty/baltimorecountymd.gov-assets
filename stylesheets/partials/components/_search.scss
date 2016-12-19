@@ -55,6 +55,12 @@
   .search-container.inside-template {
     height: 40px;
   }
+  .search-form .search-button{
+    padding: 11px 5px;
+  }
+  .search-form .search-input{
+    padding: 11px 10px;
+  }
 }
 
 @media only screen and (max-width: 400px) {

@@ -1,0 +1,28 @@
+{
+  "name": "baltimorecountymd.gov-assets",
+  "version": "1.0.0",
+  "description": "Static assets (CSS and JS) for the baltimorecountymd.gov website.",
+  "main": "NEW_gulpfile.js",
+  "dependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-uglify": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baltimorecounty/baltimorecountymd.gov-assets.git"
+  },
+  "author": "Baltimore County Government",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baltimorecounty/baltimorecountymd.gov-assets/issues"
+  },
+  "homepage": "https://github.com/baltimorecounty/baltimorecountymd.gov-assets#readme"
+}

@@ -11,22 +11,6 @@ html {
   box-sizing: border-box;
 }
 
-html, body {
-	background: $light-gray;
-	color: $base-font-color;
-	font-family: $default-font-family;
-	font-size: .96em !important;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
-
-img {
-	border: 1px solid $img-border-gray;
-	margin: 5px;
-	padding: 5px;
-}
-
 /*Remove IOS Broder Radius*/
 
 textarea,

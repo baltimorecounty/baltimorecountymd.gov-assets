@@ -1,35 +1,3 @@
-/*HACK - .callout is the desired class, .callout_box is the old SE way*/
-.callout, .callout_box {
-	max-width: 480px; /*HACK - width is set specifically from original templates*/
-	width: 100%;
-
-	img {
-		height: 100% !important;
-		width: 100% !important;
-	}
-
-	p {
-		line-height: 1.2 !important;
-		margin: 0 !important;
-	}
-}
-
-.callout__title {
-  border-bottom: 1px solid #CACACA; //TODO: Change this to variable
-  border-top: 6px solid #CACACA; //TODO: Change this to variable
-  font-weight: bold;
-  margin: 20px 0 0;
-  padding: 3px 0;
-  text-transform: uppercase;
-}
-
-.callout--page {
-	border: 2px solid $red;
-}
-.callout--secondary {
-	border: 2px solid $light-gray;
-}
-
 @media screen and (max-width: 992px) {
 	#calloutarea {
 		float: none !important;

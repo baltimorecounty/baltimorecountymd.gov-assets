@@ -112,10 +112,6 @@ dfn {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0; }
-
 /**
  * Address styling not present in IE 8/9.
  */
@@ -203,8 +199,7 @@ samp {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
-button,
-.search-form .search-button,
+button, .search-form .search-button,
 input,
 optgroup,
 select,
@@ -228,8 +223,7 @@ button, .search-form .search-button {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-button,
-.search-form .search-button,
+button, .search-form .search-button,
 select {
   text-transform: none; }
 
@@ -240,9 +234,9 @@ select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-button,
-.search-form .search-button,
-html input[type="button"], input[type="reset"],
+button, .search-form .search-button,
+html input[type="button"],
+input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
@@ -252,16 +246,14 @@ input[type="submit"] {
 /**
  * Re-set default cursor for disabled elements.
  */
-button[disabled],
-.search-form [disabled].search-button,
+button[disabled], .search-form [disabled].search-button,
 html input[disabled] {
   cursor: default; }
 
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-button::-moz-focus-inner,
-.search-form .search-button::-moz-focus-inner,
+button::-moz-focus-inner, .search-form .search-button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0; }
@@ -371,12 +363,12 @@ th {
   font-size: 65%; }
 
 /*Clearfix*/
-.clearfix:before,
-.search-input-container:before,
-.top-visited:before,
-.county-photo-feed .county-photo-container:before,
-.SESyndicationModule:before,
-.clearfix:after, .search-input-container:after, .top-visited:after, .county-photo-feed .county-photo-container:after, .SESyndicationModule:after {
+.clearfix:before, .search-input-container:before, .top-visited:before, .county-photo-feed .county-photo-container:before, .SESyndicationModule:before,
+.clearfix:after,
+.search-input-container:after,
+.top-visited:after,
+.county-photo-feed .county-photo-container:after,
+.SESyndicationModule:after {
   content: "";
   display: table; }
 
@@ -570,20 +562,6 @@ html {
   /* Firefox 1 - 28 */
   box-sizing: border-box; }
 
-html, body {
-  background: #dbdbdb;
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: .96em !important;
-  margin: 0;
-  padding: 0;
-  width: 100%; }
-
-img {
-  border: 1px solid #ccc;
-  margin: 5px;
-  padding: 5px; }
-
 /*Remove IOS Broder Radius*/
 textarea,
 input,
@@ -637,8 +615,7 @@ input[type="submit"] {
   left: 0;
   top: 0;
   display: block; }
-  .slick-track:before,
-  .slick-track:after {
+  .slick-track:before, .slick-track:after {
     content: "";
     display: table; }
   .slick-track:after {
@@ -693,15 +670,15 @@ input[type="submit"] {
   padding: 0;
   border: none;
   outline: none; }
-  .slick-prev:hover,
-  .slick-prev:focus,
-  .slick-next:hover, .slick-next:focus {
+  .slick-prev:hover, .slick-prev:focus,
+  .slick-next:hover,
+  .slick-next:focus {
     outline: none;
     background: transparent;
     color: transparent; }
-    .slick-prev:hover:before,
-    .slick-prev:focus:before,
-    .slick-next:hover:before, .slick-next:focus:before {
+    .slick-prev:hover:before, .slick-prev:focus:before,
+    .slick-next:hover:before,
+    .slick-next:focus:before {
       opacity: 1; }
   .slick-prev.slick-disabled:before,
   .slick-next.slick-disabled:before {
@@ -1318,11 +1295,7 @@ input[type="submit"] {
   .col-lg-offset-0 {
     margin-left: 0%; } }
 
-.clearfix:before,
-.search-input-container:before,
-.top-visited:before,
-.county-photo-feed .county-photo-container:before,
-.SESyndicationModule:before,
+.clearfix:before, .search-input-container:before, .top-visited:before, .county-photo-feed .county-photo-container:before, .SESyndicationModule:before,
 .clearfix:after,
 .search-input-container:after,
 .top-visited:after,
@@ -1337,11 +1310,7 @@ input[type="submit"] {
   content: " ";
   display: table; }
 
-.clearfix:after,
-.search-input-container:after,
-.top-visited:after,
-.county-photo-feed .county-photo-container:after,
-.SESyndicationModule:after,
+.clearfix:after, .search-input-container:after, .top-visited:after, .county-photo-feed .county-photo-container:after, .SESyndicationModule:after,
 .container:after,
 .container-fluid:after,
 .row:after {
@@ -1490,6 +1459,10 @@ input[type="submit"] {
 
 .hamburger-nav {
   display: none; }
+  .hamburger-nav img {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ccc; }
 
 @media only screen and (max-width: 767px) {
   .hamburger-nav {
@@ -1573,7 +1546,11 @@ input[type="submit"] {
     font-size: 1.5em; }
   .primary-nav .primary-nav-item a {
     background: url("//baltimorecountymd.gov/sebin/l/t/little-arrow.png") no-repeat scroll 12.5px 22px transparent;
-    padding: 20px 0 20px 40px; } }
+    padding: 20px 0 20px 40px; }
+  #mainContent img {
+    max-width: 100%;
+    display: block;
+    height: auto; } }
 
 @media only screen and (min-width: 767px) and (max-width: 800px) {
   .primary-nav .primary-nav-item .primary-nav-item__headline {
@@ -1662,7 +1639,7 @@ input[type="submit"] {
 
 @media only screen and (max-width: 480px) {
   .brand {
-    padding: 0 0 0 5px; }
+    padding: 0 0 0 5px !important; }
     .brand .brand-heading {
       font-size: 1.4em;
       line-height: 25px;
@@ -1677,7 +1654,8 @@ input[type="submit"] {
   padding: 20px 15px; }
   .primary-footer h2 {
     margin: 0; }
-  .primary-footer .county-help-list-item a {
+  .primary-footer .county-help-list-item a,
+  .primary-footer .translate-page-list {
     line-height: 24px; }
 
 @media only screen and (max-width: 992px) {
@@ -1688,7 +1666,7 @@ input[type="submit"] {
 .secondary-footer {
   background: #c51110;
   color: #fff;
-  padding: 20px 0; }
+  padding: 10px 0; }
   .secondary-footer a {
     color: white; }
   .secondary-footer .county-links-list-item {
@@ -1835,25 +1813,6 @@ input[type="submit"] {
   line-height: 30px; }
 
 /*Alert Box*/
-.alert {
-  background-color: #feb30c;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 0;
-  text-align: center; }
-  .alert a {
-    color: #002280;
-    text-decoration: none; }
-    .alert a:hover {
-      color: #003399; }
-  .alert h1 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.15em;
-    font-weight: bold;
-    border: none;
-    margin: 0;
-    padding: 20px;
-    line-height: 1; }
-
 @media only screen and (max-width: 1100px) {
   .alert h1 {
     line-height: 30px; } }
@@ -1916,7 +1875,7 @@ a.skip:hover {
   width: auto;
   height: auto;
   overflow: visible;
-  transition: top 0.25s linear;
+  transition: top .25s linear;
   z-index: 9999; }
 
 .social-media-list {
@@ -2000,17 +1959,27 @@ a.skip:hover {
   .social-media-list-item {
     margin-right: 10px; } }
 
-/*Hompage Specific*/
+/*Homepage Specific*/
+body {
+  background: #dbdbdb; }
+
+.homepage #primary-nav-container {
+  padding: 0; }
+
+img {
+  border: 1px solid #ccc;
+  margin: 5px;
+  padding: 5px; }
+
 .carousel-wrapper {
   position: relative; }
   .carousel-wrapper .search-container {
     position: absolute;
-    left: 50%;
     z-index: 999;
-    -moz-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%); }
+    top: auto;
+    bottom: auto;
+    left: 0;
+    right: 0; }
 
 .carousel {
   margin: 0; }
@@ -2164,7 +2133,11 @@ a.skip:hover {
 
 @media only screen and (max-width: 461px) {
   .search-container.inside-template {
-    height: 40px; } }
+    height: 40px; }
+  .search-form .search-button {
+    padding: 11px 5px; }
+  .search-form .search-input {
+    padding: 11px 10px; } }
 
 @media only screen and (max-width: 400px) {
   .search-form .search-input {
@@ -2186,32 +2159,26 @@ a.skip:hover {
 
 /*Search Box*/
 .search-container {
-  background-color: #dbdbdb;
-  background: rgba(230, 230, 230, 0.89);
+  background: rgba(230, 230, 230, 0.89) none repeat scroll 0 0;
   margin: 40px auto;
   max-width: 900px;
   width: 80%; }
 
 @media only screen and (max-width: 992px) {
-  .search-container {
-    background: none;
+  .carousel-wrapper .search-container {
+    margin: 0;
+    max-width: 100%;
     position: relative;
-    left: 0;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -ms-transform: none;
-    -o-transform: none;
-    transform: none; }
-  .alert {
-    margin: -20px 20px 0; }
-  .search-container {
-    margin: 20px auto;
-    width: 90%; } }
+    width: auto; }
+    .carousel-wrapper .search-container .search {
+      padding: 40px; }
+  .carousel-wrapper .alert {
+    margin: -20px 20px 0; } }
 
 @media only screen and (max-width: 767px) {
-  .search {
-    padding: 0; }
-    .search .inline-list li a {
+  .carousel-wrapper .search-container .search {
+    padding: 20px; }
+    .carousel-wrapper .search-container .search .inline-list li a {
       padding: 10px 0; }
   .alert {
     font-size: .9em;

@@ -108,11 +108,19 @@
         font-size: 1.5em;
       }
     }
-    .primary-nav .primary-nav-item a{
+    .primary-nav .primary-nav-item a {
       background: url($little-arrow) no-repeat scroll 12.5px 22px rgba(0, 0, 0, 0);
       padding: 20px 0 20px 40px;
     }
+    #mainContent img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+    }
 }
+
+
+	
 
 @media only screen and (min-width: 767px) and (max-width: 800px) {
   .primary-nav .primary-nav-item {
