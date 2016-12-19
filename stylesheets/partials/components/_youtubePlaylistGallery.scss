@@ -1,38 +1,45 @@
-$imageWidth: 290px;
+$imageWidth: 265px;
 
-.youtube-playlist-item {
-    background: white;
-    box-shadow: 1px 1px 4px #999;
-    float: left;
-    margin: 1em;
-    position: relative;
-    width: $imageWidth;
+#mainContent {
+    .youtube-playlist-item {
+        background: white;
+        box-shadow: 1px 1px 4px #999;
+        float: left;
+        margin: 1em;
+        position: relative;
+        width: $imageWidth;
 
-    .fa-play-circle-o {
-        text-shadow: 1px 1px 4px #000;
-        color: white; /* YouTube red  #e52d27 */
-        font-size: 3em;
-        position: absolute;
-        top: 60px;
-        left: 125px;
-        z-index: 100;
-    }
-
-    figure {
-        margin: 0;
-
-        img {
-            width: $imageWidth;
+        .fa-play-circle-o {
+            text-shadow: 1px 1px 4px #000;
+            color: white; /* YouTube red  #e52d27 */
+            font-size: 3em;
+            position: absolute;
+            top: 60px;
+            left: 125px;
+            z-index: 100;
         }
 
-        figcaption {
-            padding: .5em;
+        figure {
+            margin: 0;
 
-            h4, p {
-                margin: 0;
+            img {
+                border: 0;
                 padding: 0;
+                width: $imageWidth;
+            }
+
+            figcaption {
+                padding: .5em;
+
+                h4, p {
+                    margin: 0;
+                    padding: 0;
+                }
             }
         }
     }
-}
 
+    .loadMoreButton {
+        width: auto;
+    }
+}

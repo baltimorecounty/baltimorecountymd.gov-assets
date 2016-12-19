@@ -6,9 +6,8 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
 
     that.API_KEY = 'AIzaSyBsGskkWEi-CdCx4dze-ikK2KzE7i-O450';
     that.documentationLink = 'https://goo.gl/HbhJ1p';
-    that.options = {
-        target: '.bc-youtube-playlist-gallery',
-        playlistId: ''
+    that.defaultOptions = {
+        target: '.bc-youtube-playlist-gallery'
     };
 
     /*
@@ -19,11 +18,11 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
         if (!options) 
             options = that.options;
 
-        var $youtubePlaylistGalleryTarget = options.target ?  $(options.target.trim()) : $(that.options.target);
+        var $youtubePlaylistGalleryTarget = options.target ?  $(options.target.trim()) : $(that.defaultOptions.target);
         if (!$youtubePlaylistGalleryTarget.length === 0) 
             throw 'The "target" option value must be supplied. Please see documentation at ' + documentationLink + '.';
 
-        var playlistId = options.playlistId ? options.playlistId : that.options.playlistId;
+        var playlistId = options.playlistId;
         if (!playlistId || playlistId.length === 0) 
             throw 'The "playlistId" option must be supplied. Please see documentation at ' + documentationLink + '.';
 
@@ -71,9 +70,9 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             html +=   '    <div class="youtube-playlist-item">'
                     + '        <i class="fa fa-play-circle-o" aria-hidden="true"></i>'
                     + '        <figure>'
-                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '"><img src="' + playlistItems[i].snippet.thumbnails.medium.url + '" alt="' + playlistItems[i].snippet.description + '" /></a>'
+                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '"><img src="' + playlistItems[i].snippet.thumbnails.medium.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
                     + '            <figcaption>'
-                    + '                <h4><a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" target="_blank">' + playlistItems[i].snippet.title + '</a></h4>';
+                    + '                <h4><a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '">' + playlistItems[i].snippet.title + '</a></h4>';
 
             if (showDescription)
                 html += '                <p>' + playlistItems[i].snippet.description + '</p>';
@@ -85,13 +84,17 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
 
         html += '</div>';
 
-        html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
+        if (playlistItems.length > 6)
+            html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
 
         $target.html(html);
 
-        $target.children('.loadMoreButton').first().on('click', function() {
+        $target.children('.loadMoreButton').first().on('click', function(e) {
             $target.find('.hidden').first().removeClass('hidden');
             $target.find('.hidden').first().removeClass('hidden');
+
+            if ($target.find('.hidden').length === 0)
+                $(e.currentTarget).hide();
         });
     }
 

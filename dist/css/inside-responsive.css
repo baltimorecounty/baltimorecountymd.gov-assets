@@ -1319,14 +1319,14 @@ a.skip:hover {
 #RateThisPageFormPOLICE .seButton {
   margin: 0 !important; }
 
-.youtube-playlist-item {
+#mainContent .youtube-playlist-item {
   background: white;
   box-shadow: 1px 1px 4px #999;
   float: left;
   margin: 1em;
   position: relative;
-  width: 290px; }
-  .youtube-playlist-item .fa-play-circle-o {
+  width: 265px; }
+  #mainContent .youtube-playlist-item .fa-play-circle-o {
     text-shadow: 1px 1px 4px #000;
     color: white;
     /* YouTube red  #e52d27 */
@@ -1335,15 +1335,20 @@ a.skip:hover {
     top: 60px;
     left: 125px;
     z-index: 100; }
-  .youtube-playlist-item figure {
+  #mainContent .youtube-playlist-item figure {
     margin: 0; }
-    .youtube-playlist-item figure img {
-      width: 290px; }
-    .youtube-playlist-item figure figcaption {
+    #mainContent .youtube-playlist-item figure img {
+      border: 0;
+      padding: 0;
+      width: 265px; }
+    #mainContent .youtube-playlist-item figure figcaption {
       padding: .5em; }
-      .youtube-playlist-item figure figcaption h4, .youtube-playlist-item figure figcaption p {
+      #mainContent .youtube-playlist-item figure figcaption h4, #mainContent .youtube-playlist-item figure figcaption p {
         margin: 0;
         padding: 0; }
+
+#mainContent .loadMoreButton {
+  width: auto; }
 
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)

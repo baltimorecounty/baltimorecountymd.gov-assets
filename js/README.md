@@ -92,8 +92,29 @@ Currently we are tracking:
 ## YouTube Playlist Gallery
 Displays a video gallery of YouTube videos from an existing playlist. 
 
+### Usage
+Simply place a `<div>` on the page with a unique class, select your playlist, and you're ready to go. 
+
+```HTML 
+<div class="bc-youtube-playlist-gallery"></div>
+
+<script>
+    baltimoreCounty.youtubePlaylistGallery.init({
+        target: '.bc-youtube-playlist-gallery',
+        playlistId: 'PLYAZPzl77odrB8TBCEizC4ZvQ7NvgRoGf'
+    });
+</script>
+```
+
 **filename**: youtube-playlist-gallery.js    
 **usage**: template.min.js
 ### Dependencies
 * [jQuery](https://jquery.com/)
-* [YouTube v3 API](https://developers.google.com/api-client-library/javascript/samples/samples#LoadinganAPIandMakingaRequest)
+
+### Options
+
+Option | Type | Default | Description | Required
+------ | ---- | ------- | ----------- | --------
+target|selector|.bc-youtube-playlist-gallery|Selector targeting the `<div>` in which to render the gallery.|Yes
+playlistId|string|n/a|ID of the YouTube playlist to use for the gallery.|Yes
+showDescription|boolean|false|Indicates whether or not to display the video description.|No

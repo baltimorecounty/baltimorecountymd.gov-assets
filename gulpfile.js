@@ -32,7 +32,8 @@ gulp.task('concatTemplateJs', function() {
 					'./js/lib/review.js', 
 					'./js/mobile-search.js',
 					'./js/template-events.js', 
-					'./js/inside-template.js'];
+					'./js/inside-template.js',
+					'./js/youtube-playlist-gallery.js'];
   	return concatFiles(files, 'template.js');
 });
 
