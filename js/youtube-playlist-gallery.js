@@ -4,7 +4,6 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
 
     var that = this;
 
-    that.API_KEY = 'AIzaSyBsGskkWEi-CdCx4dze-ikK2KzE7i-O450';
     that.documentationLink = 'https://goo.gl/HbhJ1p';
     that.defaultOptions = {
         target: '.bc-youtube-playlist-gallery',
@@ -37,7 +36,7 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
      * Makes the requst to the YouTube v3 API.
      */
     function getPlaylistItems(playlistId, $target, showDescription, callback) {
-        var url = 'http://ba224964.bcg.ad.bcgov.us:1000/api/youtube/' + playlistId,
+        var url = 'http://ba224964.bcg.ad.bcgov.us:1000/api/playlistgallery/' + playlistId,
             playlistItems = [];
 
         $.getJSON(url)
