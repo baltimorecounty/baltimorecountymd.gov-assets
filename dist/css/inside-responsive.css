@@ -974,6 +974,25 @@ input[type="submit"] {
     margin: 10px 0 !important; } }
 
 /*Alert Box*/
+.alert {
+  background-color: #feb30c;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 0;
+  text-align: center; }
+  .alert a {
+    color: #002280;
+    text-decoration: none; }
+    .alert a:hover {
+      color: #003399; }
+  .alert h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.15em;
+    font-weight: bold;
+    border: none;
+    margin: 0;
+    padding: 20px;
+    line-height: 1; }
+
 @media only screen and (max-width: 1100px) {
   .alert h1 {
     line-height: 30px; } }
