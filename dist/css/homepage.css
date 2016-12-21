@@ -1666,7 +1666,7 @@ input[type="submit"] {
 .secondary-footer {
   background: #c51110;
   color: #fff;
-  padding: 10px 0; }
+  padding: 20px 0; }
   .secondary-footer a {
     color: white; }
   .secondary-footer .county-links-list-item {
@@ -1813,6 +1813,25 @@ input[type="submit"] {
   line-height: 30px; }
 
 /*Alert Box*/
+.alert {
+  background-color: #feb30c;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 0;
+  text-align: center; }
+  .alert a {
+    color: #002280;
+    text-decoration: none; }
+    .alert a:hover {
+      color: #003399; }
+  .alert h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.15em;
+    font-weight: bold;
+    border: none;
+    margin: 0;
+    padding: 20px;
+    line-height: 1; }
+
 @media only screen and (max-width: 1100px) {
   .alert h1 {
     line-height: 30px; } }
@@ -1962,6 +1981,9 @@ a.skip:hover {
 /*Homepage Specific*/
 body {
   background: #dbdbdb; }
+
+.homepage #primary-nav-container {
+  padding: 0; }
 
 img {
   border: 1px solid #ccc;
