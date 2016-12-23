@@ -2106,6 +2106,11 @@ tbody.collapse.in {
   width: 80%; }
 
 @media only screen and (max-width: 992px) {
+  .search-container {
+    background: none;
+    margin: 0 auto;
+    width: 90%;
+    padding: 10px; }
   .carousel-wrapper .search-container {
     margin: 0;
     max-width: 100%;
