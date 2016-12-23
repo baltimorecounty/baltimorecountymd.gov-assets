@@ -1,71 +1,87 @@
-.bc-accordion-menu {
+#container_localnavigation {
 
-    .panel {
+    /* Resets to circumvent red-inside.css */
 
-        a {
-            background: #ebebeb;
-            display: block;
-            line-height: 1.7em;
-            padding: 5px 15px;
+    ul li ul li a {
+        border-bottom: none;
+    }
+    
+    ul li ul li {
+        margin: 0;
+    }
 
-            &:hover {
-                background: #feb30c;
+    /* /Resets */
+
+    .bc-accordion-menu {
+
+        .panel {
+
+            a {
+                background: #ebebeb;
+                display: block;
+                line-height: 1.7em;
+                padding: 5px 15px;
+
+                &:hover {
+                    background: #feb30c;
+                }
+
             }
 
-        }
-
-        a.accordion-collapsed {
-
-            &:after {
-                border-bottom: 6px solid transparent;
-                border-left-color: initial;
-                border-right: 0 none transparent;
-                border-style: solid;
-                border-top-color: transparent;
-                border-width: 6px;
-                content: "";
-                color: #c51110;
-                display: inline-block;
-                float: right;
-                height: 0;
-                margin-top: 7px;
-                margin-bottom: 0px;
-                width: 0;
-                overflow: hidden;
-            }
-
-            &.active {
+            a.accordion-collapsed {
 
                 &:after {
-                    border-bottom: none;
-                    border-left-color: transparent;
-                    border-right: 6px solid transparent;
-                    border-top-color: initial;
-                    margin-top: 12px;
-                    margin-bottom: 3px;
+                    border-bottom: 6px solid transparent;
+                    border-left-color: initial;
+                    border-right: 0 none transparent;
+                    border-style: solid;
+                    border-top-color: transparent;
+                    border-width: 6px;
+                    content: "";
+                    color: #c51110;
+                    display: inline-block;
+                    float: right;
+                    height: 0;
+                    margin-top: 7px;
+                    margin-bottom: 0px;
+                    width: 0;
+                    overflow: hidden;
                 }
 
-            }
+                &.active {
 
-        }        
+                    &:after {
+                        border-bottom: none;
+                        border-left-color: transparent;
+                        border-right: 6px solid transparent;
+                        border-top-color: initial;
+                        margin-top: 12px;
+                        margin-bottom: 3px;
+                    }
 
-        ul {
-            list-style: none;
-            padding: 0;
-
-            li {
-
-                a, a:hover, &.inactive {
-                    padding: 5px 15px 5px 40px;
-                    margin-bottom: 0;
                 }
 
-                ul {
+            }        
 
-                    li {
+            ul {
+                list-style: none;
+                padding: 0;
 
-                        a, a:hover, &.inactive {
-                            padding: 5px 15px 5px 60px;
+                li {
+
+                    a, a:hover, &.inactive {
+                        padding: 5px 15px 5px 40px;
+                        margin-bottom: 0;
+                    }
+
+                    ul {
+
+                        li {
+
+                            a, a:hover, &.inactive {
+                                padding: 5px 15px 5px 60px;
+                            }
+
                         }
 
                     }
@@ -74,16 +90,16 @@
 
             }
 
+            .current {
+                background: #feb30c;
+            }
+
         }
 
-        .current {
-            background: #feb30c;
+        & > .panel {
+            margin-bottom: 10px;
         }
 
-    }
-
-    & > .panel {
-        margin-bottom: 10px;
     }
 
 }
