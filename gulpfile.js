@@ -3,7 +3,8 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
-	cssnano = require('gulp-cssnano');
+	cssnano = require('gulp-cssnano'),
+	stripCode = require('gulp-strip-code');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || './dist/js';
@@ -19,13 +20,16 @@ gulp.task('concatHomepageJs', function() {
 					'./js/lib/handlebars.js', 
 					'./js/lib/picturefill.min.js', 
 					'./js/flickr-feed.js', 
+					'./js/utility/namespacer.js',
 					'./js/county-news-snippet.js',
 					'./js/homepage-template.js'];
 	return concatFiles(files, 'homepage.js');
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['./js/skip-nav.js',
+	var files = ['./js/polyfills/array.indexOf.js',
+					'./js/utility/namespacer.js',
+					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
 					'./js/bc-google-analytics-custom-events.js', 
@@ -36,13 +40,30 @@ gulp.task('concatTemplateJs', function() {
   	return concatFiles(files, 'template.js');
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
+gulp.task('compressConcatenatedFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
 		return gulp.src(['!./dist/js/*min.js', './dist/js/*.js'])
+			.pipe(stripCode({
+				start_comment: 'test-code',
+				end_comment: 'end-test-code'
+			}))
 			.pipe(uglify())
 			.pipe(rename({
 	            suffix: '.min'
 	        }))
 		    .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('compressPageSpecificFiles', function() {
+		return gulp.src(['./js/page-specific/*.js'])
+			.pipe(stripCode({
+				start_comment: 'test-code',
+				end_comment: 'end-test-code'
+			}))
+			.pipe(uglify())
+			.pipe(rename({
+	            suffix: '.min'
+	        }))
+		    .pipe(gulp.dest('./dist/js/page-specific'));
 });
 
 gulp.task('sass', function () {
@@ -63,6 +84,6 @@ gulp.task('watch', function() {
 	gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
 });
 
-gulp.task('default', ['compressFiles', 'compressCss'], function() {
+gulp.task('default', ['compressPageSpecificFiles', 'compressConcatenatedFiles', 'compressCss'], function() {
 	return;
 });

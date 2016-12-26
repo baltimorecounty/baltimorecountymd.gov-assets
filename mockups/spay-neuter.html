@@ -1,0 +1,56 @@
+<!doctype html>
+
+<html lang="en-us">
+<head>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+	<link href="../dist/css/inside-responsive.css" rel="stylesheet" />
+
+	<title>Spay/Neuter Calculator</title>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<form id="spayNeuterForm">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="isBaltimoreCountyResident" /> I am a Baltimore County resident.
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="isPublicAssistance" /> I have a public assistance ID card.
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="isCatPitBull" /> I want to spay/neuter a cat or a pit bull.
+						</label>
+					</div>
+					<div class="form-group">
+						<label for="zipCode">ZIP code</label>
+						<input type="text" class="form-control" id="zipCode" placeholder="21204" required pattern="\d{5}" />
+					</div>
+					<button type="button" id="spayNeuterFormButton">Calculate</button>
+				</form>
+			</div>
+			<div id="spayNeuterFormResults" class="col-md-6 col-xs-12">
+				<p>Congratulations!</p>
+				<p>You qualify for a fee discount. The fee for you to spay or neuter your pet will be:</p>
+				<p>$20</p>
+				<p>This rate is applicable only at the following location(s):</p>
+				<ul>
+					<li>Baldwin</li>
+					<li>Dundalk</li>
+					<li>Southwest</li>
+				</ul>
+			</div>
+		</div>		
+	</div>
+
+	<script src="../dist/js/template.min.js"></script>
+	<script src="../js/page-specific/spay-neuter-calculator.js"></script>
+</body>
+</html>

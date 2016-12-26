@@ -1,4 +1,6 @@
 /*Used on this page http://www.baltimorecountymd.gov/Agencies/budfin/customerservice/taxpayerservices/stormwatercommerical.html#calculate*/
+var jQuery_1_9_1 = jQuery_1_9_1 || jQuery;
+
 var BrowserDetect = {
     init: function () {
         this.browser = this.searchString(this.dataBrowser) || "An unknown browser";

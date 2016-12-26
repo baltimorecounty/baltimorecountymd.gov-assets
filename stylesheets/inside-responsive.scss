@@ -22,7 +22,12 @@
 @import "partials/components/facebookWidget.scss";
 @import "partials/components/rateForm";
 
-@import "partials/inside/insideGrid";
+/* Bootstrap elements */
+@import "partials/bootstrap/variables";
+@import "partials/bootstrap/mixins";
+@import "partials/bootstrap/insideGrid";
+@import "partials/bootstrap/forms";
+
 @import "partials/inside/rateForm";
 @import "partials/homepage/search";
 @import "partials/inside/search";
