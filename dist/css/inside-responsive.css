@@ -1338,16 +1338,16 @@ a.skip:hover {
 #RateThisPageFormPOLICE .seButton {
   margin: 0 !important; }
 
-#mainContent .youtube-playlist-item {
+.youtube-playlist-item {
   background: white;
   box-shadow: 1px 1px 4px #999;
   float: left;
   margin: 10px;
   position: relative;
   width: 260px; }
-  #mainContent .youtube-playlist-item figure {
+  .youtube-playlist-item figure {
     margin: 0; }
-    #mainContent .youtube-playlist-item figure .fa-play-circle-o {
+    .youtube-playlist-item figure .fa-play-circle-o {
       text-shadow: 1px 1px 4px #000;
       color: white;
       font-size: 3em;
@@ -1355,19 +1355,24 @@ a.skip:hover {
       position: absolute;
       top: 55px;
       z-index: 100; }
-    #mainContent .youtube-playlist-item figure img {
+    .youtube-playlist-item figure img {
       border: 0;
       padding: 0;
       width: 260px; }
-    #mainContent .youtube-playlist-item figure figcaption {
+    .youtube-playlist-item figure figcaption {
       padding: .5em; }
-      #mainContent .youtube-playlist-item figure figcaption p {
+      .youtube-playlist-item figure figcaption p {
         margin: 0;
-        padding: 0; }
-    #mainContent .youtube-playlist-item figure a:hover .fa-play-circle-o {
+        padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+    .youtube-playlist-item figure a:hover .fa-play-circle-o {
       color: #feb30c; }
 
-#mainContent .loadMoreButton {
+.loadMoreButton {
+  clear: both;
+  display: block;
   margin-top: 1em;
   width: auto; }
 

@@ -57,17 +57,8 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
         if (!playlistItems || playlistItems.length === 0) 
             throw 'No items are listed for the playlist.';
 
-        html += '<div class="row">';
-
         for (var i = 0; i < playlistItems.length; i++) {
-            
-            if (i > 0 && i % 3 === 0)
-                if (i < 6)
-                    html += '</div><div class="row">';
-                else   
-                    html += '</div><div class="row hidden">';                
-
-            html +=   '    <div class="youtube-playlist-item">'
+            html +=   '    <div class="youtube-playlist-item hidden">'
                     + '        <figure>'
                     + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '"><i class="fa fa-play-circle-o" aria-hidden="true"></i><img src="' + playlistItems[i].snippet.thumbnails.medium.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
                     + '            <figcaption>'
@@ -78,19 +69,18 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             
             html +=   '            </figcaption>'
                     + '        </figure>'
-                    + '    </div>';           
+                    + '    </div>';                   
         }
-
-        html += '</div>';
 
         if (playlistItems.length > 6)
             html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
 
         $target.html(html);
+        
+        $target.find('.hidden').slice(0,6).removeClass('hidden');
 
         $target.children('.loadMoreButton').first().on('click', function(e) {
-            $target.find('.hidden').first().removeClass('hidden');
-            $target.find('.hidden').first().removeClass('hidden');
+            $target.find('.hidden').slice(0,6).removeClass('hidden');
 
             if ($target.find('.hidden').length === 0)
                 $(e.currentTarget).hide();

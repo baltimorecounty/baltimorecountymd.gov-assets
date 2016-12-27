@@ -1,53 +1,57 @@
 $imageWidth: 260px;
 
-#mainContent {
-    .youtube-playlist-item {
-        background: white;
-        box-shadow: 1px 1px 4px #999;
-        float: left;
-        margin: 10px;
-        position: relative;
-        width: $imageWidth;
+.youtube-playlist-item {
+    background: white;
+    box-shadow: 1px 1px 4px #999;
+    float: left;
+    margin: 10px;
+    position: relative;
+    width: $imageWidth;
 
-        figure {
-            margin: 0;
+    figure {
+        margin: 0;
 
-            .fa-play-circle-o {
-                text-shadow: 1px 1px 4px #000;
-                color: white;
-                font-size: 3em;
-                left: 110px;
-                position: absolute;
-                top: 55px;
-                z-index: 100;
-            }
+        .fa-play-circle-o {
+            text-shadow: 1px 1px 4px #000;
+            color: white;
+            font-size: 3em;
+            left: 110px;
+            position: absolute;
+            top: 55px;
+            z-index: 100;
+        }
 
-            img {
-                border: 0;
+        img {
+            border: 0;
+            padding: 0;
+            width: $imageWidth;
+        }
+
+        figcaption {
+            padding: .5em;
+
+            p {
+                margin: 0;
                 padding: 0;
-                width: $imageWidth;
-            }
-
-            figcaption {
-                padding: .5em;
-
-                p {
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-            
-            a:hover {
-                .fa-play-circle-o {
-                    color: $gold;
-                }
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
         }
-    }
+        
+        a:hover {
+            .fa-play-circle-o {
+                color: $gold;
+            }
+        }
 
-    .loadMoreButton {
-        margin-top: 1em;
-        width: auto;
     }
+}
+
+.loadMoreButton {
+    clear: both;
+    display: block;
+    margin-top: 1em;
+    width: auto;
 }
