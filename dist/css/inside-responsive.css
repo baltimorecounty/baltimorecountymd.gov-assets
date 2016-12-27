@@ -1344,25 +1344,27 @@ a.skip:hover {
   float: left;
   margin: 10px;
   position: relative;
-  width: 260px; }
+  width: 30%; }
   .youtube-playlist-item figure {
     margin: 0; }
     .youtube-playlist-item figure .fa-play-circle-o {
       text-shadow: 1px 1px 4px #000;
       color: white;
       font-size: 3em;
-      left: 110px;
+      left: 45%;
       position: absolute;
-      top: 55px;
+      top: 30%;
       z-index: 100; }
     .youtube-playlist-item figure img {
-      border: 0;
+      border: 0 !important;
+      margin: 0 !important;
       padding: 0;
-      width: 260px; }
+      width: 100%; }
     .youtube-playlist-item figure figcaption {
+      clear: both;
       padding: .5em; }
       .youtube-playlist-item figure figcaption p {
-        margin: 0;
+        margin: 0 !important;
         padding: 0;
         overflow: hidden;
         white-space: nowrap;
@@ -1373,8 +1375,22 @@ a.skip:hover {
 .loadMoreButton {
   clear: both;
   display: block;
-  margin-top: 1em;
+  margin: 10px;
   width: auto; }
+
+@media (max-width: 992px) {
+  .youtube-playlist-item {
+    width: 47%; }
+    .youtube-playlist-item figure .fa-play-circle-o {
+      left: 46%;
+      top: 35%; } }
+
+@media (max-width: 767px) {
+  .youtube-playlist-item {
+    width: 96%; }
+    .youtube-playlist-item figure .fa-play-circle-o {
+      left: 48%;
+      top: 43%; } }
 
 /*!
  * Bootstrap v3.3.2 (http://getbootstrap.com)

@@ -263,9 +263,11 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             throw 'No items are listed for the playlist.';
 
         for (var i = 0; i < playlistItems.length; i++) {
+            var targetThumbnail = getLargestThumbnail(playlistItems[i].snippet.thumbnails);
+
             html +=   '    <div class="youtube-playlist-item hidden">'
                     + '        <figure>'
-                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '"><i class="fa fa-play-circle-o" aria-hidden="true"></i><img src="' + playlistItems[i].snippet.thumbnails.medium.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
+                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '"><i class="fa fa-play-circle-o" aria-hidden="true"></i><img src="' + targetThumbnail.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
                     + '            <figcaption>'
                     + '                <p><a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '">' + playlistItems[i].snippet.title + '</a></p>';
 
@@ -281,6 +283,8 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
 
         $target.html(html);
+        
+        $target.find('.hidden').slice(0,6).removeClass('hidden');
 
         $target.children('.loadMoreButton').first().on('click', function(e) {
             $target.find('.hidden').slice(0,6).removeClass('hidden');
@@ -288,6 +292,20 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             if ($target.find('.hidden').length === 0)
                 $(e.currentTarget).hide();
         });
+    }
+
+    /*
+     * Returns the largest non-null thumbnail.
+     */
+    function getLargestThumbnail(thumbnails) {
+        /*if (thumbnails.maxres) 
+            return thumbnails.maxres;
+        if (thumbnails.standard) 
+            return thumbnails.standard;
+        if (thumbnails.high) 
+            return thumbnails.high;*/
+        if (thumbnails.medium) 
+            return thumbnails.medium;
     }
 
     return {
