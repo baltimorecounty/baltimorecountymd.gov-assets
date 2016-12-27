@@ -92,7 +92,7 @@ describe('Spay/neuter calculator', function() {
 			expect(baltimoreCounty.calculators.spayNeuter.facilityPicker(0, true, false, false).length).toBe(allLocationCount);
 		});
 
-		it('returns one location when ZIP code is in first set', function() {
+		it('returns one location when ZIP code is in first set ', function() {
 			expect(baltimoreCounty.calculators.spayNeuter.facilityPicker(0, false, true, false).length).toBe(1);
 		});
 
@@ -100,20 +100,28 @@ describe('Spay/neuter calculator', function() {
 			expect(baltimoreCounty.calculators.spayNeuter.facilityPicker(0, false, false, true).length).toBe(1);
 		});
 
+		it('returns one location when ZIP code is in first set with public assistance', function() {
+			expect(baltimoreCounty.calculators.spayNeuter.facilityPicker(0, true, true, false).length).toBe(1);
+		});
+
+		it('returns one location when ZIP code is in second setwith public assistance', function() {
+			expect(baltimoreCounty.calculators.spayNeuter.facilityPicker(0, true, false, true).length).toBe(1);
+		});
+
 	});
 
 	describe('buildDiscountMessageHTML', function() {
 
 		it('returns an "ineligible" message when cost is undefined', function() {
-			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], undefined)).toContain('not eligible');
+			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], undefined)).toContain('We\'re sorry');
 		});
 
 		it('returns a "Congratulations" message when cost is 0', function() {
-			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], 0)).toContain('Congratulations');
+			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], 0)).toContain('Good news');
 		});
 
 		it('returns a "Congratulations" message when cost is 20', function() {
-			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], 20)).toContain('Congratulations');
+			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], 20)).toContain('Good news');
 		});
 
 	});
