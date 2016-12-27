@@ -9,9 +9,20 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 
 	var zipsDundalk = ['21219', '21220', '21221', '21222', '21224', '21237'],
 		zipsSwap = ['21207', '21227', '21244'],
-		facilityDundalk = 'Dundalk, 7702 Dunmanway',
-		facilitySwap = 'Southwest Area Park, 3941 Klunk Drive',
-		facilityBaldwin = 'Baldwin, 13800 Manor Road',
+		facilityList = {
+			baldwin : {
+				address : 'Baldwin, 13800 Manor Road',
+				link : 'https://clinichq.org/online/564cf872-6f61-476f-8ecd-61d574a8a06f'
+			},
+			dundalk : {
+				address : 'Dundalk, 7702 Dunmanway',
+				link : 'https://clinichq.org/online/144afb8f-6c15-4f15-8e16-9417a4f85823'
+			},
+			swap : {
+				address : 'Southwest Area Park, 3941 Klunk Drive',
+				link : 'https://clinichq.org/online/3edba5a4-9922-4e2a-87a5-c138c8e8f4a8'
+			}
+		},
 		$isResidentField = $('#spayNeuterForm #isBaltimoreCountyResident'),
 		$isPublicAssistanceField = $('#spayNeuterForm #isPublicAssistance'),
 		$isCatPitBullField = $('#spayNeuterForm #isCatPitBull'),
@@ -58,60 +69,84 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 		facilityPicker = function(cost, isPublicAssistance, isDundalkZip, isSwapZip) {
 			var facilityArr = [];
 
-			if (cost === 20 || (cost === 0 && isPublicAssistance)) {
-				facilityArr.push(facilityBaldwin);
-				facilityArr.push(facilityDundalk);
-				facilityArr.push(facilitySwap);
+			if (typeof cost === 'undefined')
 				return facilityArr;
-			}
 
 			if (isDundalkZip) {
-				facilityArr.push(facilityDundalk);
+				facilityArr.push(facilityList.dundalk);
 				return facilityArr;
 			}
 			
 			if (isSwapZip) {
-				facilityArr.push(facilitySwap);
+				facilityArr.push(facilityList.swap);
+				return facilityArr;
+			}
+
+			if (cost === 20 || (cost === 0 && isPublicAssistance)) {
+				facilityArr.push(facilityList.baldwin);
+				facilityArr.push(facilityList.dundalk);
+				facilityArr.push(facilityList.swap);
 				return facilityArr;
 			}
 			
 			return facilityArr;
 		},
 
-		buildMessage = function(facilities, cost) {
+		buildDiscountMessageHTML = function(facilities, cost) {
 			if (typeof cost === 'undefined')
-				return '<p>Unfortunately, you are not eligible to have your pet spayed or neutered at a Baltimore County facility.<p>';
+				return '<p>We\'re sorry. Only County residents are eligible for discount spay or neuter procedures.<p>';
 
-			var message = '';
-				message += '<p><strong>Congratulations!</strong> You qualify for a fee discount.</p>';
-				message += '<p>The fee for you to spay or neuter your pet will be:</p>';
-				message += '<p>$' + cost + '</p>';
-				message += '<p>This rate is applicable only at the following location(s):</p>'
-				message += '<ul>';
+			if (facilities.length === 1 && facilities[0] === facilityList.dundalk) 
+				return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Dundalk facility at 7702 Dunmanway.</p>';
 			
-			for (var i = 0; i < facilities.length; i++) {
-				message += '<li>' + facilities[i] + '</li>';
-			}
+			if (facilities.length === 1 && facilities[0] === facilityList.swap) 
+				return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Southwest Area Park facility at 3941 Klunk Drive.</p>';
+			
+			if (cost === 0)
+				return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at any of our facilities. Select a location to book your appointment.</p>'
 
-			message += '</ul>';
-
-			return message;
+			return '<p>Good news! You\'re eligible for a <strong>$20 procedure</strong> at any of our facilities. Select a location to book your appointment. Make sure to continue to the payment screen after you book.</p>';
 		},
 		
+		buildFacilityListHTML = function(facilities) {			
+			if (!facilities || facilities.length === 0)
+				return '';
+
+			var facilityHTML = '';
+			facilityHTML += '<ul>';
+			
+			if (facilities.length === 1) 
+				facilityHTML += '<li><a href="' + facilities[0].link + '">Book Now at ' + facilities[0].address.split(',')[0] + '</a></li>';
+
+			if (facilities.length === 3) 
+				for (var i = 0; i < facilities.length; i++)
+					facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>';
+
+			facilityHTML += '</ul>';	
+
+			return facilityHTML;		
+		},
+
 		calculate = function() {
 			var formData = readForm();
 			var isDundalkZip = checkZipCode(formData.zipCode, zipsDundalk);
 			var isSwapZip = checkZipCode(formData.zipCode, zipsSwap);
 			var cost = determineCost(formData, isDundalkZip, isSwapZip);
 			var facilities = facilityPicker(cost, formData.isPublicAssistance, isDundalkZip, isSwapZip);
-			$('#spayNeuterFormResults').html(buildMessage(facilities, cost));
+			var discountMessageHTML = buildDiscountMessageHTML(facilities, cost);
+			var facilityListHTML = buildFacilityListHTML(facilities);
+
+			$('#spayNeuterFormResults').html(discountMessageHTML + facilityListHTML);
+			$('#spayNeuterFormResults').removeClass('hidden');
+			$('html, body').animate({scrollTop: $("#spayNeuterFormResults").offset().top}, 1000);
 		};
 
 	return {
 		/* test-code */
 		determineCost: determineCost,
 		facilityPicker: facilityPicker,
-		buildMessage: buildMessage,
+		buildDiscountMessageHTML: buildDiscountMessageHTML,
+		buildFacilityListHTML: buildFacilityListHTML,
 		/* end-test-code */
 		calculate: calculate
 	};
@@ -121,8 +156,4 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 /*
  * Attach the module to the form's submit button.
  */
-(function($)  {
-	'use strict';
-
-	$('#spayNeuterFormButton').on('click', baltimoreCounty.calculators.spayNeuter.calculate);
-})(jQuery);
+$(function() { $('#spayNeuterFormButton').on('click', baltimoreCounty.calculators.spayNeuter.calculate); });

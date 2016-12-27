@@ -102,18 +102,18 @@ describe('Spay/neuter calculator', function() {
 
 	});
 
-	describe('buildMessage', function() {
+	describe('buildDiscountMessageHTML', function() {
 
 		it('returns an "ineligible" message when cost is undefined', function() {
-			expect(baltimoreCounty.calculators.spayNeuter.buildMessage([], undefined)).toContain('not eligible');
+			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], undefined)).toContain('not eligible');
 		});
 
 		it('returns a "Congratulations" message when cost is 0', function() {
-			expect(baltimoreCounty.calculators.spayNeuter.buildMessage([], 0)).toContain('Congratulations');
+			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], 0)).toContain('Congratulations');
 		});
 
 		it('returns a "Congratulations" message when cost is 20', function() {
-			expect(baltimoreCounty.calculators.spayNeuter.buildMessage([], 20)).toContain('Congratulations');
+			expect(baltimoreCounty.calculators.spayNeuter.buildDiscountMessageHTML([], 20)).toContain('Congratulations');
 		});
 
 	});
