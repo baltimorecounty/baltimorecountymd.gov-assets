@@ -8,10 +8,10 @@ You will need to do these steps the first time you setup the project.
 1. [Clone this repository](https://help.github.com/articles/working-with-repositories/)
 2. Install [Node](https://nodejs.org/download/)
 3. Install [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
-4. Install [PhantomJS](http://phantomjs.org/)
 4. Open terminal or command prompt to the root of your local repository
 5. Run ``npm install`` to install all local dependencies.
 6. Run ``npm install -g karma-cli`` to install the Karma command-line interface for running unit tests.
+7. Run ``npm install phantomjs-prebuilt karma-phantomjs-launcher --save-dev`` to install the PhantomJS headless browser for unit testing.
 
 ### Build
 1. Open terminal or command prompt to the root of your local repository
