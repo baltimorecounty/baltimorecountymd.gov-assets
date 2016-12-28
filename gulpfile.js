@@ -29,6 +29,7 @@ gulp.task('concatHomepageJs', function() {
 gulp.task('concatTemplateJs', function() {
 	var files = ['./js/polyfills/array.indexOf.js',
 					'./js/utility/namespacer.js',
+					'./js/utility/form-validator.js',
 					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 

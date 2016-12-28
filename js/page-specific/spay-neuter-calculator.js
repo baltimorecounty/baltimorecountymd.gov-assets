@@ -1,10 +1,10 @@
-namespacer('baltimoreCounty.calculators');
+namespacer('baltimoreCounty.pageSpecific');
 
 /*
  * Spaying and Neutering calculator module.
  * Used on http://www.baltimorecountymd.gov/Agencies/health/animalservices/spayneuter.html
  */
-baltimoreCounty.calculators.spayNeuter = (function($) {
+baltimoreCounty.pageSpecific.spayNeuterCalculator = (function($) {
 	'use strict';
 
 	var zipsDundalk = ['21219', '21220', '21221', '21222', '21224', '21237'],
@@ -23,9 +23,10 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 				link : 'https://clinichq.org/online/3edba5a4-9922-4e2a-87a5-c138c8e8f4a8'
 			}
 		},
-		$isResidentField = $('#spayNeuterForm #isBaltimoreCountyResident'),
-		$isPublicAssistanceField = $('#spayNeuterForm #isPublicAssistance'),
-		$isCatPitBullField = $('#spayNeuterForm #isCatPitBull'),
+		$spayNeuterForm = $('#spayNeuterForm'),
+		$isResidentField = $('#spayNeuterForm input[name=isBaltimoreCountyResident]'),
+		$isPublicAssistanceField = $('#spayNeuterForm input[name=isPublicAssistance]'),
+		$isCatPitBullField = $('#spayNeuterForm input[name=isCatPitBull]'),
 		$zipCodeField = $('#spayNeuterForm #zipCode'),
 		isResident = false, 
 		isPublicAssistance = false, 
@@ -33,22 +34,112 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 		zipCode = '',
 		isDundalkZip = false,
 		isSwapZip = false,
+		textInputValidationRegExp = /^\d{5}$/,
 
+		/*
+		 * Form validation!
+		 */
+		isValid = function() {
+			var validationErrorFlag = false;
+			if (!baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($isResidentField)) {
+				errorNotification($isResidentField);
+				validationErrorFlag = true;
+			}
+
+			if (!baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($isPublicAssistanceField)) {
+				errorNotification($isPublicAssistanceField);
+				validationErrorFlag = true;
+			}
+
+			if (!baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($isCatPitBullField)) {
+				errorNotification($isCatPitBullField);
+				validationErrorFlag = true;
+			}
+
+			if (!baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($zipCodeField, textInputValidationRegExp)) {
+				errorNotification($zipCodeField);
+				validationErrorFlag = true;
+			}
+			
+			return !validationErrorFlag;
+		},
+
+		setupValidation = function($form) {
+			var $formInputs = $form.find('input');
+
+			for (var i = 0; i < $formInputs.length; i++) {
+				var $input = $($formInputs[i]);
+				var inputType = $input.attr('type');
+
+				switch (inputType) {
+					case 'radio':
+						$input.on('click', function(e) {
+							var $current = $(e.target);
+							if (baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($current))
+								clearErrorNotification($current);
+							else
+								errorNotification($current);
+						});
+						break;
+					case 'text':
+						$input.on('keyup', function(e) {
+							var $current = $(e.target);
+							if (baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($current, textInputValidationRegExp))
+								clearErrorNotification($current);
+							else
+								errorNotification($current);
+						});
+						break;
+				}
+			}
+		},
+
+		clearErrorNotification = function($fieldWithError) {
+			$fieldWithError.closest('div').find('.required-field-error-message').remove();
+		},
+
+		errorNotification = function($fieldWithError) {
+			var $closestDiv = $fieldWithError.closest('div');
+			
+			if ($closestDiv.find('.required-field-error-message').length === 0)
+				$closestDiv.append('<div class="required-field-error-message">This field is required.</div>');			
+		},
+
+		/*
+		 * Reads for form data and hydrates the formData model.
+		 */
 		readForm = function() {
 			var formData = {
-				isResident: $isResidentField.length ? $isResidentField.is(':checked') : isResident,
-				isPublicAssistance: $isPublicAssistanceField.length ? $isPublicAssistanceField.is(':checked') : isPublicAssistance,
-				isCatPitBull: $isCatPitBullField.length ? $isCatPitBullField.is(':checked') : isCatPitBull,
+				isResident: $isResidentField.length ? getRadioButtonValue($isResidentField) == 'true' : isResident,
+				isPublicAssistance: $isPublicAssistanceField.length ? getRadioButtonValue($isPublicAssistanceField) == 'true' : isPublicAssistance,
+				isCatPitBull: $isCatPitBullField.length ? getRadioButtonValue($isCatPitBullField) == 'true' : isCatPitBull,
 				zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode,
 			};
+
+			setupValidation($spayNeuterForm);
 
 			return formData;
 		},		
 
-		checkZipCode = function(zip, zipArrToMatch) {
-			return zipArrToMatch.indexOf(zip) > -1;
+		/*
+		 * Pulls Radio Button value safely.
+		 */
+		getRadioButtonValue = function($radioButton) {
+			if ($radioButton.length === 0)
+				return undefined;
+			
+			var $selectedRadioButton = $radioButton.filter(':checked');
+
+			if ($selectedRadioButton.length > 0) {
+				return $selectedRadioButton.val();
+			}
+
+			return undefined;
 		},
 
+		/*
+		 * Determines the fee for the procedure.
+		 */
 		determineCost = function(formData, isDundalkZip, isSwapZip) {
 			if (!formData)
 				return undefined; 
@@ -66,6 +157,9 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 			return cost;
 		},
 		
+		/*
+		 * Selects the facility based on cost and ZIP code.
+		 */
 		facilityPicker = function(cost, isPublicAssistance, isDundalkZip, isSwapZip) {
 			var facilityArr = [];
 
@@ -92,6 +186,9 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 			return facilityArr;
 		},
 
+		/*
+		 * Builds the HTML for the discount message.
+		 */
 		buildDiscountMessageHTML = function(facilities, cost) {
 			if (typeof cost === 'undefined')
 				return '<p>We\'re sorry. Only County residents are eligible for discount spay or neuter procedures.<p>';
@@ -108,6 +205,9 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 			return '<p>Good news! You\'re eligible for a <strong>$20 procedure</strong> at any of our facilities. Select a location to book your appointment. Make sure to continue to the payment screen after you book.</p>';
 		},
 		
+		/*
+		 * Builds the HTML for the facility message.
+		 */
 		buildFacilityListHTML = function(facilities) {			
 			if (!facilities || facilities.length === 0)
 				return '';
@@ -127,18 +227,25 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 			return facilityHTML;		
 		},
 
+		/*
+		 * Pulls everything together, and calculated the procedure cost and locations.
+		 */
 		calculate = function() {
 			var formData = readForm();
-			var isDundalkZip = checkZipCode(formData.zipCode, zipsDundalk);
-			var isSwapZip = checkZipCode(formData.zipCode, zipsSwap);
+			var isDundalkZip = zipsDundalk.indexOf(formData.zipCode) > -1;
+			var isSwapZip = zipsSwap.indexOf(formData.zipCode) > -1;
 			var cost = determineCost(formData, isDundalkZip, isSwapZip);
 			var facilities = facilityPicker(cost, formData.isPublicAssistance, isDundalkZip, isSwapZip);
 			var discountMessageHTML = buildDiscountMessageHTML(facilities, cost);
 			var facilityListHTML = buildFacilityListHTML(facilities);
-
-			$('#spayNeuterFormResults').html(discountMessageHTML + facilityListHTML);
-			$('#spayNeuterFormResults').removeClass('hidden');
-			$('html, body').animate({scrollTop: $("#spayNeuterFormResults").offset().top}, 1000);
+			
+			if (isValid()) {
+				$('#spayNeuterFormResults').html(discountMessageHTML + facilityListHTML);
+				$('#spayNeuterFormResults').removeClass('hidden');
+				$('html, body').animate({scrollTop: $("#spayNeuterFormResults").offset().top}, 1000);
+				return true;
+			}
+			return false;
 		};
 
 	return {
@@ -154,6 +261,19 @@ baltimoreCounty.calculators.spayNeuter = (function($) {
 })(jQuery);
 
 /*
- * Attach the module to the form's submit button.
+ * Attach the module to the form's submit button, and kill the enter button.
  */
-$(function() { $('#spayNeuterFormButton').on('click', baltimoreCounty.calculators.spayNeuter.calculate); });
+$(function() { 
+	$('#spayNeuterForm, #spayNeuterForm input').on('keyup keypress', function(e) {
+		var keyCode = e.keyCode || e.which;
+		if (keyCode === 13) {
+			e.preventDefault();
+			return false;
+		}
+	});
+	
+	$('#spayNeuterFormButton').on('click', function(e) { 
+		baltimoreCounty.pageSpecific.spayNeuterCalculator.calculate();
+		return false;
+	}); 
+});

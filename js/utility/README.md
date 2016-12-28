@@ -23,7 +23,15 @@ baltimoreCounty.modules.myModule = (function() {
 })();
 ```
 
-**filename**: county-news-snippet.js  
-**usage**: homepage.min.js  
+**filename**: namespacer.js  
+**usage**: homepage.min.js, template.min.js  
+### Dependencies
+* [jQuery](https://jquery.com/)
+
+## Form Validation
+Form field validation library.
+
+**filename**: form-validation.js  
+**usage**: template.min.js  
 ### Dependencies
 * [jQuery](https://jquery.com/)

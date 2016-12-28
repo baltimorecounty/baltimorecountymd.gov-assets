@@ -15,9 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'js/lib/*.js',
+      'js/utility/namespacer.js',
       'js/utility/*.js',
       'js/polyfills/*.js',
-      'js/lib/*.js',
       'js/page-specific/*.js'
     ],
 
