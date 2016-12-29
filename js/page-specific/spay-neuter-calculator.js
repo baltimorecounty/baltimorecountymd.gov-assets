@@ -64,6 +64,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function($) {
 			return !validationErrorFlag;
 		},
 
+		/*
+		 * Attaches validation to form field events so we can vlidate on the fly.
+		 */
 		setupValidation = function($form) {
 			var $formInputs = $form.find('input');
 
@@ -94,10 +97,16 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function($) {
 			}
 		},
 
+		/*
+		 * Removes the error notification message.
+		 */
 		clearErrorNotification = function($fieldWithError) {
 			$fieldWithError.closest('div').find('.required-field-error-message').remove();
 		},
 
+		/*
+		 * Renders the error notification message specified in the form element's "data-validation-message" attribute.
+		 */
 		errorNotification = function($fieldWithError) {
 			var $closestDiv = $fieldWithError.closest('div');
 			var errorMessage = $fieldWithError.attr('data-validation-message');
