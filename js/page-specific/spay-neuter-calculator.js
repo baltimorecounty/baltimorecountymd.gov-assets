@@ -100,9 +100,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function($) {
 
 		errorNotification = function($fieldWithError) {
 			var $closestDiv = $fieldWithError.closest('div');
-			
+			var errorMessage = $fieldWithError.attr('data-validation-message');
 			if ($closestDiv.find('.required-field-error-message').length === 0)
-				$closestDiv.append('<div class="required-field-error-message">This field is required.</div>');			
+				$closestDiv.append('<div class="required-field-error-message">' + errorMessage + '</div>');			
 		},
 
 		/*
