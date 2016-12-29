@@ -1393,13 +1393,10 @@ tbody.collapse.in {
       background: #feb30c; }
   #container_localnavigation .bc-accordion-menu .panel a.accordion-collapsed:after {
     border-bottom: 6px solid transparent;
-    border-left-color: initial;
-    border-right: 0 none transparent;
-    border-style: solid;
-    border-top-color: transparent;
-    border-width: 6px;
+    border-left: 6px solid #c51110;
+    border-right: none;
+    border-top: 6px solid transparent;
     content: "";
-    color: #c51110;
     display: inline-block;
     float: right;
     height: 0;
@@ -1409,9 +1406,9 @@ tbody.collapse.in {
     overflow: hidden; }
   #container_localnavigation .bc-accordion-menu .panel a.accordion-collapsed.active:after {
     border-bottom: none;
-    border-left-color: transparent;
+    border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top-color: initial;
+    border-top: 6px solid #c51110;
     margin-top: 12px;
     margin-bottom: 3px; }
   #container_localnavigation .bc-accordion-menu .panel ul {
