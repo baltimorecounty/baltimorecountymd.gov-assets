@@ -8,7 +8,6 @@ This script runs the Spay & Neuter calculator, and must be included on the page 
 
 ```
 <form id="spayNeuterForm">
-    <h3>Determine if your pet is eligible.</h3>
     <p>Are you a Baltimore County resident?<span class="required">*</span></p>
     <div class="radio">
         <label class="radio-inline">
