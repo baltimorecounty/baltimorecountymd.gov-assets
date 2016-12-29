@@ -98,14 +98,14 @@ accordion items, and `<li class="panel">` for second-level accordion items.
 ```HTML
 <nav class="nav-list bc-accordion-menu">
     <div class="panel">
-        <a class="accordion-collapsed" data-toggle="collapse" href="#collapsableListOne">Collapsable list one</a>
-        <ul class="collapse" id="collapsableListOne">
+        <button class="accordion-collapsed" data-toggle="collapse" aria-expanded="false">Collapsable list one</button>
+        <ul class="collapse">
             <li>
                 <a href="/myplainlink1">Plain link one</a>
             </li>
             <li class="panel">
-                <a class="accordion-collapsed" data-toggle="collapse" href="#collapsableSubPanelOne">Collapsable sub panel one</a>
-                <ul class="collapse" id="collapsableSubPanelOne">
+                <button class="accordion-collapsed" data-toggle="collapse" aria-expanded="false">Collapsable sub panel one</button>
+                <ul class="collapse">
                     <li><a href="/mypage1">Page one</a></li>
                     <li><a href="/mypage2">Page two</a></li>
                     <li><a href="/mypage3">Page three</a></li>

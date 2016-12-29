@@ -513,7 +513,7 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 				$(item).addClass('current');
 				var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
 				$collapsables.addClass('in');
-				var $siblings = $collapsables.siblings('a');
+				var $siblings = $collapsables.siblings('.accordion-collapsed');
 				
 				if (!$siblings.hasClass('active'))
 					$siblings.addClass('active');
@@ -523,7 +523,7 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 		/* Updates the tracked current accordion level, since Bootstrap Collapse
 		 * wasn't exactly designed for nested menus.
 		 */
-		$('.bc-accordion-menu .panel a').on('click', function(e) {
+		$('.bc-accordion-menu .panel .accordion-collapsed').on('click', function(e) {
 			var $currentTarget = $(e.currentTarget);
 
 			clickedAccordionLevel = getAccordionLevel($currentTarget);
@@ -533,7 +533,7 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 		/* Making sure only the active accordion level's "active" css class is cleared when the menu expands. */
 		$('.bc-accordion-menu .collapse').on('show.bs.collapse', function() {
 			var $collapsable = $(this);
-			var $siblings = $collapsable.siblings('a');
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
 			var accordionLevel = getAccordionLevel($collapsable);
 
 			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) 
@@ -544,7 +544,7 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 		/* Making sure only the active accordion level's "active" css class is cleared when the menu collapses. */
 		$('.bc-accordion-menu .collapse').on('hide.bs.collapse', function() {
 			var $collapsable = $(this);
-			var $siblings = $collapsable.siblings('a');
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
 			var accordionLevel = getAccordionLevel($collapsable);
 
 			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) 
@@ -553,6 +553,9 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 		
 		// Hide all text-only nodes.
 		$('.bc-accordion-menu .panel ul li').contents().filter(textNodeFilter).parent().css('display','none');
+
+		// Set up the DIVs to expand and collapse their siblings.
+		$('.bc-accordion-menu .accordion-collapsed').on('click', function(e) { $(e.target).siblings('.collapse').collapse('toggle'); return false; });
 
 		/* Returns whether this is a parent or child accordion link. */
 		function getAccordionLevel($element) {
