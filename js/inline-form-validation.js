@@ -48,7 +48,6 @@ var inlineFormValidator = (function(window, $) {
     
     //
     // Validation based on CSS class. 
-    // TODO: Move this to its own object.
     function isValid($field) {
         validate.extend(validate.validators.datetime, {      
             parse: function(value, options) {
