@@ -1,6 +1,4 @@
 var inlineFormValidator = (function(window, $) {
-    
-    var errorMessageDict = [];
 
     //
     // Loads up the field IDs and error messages that SE renders in inline JavaScript.
@@ -9,7 +7,8 @@ var inlineFormValidator = (function(window, $) {
         var fieldValueRegExp = /_CF_onError\(_CF_this.+;/g;
         
         var matches = [], 
-            tempArray = [];
+            tempArray = [],
+            errorMessageDict = [];
 
         while ((tempArray = fieldValueRegExp.exec(functionText)) !== null) {
             if (matches.indexOf(tempArray[0]) === -1)
@@ -35,7 +34,9 @@ var inlineFormValidator = (function(window, $) {
             });
 
             if (!exists)
-                errorMessageDict.push(errorObject);
+                errorMessageDict[errorObject.fieldName] = errorObject.errorMessage;
+            
+            return errorMessageDict;
         }
     }
 
@@ -45,4 +46,52 @@ var inlineFormValidator = (function(window, $) {
         return text.slice(text.indexOf(stringToRemove) + 1, text.lastIndexOf(stringToRemove));
     }
     
+    //
+    // Validation based on CSS class. 
+    // TODO: Move this to its own object.
+    function isValid($field) {
+        validate.extend(validate.validators.datetime, {      
+            parse: function(value, options) {
+                return moment(value)
+            },
+            format: function(value, options) {
+                var format = options.dateOnly ? "DD-MM-YYYY" : "DD-MM-YYYY hh:mm:ss";
+                return moment(value).format(format);
+            }
+        });
+
+        if ($field.hasClass('required-email')) 
+            return typeof validate.single($field.val(), {presence: true, email: true}) === 'undefined';
+
+        if ($field.hasClass('required-date')) 
+            return typeof validate.single($field.val(), {presence: true, datetime: true, format: /\d{1,2}[\/-]\d{1,2}[\/-]\d{4}/ }) === 'undefined';
+
+        if ($field.hasClass('required-phone')) 
+            return typeof validate.single($field.val(), {presence: true, format: /^\d{3}-\d{3}-\d{4}$/ }) === 'undefined';
+        
+        if ($field.hasClass('required-zip')) 
+            return typeof validate.single($field.val(), {presence: true, format: /^\d{5}$/ }) === 'undefined';
+        
+        if ($field.hasClass('required-zipPlusFour')) 
+            return typeof validate.single($field.val(), {presence: true, format: /^\d{5}-\d{4}$/ }) === 'undefined';
+        
+        return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+    }
+
+    //
+    // MAIN!
+    var errorMessages = loadFieldErrorMessageData();
+
+    $('.seRequiredElement[type=text]').on('keyup blur', function(e) {
+        var $target = $(e.target);
+
+        if (!isValid($target)) {
+            if ($target.siblings('.inline-form-error-message').length === 0) {
+                $target.parent().append('<i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i>');
+                $target.parent().append('<p class="seRequiredMarker inline-form-error-message">' + errorMessages[$target.attr('id')] + '</p>');
+            }
+        } else 
+            $target.parent().find('.inline-form-error-message, .inline-form-error-icon').remove();
+    });
+
 })(window, jQuery);
