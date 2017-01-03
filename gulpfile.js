@@ -14,7 +14,8 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('concatHomepageJs', function() {
-	var files = ['./js/lib/jQuery.min.js', 
+	var files = ['./js/utility/namespacer.js',
+					'./js/lib/jQuery.min.js', 
 					'./js/lib/slick.min.js', 
 					'./js/lib/handlebars.js', 
 					'./js/lib/picturefill.min.js', 
@@ -25,7 +26,8 @@ gulp.task('concatHomepageJs', function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['./js/skip-nav.js',
+	var files = ['./js/utility/namespacer.js',
+					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
 					'./js/bc-google-analytics-custom-events.js', 

@@ -1,6 +1,6 @@
-var baltimoreCounty = baltimoreCounty || {};
+namespacer('baltimoreCounty.utility');
 
-baltimoreCounty.cdnFallback = (function($) {
+baltimoreCounty.utility.cdnFallback = (function($) {
 
     function load(obj, path, isHead) {
         if (!obj)

@@ -1,4 +1,6 @@
-var inlineFormValidator = (function(window, $) {
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
 
     //
     // Loads up the field IDs and error messages that SE renders in inline JavaScript.
@@ -78,19 +80,27 @@ var inlineFormValidator = (function(window, $) {
     }
 
     //
-    // MAIN!
-    var errorMessages = loadFieldErrorMessageData();
+    // Initialize and attach handlers.
+    function init() {
+        var errorMessages = loadFieldErrorMessageData();
 
-    $('.seRequiredElement[type=text]').on('keyup blur', function(e) {
-        var $target = $(e.target);
+        $('.seRequiredElement[type=text]').on('keyup blur', function(e) {
+            var $target = $(e.target);
 
-        if (!isValid($target)) {
-            if ($target.siblings('.inline-form-error-message').length === 0) {
-                $target.parent().append('<i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i>');
-                $target.parent().append('<p class="seRequiredMarker inline-form-error-message">' + errorMessages[$target.attr('id')] + '</p>');
-            }
-        } else 
-            $target.parent().find('.inline-form-error-message, .inline-form-error-icon').remove();
-    });
+            if (!isValid($target)) {
+                if ($target.siblings('.inline-form-error-message').length === 0) {
+                    $target.parent().append('<i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i>');
+                    $target.parent().append('<p class="seRequiredMarker inline-form-error-message">' + errorMessages[$target.attr('id')] + '</p>');
+                }
+            } else 
+                $target.parent().find('.inline-form-error-message, .inline-form-error-icon').remove();
+        });
+    }
+
+    // 
+    // Revealed methods
+    return {
+        init: init
+    };
 
 })(window, jQuery);
