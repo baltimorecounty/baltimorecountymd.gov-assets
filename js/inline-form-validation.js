@@ -78,28 +78,15 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         
         if ($field.hasClass('required-zipPlusFour')) 
             return typeof validate.single($field.val(), {presence: true, format: /^\d{5}-\d{4}$/ }) === 'undefined';
- 
-         if ($field.hasClass('required-datepicker'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
 
-       
+        if ($field.hasClass('required-list')) {
+            var fieldName = $field.attr('name');
+            var $checkedFields = $('input[name=' + fieldName + ']:checked');
+            return $checkedFields.length > 0;
+        }
 
-
-
-        if ($field.hasClass('required-SOMETHING'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
-
-        if ($field.hasClass('required-SOMETHING'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
-
-        if ($field.hasClass('required-SOMETHING'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
-
-        if ($field.hasClass('required-SOMETHING'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
-
-        if ($field.hasClass('required-SOMETHING'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+        if ($field.hasClass('required-checkbox-single'))
+            return $field.is(':checked');
 
         if ($field.hasClass('required-SOMETHING'))
             return typeof validate.single($field.val(), {presence: true}) === 'undefined';
@@ -108,21 +95,61 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
     }
 
     //
+    // Handler for text box validation events
+    function basicInputHandler(validationEvent, errorMessages) {     
+
+        // So we don't throw an error when initially tabbing TO the field. 
+        if (validationEvent.type.toLowerCase() === "keyup" && validationEvent.keyCode === 9)
+            return;
+
+        var $target = $(validationEvent.target);
+
+        if (!isValid($target)) {
+            if ($target.siblings('.inline-form-error-message').length === 0) {
+                $target.parent().append('<p class="seRequiredMarker inline-form-error-message"><i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i> ' + errorMessages[$target.attr('id')] + '</p>');
+            }
+        } else 
+            $target.parent().find('.inline-form-error-message, .inline-form-error-icon').remove();
+    }
+
+    //
+    // Handler for checkbox list and radiobutton list validation events
+    function listInputHandler(validationEvent, errorMessages) {       
+
+        var $target = $(validationEvent.target);
+        var targetName = $target.attr('name');
+        var currentFocusName = $(':focus').attr('name');
+
+        if (targetName === currentFocusName) {
+            var $list = $target.closest('form').find('.seRequiredElement[name=' + targetName + ']');
+            var $wrapper = $list.closest('.seFieldCell');
+
+            if (!isValid($list)) {
+                if (!$wrapper.hasClass('inline-form-set-error')) {
+                    $wrapper.addClass('inline-form-set-error');
+                    $wrapper.append('<p class="seRequiredMarker inline-form-error-message"><i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i> ' + errorMessages[$target.attr('name')] + '</p>');
+                }
+            } else {
+                $wrapper.removeClass('inline-form-set-error');
+                $wrapper.find('.inline-form-error-message').remove();
+            }
+        }        
+    }
+
+    //
     // Initialize and attach handlers.
     function init(formId) {
         var errorMessages = loadFieldErrorMessageData(formId);
         var $form = $('#' + formId);
 
-        $form.find('.seRequiredElement').on('keyup blur', function(e) {
-            var $target = $(e.target);
+        // Set up textboxes, selects, and textareas
+        $form.find('input.seRequiredElement[type=text], textarea.seRequiredElement, select.seRequiredElement').on('keyup blur', function(e) { 
+            basicInputHandler(e, errorMessages); 
+        });
 
-            if (!isValid($target)) {
-                if ($target.siblings('.inline-form-error-message').length === 0) {
-                    $target.parent().append('<i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i>');
-                    $target.parent().append('<p class="seRequiredMarker inline-form-error-message">' + errorMessages[$target.attr('id')] + '</p>');
-                }
-            } else 
-                $target.parent().find('.inline-form-error-message, .inline-form-error-icon').remove();
+        // Set up radio buttons and checkboxes
+        $form.find('input.seRequiredElement[type=radio], input.seRequiredElement[type=checkbox]').on('keyup click blur', function(e) { 
+            listInputHandler(e, errorMessages); 
         });
     }
 
