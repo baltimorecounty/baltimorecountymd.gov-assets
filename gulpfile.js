@@ -14,7 +14,8 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('concatHomepageJs', function() {
-	var files = ['./js/utility/namespacer.js',
+	var files = ['./js/utility/namespacer.js', 
+					'./js/utility/cdnFallback.js',
 					'./js/lib/jQuery.min.js', 
 					'./js/lib/slick.min.js', 
 					'./js/lib/handlebars.js', 
@@ -26,7 +27,8 @@ gulp.task('concatHomepageJs', function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['./js/utility/namespacer.js',
+	var files = ['./js/utility/namespacer.js', 
+					'./js/utility/cdnFallback.js',
 					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
@@ -38,33 +40,35 @@ gulp.task('concatTemplateJs', function() {
   	return concatFiles(files, 'template.js');
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
-		return gulp.src(['!./dist/js/*min.js', './dist/js/*.js'])
-			.pipe(uglify())
-			.pipe(rename({
-	            suffix: '.min'
-	        }))
-		    .pipe(gulp.dest('./dist/js'));
+gulp.task('concatFormsJs', function() {
+	var files = ['./js/lib/moment.min.js',
+					'./js/lib/validate.min.js',
+					'./js/inline-form-validation.js'];
+	return concatFiles(files, 'forms.js');
 });
 
-gulp.task('sass', function () {
-  return gulp.src('./stylesheets/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./dist/css'));
+gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatFormsJs'], function() {
+	return gulp.src(['!./dist/js/*min.js', './dist/js/*.js'])
+		.pipe(uglify())
+		.pipe(rename({
+			suffix: '.min'
+		}))
+		.pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('compressCss', ['sass'], function () {
-  return gulp.src('dist/css/homepage.css')
-        .pipe(cssnano())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('dist/css'));
+gulp.task('sassAndCompressCss', function () {
+	return gulp.src('./stylesheets/*.scss')
+		.pipe(sass().on('error', sass.logError))
+		.pipe(cssnano())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('watch', function() {
 	gulp.watch(['js/*.js', 'js/lib/*.js', 'js/page-specific/*.js'], ['compressFiles']);
-	gulp.watch(['./stylesheets/*.scss', './stylesheets/**/**/*.scss'], ['sass']);
+	gulp.watch(['./stylesheets/*.scss'], ['sassAndCompressCss']);
 });
 
-gulp.task('default', ['compressFiles', 'compressCss'], function() {
+gulp.task('default', ['compressFiles', 'sassAndCompressCss'], function() {
 	return;
 });

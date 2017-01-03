@@ -1,3 +1,45 @@
+/*
+ * Creates namespaces safely and conveniently, reusing 
+ * existing objects instead of overwriting them.
+ */ 
+function namespacer(ns) {
+	var nsArr = ns.split('.'),
+		parent = window;
+	
+	if (!nsArr.length)
+		return;
+
+	for (var i = 0; i < nsArr.length; i++) {
+		var nsPart = nsArr[i];
+
+		if (typeof parent[nsPart] === 'undefined') {
+			parent[nsPart] = {};
+		}
+
+		parent = parent[nsPart];
+	}
+}
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.cdnFallback = (function($) {
+
+    function load(obj, path, isHead) {
+        if (!obj)
+            scriptTag(path, isHead);
+    }
+
+    function scriptTag(path, isHead) {
+        if (isHead)
+            $('head').append('<script src="' + path + '"><\/script>');
+        else 
+            $('body').append('<script src="' + path + '"><\/script>');
+    }
+
+    return { 
+        fallback: fallback
+    };
+
+})(jQuery);
 (function($) {
         // bind a click event to the 'skip' link
         $(document).on('click', '.skip', function(event){

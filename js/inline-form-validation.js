@@ -4,8 +4,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
 
     //
     // Loads up the field IDs and error messages that SE renders in inline JavaScript.
-    function loadFieldErrorMessageData() {
-        var functionText = _CF_checkbcpscleangreen15.toString();
+    function loadFieldErrorMessageData(formId) {
+        var functionText = window['_CF_check' + formId].toString();
         var fieldValueRegExp = /_CF_onError\(_CF_this.+;/g;
         
         var matches = [], 
@@ -37,9 +37,9 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
 
             if (!exists)
                 errorMessageDict[errorObject.fieldName] = errorObject.errorMessage;
-            
-            return errorMessageDict;
         }
+
+        return errorMessageDict;
     }
 
     //
@@ -67,6 +67,9 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         if ($field.hasClass('required-date')) 
             return typeof validate.single($field.val(), {presence: true, datetime: true, format: /\d{1,2}[\/-]\d{1,2}[\/-]\d{4}/ }) === 'undefined';
 
+        if ($field.hasClass('required-numeric')) 
+            return typeof validate.single($field.val(), {presence: true, format: /^\d+$/ }) === 'undefined';
+
         if ($field.hasClass('required-phone')) 
             return typeof validate.single($field.val(), {presence: true, format: /^\d{3}-\d{3}-\d{4}$/ }) === 'undefined';
         
@@ -75,16 +78,42 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         
         if ($field.hasClass('required-zipPlusFour')) 
             return typeof validate.single($field.val(), {presence: true, format: /^\d{5}-\d{4}$/ }) === 'undefined';
-        
+ 
+         if ($field.hasClass('required-datepicker'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
+       
+
+
+
+        if ($field.hasClass('required-SOMETHING'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
+        if ($field.hasClass('required-SOMETHING'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
+        if ($field.hasClass('required-SOMETHING'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
+        if ($field.hasClass('required-SOMETHING'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
+        if ($field.hasClass('required-SOMETHING'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
+        if ($field.hasClass('required-SOMETHING'))
+            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
+
         return typeof validate.single($field.val(), {presence: true}) === 'undefined';
     }
 
     //
     // Initialize and attach handlers.
-    function init() {
-        var errorMessages = loadFieldErrorMessageData();
+    function init(formId) {
+        var errorMessages = loadFieldErrorMessageData(formId);
+        var $form = $('#' + formId);
 
-        $('.seRequiredElement[type=text]').on('keyup blur', function(e) {
+        $form.find('.seRequiredElement').on('keyup blur', function(e) {
             var $target = $(e.target);
 
             if (!isValid($target)) {
