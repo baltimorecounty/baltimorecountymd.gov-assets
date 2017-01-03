@@ -51,16 +51,6 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
     //
     // Validation based on CSS class. 
     function isValid($field) {
-        validate.extend(validate.validators.datetime, {      
-            parse: function(value, options) {
-                return moment(value)
-            },
-            format: function(value, options) {
-                var format = options.dateOnly ? "DD-MM-YYYY" : "DD-MM-YYYY hh:mm:ss";
-                return moment(value).format(format);
-            }
-        });
-
         if ($field.hasClass('required-email')) 
             return typeof validate.single($field.val(), {presence: true, email: true}) === 'undefined';
 
@@ -88,9 +78,6 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         if ($field.hasClass('required-checkbox-single'))
             return $field.is(':checked');
 
-        if ($field.hasClass('required-SOMETHING'))
-            return typeof validate.single($field.val(), {presence: true}) === 'undefined';
-
         return typeof validate.single($field.val(), {presence: true}) === 'undefined';
     }
 
@@ -105,7 +92,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         var $target = $(validationEvent.target);
 
         if (!isValid($target)) {
-            if ($target.siblings('.inline-form-error-message').length === 0) {
+            if (!$target.siblings('.inline-form-error-message').length) {
                 $target.parent().append('<p class="seRequiredMarker inline-form-error-message"><i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i> ' + errorMessages[$target.attr('id')] + '</p>');
             }
         } else 
@@ -141,6 +128,16 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
     function init(formId) {
         var errorMessages = loadFieldErrorMessageData(formId);
         var $form = $('#' + formId);
+
+        validate.extend(validate.validators.datetime, {      
+            parse: function(value, options) {
+                return moment(value)
+            },
+            format: function(value, options) {
+                var format = options.dateOnly ? "DD-MM-YYYY" : "DD-MM-YYYY hh:mm:ss";
+                return moment(value).format(format);
+            }
+        });
 
         // Set up textboxes, selects, and textareas
         $form.find('input.seRequiredElement[type=text], textarea.seRequiredElement, select.seRequiredElement').on('keyup blur', function(e) { 
