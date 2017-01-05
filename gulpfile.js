@@ -3,7 +3,8 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
-	cssnano = require('gulp-cssnano');
+	cssnano = require('gulp-cssnano'),
+	jshint = require('gulp-jshint');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || './dist/js';
@@ -67,6 +68,12 @@ gulp.task('sassAndCompressCss', function () {
 gulp.task('watch', function() {
 	gulp.watch(['js/*.js', 'js/lib/*.js', 'js/page-specific/*.js'], ['compressFiles']);
 	gulp.watch(['./stylesheets/*.scss'], ['sassAndCompressCss']);
+});
+
+gulp.task('linter', function() {
+	return gulp.src(['!js/lib/**/*','js/**/*.js'])
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'));
 });
 
 gulp.task('default', ['compressFiles', 'sassAndCompressCss'], function() {
