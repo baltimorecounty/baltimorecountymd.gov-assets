@@ -562,6 +562,16 @@ namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
 
+    var $currentEventObject,
+        $lastEventObject,
+        $currentWrapper, 
+        $lastWrapper,
+        REQUIRED_TEXTBOX_SELECT_TEXTAREA_SELECTOR = 'input.seRequiredElement[type=text]:not(:disabled), select.seRequiredElement:not(:disabled), textarea.seRequiredElement:not(:disabled)',
+        REQUIRED_CHECKBOX_RADIO_SELECTOR = 'input.seRequiredElement[type=radio]:not(:disabled), input.seRequiredElement[type=checkbox]:not(:disabled)',
+        REQUIRED_ALL_FIELDS_SELECTOR = 'input.seRequiredElement:not(:disabled), select.seRequiredElement:not(:disabled), textarea.seRequiredElement:not(:disabled)',
+        FIELD_WRAPPER_CLASS = '.seFieldCell',
+        REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message';
+
     //
     // Loads up the field IDs and error messages that SE renders in inline JavaScript.
     function loadFieldErrorMessageData(formId) {
@@ -601,6 +611,26 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
 
         return errorMessageDict;
     }
+
+    //
+    // Attaches the error messages to their respective required elements.
+    function attachErrorMessages($form, errorMessages) {
+        var $requiredElements = $form.find(REQUIRED_ALL_FIELDS_SELECTOR);
+
+        $requiredElements.each(function(idx, item) {
+            var $currentElement = $(item);
+
+            if ($currentElement.is(REQUIRED_CHECKBOX_RADIO_SELECTOR)) {
+                var $listWrapper = $currentElement.closest(FIELD_WRAPPER_CLASS);
+                if (!$listWrapper.find(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR).length) {
+                    $listWrapper.append('<p class="seRequiredMarker inline-form-error-message hidden">' + errorMessages[$currentElement.attr('name')] + '</p>');
+                }
+            } else {
+                $currentElement.parent().append('<p class="seRequiredMarker inline-form-error-message hidden">' + errorMessages[$currentElement.attr('id')] + '</p>');
+            }            
+        });
+    }
+    
 
     //
     // Removes a string that wraps another string. For example, changes '"test"' to 'test'.
@@ -649,45 +679,62 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         if (validationEvent.type.toLowerCase() === "keyup" && validationEvent.keyCode === 9)
             return;
 
-        var $target = $(validationEvent.target);
+        var $target = $(validationEvent.target),
+            $errorMessage = $target.siblings(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR);
 
         if (!isValid($target)) {
-            if (!$target.siblings('.inline-form-error-message').length) {
-                $target.parent().append('<p class="seRequiredMarker inline-form-error-message"><i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i> ' + errorMessages[$target.attr('id')] + '</p>');
-            }
-        } else 
-            $target.parent().find('.inline-form-error-message, .inline-form-error-icon').remove();
+            $errorMessage.removeClass('hidden');
+        } else {
+            $errorMessage.addClass('hidden');
+        }
+
     }
 
     //
     // Handler for checkbox list and radiobutton list validation events
-    function listInputHandler(validationEvent, errorMessages) {       
+    function listInputHandler(validationEvent, errorMessages, $listWrapper) {   
+        
+        var $targets = $listWrapper.find(REQUIRED_CHECKBOX_RADIO_SELECTOR),
+            $errorMessage = $listWrapper.find(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR);
 
-        var $target = $(validationEvent.target);
-        var targetName = $target.attr('name');
-        var currentFocusName = $(':focus').attr('name');
+        if (!isValid($targets)) {
+            $errorMessage.removeClass('hidden');
+        } else {
+            $errorMessage.addClass('hidden');
+        }
 
-        if (targetName === currentFocusName) {
-            var $list = $target.closest('form').find('.seRequiredElement[name=' + targetName + ']');
-            var $wrapper = $list.closest('.seFieldCell');
-
-            if (!isValid($list)) {
-                if (!$wrapper.hasClass('inline-form-set-error')) {
-                    $wrapper.addClass('inline-form-set-error');
-                    $wrapper.append('<p class="seRequiredMarker inline-form-error-message"><i class="seRequiredMarker fa fa-times-circle inline-form-error-icon" aria-hidden="true"></i> ' + errorMessages[$target.attr('name')] + '</p>');
-                }
-            } else {
-                $wrapper.removeClass('inline-form-set-error');
-                $wrapper.find('.inline-form-error-message').remove();
-            }
-        }        
     }
+
+
+
+
+    function validateRequiredElementsInLastWrapper($wrapper) {
+        var $targets = $wrapper.find(REQUIRED_ALL_FIELDS_SELECTOR),
+            $errorMessage = $wrapper.find(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR);
+
+        if (!isValid($targets)) {
+            $errorMessage.removeClass('hidden');
+        } else {
+            $errorMessage.addClass('hidden');
+        }
+    }
+
+
+
+
+
+
 
     //
     // Initialize and attach handlers.
     function init(formId) {
-        var errorMessages = loadFieldErrorMessageData(formId);
-        var $form = $('#' + formId);
+        var errorMessages = loadFieldErrorMessageData(formId),
+            $form = $('#' + formId),
+            $inputsSelectsTextboxes = $form.find(REQUIRED_TEXTBOX_SELECT_TEXTAREA_SELECTOR),
+            $checkboxesRadios = $form.find(REQUIRED_CHECKBOX_RADIO_SELECTOR),
+            $allRequiredFields = $form.find(REQUIRED_ALL_FIELDS_SELECTOR);
+
+        attachErrorMessages($form, errorMessages);
 
         validate.extend(validate.validators.datetime, {      
             parse: function(value, options) {
@@ -699,14 +746,22 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             }
         });
 
-        // Set up textboxes, selects, and textareas
-        $form.find('input.seRequiredElement[type=text], textarea.seRequiredElement, select.seRequiredElement').on('keyup blur', function(e) { 
-            basicInputHandler(e, errorMessages); 
-        });
+        // Set up textboxes, selects, and textareas to be validated as the user types.
+        $inputsSelectsTextboxes.on('keyup', function(e) { 
+            //basicInputHandler(e, errorMessages); 
+        });            
 
-        // Set up radio buttons and checkboxes
-        $form.find('input.seRequiredElement[type=radio], input.seRequiredElement[type=checkbox]').on('keyup click blur', function(e) { 
-            listInputHandler(e, errorMessages); 
+        $allRequiredFields.on('keyup click', function(e) {
+            $currentEventObject = $(e.target);
+            $currentWrapper = $currentEventObject.closest(FIELD_WRAPPER_CLASS);
+            $lastWrapper = $lastWrapper || $currentWrapper;
+            
+            var isSameWrapper = $currentWrapper.is($lastWrapper);
+console.log('isSameWrapper', isSameWrapper);
+            if (!isSameWrapper)
+                validateRequiredElementsInLastWrapper($lastWrapper);
+
+            $lastWrapper = $currentWrapper;
         });
     }
 
