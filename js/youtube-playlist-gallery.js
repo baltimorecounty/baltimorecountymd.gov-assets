@@ -84,48 +84,6 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
         });
    }
 
-    /*
-     * Generates the HTML for the video gallery itself. 
-     * --- Depricated. Use generateYouTubePlaylistHtmlWithHandlebars instead.
-     */
-    function generateYouTubePlaylistHtml(playlistItems, $target, showDescription) {
-        var html = '';
-
-        if (!playlistItems || playlistItems.length === 0) 
-            throw 'No items are listed for the playlist.';
-
-        for (var i = 0; i < playlistItems.length; i++) {
-            var targetThumbnail = getLargestThumbnail(playlistItems[i].snippet.thumbnails);
-
-            html +=   '    <div class="youtube-playlist-item hidden">'
-                    + '        <figure>'
-                    + '            <a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '" data-fancybox-href="https://www.youtube.com/embed/' + playlistItems[i].snippet.resourceId.videoId + '" data-fancybox-type="iframe" class="fancybox"><i class="fa fa-play-circle-o" aria-hidden="true"></i><img src="' + targetThumbnail.url + '" alt="' + playlistItems[i].snippet.title + '" /></a>'
-                    + '            <figcaption>'
-                    + '                <p><a href="https://www.youtube.com/watch?v=' + playlistItems[i].snippet.resourceId.videoId +  '" title="Video: ' + playlistItems[i].snippet.title + '" data-fancybox-href="https://www.youtube.com/embed/' + playlistItems[i].snippet.resourceId.videoId + '" data-fancybox-type="iframe" class="fancybox">' + playlistItems[i].snippet.title + '</a></p>';
-
-            if (showDescription)
-                html += '                <p>' + playlistItems[i].snippet.description + '</p>';
-            
-            html +=   '            </figcaption>'
-                    + '        </figure>'
-                    + '    </div>';                   
-        }
-
-        if (playlistItems.length > 6)
-            html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
-
-        $target.html(html);
-        
-        $target.find('.hidden').slice(0,6).removeClass('hidden');
-
-        $target.children('.loadMoreButton').first().on('click', function(e) {
-            $target.find('.hidden').slice(0,6).removeClass('hidden');
-
-            if ($target.find('.hidden').length === 0)
-                $(e.currentTarget).hide();
-        });
-    }
-
     return {
         init: init
     };

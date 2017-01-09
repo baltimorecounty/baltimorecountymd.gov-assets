@@ -95,37 +95,38 @@ Displays a video gallery of YouTube videos from an existing playlist.
 ### Usage
 Create a HTML Snippet with the following code, and you're ready to go. All you need to do is customize the playlistId value near the bottom.
 
-```HTML & JavaScript 
-	<div class="bc-youtube-playlist-gallery"></div>
+```html
+<div class="bc-youtube-playlist-gallery"></div>
 
-	<script id="youtube-playlist-item-template" type="text/x-handlebars-template">
-		{{#each youtubeItemInfo}}
-		<div class="youtube-playlist-item {{#if isHidden}}hidden{{/if}}">
-			<figure>
-				<a href="https://www.youtube.com/watch?v={{videoId}}" title="Video: {{videoTitle}}" data-fancybox-href="https://www.youtube.com/embed/{{videoId}}" data-fancybox-type="iframe" class="fancybox">
-				<i class="fa fa-play-circle-o" aria-hidden="true"></i>
-				<img src="{{thumbnailUrl}}" alt="{{videoTitle}}" /></a>
-				<figcaption>
-					<p><a href="https://www.youtube.com/watch?v={{videoId}}" title="Video: {{videoTitle}}" data-fancybox-href="https://www.youtube.com/embed/{{videoId}}" data-fancybox-type="iframe" class="fancybox">{{videoTitle}}</a></p>
-				</figcaption>
-			</figure>
-		</div>
-		{{/each}}
-	</script>	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
-	<script>
-		$(document).ready(function() { 
-			baltimoreCounty.youtubePlaylistGallery.init({
-				target: '.bc-youtube-playlist-gallery',
-				templateSelector: '#youtube-playlist-item-template',
-				playlistId: 'PLYAZPzl77odrB8TBCEizC4ZvQ7NvgRoGf'
-			});
-
-			$('.fancybox').fancybox();
+<script id="youtube-playlist-item-template" type="text/x-handlebars-template">
+	{{#each youtubeItemInfo}}
+	<div class="youtube-playlist-item {{#if isHidden}}hidden{{/if}}">
+		<figure>
+			<a href="https://www.youtube.com/watch?v={{videoId}}" title="Video: {{videoTitle}}" data-fancybox-href="https://www.youtube.com/embed/{{videoId}}" data-fancybox-type="iframe" class="fancybox">
+			<i class="fa fa-play-circle-o" aria-hidden="true"></i>
+			<img src="{{thumbnailUrl}}" alt="{{videoTitle}}" /></a>
+			<figcaption>
+				<p><a href="https://www.youtube.com/watch?v={{videoId}}" title="Video: {{videoTitle}}" data-fancybox-href="https://www.youtube.com/embed/{{videoId}}" data-fancybox-type="iframe" class="fancybox">{{videoTitle}}</a></p>
+			</figcaption>
+		</figure>
+	</div>
+	{{/each}}
+	<div style="clear: both"></div>
+</script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
+<script>
+	$(document).ready(function() { 
+		baltimoreCounty.youtubePlaylistGallery.init({
+			target: '.bc-youtube-playlist-gallery',
+			templateSelector: '#youtube-playlist-item-template',
+			playlistId: 'PLYAZPzl77odrB8TBCEizC4ZvQ7NvgRoGf'
 		});
-	</script>
+
+		$('.fancybox').fancybox();
+	});
+</script>
 ```
 
 **filename**: youtube-playlist-gallery.js    
