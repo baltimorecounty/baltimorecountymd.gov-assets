@@ -87,41 +87,46 @@ Currently we are tracking:
 
 
 ## Content Filter
-Filters unordered lists that are broken into sections or tables.
+Filters unordered lists that are broken into sections, or tables.
 
 ### Usage
-**Note:** You will need to use content inclusions for both the `<form>` tag and the `<script>` tag. Everything else can be directly on the page.
+**Note:** You will need to use HTML Snippets in content inclusions for both the `<form>` tag and the `<script>` tag. Everything else can be directly on the page.
 
-#### HTML for the form, error message, and filterable content required for filtering a list. 
+#### HTML for the filter's form. This must be in an HTML Snippet.
 ```html
-<form class="bc-filter-form">
-    <label for="filter">Filter: Enter topic or keyword to filter content.</label>
-    <input id="filter" value="" type="text" class="bc-filter-form-filter" />
-    <button type="button" class="clear bc-filter-form-clearButton">Clear</button>
+<form id="filter-form" class="bc-filter-form">
+    <p><strong>Filter:</strong> Enter topic or keyword to filter content.</p>
+    <input id="filter" value="" type="text" class="bc-filter-form-filter" aria-label="Enter topic or keyword to filter content" />
+    <input type="button" class="clear bc-filter-form-clearButton" value="Clear" />
 </form>
+```
 
+#### HTML for the *list* filter and error message. This can be directly on the page.
+```html
 <div class="bc-filter-noResults" style="display: none;">No Search Results...Please Try Another Search</div>       
 
 <div id="centerContent" class="bc-filter-content">
     <div>
-        <h2>Section Header</h2>
+        <h2>Section Header 1</h2>
         <ul>
             <li><a href="https://www.google.com">First List Item</a></li>
             <li><a href="https://www.google.com">Second List Item</a></li>
             <li><a href="https://www.google.com">Third List Item</a></li>
         </ul>
     </div>
+    <div>
+        <h2>Section Header 2</h2>
+        <ul>
+            <li><a href="https://www.google.com">Fourth List Item</a></li>
+            <li><a href="https://www.google.com">Fifth List Item</a></li>
+            <li><a href="https://www.google.com">Sixth List Item</a></li>
+        </ul>
+    </div>
 </div>
 ```
 
-#### HTML for the form, error message, and filterable content required for filtering a table. 
+#### HTML for the *table* filter and error message. This can be directly on the page.
 ```html
-<form class="bc-filter-form">
-    <label for="filter">Filter: Enter topic or keyword to filter content.</label>
-    <input id="filter" value="" type="text" class="bc-filter-form-filter" />
-    <button type="button" class="clear bc-filter-form-clearButton">Clear</button>
-</form>
-
 <div class="bc-filter-noResults" style="display: none;">No Search Results...Please Try Another Search</div>       
 
 <table class="bc-filter-content">
@@ -131,18 +136,22 @@ Filters unordered lists that are broken into sections or tables.
         <th>Column Header 3</th>
     </tr>
     <tr>
-        <td><a href="https://www.google.com">First List Item</a></td>
-        <td><a href="https://www.google.com">Second List Item</a></td>
-        <td><a href="https://www.google.com">Third List Item</a></td>
+        <td><a href="https://www.google.com">First Item</a></td>
+        <td><a href="https://www.google.com">Second Item</a></td>
+        <td><a href="https://www.google.com">Third Item</a></td>
+    </tr>
+    <tr>
+        <td><a href="https://www.google.com">Fourth Item</a></td>
+        <td><a href="https://www.google.com">Fifth Item</a></td>
+        <td><a href="https://www.google.com">Sixth Item</a></td>
     </tr>
 </table>
 ```
 
-#### HTML/JavaScript for the filter initialization. 
-
+#### HTML/JavaScript for the filter initialization. This must be in an HTML Snippet.
 ```html
 <script>
-    baltimoreCounty.listFilter.init({
+    baltimoreCounty.contentFilter.init({
         listWrapper: '.bc-filter-content',
         searchBox: '.bc-filter-form .bc-filter-form-filter',
         clearButton: '.bc-filter-form .bc-filter-form-clearButton',
