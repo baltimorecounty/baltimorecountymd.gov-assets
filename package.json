@@ -18,7 +18,8 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.2",
-    "phantomjs-prebuilt": "^2.1.14"
+    "phantomjs-prebuilt": "^2.1.14",
+    "gulp-clean": "^0.3.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -4,7 +4,8 @@ var gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
 	cssnano = require('gulp-cssnano'),
-	stripCode = require('gulp-strip-code');
+	stripCode = require('gulp-strip-code'),
+	clean = require('gulp-clean');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || './dist/js';
