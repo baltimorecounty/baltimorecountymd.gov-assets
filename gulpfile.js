@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
-	cssnano = require('gulp-cssnano')
+	cssnano = require('gulp-cssnano'),
 	clean = require('gulp-clean');
 
 var concatFiles = function(files, name, dest) {
