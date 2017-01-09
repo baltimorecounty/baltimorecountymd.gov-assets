@@ -23,12 +23,12 @@ namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.cdnFallback = (function($) {
 
-    function load(obj, path, isHead) {
+    var load = function(obj, path, isHead) {
         if (!obj)
             scriptTag(path, isHead);
-    }
+    },
 
-    function scriptTag(path, isHead) {
+    scriptTag = function(path, isHead) {
         if (isHead)
             $('head').append('<script src="' + path + '"><\/script>');
         else 
@@ -36,10 +36,32 @@ baltimoreCounty.utility.cdnFallback = (function($) {
     }
 
     return { 
-        fallback: fallback
+        load: load
     };
 
 })(jQuery);
+namespacer('baltimoreCounty');
+
+baltimoreCounty.niftyForms = (function() {
+
+    var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
+
+        init = function($form) {
+            $form.find(checkboxesAndRadiosLabelSelector).on('click', function() {
+                var $current = $(this),
+                    $input = $current.siblings('input').first();
+
+                $current.toggleClass('checked');
+
+                // TODO: Tabbable (tab index?) and keyboardable (keyup)
+            });
+        };
+
+    return {
+        init: init
+    };
+
+})();
 (function($) {
         // bind a click event to the 'skip' link
         $(document).on('click', '.skip', function(event){

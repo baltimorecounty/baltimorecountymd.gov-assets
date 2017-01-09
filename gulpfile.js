@@ -30,6 +30,7 @@ gulp.task('concatHomepageJs', function() {
 gulp.task('concatTemplateJs', function() {
 	var files = ['./js/utility/namespacer.js', 
 					'./js/utility/cdnFallback.js',
+					'./js/nifty-forms.js',
 					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 

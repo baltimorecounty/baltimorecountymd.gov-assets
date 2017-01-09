@@ -124,13 +124,21 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         validateRequiredElementsInWrapper = function($wrapper) {
 
             var $targets = $wrapper.find(REQUIRED_ALL_FIELDS_SELECTOR),
-                $errorMessage = $wrapper.find(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR);
+                $errorMessage = $wrapper.find(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR),
+                $label = $wrapper.siblings('.seLabelCell').find('label');
+            
+            if (!$label.length)
+                $targets = $targets.siblings('label');
 
-            if (!isValid($targets)) {
+            if (!isValid($targets)) {                
                 $errorMessage.removeClass('hidden');
+                $targets.addClass('error-field');
+                $label.addClass('error-label');
             } else {
                 $errorMessage.addClass('hidden');
-            }
+                $targets.removeClass('error-field');
+                $label.removeClass('error-label');
+          }
         },
 
         /*
@@ -141,12 +149,11 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             $currentWrapper = $currentEventObject.closest(FIELD_WRAPPER_CLASS);
             $lastWrapper = $lastWrapper || $currentWrapper;
             
-            var isTextSelectTextarea = $currentEventObject.is($inputsSelectsTextboxes),
-                isClick = e.type === 'click',
+            var isClick = e.type === 'click',
                 isTab = e.keyCode === 9,
                 isSameWrapper = $currentWrapper.is($lastWrapper);
 
-            if ((isTextSelectTextarea && !isTab && !isSameWrapper) || !isSameWrapper)
+            if (!isSameWrapper || (isSameWrapper && !isTab && !isClick))
                 validateRequiredElementsInWrapper($lastWrapper);
 
             $lastWrapper = $currentWrapper;        
