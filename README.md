@@ -1,8 +1,8 @@
 # baltimorecountymd.gov Assets
 Assets used on the [Baltimore County Website](https://www.baltimorecountymd.gov/index.html)
 
-##Building Files for Distribution
-###Setup
+## Building Files for Distribution
+### Setup
 You will need to do these steps the first time you setup the project.
 
 1. [Clone this repository](https://help.github.com/articles/working-with-repositories/)
@@ -16,7 +16,7 @@ You will need to do these steps the first time you setup the project.
 9. Run ``npm install --save-dev gulp-sass``
 10. Run ``npm install --save-dev gulp-cssnano``
 
-###Build
+### Build
 1. Open terminal or command prompt to the root of your local repository
 2. Run the ``gulp`` command
 
