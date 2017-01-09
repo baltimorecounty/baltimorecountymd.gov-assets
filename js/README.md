@@ -170,7 +170,7 @@ clearButton|string|.bc-filter-form .bc-filter-form-clearButton|jQuery selector t
 errorMessage|string|.bc-filter-noResults|jQuery selector that identifies the element to display when there are no results.|No
 contentType|string|list|Determines whether we're filtering an unordered list or a table. Acceptable values are **list** and **table**.|No
 
-**filename**: bc-list-filter.js     
+**filename**: bc-content-filter.js     
 **usage**: template.min.js 
 ### Dependencies
 * [jQuery](https://jquery.com/)
