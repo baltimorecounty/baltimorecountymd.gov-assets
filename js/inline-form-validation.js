@@ -12,6 +12,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         REQUIRED_TEXTBOX_SELECT_TEXTAREA_SELECTOR = 'input.seRequiredElement[type=text]:not(:disabled), select.seRequiredElement:not(:disabled), textarea.seRequiredElement:not(:disabled)',
         REQUIRED_CHECKBOX_RADIO_SELECTOR = '.seRequiredElement[type=radio]:not(:disabled), .seRequiredElement[type=checkbox]:not(:disabled)',
         REQUIRED_ALL_FIELDS_SELECTOR = '.seRequiredElement:not(:disabled)',
+        REQUIRED_CHECKBOX_RADIO_LABEL_SELECTOR = '.seCheckboxLabel, .seRadioLabel',
         FIELD_WRAPPER_CLASS = '.seFieldCell',
         REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message',
 
@@ -88,6 +89,11 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
          * Validation based on CSS class. 
          */
         isValid = function($field) {
+
+            if ($field.is(REQUIRED_CHECKBOX_RADIO_LABEL_SELECTOR)) {
+                $field = $field.closest(FIELD_WRAPPER_CLASS).find(REQUIRED_CHECKBOX_RADIO_SELECTOR);
+            }
+
             if ($field.hasClass('required-email')) 
                 return typeof validate.single($field.val(), {presence: true, email: true}) === 'undefined';
 
@@ -106,14 +112,12 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             if ($field.hasClass('required-zipPlusFour')) 
                 return typeof validate.single($field.val(), {presence: true, format: /^\d{5}-\d{4}$/ }) === 'undefined';
 
-            if ($field.hasClass('required-list')) {
+            if ($field.hasClass('required-list') || $field.hasClass('required-checkbox-single')) {
                 var fieldName = $field.attr('name');
                 var $checkedFields = $('input[name=' + fieldName + ']:checked');
+
                 return $checkedFields.length > 0;
             }
-
-            if ($field.hasClass('required-checkbox-single'))
-                return $field.is(':checked');
 
             return typeof validate.single($field.val(), {presence: true}) === 'undefined';
         },        
@@ -138,7 +142,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
                 $errorMessage.addClass('hidden');
                 $targets.removeClass('error-field');
                 $label.removeClass('error-label');
-          }
+            }
         },
 
         /*
