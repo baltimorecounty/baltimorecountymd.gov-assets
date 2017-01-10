@@ -85,7 +85,6 @@ Currently we are tracking:
 ### Dependencies
 * [jQuery](https://jquery.com/)
 
-
 ## Content Filter
 Filters unordered lists that are broken into sections, or tables.
 
@@ -172,5 +171,36 @@ contentType|string|list|Determines whether we're filtering an unordered list or 
 
 **filename**: bc-content-filter.js     
 **usage**: template.min.js 
+
+## Accordion menu
+Contains code to add and remove classes to the Bootstrap Accordion Menu in order to have arrows that indicate an expanded or collapsed list.
+
+In order to use the Bootstrap Accordion Menu, the HTML for the menu must match the following format. `<div class="panel">` corresponds to top-level 
+accordion items, and `<li class="panel">` for second-level accordion items. 
+
+```HTML
+<nav class="nav-list bc-accordion-menu">
+    <div class="panel">
+        <button class="accordion-collapsed" data-toggle="collapse" aria-expanded="false">Collapsable list one</button>
+        <ul class="collapse">
+            <li>
+                <a href="/myplainlink1">Plain link one</a>
+            </li>
+            <li class="panel">
+                <button class="accordion-collapsed" data-toggle="collapse" aria-expanded="false">Collapsable sub panel one</button>
+                <ul class="collapse">
+                    <li><a href="/mypage1">Page one</a></li>
+                    <li><a href="/mypage2">Page two</a></li>
+                    <li><a href="/mypage3">Page three</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+```
+
+**filename**: accordion-menu.js    
+**usage**: template.min.js
+
 ### Dependencies
 * [jQuery](https://jquery.com/)
