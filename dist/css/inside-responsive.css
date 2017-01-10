@@ -1392,6 +1392,8 @@ tbody.collapse.in {
     padding: 5px 15px; }
     #container_localnavigation .bc-accordion-menu .panel a:hover, #container_localnavigation .bc-accordion-menu .panel .accordion-collapsed:hover {
       background: #feb30c; }
+    #container_localnavigation .bc-accordion-menu .panel a:focus, #container_localnavigation .bc-accordion-menu .panel .accordion-collapsed:focus {
+      outline: none; }
   #container_localnavigation .bc-accordion-menu .panel .accordion-collapsed {
     border: none;
     color: #002280;

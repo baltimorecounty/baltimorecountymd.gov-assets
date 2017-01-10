@@ -27,6 +27,10 @@
                     background: $gold;
                 }
 
+                &:focus {
+                    outline: none;
+                }
+
             }
 
             .accordion-collapsed {
