@@ -270,8 +270,7 @@ baltimoreCounty.contentFilter = (function($) {
                 case 'list':
                     filterList(that.$wrapper, $(eventObject.currentTarget).val());
                     break;
-            }
-            
+            }            
         });
         
         that.$searchBox.closest('form').on('submit', function(e) {

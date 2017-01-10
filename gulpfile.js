@@ -14,7 +14,12 @@ var concatFiles = function(files, name, dest) {
 	    .pipe(gulp.dest(dest));
 };
 
-gulp.task('concatHomepageJs', function() {
+gulp.task('clean-dist', function() {
+	gulp.src('dist')
+		.pipe(clean());
+});
+
+gulp.task('concatHomepageJs', ['clean-dist'], function() {
 	var files = ['./js/lib/jQuery.min.js', 
 					'./js/lib/slick.min.js', 
 					'./js/lib/handlebars.js', 
@@ -25,7 +30,7 @@ gulp.task('concatHomepageJs', function() {
 	return concatFiles(files, 'homepage.js');
 });
 
-gulp.task('concatTemplateJs', function() {
+gulp.task('concatTemplateJs', ['clean-dist'], function() {
 	var files = ['./js/polyfills/array.some.js', 
 					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
@@ -48,7 +53,7 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 		    .pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('sass', function () {
+gulp.task('sass', ['clean-dist'], function() {
   return gulp.src('./stylesheets/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dist/css'));
