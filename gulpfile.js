@@ -55,7 +55,8 @@ gulp.task('concatTemplateJs', ['clean-dist'], function() {
 gulp.task('concatFormsJs', ['clean-dist'], function() {
 	var files = ['./js/lib/moment.min.js',
 					'./js/lib/validate.min.js',
-					'./js/inline-form-validation.js'];
+					'./js/inline-form-validation.js',
+					'./js/nifty-forms.js'];
 	return concatFiles(files, 'forms.js');
 });
 
