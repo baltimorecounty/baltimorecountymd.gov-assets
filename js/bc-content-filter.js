@@ -31,7 +31,6 @@ baltimoreCounty.contentFilter = (function($) {
         that.$errorMessage.hide();
 
         that.$searchBox.on('keyup', function(eventObject) {
-
             switch (that.contentType) {
                 case 'table':
                     filterTable(that.$wrapper, $(eventObject.currentTarget).val());
@@ -39,10 +38,13 @@ baltimoreCounty.contentFilter = (function($) {
                 case 'list':
                     filterList(that.$wrapper, $(eventObject.currentTarget).val());
                     break;
-            }
-            
+            }            
         });
         
+        that.$searchBox.closest('form').on('submit', function(e) {
+            return false;
+        });
+
         $clearButton.on('click', function() {
             clearFilter(that.$wrapper, that.$searchBox);
         });
