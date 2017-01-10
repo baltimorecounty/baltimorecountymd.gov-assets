@@ -3,8 +3,9 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
+	jshint = require('gulp-jshint'),
 	cssnano = require('gulp-cssnano'),
-	jshint = require('gulp-jshint');
+	clean = require('gulp-clean');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || './dist/js';
@@ -14,7 +15,12 @@ var concatFiles = function(files, name, dest) {
 	    .pipe(gulp.dest(dest));
 };
 
-gulp.task('concatHomepageJs', function() {
+gulp.task('clean-dist', function() {
+	gulp.src('dist')
+		.pipe(clean());
+});
+
+gulp.task('concatHomepageJs', ['clean-dist'], function() {
 	var files = ['./js/utility/namespacer.js', 
 					'./js/utility/cdnFallback.js',
 					'./js/lib/jQuery.min.js', 
@@ -27,10 +33,12 @@ gulp.task('concatHomepageJs', function() {
 	return concatFiles(files, 'homepage.js');
 });
 
-gulp.task('concatTemplateJs', function() {
-	var files = ['./js/utility/namespacer.js', 
+gulp.task('concatTemplateJs', ['clean-dist'], function() {
+	var files = ['./js/polyfills/array.some.js',
+					'./js/utility/namespacer.js', 
 					'./js/utility/cdnFallback.js',
 					'./js/nifty-forms.js',
+					'./js/lib/bootstrap-collapse.js',
 					'./js/skip-nav.js',
 					'./js/text-resizer.js', 
 					'./js/bc-google-analytics.js', 
@@ -38,11 +46,13 @@ gulp.task('concatTemplateJs', function() {
 					'./js/lib/review.js', 
 					'./js/mobile-search.js',
 					'./js/template-events.js', 
-					'./js/inside-template.js'];
+					'./js/inside-template.js',
+					'./js/bc-content-filter.js', 
+					'./js/accordion-menu.js'];
   	return concatFiles(files, 'template.js');
 });
 
-gulp.task('concatFormsJs', function() {
+gulp.task('concatFormsJs', ['clean-dist'], function() {
 	var files = ['./js/lib/moment.min.js',
 					'./js/lib/validate.min.js',
 					'./js/inline-form-validation.js'];
@@ -58,7 +68,7 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatForms
 		.pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('sassAndCompressCss', function () {
+gulp.task('sassAndCompressCss', ['clean-dist'], function () {
 	return gulp.src('./stylesheets/*.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cssnano())
