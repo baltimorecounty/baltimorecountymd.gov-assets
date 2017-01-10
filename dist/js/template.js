@@ -524,7 +524,6 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
         });
     });
 })(jQuery, TextResizer);
-<<<<<<< HEAD
 var baltimoreCounty = baltimoreCounty || {};
 
 baltimoreCounty.contentFilter = (function($) {
@@ -668,7 +667,7 @@ baltimoreCounty.contentFilter = (function($) {
     };
 
 })(jQuery);
-=======
+
 // Collapse the other items
 (function($) {
 
@@ -743,4 +742,3 @@ baltimoreCounty.contentFilter = (function($) {
     });
 
 })(jQuery);
->>>>>>> accordion-menu
