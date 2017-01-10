@@ -58,10 +58,10 @@ baltimoreCounty.niftyForms = (function() {
                     .siblings(checkboxesAndRadiosLabelSelector)
                     .removeClass('checked');
             }
-        
+
             $label.toggleClass('checked');
             $input.prop('checked', $label.hasClass('checked'));
-      },
+        },
 
         makeItemCheckedOnClickHandler = function(e) {
             var $label = $(e.target);
@@ -84,10 +84,15 @@ baltimoreCounty.niftyForms = (function() {
      * Main
      */
     $(function() {
-        $('form').find(checkboxesAndRadiosLabelSelector)
-            .on('click', makeItemCheckedOnClickHandler)
+        var $checkAndRadioLabels = $('form').find(checkboxesAndRadiosLabelSelector);
+
+        $checkAndRadioLabels.on('click', makeItemCheckedOnClickHandler)
             .on('keyup', makeItemCheckedOnKeyupHandler)
-            .attr('tabindex', '0');
+            .attr('tabindex', '0')
+            .attr('aria-checked', false);
+        
+        $checkAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
+        $checkAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
     });
 
 })();
