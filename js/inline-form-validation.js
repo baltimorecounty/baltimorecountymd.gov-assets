@@ -149,16 +149,22 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
          * Handles the keyup and click events for all required fields.
          */
         allFieldsKeyupClickHandler = function(e) {
+
+
             $currentEventObject = $(e.target);
             $currentWrapper = $currentEventObject.closest(FIELD_WRAPPER_CLASS);
             $lastWrapper = $lastWrapper || $currentWrapper;
-            
+
             var isClick = e.type === 'click',
-                isTab = e.keyCode === 9,
-                isSameWrapper = $currentWrapper.is($lastWrapper);
+                isTab = e.which === 9,
+                isSameWrapper = $currentWrapper.is($lastWrapper),
+                isLabel = $currentEventObject.is('label');
 
             if (!isSameWrapper || (isSameWrapper && !isTab && !isClick))
                 validateRequiredElementsInWrapper($lastWrapper);
+
+            if (isLabel && !isTab) 
+                validateRequiredElementsInWrapper($currentWrapper);
 
             $lastWrapper = $currentWrapper;        
         },

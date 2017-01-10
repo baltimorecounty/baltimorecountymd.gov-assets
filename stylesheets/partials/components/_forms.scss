@@ -63,6 +63,8 @@ $error-shadow: 0 0 5px $red;
         font-family: FontAwesome;
         font-size: .75em;
         line-height: 1.5em;
+        position: relative;
+        top: -2px;
     }    
 
     &.error-field {
@@ -89,4 +91,8 @@ $error-shadow: 0 0 5px $red;
         width: 20px;
     }
 
+}
+
+.seRequiredMarker, .inline-form-error-message {
+    font-size: .75em;
 }
