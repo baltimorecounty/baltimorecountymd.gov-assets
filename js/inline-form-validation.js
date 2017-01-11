@@ -14,6 +14,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         REQUIRED_ALL_FIELDS_SELECTOR = '.seRequiredElement:not(:disabled)',
         REQUIRED_CHECKBOX_RADIO_LABEL_SELECTOR = '.seCheckboxLabel, .seRadioLabel',
         FIELD_WRAPPER_CLASS = '.seFieldCell',
+        LABEL_WRAPPER_CLASS = '.seLabelCell',
         REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message',
 
         /*
@@ -129,10 +130,14 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
 
             var $targets = $wrapper.find(REQUIRED_ALL_FIELDS_SELECTOR),
                 $errorMessage = $wrapper.find(REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR),
-                $label = $wrapper.siblings('.seLabelCell').find('label');
+                $label = $wrapper.siblings(LABEL_WRAPPER_CLASS).find('label');
             
-            if (!$label.length)
+            if (!$label.length) {
                 $targets = $targets.siblings('label');
+                $label = $wrapper.siblings(LABEL_WRAPPER_CLASS).length ? 
+                    $wrapper.siblings(LABEL_WRAPPER_CLASS) : 
+                    $wrapper.parents(FIELD_WRAPPER_CLASS).last().siblings(LABEL_WRAPPER_CLASS).find('label');
+            }
 
             if ($targets.hasClass('required-checkbox-single'))
                 $targets = $targets.closest('.seCheckboxLabel');
@@ -175,7 +180,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
          */
         inputsSelectsTextboxesBlurHandler = function(e) {
             var $eventTarget = $(e.target),
-                $targetWrapper = $eventTarget.closest(FIELD_WRAPPER_CLASS);
+                $targetWrapper = $eventTarget.parents(FIELD_WRAPPER_CLASS).last();
             
             validateRequiredElementsInWrapper($lastWrapper);                
         },
