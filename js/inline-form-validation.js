@@ -134,6 +134,9 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             if (!$label.length)
                 $targets = $targets.siblings('label');
 
+            if ($targets.hasClass('required-checkbox-single'))
+                $targets = $targets.closest('.seCheckboxLabel');
+
             if (!isValid($targets)) {                
                 $errorMessage.removeClass('hidden');
                 $targets.addClass('error-field');
@@ -149,8 +152,6 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
          * Handles the keyup and click events for all required fields.
          */
         allFieldsKeyupClickHandler = function(e) {
-
-
             $currentEventObject = $(e.target);
             $currentWrapper = $currentEventObject.closest(FIELD_WRAPPER_CLASS);
             $lastWrapper = $lastWrapper || $currentWrapper;
@@ -158,7 +159,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             var isClick = e.type === 'click',
                 isTab = e.which === 9,
                 isSameWrapper = $currentWrapper.is($lastWrapper),
-                isLabel = $currentEventObject.is('label');
+                isLabel = $currentEventObject.is('label, .seCheckboxLabel, .seRadioLabel');
 
             if (!isSameWrapper || (isSameWrapper && !isTab && !isClick))
                 validateRequiredElementsInWrapper($lastWrapper);
@@ -185,7 +186,11 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         submitClickHandler = function(e) {
             e.preventDefault();
             var $form = $(e.target.form);
-            validateRequiredElementsInWrapper($form);                
+
+            $.each($form.find(FIELD_WRAPPER_CLASS), function(index, item) {
+                var $wrapper = $(item);
+                validateRequiredElementsInWrapper($wrapper);                
+            });
         },
 
         /*

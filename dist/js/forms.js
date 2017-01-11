@@ -694,6 +694,9 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             if (!$label.length)
                 $targets = $targets.siblings('label');
 
+            if ($targets.hasClass('required-checkbox-single'))
+                $targets = $targets.closest('.seCheckboxLabel');
+
             if (!isValid($targets)) {                
                 $errorMessage.removeClass('hidden');
                 $targets.addClass('error-field');
@@ -709,8 +712,6 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
          * Handles the keyup and click events for all required fields.
          */
         allFieldsKeyupClickHandler = function(e) {
-
-
             $currentEventObject = $(e.target);
             $currentWrapper = $currentEventObject.closest(FIELD_WRAPPER_CLASS);
             $lastWrapper = $lastWrapper || $currentWrapper;
@@ -718,7 +719,7 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
             var isClick = e.type === 'click',
                 isTab = e.which === 9,
                 isSameWrapper = $currentWrapper.is($lastWrapper),
-                isLabel = $currentEventObject.is('label');
+                isLabel = $currentEventObject.is('label, .seCheckboxLabel, .seRadioLabel');
 
             if (!isSameWrapper || (isSameWrapper && !isTab && !isClick))
                 validateRequiredElementsInWrapper($lastWrapper);
@@ -745,7 +746,11 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         submitClickHandler = function(e) {
             e.preventDefault();
             var $form = $(e.target.form);
-            validateRequiredElementsInWrapper($form);                
+
+            $.each($form.find(FIELD_WRAPPER_CLASS), function(index, item) {
+                var $wrapper = $(item);
+                validateRequiredElementsInWrapper($wrapper);                
+            });
         },
 
         /*
@@ -784,59 +789,3 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
     };
 
 })(window, jQuery);
-namespacer('baltimoreCounty');
-
-baltimoreCounty.niftyForms = (function() {
-
-    var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
-
-        toggleChecked = function($label) {
-            var labelFor = $label.attr('for'),
-                $input = $label.siblings('#' + labelFor);
-
-            if ($input.is('[type=radio]')) {
-                var inputName = $input.attr('name');
-
-                $label.closest('form').find('input[name=' + inputName + ']')
-                    .prop('checked', false)
-                    .siblings(checkboxesAndRadiosLabelSelector)
-                    .removeClass('checked');
-            }
-
-            $label.toggleClass('checked');
-            $input.prop('checked', $label.hasClass('checked'));
-        },
-
-        makeItemCheckedOnClickHandler = function(e) {
-            var $label = $(e.target);
-            
-            e.preventDefault();
-            toggleChecked($label);
-        },
-
-        makeItemCheckedOnKeyupHandler = function(e) {
-            var $label = $(e.target),
-                KEYCODE_SPACEBAR = 32;
-
-                if (e.which === KEYCODE_SPACEBAR) {
-                    e.preventDefault();
-                    toggleChecked($label);
-                }
-        };
-
-    /*
-     * Main
-     */
-    $(function() {
-        var $checkAndRadioLabels = $('form').find(checkboxesAndRadiosLabelSelector);
-
-        $checkAndRadioLabels.on('click', makeItemCheckedOnClickHandler)
-            .on('keyup', makeItemCheckedOnKeyupHandler)
-            .attr('tabindex', '0')
-            .attr('aria-checked', false);
-        
-        $checkAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
-        $checkAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
-    });
-
-})();

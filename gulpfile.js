@@ -5,7 +5,8 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	jshint = require('gulp-jshint'),
 	cssnano = require('gulp-cssnano'),
-	clean = require('gulp-clean');
+	clean = require('gulp-clean'),
+	runSequence = require('run-sequence');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || './dist/js';
@@ -20,7 +21,7 @@ gulp.task('clean-dist', function() {
 		.pipe(clean());
 });
 
-gulp.task('concatHomepageJs', ['clean-dist'], function() {
+gulp.task('concatHomepageJs', function() {
 	var files = ['./js/utility/namespacer.js', 
 					'./js/utility/cdnFallback.js',
 					'./js/lib/jQuery.min.js', 
@@ -33,7 +34,7 @@ gulp.task('concatHomepageJs', ['clean-dist'], function() {
 	return concatFiles(files, 'homepage.js');
 });
 
-gulp.task('concatTemplateJs', ['clean-dist'], function() {
+gulp.task('concatTemplateJs', function() {
 	var files = ['./js/polyfills/array.some.js',
 					'./js/utility/namespacer.js', 
 					'./js/utility/cdnFallback.js',
@@ -52,11 +53,10 @@ gulp.task('concatTemplateJs', ['clean-dist'], function() {
   	return concatFiles(files, 'template.js');
 });
 
-gulp.task('concatFormsJs', ['clean-dist'], function() {
+gulp.task('concatFormsJs', function() {
 	var files = ['./js/lib/moment.min.js',
 					'./js/lib/validate.min.js',
-					'./js/inline-form-validation.js',
-					'./js/nifty-forms.js'];
+					'./js/inline-form-validation.js'];
 	return concatFiles(files, 'forms.js');
 });
 
@@ -69,7 +69,7 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatForms
 		.pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('sassAndCompressCss', ['clean-dist'], function () {
+gulp.task('sassAndCompressCss', function () {
 	return gulp.src('./stylesheets/*.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cssnano())
@@ -88,6 +88,6 @@ gulp.task('linter', function() {
 		.pipe(jshint.reporter('default'));
 });
 
-gulp.task('default', ['compressFiles', 'sassAndCompressCss'], function() {
-	return;
+gulp.task('default', function(callback) {
+	runSequence('clean-dist', ['compressFiles', 'sassAndCompressCss'], callback);
 });

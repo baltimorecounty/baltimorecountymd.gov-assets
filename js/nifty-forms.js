@@ -3,10 +3,16 @@ namespacer('baltimoreCounty');
 baltimoreCounty.niftyForms = (function() {
 
     var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
+        checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
+        checkboxesSelector = '.seCheckbox',
+        radiosSelector = '.seRadio',
 
         toggleChecked = function($label) {
             var labelFor = $label.attr('for'),
                 $input = $label.siblings('#' + labelFor);
+
+            if (!$input.length)
+                $input = $label.find('input').first();
 
             if ($input.is('[type=radio]')) {
                 var inputName = $input.attr('name');
@@ -36,21 +42,31 @@ baltimoreCounty.niftyForms = (function() {
                     e.preventDefault();
                     toggleChecked($label);
                 }
+        },
+
+        singleCheckboxAndRadioFilter = function(index, item) {
+            return $(item).siblings('label').length === 0;
         };
 
     /*
      * Main
      */
     $(function() {
-        var $checkAndRadioLabels = $('form').find(checkboxesAndRadiosLabelSelector);
 
-        $checkAndRadioLabels.on('click', makeItemCheckedOnClickHandler)
+        var $forms = $('form'),
+            $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
+            $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
+            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>');
+            $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
+            $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
+
+        $checkboxAndRadioLabels.add().add().on('click', makeItemCheckedOnClickHandler)
             .on('keyup', makeItemCheckedOnKeyupHandler)
             .attr('tabindex', '0')
             .attr('aria-checked', false);
         
-        $checkAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
-        $checkAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
+        $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
+        $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
     });
 
 })();
