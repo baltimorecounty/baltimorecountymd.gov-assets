@@ -514,4 +514,77 @@ namespacer('baltimoreCounty');
 
 baltimoreCounty.niftyTables = (function() {
     
+    $(function() {
+
+        var $niftyTable = $('.nifty-table'),
+            columnIndex = 0,
+            isAscending = true;
+
+            clickedColumnSorter = function(a, b) {
+                var aContent = $(a).find('td').eq(columnIndex).find('p').text(),
+                    bContent = $(b).find('td').eq(columnIndex).find('p').text();
+
+                aContent = extractNumbersIfPresent(aContent);
+                bContent = extractNumbersIfPresent(bContent);
+                
+                return isAscending ? ascendingComparer(aContent, bContent) : descendingComparer(aContent, bContent);
+            },
+            
+            decimalAndDollarSkipper = function(numberString) {
+                var startsWithPeriodOrCurrencyRegex = /[\.\$]*/;
+                return startsWithPeriodOrCurrencyRegex.test(numberString[0]) && numberString.length > 1 ? 1 : 0;
+            },
+
+            getFirstSetOfNumbersAndRemoveNonDigits = function(puppy) {
+                var allTheDigitsRegex = /^[\.\$]{0,1}(\d+[\,\.]{0,1})*\d+/i;
+                return parseInt(puppy.match(allTheDigitsRegex)[0].split(',').join(''))
+            },
+
+            extractNumbersIfPresent = function(stringOrNumber) {
+                var firstCharacterIndex = decimalAndDollarSkipper(stringOrNumber);
+
+                return parseInt(stringOrNumber[firstCharacterIndex]) ? parseInt(stringOrNumber.match(allTheDigitsRegex)[0].split(',').join('')) : stringOrNumber;
+            },
+
+            ascendingComparer = function(a, b) {
+                if (aContent > bContent)
+                    return 1;
+
+                if (bContent > aContent)
+                    return -1;
+
+                return 0;                
+            },
+
+            descendingComparer = function(a, b) {
+                if (a < b)
+                    return 1;
+
+                if (b < a)
+                    return -1;
+
+                return 0;                
+            },
+
+            tableSort = function(e) {
+                var $clickedLink = $(e.target),                    
+                    $tableRows = $niftyTable.find('tr').not(':first-child');
+
+                columnIndex = $clickedLink.closest('th').index();
+
+                $tableRows.detach();
+                $tableRows.sort(clickedColumnSorter);                    
+                $niftyTable.append($tableRows);
+                isAscending = !isAscending;
+            };
+
+        var $columnHeadings = $niftyTable.find('th');
+
+        // Create sorting links
+        $columnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>')
+
+        // Attach sort function
+        $columnHeadings.find('.btn-sort').on('click', tableSort);
+    });
+
 })();
