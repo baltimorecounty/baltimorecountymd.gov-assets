@@ -57,6 +57,7 @@ $error-shadow: 0 0 5px $red;
 }
 
 .seRadioLabel {    
+    white-space: nowrap;
 
     &.checked::before {
         content: '\f111';
