@@ -1,4 +1,4 @@
-table.nifty-table {
+table.nifty-table.nifty-table-sortable {
 
     th {
 
@@ -29,4 +29,23 @@ table.nifty-table {
 
     }
 
+}
+
+.nifty-table-alphabet-filter {
+    background-color: #ebebeb;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    text-align: center;
+    width: 98%;
+
+    a, span {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 1em .35em
+    }
+
+}
+
+.nifty-table-alphabet-filter + #BACO_table {
+    margin-top: 0;
 }
