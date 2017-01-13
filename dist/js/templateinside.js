@@ -631,19 +631,30 @@ baltimoreCounty.niftyTables = (function($) {
             $niftyTable.append($tableRows);
         },
 
+        buildAlphabetFilters = function($tables) {            
+            $tables.before('<div class="nifty-tables-alphabet-filter"></div>');
+        },
+
         /*
          * 
          */
         init = function() {
 
             var $niftyTables = $('table.nifty-table'),
-                $columnHeadings = $niftyTables.find('th');
+                $sortableTables = $('.nifty-table').filter('.nifty-table-sortable'),
+                $alphabetFilterableTables = $('.nifty-table').filter('.nifty-table-alphabet-filterable'),
+                $sortableColumnHeadings = $sortableTables.find('th');
+                
+            // Create sorting links    
+            if ($sortableTables.length) {
+                $sortableColumnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>');
+                $sortableColumnHeadings.find('.btn-sort').on('click', tableSort);
+            }
 
-            // Create sorting links                
-            $columnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>');
-            
-            // Attach sort function
-            $columnHeadings.find('.btn-sort').on('click', tableSort);
+            // Create alphabetFilter
+            if ($alphabetFilterableTables.length) {
+                buildAlphabetFilters($alphabetFilterableTables);
+            }
         };
 
     return {
