@@ -1,84 +1,156 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.niftyTables = (function() {
-    
-    $(function() {
+baltimoreCounty.niftyTables = (function($) {
+    'use strict';
 
-        var $niftyTable = $('.nifty-table'),
-            columnIndex = 0,
-            isAscending = true;
+    var columnIndex = 0,
+        shouldSortAscending = true,
 
-            clickedColumnSorter = function(a, b) {
-                var aContent = getFirstParagraphTextFromCell(a, columnIndex),
-                    bContent = getFirstParagraphTextFromCell(b, columnIndex),
-                    aExtractedContent = extractNumbersIfPresent(aContent),
-                    bExtractedContent = extractNumbersIfPresent(bContent),
-                    directionComparer = isAscending ? ascendingComparer : descendingComparer;
-                return comparer(directionComparer, aExtractedContent, bExtractedContent);
-            },
+        /*
+         * Since we're soring a table, we need to work out what we're 
+         * comparing against, based on the column header that was clicked. 
+         * Then we can compare the two rows that are passed in.
+         */
+        clickedColumnSorter = function(a, b) {
+            var aContent = getFirstTextFromCell(a, columnIndex),
+                bContent = getFirstTextFromCell(b, columnIndex),
+                aExtractedContent = extractNumbersIfPresent(aContent),
+                bExtractedContent = extractNumbersIfPresent(bContent),
+                directionComparer = shouldSortAscending ? ascendingComparer : descendingComparer;
+            return comparer(directionComparer, aExtractedContent, bExtractedContent);
+        },
 
-            comparer = function(comparerFunction, a, b) {
-                return comparerFunction(a, b);
-            },
-            
-            getFirstParagraphTextFromCell = function(tableCell, idx) {
-                return $(tableCell).find('td').eq(idx).find('p').text();
-            },
+        /*
+         * Use the supplied comparerFunction to compare a and b.
+         */
+        comparer = function(comparerFunction, a, b) {
+            return comparerFunction(a, b);
+        },
 
-            decimalAndDollarSkipper = function(numberString) {
-                var startsWithPeriodOrCurrencyRegex = /[\.\$]/;
-                return startsWithPeriodOrCurrencyRegex.test(numberString[0]) && numberString.length > 1 ? 1 : 0;
-            },
+        /*
+         * Compares two values, and returns a result that incidates whether 
+         * or not the values are in ascending order.
+         */
+        ascendingComparer = function(a, b) {
+            if (a > b)
+                return 1;
 
-            getFirstSetOfNumbersAndRemoveNonDigits = function(numbersAndAssortedOtherCharacters) {
-                var allTheDigitsRegex = /^[\.\$]{0,1}(\d+[\,\.]{0,1})*\d+/i;
-                return parseInt(numbersAndAssortedOtherCharacters.match(allTheDigitsRegex)[0].split(',').join(''))
-            },
+            if (b > a)
+                return -1;
 
-            extractNumbersIfPresent = function(stringOrNumber) {
-                var firstCharacterIndex = decimalAndDollarSkipper(stringOrNumber);
-                return parseInt(stringOrNumber[firstCharacterIndex]) ? getFirstSetOfNumbersAndRemoveNonDigits(stringOrNumber) : stringOrNumber;
-            },
+            return 0;                
+        },
 
-            ascendingComparer = function(a, b) {
-                if (a > b)
-                    return 1;
+        /*
+         * Compares two values, and returns a result that incidates whether 
+         * or not the values are in descending order.
+         */
+        descendingComparer = function(a, b) {
+            if (a < b)
+                return 1;
 
-                if (b > a)
-                    return -1;
+            if (b < a)
+                return -1;
 
-                return 0;                
-            },
+            return 0;                
+        },
+        
+        /*
+         * Finds the content of the first <p> in a cell from the clicked column 
+         * of the supplied row. If there's no <p>, returns the raw text of the cell.
+         */
+        getFirstTextFromCell = function(tableRow, idx) {
+            var $cell = $(tableRow).find('td').eq(idx),
+                $p = $cell.find('p');
 
-            descendingComparer = function(a, b) {
-                if (a < b)
-                    return 1;
+            return $p.length ? $p.text() : $cell.text();
+        },
 
-                if (b < a)
-                    return -1;
+        /*
+         * We want to consider the column text to be a number if it starts with a dollar 
+         * sign, so let's peek at the first character and see if that's the case.
+         * Don't worry, if it's just a normal number, it's handled elsewhere.
+         */
+        dollarSkipper = function(numberString) {
+            var startsWithPeriodOrCurrencyRegex = /\$/;
+            return startsWithPeriodOrCurrencyRegex.test(numberString[0]) && numberString.length > 1 ? 1 : 0;
+        },
 
-                return 0;                
-            },
+        /*
+         * Is the first character of the value in question a number (without the dollar sign, if present)? 
+         * If so, return the value as an actual number, rather than a string of numbers.
+         */
+        extractNumbersIfPresent = function(stringOrNumber) {
+            var firstCharacterIndex = dollarSkipper(stringOrNumber),
+                stringOrNumberPossiblyWithoutFirstCharacter = stringOrNumber.slice(firstCharacterIndex);                
+            return parseFloat(stringOrNumber[firstCharacterIndex]) ? getFirstSetOfNumbersAndRemoveNonDigits(stringOrNumberPossiblyWithoutFirstCharacter) : stringOrNumber;
+        },
 
-            tableSort = function(e) {
-                var $clickedLink = $(e.target),                    
-                    $tableRows = $niftyTable.find('tr').not(':first-child');
+        /*
+         * Here, we're converting the first group of characters to a number, so we can sort 
+         * numbers numerically, rather than alphabetically.
+         */
+        getFirstSetOfNumbersAndRemoveNonDigits = function(numbersAndAssortedOtherCharacters) {
+            var allTheDigitsRegex = /^\.{0,1}(\d+[\,\.]{0,1})*\d+/i;
+            return parseFloat(numbersAndAssortedOtherCharacters.match(allTheDigitsRegex)[0].split(',').join(''));
+        },
 
-                columnIndex = $clickedLink.closest('th').index();
+        /*
+         * Sorts the table based on the column header that was clicked.
+         */
+        tableSort = function(e) {
+            var $clickedLink = $(e.target).closest('a'),                    
+                $niftyTable = $clickedLink.closest('table'),
+                $tableRows = $niftyTable.find('tr').not(':first-child');
 
-                $tableRows.detach();
-                $tableRows.sort(clickedColumnSorter);                    
-                $niftyTable.append($tableRows);
-                isAscending = !isAscending;
-            };
+            columnIndex = $clickedLink.closest('th').index();
 
-        var $columnHeadings = $niftyTable.find('th');
+            shouldSortAscending = !($clickedLink.hasClass('sort-ascending') || $clickedLink.hasClass('sort-descending')) || $clickedLink.hasClass('sort-descending');
 
-        // Create sorting links
-        $columnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>')
+            if (shouldSortAscending)
+                $clickedLink.removeClass('sort-descending').addClass('sort-ascending');
+            else
+                $clickedLink.removeClass('sort-ascending').addClass('sort-descending');
 
-        // Attach sort function
-        $columnHeadings.find('.btn-sort').on('click', tableSort);
-    });
+            $clickedLink.closest('tr').find('a').not($clickedLink).removeClass('sort-ascending').removeClass('sort-descending');
 
-})();
+            $tableRows.detach();
+            $tableRows.sort(clickedColumnSorter);                    
+            $niftyTable.append($tableRows);
+        },
+
+        buildAlphabetFilters = function($tables) {            
+            $tables.before('<div class="nifty-tables-alphabet-filter"></div>');
+        },
+
+        /*
+         * 
+         */
+        init = function() {
+
+            var $niftyTables = $('table.nifty-table'),
+                $sortableTables = $('.nifty-table').filter('.nifty-table-sortable'),
+                $alphabetFilterableTables = $('.nifty-table').filter('.nifty-table-alphabet-filterable'),
+                $sortableColumnHeadings = $sortableTables.find('th');
+                
+            // Create sorting links    
+            if ($sortableTables.length) {
+                $sortableColumnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>');
+                $sortableColumnHeadings.find('.btn-sort').on('click', tableSort);
+            }
+
+            // Create alphabetFilter
+            if ($alphabetFilterableTables.length) {
+                buildAlphabetFilters($alphabetFilterableTables);
+            }
+        };
+
+    return {
+        init: init
+    };
+
+})(jQuery);
+
+$(document).ready(function() {
+    baltimoreCounty.niftyTables.init();
+});

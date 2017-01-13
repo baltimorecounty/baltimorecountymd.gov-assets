@@ -1,0 +1,32 @@
+table.nifty-table {
+
+    th {
+
+        .btn-sort {
+            text-decoration: none !important;
+            
+            p::after {
+                content: '\f0dc';
+                font-family: FontAwesome;
+                margin-left: .25em;
+            }
+
+        }
+
+        .btn-sort.sort-ascending {
+            p::after {
+                content: '\f0de';
+                font-family: FontAwesome;
+            }
+        }
+
+        .btn-sort.sort-descending {
+            p::after {
+                content: '\f0dd';
+                font-family: FontAwesome;
+            }
+        }
+
+    }
+
+}
