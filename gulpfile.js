@@ -6,7 +6,8 @@ var gulp = require('gulp'),
 	jshint = require('gulp-jshint'),
 	cssnano = require('gulp-cssnano'),
 	clean = require('gulp-clean'),
-	runSequence = require('run-sequence');
+	runSequence = require('run-sequence'), 
+	stripCode = require('gulp-strip-code');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || 'dist/js';
@@ -62,6 +63,10 @@ gulp.task('concatFormsJs', function() {
 
 gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatFormsJs'], function() {
 	return gulp.src(['dist/js/*.js'])
+		.pipe(stripCode({
+			start_comment: 'test-code',
+			end_comment: 'end-test-code'			
+		}))
 		.pipe(uglify())
 		.pipe(rename({
 			suffix: '.min'

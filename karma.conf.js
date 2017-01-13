@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Mon Dec 26 2016 14:16:26 GMT-0500 (Eastern Standard Time)
-
 module.exports = function(config) {
   config.set({
 
@@ -10,16 +7,23 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'js/lib/*.js',
+      'node_modules/jquery/dist/jquery.min.js',
       'js/utility/namespacer.js',
       'js/utility/*.js',
       'js/polyfills/*.js',
-      'js/page-specific/*.js'
+      'js/nifty-tables.js',
+      'spec/**/*.spec.js',
+      {
+        pattern: 'spec/fixtures/**/*.html',
+        watched: true,
+        included: false,
+        served: true
+      }
     ],
 
 
@@ -37,7 +41,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['mocha'],
 
 
     // web server port

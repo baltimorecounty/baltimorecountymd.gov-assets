@@ -648,6 +648,13 @@ baltimoreCounty.niftyTables = (function($) {
         };
 
     return {
+        /* test code */
+        clickedColumnSorter : clickedColumnSorter,
+        getFirstTextFromCell: getFirstTextFromCell,
+        dollarSkipper : dollarSkipper,
+        extractNumbersIfPresent: extractNumbersIfPresent,
+        getFirstSetOfNumbersAndRemoveNonDigits : getFirstSetOfNumbersAndRemoveNonDigits,
+        /* end test code */
         init: init
     };
 

@@ -7,13 +7,13 @@ baltimoreCounty.niftyTables = (function($) {
         shouldSortAscending = true,
 
         /*
-         * Since we're soring a table, we need to work out what we're 
+         * Since we're sorting a table, we need to work out what we're 
          * comparing against, based on the column header that was clicked. 
          * Then we can compare the two rows that are passed in.
          */
-        clickedColumnSorter = function(a, b) {
-            var aContent = getFirstTextFromCell(a, columnIndex),
-                bContent = getFirstTextFromCell(b, columnIndex),
+        clickedColumnSorter = function(aTableRow, bTableRow) {
+            var aContent = getFirstTextFromCell(aTableRow, columnIndex),
+                bContent = getFirstTextFromCell(bTableRow, columnIndex),
                 aExtractedContent = extractNumbersIfPresent(aContent),
                 bExtractedContent = extractNumbersIfPresent(bContent),
                 directionComparer = shouldSortAscending ? ascendingComparer : descendingComparer;
@@ -59,8 +59,8 @@ baltimoreCounty.niftyTables = (function($) {
          * Finds the content of the first <p> in a cell from the clicked column 
          * of the supplied row. If there's no <p>, returns the raw text of the cell.
          */
-        getFirstTextFromCell = function(tableRow, idx) {
-            var $cell = $(tableRow).find('td').eq(idx),
+        getFirstTextFromCell = function(tableRow, clickedColumnIndex) {
+            var $cell = $(tableRow).find('td').eq(clickedColumnIndex),
                 $p = $cell.find('p');
 
             return $p.length ? $p.text() : $cell.text();
@@ -136,6 +136,13 @@ baltimoreCounty.niftyTables = (function($) {
         };
 
     return {
+        /* test code */
+        clickedColumnSorter : clickedColumnSorter,
+        getFirstTextFromCell: getFirstTextFromCell,
+        dollarSkipper : dollarSkipper,
+        extractNumbersIfPresent: extractNumbersIfPresent,
+        getFirstSetOfNumbersAndRemoveNonDigits : getFirstSetOfNumbersAndRemoveNonDigits,
+        /* end test code */
         init: init
     };
 
