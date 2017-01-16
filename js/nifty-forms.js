@@ -73,7 +73,7 @@ baltimoreCounty.niftyForms = (function() {
         var $forms = $('form'),
             $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
             $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
-            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>');
+            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
             $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
             $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
 
