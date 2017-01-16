@@ -1,5 +1,8 @@
 namespacer('baltimoreCounty');
 
+/*
+ * Adds nifty checkboxes and radio buttons to a Site Executive form.
+ */
 baltimoreCounty.niftyForms = (function() {
 
     var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
@@ -7,6 +10,11 @@ baltimoreCounty.niftyForms = (function() {
         checkboxesSelector = '.seCheckbox',
         radiosSelector = '.seRadio',
 
+        /*
+         * Toggle the click label's checkbox/radion button. This is necessary because
+         * the niftyness is the ::before pseudo-element of the label tag, and not the 
+         * input itself.
+         */
         toggleChecked = function($label) {
             var labelFor = $label.attr('for'),
                 $input = $label.siblings('#' + labelFor);
@@ -27,6 +35,9 @@ baltimoreCounty.niftyForms = (function() {
             $input.prop('checked', $label.hasClass('checked'));
         },
 
+        /*
+         * Toggles the checkedness of the underlying input when the user clicks the label. 
+         */
         makeItemCheckedOnClickHandler = function(e) {
             var $label = $(e.target);
             
@@ -34,6 +45,9 @@ baltimoreCounty.niftyForms = (function() {
             toggleChecked($label);
         },
 
+        /*
+         * Toggles the checkedness of the underlying input when the user hits the space bar.
+         */
         makeItemCheckedOnKeyupHandler = function(e) {
             var $label = $(e.target),
                 KEYCODE_SPACEBAR = 32;
@@ -44,12 +58,15 @@ baltimoreCounty.niftyForms = (function() {
                 }
         },
 
+        /*
+         * Filter that finds checkboxes and radios that aren't in a list.
+         */ 
         singleCheckboxAndRadioFilter = function(index, item) {
             return $(item).siblings('label').length === 0;
         };
 
     /*
-     * Main
+     * Attach events and add aria roles to labels. 
      */
     $(function() {
 
@@ -60,7 +77,8 @@ baltimoreCounty.niftyForms = (function() {
             $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
             $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
 
-        $checkboxAndRadioLabels.add().add().on('click', makeItemCheckedOnClickHandler)
+        $checkboxAndRadioLabels
+            .on('click', makeItemCheckedOnClickHandler)
             .on('keyup', makeItemCheckedOnKeyupHandler)
             .attr('tabindex', '0')
             .attr('aria-checked', false);
