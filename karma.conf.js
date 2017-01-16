@@ -13,6 +13,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/jquery/dist/jquery.min.js',
+      'js/lib/require.js',
       'js/utility/namespacer.js',
       'js/utility/*.js',
       'js/polyfills/*.js',
