@@ -17,9 +17,9 @@ module.exports = function(config) {
       'js/utility/*.js',
       'js/polyfills/*.js',
       'js/nifty-tables.js',
-      'spec/**/*.spec.js',
+      'spec/js/**/*.spec.js',
       {
-        pattern: 'spec/fixtures/**/*.html',
+        pattern: 'spec/js/fixtures/**/*.html',
         watched: true,
         included: false,
         served: true
@@ -31,6 +31,12 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    plugins: [
+      'karma-mocha-reporter',
+      'karma-jasmine',
+      'karma-jasmine-jquery-2',
+      'karma-phantomjs-launcher'
+    ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor

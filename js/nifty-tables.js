@@ -71,9 +71,9 @@ baltimoreCounty.niftyTables = (function($) {
          * sign, so let's peek at the first character and see if that's the case.
          * Don't worry, if it's just a normal number, it's handled elsewhere.
          */
-        dollarSkipper = function(numberString) {
-            var startsWithPeriodOrCurrencyRegex = /\$/;
-            return startsWithPeriodOrCurrencyRegex.test(numberString[0]) && numberString.length > 1 ? 1 : 0;
+        getIndexOfFirstDigit = function(numberString) {
+            var startsWithCurrencyRegex = /[\$]/;
+            return startsWithCurrencyRegex.test(numberString[0]) && numberString.length > 1 ? 1 : 0;
         },
 
         /*
@@ -81,9 +81,10 @@ baltimoreCounty.niftyTables = (function($) {
          * If so, return the value as an actual number, rather than a string of numbers.
          */
         extractNumbersIfPresent = function(stringOrNumber) {
-            var firstCharacterIndex = dollarSkipper(stringOrNumber),
-                stringOrNumberPossiblyWithoutFirstCharacter = stringOrNumber.slice(firstCharacterIndex);                
-            return parseFloat(stringOrNumber[firstCharacterIndex]) ? getFirstSetOfNumbersAndRemoveNonDigits(stringOrNumberPossiblyWithoutFirstCharacter) : stringOrNumber;
+            var firstCharacterIndex = getIndexOfFirstDigit(stringOrNumber),
+                stringOrNumberPossiblyWithoutFirstCharacter = stringOrNumber.slice(firstCharacterIndex),
+                firstSetOfNumbers = getFirstSetOfNumbersAndRemoveNonDigits(stringOrNumberPossiblyWithoutFirstCharacter);                
+            return typeof firstSetOfNumbers === 'number' ? firstSetOfNumbers : stringOrNumber;
         },
 
         /*
@@ -91,8 +92,9 @@ baltimoreCounty.niftyTables = (function($) {
          * numbers numerically, rather than alphabetically.
          */
         getFirstSetOfNumbersAndRemoveNonDigits = function(numbersAndAssortedOtherCharacters) {
-            var allTheDigitsRegex = /^\.{0,1}(\d+[\,\.]{0,1})*\d+/i;
-            return parseFloat(numbersAndAssortedOtherCharacters.match(allTheDigitsRegex)[0].split(',').join(''));
+            var allTheDigitsRegex = /^\.{0,1}(\d+[\,\.]{0,1})*\d+\b/,
+                extractedNumerics = numbersAndAssortedOtherCharacters.match(allTheDigitsRegex);
+            return extractedNumerics ? parseFloat(extractedNumerics[0].split(',').join('')) : numbersAndAssortedOtherCharacters;
         },
 
         /*
@@ -139,7 +141,7 @@ baltimoreCounty.niftyTables = (function($) {
         /* test code */
         clickedColumnSorter : clickedColumnSorter,
         getFirstTextFromCell: getFirstTextFromCell,
-        dollarSkipper : dollarSkipper,
+        getIndexOfFirstDigit : getIndexOfFirstDigit,
         extractNumbersIfPresent: extractNumbersIfPresent,
         getFirstSetOfNumbersAndRemoveNonDigits : getFirstSetOfNumbersAndRemoveNonDigits,
         /* end test code */

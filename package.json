@@ -25,6 +25,7 @@
     "karma-jasmine-jquery-2": "^0.1.1",
     "karma-mocha-reporter": "^2.2.1",
     "karma-phantomjs-launcher": "^1.0.2",
+    "mocha": "^3.2.0",
     "run-sequence": "^1.2.2"
   },
   "scripts": {
