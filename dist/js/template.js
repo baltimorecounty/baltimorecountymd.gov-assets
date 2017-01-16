@@ -1,3 +1,30 @@
+// Production steps of ECMA-262, Edition 5, 15.4.4.17
+// Reference: http://es5.github.io/#x15.4.4.17
+if (!Array.prototype.some) {
+  Array.prototype.some = function(fun/*, thisArg*/) {
+    'use strict';
+
+    if (this == null) {
+      throw new TypeError('Array.prototype.some called on null or undefined');
+    }
+
+    if (typeof fun !== 'function') {
+      throw new TypeError();
+    }
+
+    var t = Object(this);
+    var len = t.length >>> 0;
+
+    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+    for (var i = 0; i < len; i++) {
+      if (i in t && fun.call(thisArg, t[i], i, t)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
 (function($) {
         // bind a click event to the 'skip' link
         $(document).on('click', '.skip', function(event){
@@ -17,6 +44,300 @@
             }).focus(); // focus on the content container
         });
 })(jQuery);
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/*!
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=291973edd1db2862ed4cd150643ae4f7)
+ * Config saved to config.json and https://gist.github.com/291973edd1db2862ed4cd150643ae4f7
+ */
+if (typeof jQuery === 'undefined') {
+  throw new Error('Bootstrap\'s JavaScript requires jQuery')
+}
++function ($) {
+  'use strict';
+  var version = $.fn.jquery.split(' ')[0].split('.')
+  if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1) || (version[0] > 3)) {
+    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher, but lower than version 4')
+  }
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: collapse.js v3.3.7
+ * http://getbootstrap.com/javascript/#collapse
+ * ========================================================================
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+/* jshint latedef: false */
+
++function ($) {
+  'use strict';
+
+  // COLLAPSE PUBLIC CLASS DEFINITION
+  // ================================
+
+  var Collapse = function (element, options) {
+    this.$element      = $(element)
+    this.options       = $.extend({}, Collapse.DEFAULTS, options)
+    this.$trigger      = $('[data-toggle="collapse"][href="#' + element.id + '"],' +
+                           '[data-toggle="collapse"][data-target="#' + element.id + '"]')
+    this.transitioning = null
+
+    if (this.options.parent) {
+      this.$parent = this.getParent()
+    } else {
+      this.addAriaAndCollapsedClass(this.$element, this.$trigger)
+    }
+
+    if (this.options.toggle) this.toggle()
+  }
+
+  Collapse.VERSION  = '3.3.7'
+
+  Collapse.TRANSITION_DURATION = 350
+
+  Collapse.DEFAULTS = {
+    toggle: true
+  }
+
+  Collapse.prototype.dimension = function () {
+    var hasWidth = this.$element.hasClass('width')
+    return hasWidth ? 'width' : 'height'
+  }
+
+  Collapse.prototype.show = function () {
+    if (this.transitioning || this.$element.hasClass('in')) return
+
+    var activesData
+    var actives = this.$parent && this.$parent.children('.panel').children('.in, .collapsing')
+
+    if (actives && actives.length) {
+      activesData = actives.data('bs.collapse')
+      if (activesData && activesData.transitioning) return
+    }
+
+    var startEvent = $.Event('show.bs.collapse')
+    this.$element.trigger(startEvent)
+    if (startEvent.isDefaultPrevented()) return
+
+    if (actives && actives.length) {
+      Plugin.call(actives, 'hide')
+      activesData || actives.data('bs.collapse', null)
+    }
+
+    var dimension = this.dimension()
+
+    this.$element
+      .removeClass('collapse')
+      .addClass('collapsing')[dimension](0)
+      .attr('aria-expanded', true)
+
+    this.$trigger
+      .removeClass('collapsed')
+      .attr('aria-expanded', true)
+
+    this.transitioning = 1
+
+    var complete = function () {
+      this.$element
+        .removeClass('collapsing')
+        .addClass('collapse in')[dimension]('')
+      this.transitioning = 0
+      this.$element
+        .trigger('shown.bs.collapse')
+    }
+
+    if (!$.support.transition) return complete.call(this)
+
+    var scrollSize = $.camelCase(['scroll', dimension].join('-'))
+
+    this.$element
+      .one('bsTransitionEnd', $.proxy(complete, this))
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
+  }
+
+  Collapse.prototype.hide = function () {
+    if (this.transitioning || !this.$element.hasClass('in')) return
+
+    var startEvent = $.Event('hide.bs.collapse')
+    this.$element.trigger(startEvent)
+    if (startEvent.isDefaultPrevented()) return
+
+    var dimension = this.dimension()
+
+    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
+
+    this.$element
+      .addClass('collapsing')
+      .removeClass('collapse in')
+      .attr('aria-expanded', false)
+
+    this.$trigger
+      .addClass('collapsed')
+      .attr('aria-expanded', false)
+
+    this.transitioning = 1
+
+    var complete = function () {
+      this.transitioning = 0
+      this.$element
+        .removeClass('collapsing')
+        .addClass('collapse')
+        .trigger('hidden.bs.collapse')
+    }
+
+    if (!$.support.transition) return complete.call(this)
+
+    this.$element
+      [dimension](0)
+      .one('bsTransitionEnd', $.proxy(complete, this))
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
+  }
+
+  Collapse.prototype.toggle = function () {
+    this[this.$element.hasClass('in') ? 'hide' : 'show']()
+  }
+
+  Collapse.prototype.getParent = function () {
+    return $(this.options.parent)
+      .find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]')
+      .each($.proxy(function (i, element) {
+        var $element = $(element)
+        this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element)
+      }, this))
+      .end()
+  }
+
+  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
+    var isOpen = $element.hasClass('in')
+
+    $element.attr('aria-expanded', isOpen)
+    $trigger
+      .toggleClass('collapsed', !isOpen)
+      .attr('aria-expanded', isOpen)
+  }
+
+  function getTargetFromTrigger($trigger) {
+    var href
+    var target = $trigger.attr('data-target')
+      || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') // strip for ie7
+
+    return $(target)
+  }
+
+
+  // COLLAPSE PLUGIN DEFINITION
+  // ==========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.collapse')
+      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
+
+      if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false
+      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.collapse
+
+  $.fn.collapse             = Plugin
+  $.fn.collapse.Constructor = Collapse
+
+
+  // COLLAPSE NO CONFLICT
+  // ====================
+
+  $.fn.collapse.noConflict = function () {
+    $.fn.collapse = old
+    return this
+  }
+
+
+  // COLLAPSE DATA-API
+  // =================
+
+  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
+    var $this   = $(this)
+
+    if (!$this.attr('data-target')) e.preventDefault()
+
+    var $target = getTargetFromTrigger($this)
+    var data    = $target.data('bs.collapse')
+    var option  = data ? 'toggle' : $this.data()
+
+    Plugin.call($target, option)
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: transition.js v3.3.7
+ * http://getbootstrap.com/javascript/#transitions
+ * ========================================================================
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+  // ============================================================
+
+  function transitionEnd() {
+    var el = document.createElement('bootstrap')
+
+    var transEndEventNames = {
+      WebkitTransition : 'webkitTransitionEnd',
+      MozTransition    : 'transitionend',
+      OTransition      : 'oTransitionEnd otransitionend',
+      transition       : 'transitionend'
+    }
+
+    for (var name in transEndEventNames) {
+      if (el.style[name] !== undefined) {
+        return { end: transEndEventNames[name] }
+      }
+    }
+
+    return false // explicit for ie8 (  ._.)
+  }
+
+  // http://blog.alexmaccaw.com/css-transitions
+  $.fn.emulateTransitionEnd = function (duration) {
+    var called = false
+    var $el = this
+    $(this).one('bsTransitionEnd', function () { called = true })
+    var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
+    setTimeout(callback, duration)
+    return this
+  }
+
+  $(function () {
+    $.support.transition = transitionEnd()
+
+    if (!$.support.transition) return
+
+    $.event.special.bsTransitionEnd = {
+      bindType: $.support.transition.end,
+      delegateType: $.support.transition.end,
+      handle: function (e) {
+        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+      }
+    }
+  })
+
+}(jQuery);
+
 var TextResizer = (function (window, undefined, $) {
     var TextResizer = function (options) {
         this.listClass = options.listClass || "text-resizer";
@@ -203,3 +524,221 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
         });
     });
 })(jQuery, TextResizer);
+var baltimoreCounty = baltimoreCounty || {};
+
+baltimoreCounty.contentFilter = (function($) {
+
+    /* Private Properties ******************************************/
+
+    var that = this;
+    that.options = {};
+
+    /* Public Methods ******************************************/ 
+
+    /*
+     * Initialize the filter, and activate it.
+     */
+    function init(options) {
+
+        options = options || {};
+
+        that.options.wrapperSelector = options.wrapper || '.bc-filter-content';
+        that.options.searchBoxSelector = options.searchBox || '.bc-filter-form .bc-filter-form-filter';
+        that.options.clearButtonSelector = options.clearButton || '.bc-filter-form .bc-filter-form-clearButton';
+        that.options.errorMessageSelector = options.errorMessage || '.bc-filter-noResults';
+        that.options.contentType = options.contentType || 'list';
+
+        that.$wrapper = safeLoad(that.options.wrapperSelector);
+        that.$searchBox = safeLoad(that.options.searchBoxSelector);
+        that.$clearButton = safeLoad(that.options.clearButtonSelector);
+        that.$errorMessage = safeLoad(that.options.errorMessageSelector);
+        that.contentType = that.options.contentType;
+
+        that.$errorMessage.hide();
+
+        that.$searchBox.on('keyup', function(eventObject) {
+            switch (that.contentType) {
+                case 'table':
+                    filterTable(that.$wrapper, $(eventObject.currentTarget).val());
+                    break;
+                case 'list':
+                    filterList(that.$wrapper, $(eventObject.currentTarget).val());
+                    break;
+            }            
+        });
+        
+        that.$searchBox.closest('form').on('submit', function(e) {
+            return false;
+        });
+
+        $clearButton.on('click', function() {
+            clearFilter(that.$wrapper, that.$searchBox);
+        });
+    }      
+
+    /* Private Methods ******************************************/
+
+    function safeLoad(selector) {
+        var $items = $(selector);
+        if ($items.length === 0)
+            throw 'No elements for "' + selector + '" were found.';
+        return $items;
+    }
+
+    /*
+     * Tokenized search that returns the matches found in the list or table.
+     */
+    function findMatches($wrapper, selector, criteria) {
+        var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
+
+        var $matches = $wrapper.find(selector).filter(function(idx, element) {
+            var selectorText = $(element).text().toLowerCase();            
+            return criteriaTokens.every(function(tokenValue) {
+                return selectorText.indexOf(tokenValue) > -1;
+            });
+        });
+
+        return $matches;
+    }
+
+    /*
+     * Filters an unordered list based on the user's input.
+     */
+    function filterList($wrapper, criteria) {
+        var $matches = findMatches($wrapper, 'ul li', criteria);
+
+        $wrapper.find('li').not($matches).hide();
+        $matches.show();
+
+        var $divsWithResults = $wrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
+
+        $wrapper.children('div').not($divsWithResults).hide();
+        $divsWithResults.show();
+
+        if ($divsWithResults.length === 0) 
+            $errorMessage.show();
+        else
+            $errorMessage.hide();
+    }
+
+    /*
+     * Since the current table stripes are based on :nth-child(), they'll get funky
+     * when the filter removes rows. So, let's reset the row striping when there's a search. 
+     * This is using inline styles since there's inline CSS that sets the color and 
+     * has to be overwritten.
+     */
+    function resetTableStripes($matches, selector, color) {
+        $matches.parent().children(selector).has('td').css('background-color', color);
+    }
+
+    /*
+     * Filters an table of links and content based on the user's input.
+     */
+    function filterTable($wrapper, criteria) {
+        var $matches = findMatches($wrapper, 'tr', criteria);
+
+        $wrapper.find('tr').has('td').not($matches).hide();
+        $matches.show();
+
+        if ($matches.length === 0) {
+            $errorMessage.show();
+            $wrapper.find('tr').has('th').hide();
+        } else {
+            $errorMessage.hide();
+            $wrapper.find('tr').has('th').show();
+        }
+
+        resetTableStripes($matches, 'tr:visible:even', '#ebebeb');
+        resetTableStripes($matches, 'tr:visible:odd', '#fff');
+    }
+
+    /*
+     * Clears the filter and displays all nodes in the list.
+     */
+    function clearFilter($wrapper, $searchbox) {
+        $wrapper.find('li, div, tr').show();
+        $searchbox.val('');
+    }
+
+    /* Reveal! */
+
+    return {
+        init: init
+    };
+
+})(jQuery);
+
+// Collapse the other items
+(function($) {
+
+    $(function() {
+
+		var clickedAccordionLevel = 0;
+
+		/* Opens any items that match the current URL, so the user 
+		 * sees the current page as being active. 
+		 */
+		$('.bc-accordion-menu ul li a').each(function(idx, item) {
+			var itemHref = item.getAttribute('href');
+			if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
+				$(item).addClass('current');
+				var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+				$collapsables.addClass('in');
+				var $siblings = $collapsables.siblings('.accordion-collapsed');
+				
+				if (!$siblings.hasClass('active'))
+					$siblings.addClass('active');
+			}      
+		}); 
+
+		/* Updates the tracked current accordion level, since Bootstrap Collapse
+		 * wasn't exactly designed for nested menus.
+		 */
+		$('.bc-accordion-menu .panel .accordion-collapsed').on('click', function(e) {
+			var $currentTarget = $(e.currentTarget);
+
+			clickedAccordionLevel = getAccordionLevel($currentTarget);
+			$currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
+		});
+
+		/* Making sure only the active accordion level's "active" css class is cleared when the menu expands. */
+		$('.bc-accordion-menu .collapse').on('show.bs.collapse', function() {
+			var $collapsable = $(this);
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
+			var accordionLevel = getAccordionLevel($collapsable);
+
+			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) 
+				$siblings.addClass('active');
+
+		});
+
+		/* Making sure only the active accordion level's "active" css class is cleared when the menu collapses. */
+		$('.bc-accordion-menu .collapse').on('hide.bs.collapse', function() {
+			var $collapsable = $(this);
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
+			var accordionLevel = getAccordionLevel($collapsable);
+
+			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) 
+				$siblings.removeClass('active');
+		});
+		
+		// Hide all text-only nodes.
+		$('.bc-accordion-menu .panel ul li').contents().filter(textNodeFilter).parent().css('display','none');
+
+		// Set up the DIVs to expand and collapse their siblings.
+		$('.bc-accordion-menu .accordion-collapsed').on('click', function(e) { $(e.target).siblings('.collapse').collapse('toggle'); return false; });
+
+		/* Returns whether this is a parent or child accordion link. */
+		function getAccordionLevel($element) {
+			return $element.parents('ul').length + 1;
+		}
+
+		function textNodeFilter(idx, element) {
+			if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
+				return true;
+			}
+		}
+
+    });
+
+})(jQuery);
