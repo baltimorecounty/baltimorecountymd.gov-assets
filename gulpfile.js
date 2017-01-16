@@ -21,8 +21,9 @@ gulp.task('clean-dist', function() {
 		.pipe(clean());
 });
 
-gulp.task('concatHomepageJs', function() {
-	var files = ['js/utility/namespacer.js', 
+gulp.task('concatHomepageJs', ['clean-dist'], function() {
+	var files = ['js/lib/require.js',
+					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
@@ -35,7 +36,8 @@ gulp.task('concatHomepageJs', function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['js/polyfills/array.some.js',
+	var files = ['js/lib/require.js',
+					'js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/nifty-forms.js',
@@ -53,6 +55,7 @@ gulp.task('concatTemplateJs', function() {
   	return concatFiles(files, 'template.js');
 });
 
+
 gulp.task('concatFormsJs', function() {
 	var files = ['js/lib/moment.min.js',
 					'js/lib/validate.min.js',
@@ -68,6 +71,7 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatForms
 		}))
 		.pipe(gulp.dest('dist/js'));
 });
+
 
 gulp.task('sassAndCompressCss', function () {
 	return gulp.src('stylesheets/*.scss')
