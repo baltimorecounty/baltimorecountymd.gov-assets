@@ -301,137 +301,140 @@ var baltimoreCounty = baltimoreCounty || {};
 
 baltimoreCounty.contentFilter = (function($) {
 
-    /* Private Properties ******************************************/
-
-    var that = this;
-    that.options = {};
-
-    /* Public Methods ******************************************/ 
+    var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
+        DEFAULT_SEARCH_BOX_SELECTOR = '.bc-filter-form .bc-filter-form-filter',
+        DEFAULT_CLEAR_BUTTON_SELECTOR = '.bc-filter-form .bc-filter-form-clearButton',
+        DEFAULT_ERROR_MESSAGE_SELECTOR = '.bc-filter-noResults',
+        DEFAULT_CONTENT_TYPE = 'list',
 
     /*
      * Initialize the filter, and activate it.
      */
-    function init(options) {
+        init = function(options) {
 
-        options = options || {};
+            options = options || {};
 
-        that.options.wrapperSelector = options.wrapper || '.bc-filter-content';
-        that.options.searchBoxSelector = options.searchBox || '.bc-filter-form .bc-filter-form-filter';
-        that.options.clearButtonSelector = options.clearButton || '.bc-filter-form .bc-filter-form-clearButton';
-        that.options.errorMessageSelector = options.errorMessage || '.bc-filter-noResults';
-        that.options.contentType = options.contentType || 'list';
+            var wrapperSelector = options.wrapper || DEFAULT_WRAPPER_SELECTOR,
+                searchBoxSelector = options.searchBox || DEFAULT_SEARCH_BOX_SELECTOR,
+                clearButtonSelector = options.clearButton || DEFAULT_CLEAR_BUTTON_SELECTOR,
+                errorMessageSelector = options.errorMessage || DEFAULT_ERROR_MESSAGE_SELECTOR,
+                contentType = options.contentType || DEFAULT_CONTENT_TYPE,
+                $wrapper = safeLoad(wrapperSelector),
+                $searchBox = safeLoad(searchBoxSelector),
+                $clearButton = safeLoad(clearButtonSelector),
+                $errorMessage = safeLoad(errorMessageSelector);
 
-        that.$wrapper = safeLoad(that.options.wrapperSelector);
-        that.$searchBox = safeLoad(that.options.searchBoxSelector);
-        that.$clearButton = safeLoad(that.options.clearButtonSelector);
-        that.$errorMessage = safeLoad(that.options.errorMessageSelector);
-        that.contentType = that.options.contentType;
+            $errorMessage.hide();
 
-        that.$errorMessage.hide();
+            if (contentType === 'table')
+                $wrapper.find('th').each(setColumnWidthToInitialWidth);
 
-        that.$searchBox.on('keyup', function(eventObject) {
-            switch (that.contentType) {
-                case 'table':
-                    filterTable(that.$wrapper, $(eventObject.currentTarget).val());
-                    break;
-                case 'list':
-                    filterList(that.$wrapper, $(eventObject.currentTarget).val());
-                    break;
-            }            
-        });
-        
-        that.$searchBox.closest('form').on('submit', function(e) {
-            return false;
-        });
-
-        $clearButton.on('click', function() {
-            clearFilter(that.$wrapper, that.$searchBox);
-        });
-    }      
-
-    /* Private Methods ******************************************/
-
-    function safeLoad(selector) {
-        var $items = $(selector);
-        if ($items.length === 0)
-            throw 'No elements for "' + selector + '" were found.';
-        return $items;
-    }
-
-    /*
-     * Tokenized search that returns the matches found in the list or table.
-     */
-    function findMatches($wrapper, selector, criteria) {
-        var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
-
-        var $matches = $wrapper.find(selector).filter(function(idx, element) {
-            var selectorText = $(element).text().toLowerCase();            
-            return criteriaTokens.every(function(tokenValue) {
-                return selectorText.indexOf(tokenValue) > -1;
+            $searchBox.on('keyup', function(eventObject) {
+                switch (contentType) {
+                    case 'table':
+                        filterTable($wrapper, $(eventObject.currentTarget).val());
+                        break;
+                    case 'list':
+                        filterList($wrapper, $(eventObject.currentTarget).val());
+                        break;
+                }            
             });
-        });
+            
+            $searchBox.closest('form').on('submit', function(e) {
+                return false;
+            });
 
-        return $matches;
-    }
+            $clearButton.on('click', function() {
+                clearFilter($wrapper, $searchBox);
+            });
+        },  
 
-    /*
-     * Filters an unordered list based on the user's input.
-     */
-    function filterList($wrapper, criteria) {
-        var $matches = findMatches($wrapper, 'ul li', criteria);
+        setColumnWidthToInitialWidth = function(index, item) {
+            var $columnHeader = $(item);
+            $columnHeader.width($columnHeader.width());
+        },
 
-        $wrapper.find('li').not($matches).hide();
-        $matches.show();
+        safeLoad = function(selector) {
+            var $items = $(selector);
+            if ($items.length === 0)
+                throw 'No elements for "' + selector + '" were found.';
+            return $items;
+        },
 
-        var $divsWithResults = $wrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
+        /*
+        * Tokenized search that returns the matches found in the list or table.
+        */
+        findMatches = function($wrapper, selector, criteria) {
+            var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
 
-        $wrapper.children('div').not($divsWithResults).hide();
-        $divsWithResults.show();
+            var $matches = $wrapper.find(selector).filter(function(idx, element) {
+                var selectorText = $(element).text().toLowerCase();            
+                return criteriaTokens.every(function(tokenValue) {
+                    return selectorText.indexOf(tokenValue) > -1;
+                });
+            });
 
-        if ($divsWithResults.length === 0) 
-            $errorMessage.show();
-        else
-            $errorMessage.hide();
-    }
+            return $matches;
+        },
 
-    /*
-     * Since the current table stripes are based on :nth-child(), they'll get funky
-     * when the filter removes rows. So, let's reset the row striping when there's a search. 
-     * This is using inline styles since there's inline CSS that sets the color and 
-     * has to be overwritten.
-     */
-    function resetTableStripes($matches, selector, color) {
-        $matches.parent().children(selector).has('td').css('background-color', color);
-    }
+        /*
+        * Filters an unordered list based on the user's input.
+        */
+        filterList = function($wrapper, criteria) {
+            var $matches = findMatches($wrapper, 'ul li', criteria);
 
-    /*
-     * Filters an table of links and content based on the user's input.
-     */
-    function filterTable($wrapper, criteria) {
-        var $matches = findMatches($wrapper, 'tr', criteria);
+            $wrapper.find('li').not($matches).hide();
+            $matches.show();
 
-        $wrapper.find('tr').has('td').not($matches).hide();
-        $matches.show();
+            var $divsWithResults = $wrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
 
-        if ($matches.length === 0) {
-            $errorMessage.show();
-            $wrapper.find('tr').has('th').hide();
-        } else {
-            $errorMessage.hide();
-            $wrapper.find('tr').has('th').show();
-        }
+            $wrapper.children('div').not($divsWithResults).hide();
+            $divsWithResults.show();
 
-        resetTableStripes($matches, 'tr:visible:even', '#ebebeb');
-        resetTableStripes($matches, 'tr:visible:odd', '#fff');
-    }
+            if ($divsWithResults.length === 0) 
+                $errorMessage.show();
+            else
+                $errorMessage.hide();
+        },
 
-    /*
-     * Clears the filter and displays all nodes in the list.
-     */
-    function clearFilter($wrapper, $searchbox) {
-        $wrapper.find('li, div, tr').show();
-        $searchbox.val('');
-    }
+        /*
+        * Since the current table stripes are based on :nth-child(), they'll get funky
+        * when the filter removes rows. So, let's reset the row striping when there's a search. 
+        * This is using inline styles since there's inline CSS that sets the color and 
+        * has to be overwritten.
+        */
+        resetTableStripes = function($matches, selector, color) {
+            $matches.parent().children(selector).has('td').css('background-color', color);
+        },
+
+        /*
+        * Filters an table of links and content based on the user's input.
+        */
+        filterTable = function($wrapper, criteria) {
+            var $matches = findMatches($wrapper, 'tr', criteria);
+
+            $wrapper.find('tr').has('td').not($matches).hide();
+            $matches.show();
+
+            if ($matches.length === 0) {
+                $errorMessage.show();
+                $wrapper.find('tr').has('th').hide();
+            } else {
+                $errorMessage.hide();
+                $wrapper.find('tr').has('th').show();
+            }
+
+            resetTableStripes($matches, 'tr:visible:even', '#ebebeb');
+            resetTableStripes($matches, 'tr:visible:odd', '#fff');
+        },
+
+        /*
+        * Clears the filter and displays all nodes in the list.
+        */
+        clearFilter = function($wrapper, $searchbox) {
+            $wrapper.find('li, div, tr').show();
+            $searchbox.val('');
+        };
 
     /* Reveal! */
 
