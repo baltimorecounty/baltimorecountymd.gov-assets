@@ -15,13 +15,12 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('clean-dist', function() {
-	gulp.src('dist')
+	return gulp.src('dist')
 		.pipe(clean());
 });
 
 gulp.task('concatHomepageJs', ['clean-dist'], function() {
-	var files = ['js/lib/require.js',
-					'js/lib/jQuery.min.js', 
+	var files = ['js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
 					'js/lib/handlebars.js', 
 					'js/lib/picturefill.min.js', 
@@ -32,8 +31,7 @@ gulp.task('concatHomepageJs', ['clean-dist'], function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['js/lib/require.js',
-					'js/polyfills/array.some.js',
+	var files = ['js/polyfills/array.some.js',
 					'js/skip-nav.js',
 					'js/lib/bootstrap-collapse.js',
 					'js/text-resizer.js', 
