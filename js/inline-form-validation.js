@@ -25,7 +25,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
                 fieldValueRegExp = /_CF_onError\(_CF_this.+;/g,
                 matches = [], 
                 tempArray = [],
-                errorMessageDict = [];
+                errorMessageDict = {};
 
             // This makes sure we're only pushing distinct values into the "matches" array.
             while ((tempArray = fieldValueRegExp.exec(functionText)) !== null) {
@@ -45,14 +45,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
                         errorMessage: errorMessage
                     };    
 
-                for (var m = 0; m < errorMessageDict.length; m++) {
-                    exists = errorMessageDict[m].fieldName === errorObject.fieldName;
-                    if (exists)
-                        break;
-                }
-
-                if (!exists)
-                    errorMessageDict[errorObject.fieldName] = errorObject.errorMessage;
+                errorMessageDict[errorObject.fieldName] = errorObject.errorMessage;
             }
 
             return errorMessageDict;
@@ -83,7 +76,9 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
         * Removes a string that wraps another string. For example, changes '"test"' to 'test'.
         */
         cleanWrappedText = function(text, stringToRemove) {
-            return text.slice(text.indexOf(stringToRemove) + 1, text.lastIndexOf(stringToRemove));
+            if (text.indexOf(stringToRemove) > -1 && text.indexOf(stringToRemove) < text.lastIndexOf(stringToRemove))
+                return text.slice(text.indexOf(stringToRemove) + stringToRemove.length, text.lastIndexOf(stringToRemove));
+            return text;
         },
         
         /*
@@ -230,6 +225,15 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
     * Revealed methods
     */
     return {
+        /* test code */
+        loadFieldErrorMessageData: loadFieldErrorMessageData,
+        attachErrorMessages: attachErrorMessages,
+        cleanWrappedText: cleanWrappedText,
+        validateRequiredElementsInWrapper: validateRequiredElementsInWrapper,
+        allFieldsKeyupClickHandler: allFieldsKeyupClickHandler,
+        inputsSelectsTextboxesBlurHandler: inputsSelectsTextboxesBlurHandler,
+        submitClickHandler: submitClickHandler,
+        /* end test code */
         init: init
     };
 
