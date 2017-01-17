@@ -18,7 +18,7 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('clean-dist', function() {
-	gulp.src('dist')
+	return gulp.src('dist')
 		.pipe(clean());
 });
 
