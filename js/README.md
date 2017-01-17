@@ -73,8 +73,6 @@ Contains google specific code to report analytics to Google Analytics.
 **filename**: bc-google-analytics.js  
 **usage**: template.min.js
 
-
-
 ## Google Analytics Custom Events
 Contains events that will trigger event tracking in Google Analytics.  We are responsible for maintaining the events we want to track in this file.
 
@@ -86,8 +84,6 @@ Currently we are tracking:
 **usage**: template.min.js    
 ### Dependencies
 * [jQuery](https://jquery.com/)
-
-
 
 ## YouTube Playlist Gallery
 Displays a video gallery of YouTube videos from an existing playlist. 
@@ -145,3 +141,123 @@ target|selector|.bc-youtube-playlist-gallery|Selector targeting the `<div>` in w
 playlistId|string|n/a|ID of the YouTube playlist to use for the gallery.|Yes
 templateSelector|string|#youtube-playlist-item-template|ID of the Handlebars template.|No
 showDescription|boolean|false|Indicates whether or not to display the video description.|No
+
+## Content Filter
+Filters unordered lists that are broken into sections, or tables.
+
+### Usage
+**Note:** You will need to use HTML Snippets in content inclusions for both the `<form>` tag and the `<script>` tag. Everything else can be directly on the page.
+
+#### HTML for the filter's form. This must be in an HTML Snippet.
+```html
+<form id="filter-form" class="bc-filter-form">
+    <p><strong>Filter:</strong> Enter topic or keyword to filter content.</p>
+    <input id="filter" value="" type="text" class="bc-filter-form-filter" aria-label="Enter topic or keyword to filter content" />
+    <input type="button" class="clear bc-filter-form-clearButton" value="Clear" />
+</form>
+```
+
+#### HTML for the *list* filter and error message. This can be directly on the page.
+```html
+<div class="bc-filter-noResults" style="display: none;">No Search Results...Please Try Another Search</div>       
+
+<div id="centerContent" class="bc-filter-content">
+    <div>
+        <h2>Section Header 1</h2>
+        <ul>
+            <li><a href="https://www.google.com">First List Item</a></li>
+            <li><a href="https://www.google.com">Second List Item</a></li>
+            <li><a href="https://www.google.com">Third List Item</a></li>
+        </ul>
+    </div>
+    <div>
+        <h2>Section Header 2</h2>
+        <ul>
+            <li><a href="https://www.google.com">Fourth List Item</a></li>
+            <li><a href="https://www.google.com">Fifth List Item</a></li>
+            <li><a href="https://www.google.com">Sixth List Item</a></li>
+        </ul>
+    </div>
+</div>
+```
+
+#### HTML for the *table* filter and error message. This can be directly on the page.
+```html
+<div class="bc-filter-noResults" style="display: none;">No Search Results...Please Try Another Search</div>       
+
+<table class="bc-filter-content">
+    <tr>
+        <th>Column Header 1</th>
+        <th>Column Header 2</th>
+        <th>Column Header 3</th>
+    </tr>
+    <tr>
+        <td><a href="https://www.google.com">First Item</a></td>
+        <td><a href="https://www.google.com">Second Item</a></td>
+        <td><a href="https://www.google.com">Third Item</a></td>
+    </tr>
+    <tr>
+        <td><a href="https://www.google.com">Fourth Item</a></td>
+        <td><a href="https://www.google.com">Fifth Item</a></td>
+        <td><a href="https://www.google.com">Sixth Item</a></td>
+    </tr>
+</table>
+```
+
+#### HTML/JavaScript for the filter initialization. This must be in an HTML Snippet.
+```html
+<script>
+    baltimoreCounty.contentFilter.init({
+        listWrapper: '.bc-filter-content',
+        searchBox: '.bc-filter-form .bc-filter-form-filter',
+        clearButton: '.bc-filter-form .bc-filter-form-clearButton',
+        errorMessage: '.bc-filter-noResults',
+        contentType: 'list'
+    });     
+</script>   
+```
+
+### Options
+Option | Type | Default | Description | Required
+------ | ---- | ------- | ----------- | --------
+listWrapper|string|.bc-filter-content|jQuery selector that identifies the element that wraps the entire list.|No
+searchBox|string|.bc-filter-form .bc-filter-form-filter|jQuery selector that identifies the filter's search box.|No
+clearButton|string|.bc-filter-form .bc-filter-form-clearButton|jQuery selector that identifies the filter's "Clear" button.|No
+errorMessage|string|.bc-filter-noResults|jQuery selector that identifies the element to display when there are no results.|No
+contentType|string|list|Determines whether we're filtering an unordered list or a table. Acceptable values are **list** and **table**.|No
+
+**filename**: bc-content-filter.js     
+**usage**: template.min.js 
+
+## Accordion menu
+Contains code to add and remove classes to the Bootstrap Accordion Menu in order to have arrows that indicate an expanded or collapsed list.
+
+In order to use the Bootstrap Accordion Menu, the HTML for the menu must match the following format. `<div class="panel">` corresponds to top-level 
+accordion items, and `<li class="panel">` for second-level accordion items. 
+
+```HTML
+<nav class="nav-list bc-accordion-menu">
+    <div class="panel">
+        <button class="accordion-collapsed" data-toggle="collapse" aria-expanded="false">Collapsable list one</button>
+        <ul class="collapse">
+            <li>
+                <a href="/myplainlink1">Plain link one</a>
+            </li>
+            <li class="panel">
+                <button class="accordion-collapsed" data-toggle="collapse" aria-expanded="false">Collapsable sub panel one</button>
+                <ul class="collapse">
+                    <li><a href="/mypage1">Page one</a></li>
+                    <li><a href="/mypage2">Page two</a></li>
+                    <li><a href="/mypage3">Page three</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+```
+
+**filename**: accordion-menu.js    
+**usage**: template.min.js
+
+### Dependencies
+* [jQuery](https://jquery.com/)
