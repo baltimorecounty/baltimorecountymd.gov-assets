@@ -33,10 +33,10 @@ baltimoreCounty.contentFilter = (function($) {
             $searchBox.on('keyup', function(eventObject) {
                 switch (contentType) {
                     case 'table':
-                        filterTable($wrapper, $(eventObject.currentTarget).val());
+                        filterTable($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
                         break;
                     case 'list':
-                        filterList($wrapper, $(eventObject.currentTarget).val());
+                        filterList($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
                         break;
                 }            
             });
@@ -81,7 +81,7 @@ baltimoreCounty.contentFilter = (function($) {
         /*
          * Filters an unordered list based on the user's input.
          */
-        filterList = function($wrapper, criteria) {
+        filterList = function($wrapper, criteria, $errorMessage) {
             var $matches = findMatches($wrapper, 'ul li', criteria);
 
             $wrapper.find('li').not($matches).hide();
@@ -111,7 +111,7 @@ baltimoreCounty.contentFilter = (function($) {
         /*
          * Filters an table of links and content based on the user's input.
          */
-        filterTable = function($wrapper, criteria) {
+        filterTable = function($wrapper, criteria, $errorMessage) {
             var $matches = findMatches($wrapper, 'tr', criteria);
 
             $wrapper.find('tr').has('td').not($matches).hide();
