@@ -1,12 +1,13 @@
-var gulp = require('gulp'),
+var clean = require('gulp-clean'),
 	concat = require('gulp-concat'),
-	uglify = require('gulp-uglify'),
-	rename = require('gulp-rename'),
-	sass = require('gulp-sass'),
-	jshint = require('gulp-jshint'),
 	cssnano = require('gulp-cssnano'),
-	clean = require('gulp-clean'),
-	runSequence = require('run-sequence');
+	gulp = require('gulp'),
+	jshint = require('gulp-jshint'),
+	rename = require('gulp-rename'),
+	requirejsOptimize = require('gulp-requirejs-optimize'),
+	runSequence = require('run-sequence'),
+	sass = require('gulp-sass'),
+	uglify = require('gulp-uglify');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || 'dist/js';
@@ -17,13 +18,12 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('clean-dist', function() {
-	gulp.src('dist')
+	return gulp.src(['dist/js', 'dist/css'])
 		.pipe(clean());
 });
 
 gulp.task('concatHomepageJs', ['clean-dist'], function() {
-	var files = ['js/lib/require.js',
-					'js/utility/namespacer.js', 
+	var files = ['js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
@@ -36,8 +36,7 @@ gulp.task('concatHomepageJs', ['clean-dist'], function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['js/lib/require.js',
-					'js/polyfills/array.some.js',
+	var files = ['js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/nifty-forms.js',
@@ -52,7 +51,7 @@ gulp.task('concatTemplateJs', function() {
 					'js/inside-template.js',
 					'js/bc-content-filter.js', 
 					'js/accordion-menu.js'];
-  	return concatFiles(files, 'template.js');
+  	return concatFiles(files, 'templateinside.js');
 });
 
 

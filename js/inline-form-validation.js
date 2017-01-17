@@ -1,6 +1,6 @@
-namespacer('baltimoreCounty.utility');
+namespacer('baltimoreCounty');
 
-baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
+baltimoreCounty.inlineFormValidation = (function(window, $) {
 
     var $currentEventObject,
         $lastEventObject,
@@ -18,8 +18,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message',
 
         /*
-         * Loads up the field IDs and error messages that SE renders in inline JavaScript.
-         */
+        * Loads up the field IDs and error messages that SE renders in inline JavaScript.
+        */
         loadFieldErrorMessageData = function(formId) {
             var functionText = window['_CF_check' + formId].toString(),
                 fieldValueRegExp = /_CF_onError\(_CF_this.+;/g,
@@ -59,8 +59,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         },
 
         /*
-         * Attaches the error messages to their respective required elements.
-         */
+        * Attaches the error messages to their respective required elements.
+        */
         attachErrorMessages = function($form, errorMessages) {
             var $requiredElements = $form.find(REQUIRED_ALL_FIELDS_SELECTOR);
 
@@ -80,15 +80,15 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         
 
         /*
-         * Removes a string that wraps another string. For example, changes '"test"' to 'test'.
-         */
+        * Removes a string that wraps another string. For example, changes '"test"' to 'test'.
+        */
         cleanWrappedText = function(text, stringToRemove) {
             return text.slice(text.indexOf(stringToRemove) + 1, text.lastIndexOf(stringToRemove));
         },
         
         /*
-         * Validation based on CSS class. 
-         */
+        * Validation based on CSS class. 
+        */
         isValid = function($field) {
 
             if ($field.is(REQUIRED_CHECKBOX_RADIO_LABEL_SELECTOR)) {
@@ -124,8 +124,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         },        
         
         /*
-         * Looks to the last element 
-         */
+        * Looks to the last element 
+        */
         validateRequiredElementsInWrapper = function($wrapper) {
 
             var $targets = $wrapper.find(REQUIRED_ALL_FIELDS_SELECTOR),
@@ -154,8 +154,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         },
 
         /*
-         * Handles the keyup and click events for all required fields.
-         */
+        * Handles the keyup and click events for all required fields.
+        */
         allFieldsKeyupClickHandler = function(e) {
             $currentEventObject = $(e.target);
             $currentWrapper = $currentEventObject.closest(FIELD_WRAPPER_CLASS);
@@ -176,8 +176,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         },
 
         /*
-         * Handles the blur event for textboxes, selects, and textareas.
-         */
+        * Handles the blur event for textboxes, selects, and textareas.
+        */
         inputsSelectsTextboxesBlurHandler = function(e) {
             var $eventTarget = $(e.target),
                 $targetWrapper = $eventTarget.parents(FIELD_WRAPPER_CLASS).last();
@@ -186,8 +186,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         },
 
         /*
-         * Handles the submit button's click event.
-         */
+        * Handles the submit button's click event.
+        */
         submitClickHandler = function(e) {
             e.preventDefault();
             var $form = $(e.target.form);
@@ -199,8 +199,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         },
 
         /*
-         * Initialize and attach handlers.
-         */
+        * Initialize and attach handlers.
+        */
         init = function(formId) {
             var errorMessages = loadFieldErrorMessageData(formId),
                 $form = $('#' + formId);
@@ -227,8 +227,8 @@ baltimoreCounty.utility.inlineFormValidation = (function(window, $) {
         };
 
     /*
-     * Revealed methods
-     */
+    * Revealed methods
+    */
     return {
         init: init
     };
