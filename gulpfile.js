@@ -18,13 +18,12 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('clean-dist', function() {
-	gulp.src('dist')
+	return gulp.src('dist')
 		.pipe(clean());
 });
 
 gulp.task('concatHomepageJs', ['clean-dist'], function() {
-	var files = ['js/lib/require.js',
-					'js/utility/namespacer.js', 
+	var files = ['js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
@@ -37,10 +36,10 @@ gulp.task('concatHomepageJs', ['clean-dist'], function() {
 });
 
 gulp.task('concatTemplateJs', function() {
-	var files = ['js/lib/require.js',
-					'js/polyfills/array.some.js',
+	var files = ['js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
+					'js/utility/numericStringTools.js',
 					'js/lib/bootstrap-collapse.js',
 					'js/skip-nav.js',
 					'js/text-resizer.js', 
