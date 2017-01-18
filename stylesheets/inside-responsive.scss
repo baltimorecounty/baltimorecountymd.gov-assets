@@ -20,6 +20,7 @@
 @import "partials/components/callout";
 @import "partials/components/blogTabs.scss";
 @import "partials/components/facebookWidget.scss";
+@import "partials/components/filter";
 @import "partials/components/rateForm";
 @import "partials/components/formFields";
 
@@ -29,6 +30,8 @@
 @import "partials/bootstrap/insideGrid";
 @import "partials/bootstrap/forms";
 @import "partials/bootstrap/labels";
+@import "partials/components/collapse";
+@import "partials/components/accordion-menu";
 
 @import "partials/inside/rateForm";
 @import "partials/homepage/search";
