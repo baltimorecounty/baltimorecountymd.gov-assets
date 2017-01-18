@@ -760,33 +760,48 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             if (!options) 
                 options = defaultOptions;
 
-            var $youtubePlaylistGalleryTarget = options.target ?  $(options.target.trim()) : $(defaultOptions.target);
+            var $youtubePlaylistGalleryTarget = options.target ?  $(options.target.trim()) : $(defaultOptions.target),
+                templateSelector = options.templateSelector ? options.templateSelector : defaultOptions.templateSelector,
+                playlistId = options.playlistId;
+            
             if ($youtubePlaylistGalleryTarget.length === 0) 
                 throw 'The "target" option value must be supplied. Please see documentation at ' + documentationLink + '.';
-
-            var templateSelector = options.templateSelector ? options.templateSelector : defaultOptions.templateSelector;
-
-            var playlistId = options.playlistId;
+            
             if (!playlistId || playlistId.length === 0) 
                 throw 'The "playlistId" option must be supplied. Please see documentation at ' + documentationLink + '.';
+            
+             getPlaylistDataFromYouTube(playlistId)
+                .done(function(data) {
+                    var playlistItems = getYouTubeItemInfoFromPlaylistData(data.items),
+                        html;
 
-            generatePlaylistItems(playlistId, $youtubePlaylistGalleryTarget, templateSelector, generateYouTubePlaylistHtmlWithHandlebarsCallback);
+                    if (playlistItems.length) {
+                        html = generateYouTubePlaylistHtmlWithHandlebars(playlistItems, $youtubePlaylistGalleryTarget, templateSelector);
+                    } else {
+                        html = '<div role="alert" class="alert-warning"><p>An error has occurred retreiving the videos from YouTube.</p></div>';
+                    }
+
+                    $youtubePlaylistGalleryTarget.html(html);
+
+                    $youtubePlaylistGalleryTarget.children('.loadMoreButton').first().on('click', function(e) {
+                        $youtubePlaylistGalleryTarget.find('.hidden').slice(0,6).removeClass('hidden');
+
+                        if ($youtubePlaylistGalleryTarget.find('.hidden').length === 0)
+                            $(e.currentTarget).hide();
+                    });
+                })
+                .fail(function(data) {
+                    console.log('Data load from YouTube failed. Response: ' + JSON.stringify(data));
+                });
         },
 
         /**
          * Makes the requst to the YouTube v3 API.
          */
-        generatePlaylistItems = function(playlistId, $target, templateSelector, callback) {
-            var url = 'http://testservices.baltimorecountymd.gov/api/playlistgallery/' + playlistId,
-                playlistItems = [];
+        getPlaylistDataFromYouTube = function(playlistId) {
+            var url = 'http://testservices.baltimorecountymd.gov/api/playlistgallery/' + playlistId;
 
-            $.getJSON(url)
-                .done(function(data) {
-                    callback(data.items, $target, templateSelector);
-                }) 
-                .fail(function(data) {
-                    console.log('Data load from YouTube failed. Response: ' + JSON.stringify(data));
-                });
+            return $.getJSON(url);
         },
 
         /**
@@ -795,42 +810,44 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
         getYouTubeItemInfoFromPlaylistData = function(playlistData) {
             var youtubeItemInfoArr = [];
             
-            for (var i = 0; i < playlistData.length; i++) {
-                var youtubeItemInfo = {
-                    videoId: playlistData[i].snippet.resourceId.videoId,
-                    videoTitle: playlistData[i].snippet.title,
-                    thumbnailUrl: playlistData[i].snippet.thumbnails.medium.url,
-                    isHidden: i > 5
-                };
-                youtubeItemInfoArr.push(youtubeItemInfo);
+            if (playlistData) {
+                for (var i = 0; i < playlistData.length; i++) {
+                    if (playlistData[i].snippet) {
+                        try {
+                            var youtubeItemInfo = {
+                                videoId: playlistData[i].snippet.resourceId.videoId.toString(),
+                                videoTitle: playlistData[i].snippet.title.toString(),
+                                thumbnailUrl: playlistData[i].snippet.thumbnails.medium.url.toString(),
+                                isHidden: i > 5
+                            };
+                           youtubeItemInfoArr.push(youtubeItemInfo);
+                        } catch (exception) {
+                            console.log('Incomplete data in the following snippet: ' + JSON.stringify(playlistData[i]));
+                        }
+                    }
+                }
             }
-
             return youtubeItemInfoArr;
         },
 
         /**
          * Generates the HTML for the video gallery itself using Handlebars.
          */
-        generateYouTubePlaylistHtmlWithHandlebarsCallback = function(playlistItems, $target, templateSelector) {
+        generateYouTubePlaylistHtmlWithHandlebars = function(youtubeItemInfoArr, $target, templateSelector) {
             var source = $(templateSelector).html(),
                 template = Handlebars.compile(source),
-                youtubeItemInfoArr = getYouTubeItemInfoFromPlaylistData(playlistItems),
                 html = template({ youtubeItemInfo: youtubeItemInfoArr });
 
-            if (playlistItems.length > 6)
+            if (youtubeItemInfoArr.length > 6)
                 html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
 
-            $target.html(html);
-
-            $target.children('.loadMoreButton').first().on('click', function(e) {
-                $target.find('.hidden').slice(0,6).removeClass('hidden');
-
-                if ($target.find('.hidden').length === 0)
-                    $(e.currentTarget).hide();
-            });
+            return html;
         };   
 
     return {
+        /* test-code */
+        getYouTubeItemInfoFromPlaylistData: getYouTubeItemInfoFromPlaylistData,
+        /* end-test-code */
         init: init
     };
 

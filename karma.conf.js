@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Wed Dec 07 2016 14:42:27 GMT-0500 (Eastern Standard Time)
-
 module.exports = function(config) {
   config.set({
 
@@ -10,12 +7,20 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'js/**/*.js'
+      'node_modules/jquery/dist/jquery.min.js',
+      'js/polyfills/*.js',
+      'spec/js/**/*.spec.js',
+      {
+        pattern: 'spec/js/fixtures/**/*.html',
+        watched: true,
+        included: false,
+        served: true
+      }
     ],
 
 
@@ -23,6 +28,12 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    plugins: [
+      'karma-mocha-reporter',
+      'karma-jasmine',
+      'karma-jasmine-jquery-2',
+      'karma-phantomjs-launcher'
+    ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -33,7 +44,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['mocha'],
 
 
     // web server port
@@ -55,12 +66,12 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous
