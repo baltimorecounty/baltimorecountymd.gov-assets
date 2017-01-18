@@ -5,13 +5,12 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
     var documentationLink = 'https://goo.gl/HbhJ1p',
         defaultOptions = {
             target: '.bc-youtube-playlist-gallery',
-            templateSelector: '#youtube-playlist-item-template',
-            showDescription: false
+            templateSelector: '#youtube-playlist-item-template'
         },
 
-        /*
-        * Initializes based on supplied options, and throws errors if they're missing. 
-        */
+        /**
+         * Initializes based on supplied options, and throws errors if they're missing. 
+         */
         init = function(options) {
             
             if (!options) 
@@ -27,48 +26,53 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
             if (!playlistId || playlistId.length === 0) 
                 throw 'The "playlistId" option must be supplied. Please see documentation at ' + documentationLink + '.';
 
-            // A little redundant, but since null isn't quite false, let's check anyway.
-            var showDescription = options.showDescription ? options.showDescription : defaultOptions.showDescription; 
-
-            getPlaylistItems(playlistId, $youtubePlaylistGalleryTarget, templateSelector, showDescription, generateYouTubePlaylistHtmlWithHandlebars);
+            generatePlaylistItems(playlistId, $youtubePlaylistGalleryTarget, templateSelector, generateYouTubePlaylistHtmlWithHandlebarsCallback);
         },
 
-        /*
-        * Makes the requst to the YouTube v3 API.
-        */
-        getPlaylistItems = function(playlistId, $target, templateSelector, showDescription, callback) {
+        /**
+         * Makes the requst to the YouTube v3 API.
+         */
+        generatePlaylistItems = function(playlistId, $target, templateSelector, callback) {
             var url = 'http://testservices.baltimorecountymd.gov/api/playlistgallery/' + playlistId,
                 playlistItems = [];
 
             $.getJSON(url)
                 .done(function(data) {
-                    callback(data.items, $target, templateSelector, showDescription);
+                    callback(data.items, $target, templateSelector);
                 }) 
                 .fail(function(data) {
                     console.log('Data load from YouTube failed. Response: ' + JSON.stringify(data));
                 });
         },
 
-        /*
-        * Generates the HTML for the video gallery itself using Handlebars.
-        */
-        generateYouTubePlaylistHtmlWithHandlebars = function(playlistItems, $target, templateSelector, showDescription) {
-            var source = $(templateSelector).html();
-            var template = Handlebars.compile(source);
-
+        /**
+         * Turns the YouTube data object into an array we can iterate over.
+         */
+        getYouTubeItemInfoFromPlaylistData = function(playlistData) {
             var youtubeItemInfoArr = [];
             
-            for (var i = 0; i < playlistItems.length; i++) {
+            for (var i = 0; i < playlistData.length; i++) {
                 var youtubeItemInfo = {
-                    videoId: playlistItems[i].snippet.resourceId.videoId,
-                    videoTitle: playlistItems[i].snippet.title,
-                    thumbnailUrl: playlistItems[i].snippet.thumbnails.medium.url,
+                    videoId: playlistData[i].snippet.resourceId.videoId,
+                    videoTitle: playlistData[i].snippet.title,
+                    thumbnailUrl: playlistData[i].snippet.thumbnails.medium.url,
                     isHidden: i > 5
                 };
                 youtubeItemInfoArr.push(youtubeItemInfo);
             }
 
-            var html = template({ youtubeItemInfo: youtubeItemInfoArr });
+            return youtubeItemInfoArr;
+        },
+
+        /**
+         * Generates the HTML for the video gallery itself using Handlebars.
+         */
+        generateYouTubePlaylistHtmlWithHandlebarsCallback = function(playlistItems, $target, templateSelector) {
+            var source = $(templateSelector).html(),
+                template = Handlebars.compile(source),
+                youtubeItemInfoArr = getYouTubeItemInfoFromPlaylistData(playlistItems),
+                html = template({ youtubeItemInfo: youtubeItemInfoArr });
+
             if (playlistItems.length > 6)
                 html += '<button type="button" class="contentButton loadMoreButton">LOAD MORE</button>';
 
