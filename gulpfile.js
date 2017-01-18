@@ -6,7 +6,9 @@ var gulp = require('gulp'),
 	cssnano = require('gulp-cssnano'),
 	stripCode = require('gulp-strip-code'),
 	clean = require('gulp-clean'),
-	runSequence = require('run-sequence');
+	runSequence = require('run-sequence'),
+	jshint = require('gulp-jshint'),
+	stylish = require('jshint-stylish');
 
 var concatFiles = function (files, name, dest) {
 	dest = dest || 'dist/js';
@@ -87,6 +89,12 @@ gulp.task('sassAndCompressCss', function () {
 			suffix: '.min'
 		}))
 		.pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('linter', function() {
+	return gulp.src(['js/**/*.js', '!js/lib/*'])
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('watch', function () {
