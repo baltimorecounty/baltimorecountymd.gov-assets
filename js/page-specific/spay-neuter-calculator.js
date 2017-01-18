@@ -212,18 +212,18 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		 */
 		buildDiscountMessageHTML = function (facilities, cost) {
 			if (typeof cost === 'undefined')
-				return '<div class="alert-warning"><p>We\'re sorry. Only County residents are eligible for discount spay or neuter procedures.</p></div>';
+				return '<p>We\'re sorry. Only County residents are eligible for discount spay or neuter procedures.</p>';
 
 			if (facilities.length === 1 && facilities[0] === facilityList.dundalk)
-				return '<div class="alert-success"><p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Dundalk facility at 7702 Dunmanway.</p></div>';
+				return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Dundalk facility at 7702 Dunmanway.</p>';
 
 			if (facilities.length === 1 && facilities[0] === facilityList.swap)
-				return '<div class="alert-success"><p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Southwest Area Park facility at 3941 Klunk Drive.</p></div>';
+				return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Southwest Area Park facility at 3941 Klunk Drive.</p>';
 
 			if (cost === 0)
-				return '<div class="alert-success"><p>Good news! You\'re eligible for a <strong>free procedure</strong> at any of our facilities. Select a location to book your appointment.</p></div>';
+				return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at any of our facilities. Select a location to book your appointment.</p>';
 
-			return '<div class="alert-success"><p>Good news! You\'re eligible for a <strong>$20 procedure</strong> at any of our facilities. Select a location to book your appointment. Make sure to continue to the payment screen after you book.</p></div>';
+			return '<p>Good news! You\'re eligible for a <strong>$20 procedure</strong> at any of our facilities. Select a location to book your appointment. Make sure to continue to the payment screen after you book.</p>';
 		},
 
 		/*
@@ -261,6 +261,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 			var facilityListHTML = buildFacilityListHTML(facilities);
 
 			if (isValid()) {
+				$('#spayNeuterFormResults').addClass(facilityListHTML ? 'alert-success' : 'alert-warning').attr('role','alert');
 				$('#spayNeuterFormResults').html(discountMessageHTML + facilityListHTML);
 				$('#spayNeuterFormResults').removeClass('hidden');
 				$('html, body').animate({
