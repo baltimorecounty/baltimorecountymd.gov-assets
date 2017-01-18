@@ -22,7 +22,7 @@ gulp.task('clean-dist', function() {
 		.pipe(clean());
 });
 
-gulp.task('concatHomepageJs', ['clean-dist'], function() {
+gulp.task('concatHomepageJs', function() {
 	var files = ['js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/lib/jQuery.min.js', 
