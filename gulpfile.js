@@ -1,11 +1,13 @@
-var gulp = require('gulp'),
+var clean = require('gulp-clean'),
 	concat = require('gulp-concat'),
-	uglify = require('gulp-uglify'),
-	rename = require('gulp-rename'),
-	sass = require('gulp-sass'),
 	cssnano = require('gulp-cssnano'),
-	clean = require('gulp-clean'),
-	runSequence = require('run-sequence');
+	gulp = require('gulp'),
+	jshint = require('gulp-jshint'),
+	rename = require('gulp-rename'),
+	runSequence = require('run-sequence'),
+	sass = require('gulp-sass'),
+	stylish = require('jshint-stylish'),
+	uglify = require('gulp-uglify');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || 'dist/js';
@@ -63,6 +65,12 @@ gulp.task('sassAndCompressCss', function () {
 		.pipe(cssnano())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('linter', function() {
+	return gulp.src(['js/**/*.js', '!js/lib/*'])
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('watch', function() {

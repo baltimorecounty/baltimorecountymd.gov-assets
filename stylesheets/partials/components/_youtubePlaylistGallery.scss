@@ -51,7 +51,7 @@ $youTubePlayListItemWidth: 30%;
     }
 }
 
-.loadMoreButton {
+.loadMoreButton, #maintContent .loadMoreButton {
     clear: both;
     display: block;
     margin: 10px;
