@@ -1,4 +1,4 @@
-var baltimoreCounty = baltimoreCounty || {};
+namespacer('baltimoreCounty');
 
 baltimoreCounty.contentFilter = (function($) {
 
@@ -46,7 +46,7 @@ baltimoreCounty.contentFilter = (function($) {
             });
 
             $clearButton.on('click', function() {
-                clearFilter($wrapper, $searchBox);
+                clearFilter($wrapper, $searchBox, $errorMessage);
             });
         },  
 
@@ -132,9 +132,10 @@ baltimoreCounty.contentFilter = (function($) {
         /*
          * Clears the filter and displays all nodes in the list.
          */
-        clearFilter = function($wrapper, $searchbox) {
+        clearFilter = function($wrapper, $searchbox, $errorMessage) {
             $wrapper.find('li, div, tr').show();
             $searchbox.val('');
+            $errorMessage.hide();
         };
 
     /* Reveal! */
