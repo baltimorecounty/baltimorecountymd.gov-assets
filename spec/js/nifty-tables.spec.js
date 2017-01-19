@@ -1,10 +1,11 @@
-jasmine.getFixtures().fixturesPath = '/spec/js/fixtures';
+var basePath = window['__karma__'] ? 'base' : '';
 
 describe('NiftyTables', function () {
 
     describe('getFirstTextFromCell', function () {
 
         beforeEach(function () {
+            jasmine.getFixtures().fixturesPath = basePath + '/spec/js/fixtures';
             loadFixtures('nifty-tables-sortable.fixture.html');
         });
 
@@ -42,7 +43,7 @@ describe('NiftyTables', function () {
         var fakeEvent,
             $niftyTable,
             $niftyTableHeaderRow,
-            getConcatinatedColumnString = function($table) {
+            getConcatinatedColumnString = function ($table) {
                 var actualFirstColumnTextArr = [];
                 $.each($table.find('tr td:first-child'), function (idx, item) {
                     actualFirstColumnTextArr.push($(item).text());
@@ -51,6 +52,7 @@ describe('NiftyTables', function () {
             };
 
         beforeEach(function () {
+            jasmine.getFixtures().fixturesPath = basePath + '/spec/js/fixtures';
             loadFixtures('nifty-tables-sortable.fixture.html');
 
             fakeEvent = {};
@@ -62,7 +64,7 @@ describe('NiftyTables', function () {
             var expected = 'aaaabbbbcccc';
 
             fakeEvent.target = $niftyTableHeaderRow.find('a').first().get();
-            
+
             baltimoreCounty.niftyTables.tableSort(fakeEvent);
 
             var actual = getConcatinatedColumnString($niftyTable);
@@ -72,9 +74,9 @@ describe('NiftyTables', function () {
 
         it('sorts the table descendingly when a column header link is clicked for the second time', function () {
             var expected = 'ccccbbbbaaaa';
-                
+
             fakeEvent.target = $niftyTableHeaderRow.find('a').first().get();
-            
+
             baltimoreCounty.niftyTables.tableSort(fakeEvent);
             baltimoreCounty.niftyTables.tableSort(fakeEvent);
 
