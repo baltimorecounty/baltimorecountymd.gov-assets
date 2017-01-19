@@ -1,6 +1,6 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.niftyTables = (function($) {
+baltimoreCounty.niftyTables = (function ($) {
     'use strict';
 
     var columnIndex = 0,
@@ -8,11 +8,11 @@ baltimoreCounty.niftyTables = (function($) {
         numericStringTools = baltimoreCounty.utility.numericStringTools,
 
         /*
-        * Since we're sorting a table, we need to work out what we're 
-        * comparing against, based on the column header that was clicked. 
-        * Then we can compare the two rows that are passed in.
-        */
-        clickedColumnSorter = function(aTableRow, bTableRow) {
+         * Since we're sorting a table, we need to work out what we're 
+         * comparing against, based on the column header that was clicked. 
+         * Then we can compare the two rows that are passed in.
+         */
+        clickedColumnSorter = function (aTableRow, bTableRow) {
             var aContent = getFirstTextFromCell(aTableRow, columnIndex),
                 bContent = getFirstTextFromCell(bTableRow, columnIndex),
                 aExtractedContent = numericStringTools.extractNumbersIfPresent(aContent),
@@ -22,45 +22,45 @@ baltimoreCounty.niftyTables = (function($) {
         },
 
         /*
-        * Use the supplied comparerFunction to compare a and b.
-        */
-        comparer = function(comparerFunction, a, b) {
+         * Use the supplied comparerFunction to compare a and b.
+         */
+        comparer = function (comparerFunction, a, b) {
             return comparerFunction(a, b);
         },
 
         /*
-        * Compares two values, and returns a result that incidates whether 
-        * or not the values are in ascending order.
-        */
-        ascendingComparer = function(a, b) {
+         * Compares two values, and returns a result that incidates whether 
+         * or not the values are in ascending order.
+         */
+        ascendingComparer = function (a, b) {
             if (a > b)
                 return 1;
 
             if (b > a)
                 return -1;
 
-            return 0;                
+            return 0;
         },
 
         /*
-        * Compares two values, and returns a result that incidates whether 
-        * or not the values are in descending order.
-        */
-        descendingComparer = function(a, b) {
+         * Compares two values, and returns a result that incidates whether 
+         * or not the values are in descending order.
+         */
+        descendingComparer = function (a, b) {
             if (a < b)
                 return 1;
 
             if (b < a)
                 return -1;
 
-            return 0;                
+            return 0;
         },
-        
+
         /*
-        * Finds the content of the first <p> in a cell from the clicked column 
-        * of the supplied row. If there's no <p>, returns the raw text of the cell.
-        */
-        getFirstTextFromCell = function(tableRow, clickedColumnIndex) {
+         * Finds the content of the first <p> in a cell from the clicked column 
+         * of the supplied row. If there's no <p>, returns the raw text of the cell.
+         */
+        getFirstTextFromCell = function (tableRow, clickedColumnIndex) {
             var $cell = $(tableRow).find('td').eq(clickedColumnIndex),
                 $p = $cell.find('p');
 
@@ -68,38 +68,40 @@ baltimoreCounty.niftyTables = (function($) {
         },
 
         /*
-        * Sorts the table based on the column header that was clicked.
-        */
-        tableSort = function(e) {
-            var $clickedLink = $(e.target).closest('a'),                    
+         * Sorts the table based on the column header that was clicked.
+         */
+        tableSort = function (e) {
+            var $clickedLink = $(e.target).closest('a'),
                 $niftyTable = $clickedLink.closest('table'),
-                $tableRows = $niftyTable.find('tr').not(':first-child');
+                $tableRows = $niftyTable.find('tr').has('td'),
+                SORT_ASCENDING_CLASS = 'sort-ascending',
+                SORT_DESCENDING_CLASS = 'sort-descending';
 
             columnIndex = $clickedLink.closest('th').index();
 
-            shouldSortAscending = !($clickedLink.hasClass('sort-ascending') || $clickedLink.hasClass('sort-descending')) || $clickedLink.hasClass('sort-descending');
+            shouldSortAscending = !($clickedLink.hasClass(SORT_ASCENDING_CLASS) || $clickedLink.hasClass(SORT_DESCENDING_CLASS)) || $clickedLink.hasClass(SORT_DESCENDING_CLASS);
 
             if (shouldSortAscending)
-                $clickedLink.removeClass('sort-descending').addClass('sort-ascending');
+                $clickedLink.removeClass(SORT_DESCENDING_CLASS).addClass(SORT_ASCENDING_CLASS);
             else
-                $clickedLink.removeClass('sort-ascending').addClass('sort-descending');
+                $clickedLink.removeClass(SORT_ASCENDING_CLASS).addClass(SORT_DESCENDING_CLASS);
 
-            $clickedLink.closest('tr').find('a').not($clickedLink).removeClass('sort-ascending').removeClass('sort-descending');
+            $clickedLink.closest('tr').find('a').not($clickedLink).removeClass(SORT_ASCENDING_CLASS).removeClass(SORT_DESCENDING_CLASS);
 
             $tableRows.detach();
-            $tableRows.sort(clickedColumnSorter);                    
+            $tableRows.sort(clickedColumnSorter);
             $niftyTable.append($tableRows);
-        },        
+        },
 
         /*
-        * Build links and attach event handlers.
-        */
-        init = function() {
+         * Build links and attach event handlers.
+         */
+        init = function () {
 
             var $niftyTables = $('table.nifty-table'),
                 $sortableTables = $('.nifty-table').filter('.nifty-table-sortable'),
                 $sortableColumnHeadings = $sortableTables.find('th');
-                
+
             // Create sorting links    
             if ($sortableTables.length) {
                 $sortableColumnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>');
@@ -108,15 +110,15 @@ baltimoreCounty.niftyTables = (function($) {
         };
 
     return {
-        /* test code */
-        clickedColumnSorter : clickedColumnSorter,
+        /* test-code */
         getFirstTextFromCell: getFirstTextFromCell,
-        /* end test code */
+        tableSort: tableSort,
+        /* end-test-code */
         init: init
     };
 
 })(jQuery);
 
-$(document).ready(function() {
+$(document).ready(function () {
     baltimoreCounty.niftyTables.init();
 });
