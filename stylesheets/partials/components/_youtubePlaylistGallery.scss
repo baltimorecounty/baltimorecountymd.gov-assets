@@ -11,13 +11,22 @@ $youTubePlayListItemWidth: 30%;
     figure {
         margin: 0;
 
+        a {
+            display: block;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            width: 100%;
+        }
+
         .fa-play-circle-o {
-            text-shadow: 1px 1px 4px #000;
             color: white;
             font-size: 3em;
-            left: 45%;
+            left: 50%;
             position: absolute;
-            top: 30%;
+            text-shadow: 1px 1px 4px #000;
+            top: 50%;
+            transform: translate(-50%, -50%);
             z-index: 100;
         }
 
@@ -62,13 +71,13 @@ $youTubePlayListItemWidth: 30%;
 @media (max-width: 992px) {
     .youtube-playlist-item {
         width: 47%;
-
+/*
         figure {
             .fa-play-circle-o {
                 left: 46%;
                 top: 35%;
            }
-        }
+        }*/
     }
 }
 
@@ -76,11 +85,11 @@ $youTubePlayListItemWidth: 30%;
     .youtube-playlist-item {
         width: 96%;
 
-        figure {
+      /*  figure {
             .fa-play-circle-o {
                 left: 48%;
                 top: 43%;
             }
-        }
+        }*/
    }
 }
