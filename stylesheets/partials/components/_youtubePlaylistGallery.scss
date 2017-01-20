@@ -36,8 +36,9 @@ $youTubePlayListItemWidth: 30%;
                 margin: 0 !important;
                 padding: 0;
                 overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+                /*white-space: nowrap;
+                text-overflow: ellipsis;*/
+                height: 2.6em;
             }
 
         }

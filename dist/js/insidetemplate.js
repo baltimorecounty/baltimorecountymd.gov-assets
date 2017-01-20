@@ -25,6 +25,33 @@ if (!Array.prototype.some) {
     return false;
   };
 }
+;(function($, undefined) {
+    'use strict';
+
+    $.fn.elliptical = function(options) {
+
+        var settings = $.extend({
+            deepestDescendentSelector: 'a',
+            separator: ' ',
+            suffix: '...'
+        }, options);
+
+        return this.filter(function(index, item) { 
+            return $(item).height() < item.scrollHeight;
+        }).each(function(index, item) {
+            var $item = $(item),
+                textArr = $item.text().split(settings.separator),
+                $deepestDescendent = $item.find(settings.deepestDescendentSelector);
+
+            while (item.scrollHeight > $item.height()) {
+                textArr.pop();
+                $deepestDescendent.text(textArr.join(settings.separator));
+            }
+            textArr.pop();
+            $deepestDescendent.text(textArr.join(settings.separator) + settings.suffix);
+        });
+    };
+})(jQuery);
 (function($) {
         // bind a click event to the 'skip' link
         $(document).on('click', '.skip', function(event){
@@ -781,12 +808,13 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
                         html = '<div role="alert" class="alert-warning"><p>An error has occurred retreiving the videos from YouTube.</p></div>';
                     }
 
-                    $youtubePlaylistGalleryTarget.html(html);
+                    $youtubePlaylistGalleryTarget.html(html).find('.youtube-playlist-item p').elliptical();
 
                     $youtubePlaylistGalleryTarget.children('.loadMoreButton').first().on('click', function(e) {
-                        $youtubePlaylistGalleryTarget.find('.hidden').slice(0,6).removeClass('hidden');
-
-                        if ($youtubePlaylistGalleryTarget.find('.hidden').length === 0)
+                        var $hiddenItems = $youtubePlaylistGalleryTarget.find('.hidden');
+                        if ($hiddenItems.length) 
+                            var $revealed = $hiddenItems.slice(0,6).removeClass('hidden').find('p').elliptical();
+                        if ($hiddenItems.length <= 6)
                             $(e.currentTarget).hide();
                     });
                 })

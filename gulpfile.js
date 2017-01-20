@@ -36,6 +36,7 @@ gulp.task('concatHomepageJs', function() {
 
 gulp.task('concatTemplateJs', function() {
 	var files = ['js/polyfills/array.some.js',
+					'js/utility/jquery.elliptical.js',
 					'js/skip-nav.js',
 					'js/lib/bootstrap-collapse.js',
 					'js/text-resizer.js', 

@@ -37,12 +37,13 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
                         html = '<div role="alert" class="alert-warning"><p>An error has occurred retreiving the videos from YouTube.</p></div>';
                     }
 
-                    $youtubePlaylistGalleryTarget.html(html);
+                    $youtubePlaylistGalleryTarget.html(html).find('.youtube-playlist-item p').elliptical();
 
                     $youtubePlaylistGalleryTarget.children('.loadMoreButton').first().on('click', function(e) {
-                        $youtubePlaylistGalleryTarget.find('.hidden').slice(0,6).removeClass('hidden');
-
-                        if ($youtubePlaylistGalleryTarget.find('.hidden').length === 0)
+                        var $hiddenItems = $youtubePlaylistGalleryTarget.find('.hidden');
+                        if ($hiddenItems.length) 
+                            var $revealed = $hiddenItems.slice(0,6).removeClass('hidden').find('p').elliptical();
+                        if ($hiddenItems.length <= 6)
                             $(e.currentTarget).hide();
                     });
                 })
