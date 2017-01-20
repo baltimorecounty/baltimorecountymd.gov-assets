@@ -1,6 +1,6 @@
 **/.sass-cache
 **/.sass-cache/*
 **/*.map
-!./dist/css/*.css
 **/*.css
+!dist/css/*.css
 node_modules/**/*

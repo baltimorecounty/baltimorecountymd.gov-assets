@@ -24,7 +24,9 @@ gulp.task('clean-dist', function() {
 });
 
 gulp.task('concatHomepageJs', function() {
-	var files = ['js/lib/jQuery.min.js', 
+	var files = ['js/utility/namespacer.js', 
+					'js/utility/cdnFallback.js',
+					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
 					'js/lib/handlebars.js', 
 					'js/lib/picturefill.min.js', 
@@ -37,8 +39,10 @@ gulp.task('concatHomepageJs', function() {
 gulp.task('concatTemplateJs', function() {
 	var files = ['js/polyfills/array.some.js',
 					'js/utility/jquery.elliptical.js',
-					'js/skip-nav.js',
+					'js/utility/namespacer.js', 
+					'js/utility/cdnFallback.js',
 					'js/lib/bootstrap-collapse.js',
+					'js/skip-nav.js',
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
 					'js/bc-google-analytics-custom-events.js', 
@@ -81,9 +85,16 @@ gulp.task('linter', function() {
 
 gulp.task('watch', function() {
 	gulp.watch(['js/*.js', 'js/lib/*.js', 'js/page-specific/*.js'], ['compressFiles']);
-	gulp.watch(['stylesheets/*.scss', 'stylesheets/**/**/*.scss'], ['sass']);
+	gulp.watch(['stylesheets/*.scss'], ['sassAndCompressCss']);
+
+});
+
+gulp.task('linter', function() {
+	return gulp.src(['!js/lib/**/*','js/**/*.js'])
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'));
 });
 
 gulp.task('default', ['clean-dist'], function(callback) {
-	runSequence(['compressFiles', 'sassAndCompressCss'], callback)
+	return runSequence(['compressFiles', 'sassAndCompressCss'], callback);
 });
