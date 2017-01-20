@@ -42,6 +42,7 @@ gulp.task('concatTemplateJs', function() {
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/lib/bootstrap-collapse.js',
+					'js/lib/handlebars.js', 
 					'js/skip-nav.js',
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
