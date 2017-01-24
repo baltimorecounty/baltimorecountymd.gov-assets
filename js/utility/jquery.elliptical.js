@@ -4,7 +4,6 @@
     $.fn.elliptical = function(options) {
 
         var settings = $.extend({
-            deepestDescendentSelector: 'a',
             separator: ' ',
             suffix: '...'
         }, options);
@@ -18,10 +17,10 @@
 
             while (item.scrollHeight > $item.height()) {
                 textArr.pop();
-                $deepestDescendent.text(textArr.join(settings.separator));
+                $item.text(textArr.join(settings.separator));
             }
             textArr.pop();
-            $deepestDescendent.text(textArr.join(settings.separator) + settings.suffix);
+            $item.text(textArr.join(settings.separator) + settings.suffix);
         });
     };
 })(jQuery);

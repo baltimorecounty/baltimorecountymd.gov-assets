@@ -31,7 +31,6 @@ if (!Array.prototype.some) {
     $.fn.elliptical = function(options) {
 
         var settings = $.extend({
-            deepestDescendentSelector: 'a',
             separator: ' ',
             suffix: '...'
         }, options);
@@ -45,10 +44,10 @@ if (!Array.prototype.some) {
 
             while (item.scrollHeight > $item.height()) {
                 textArr.pop();
-                $deepestDescendent.text(textArr.join(settings.separator));
+                $item.text(textArr.join(settings.separator));
             }
             textArr.pop();
-            $deepestDescendent.text(textArr.join(settings.separator) + settings.suffix);
+            $item.text(textArr.join(settings.separator) + settings.suffix);
         });
     };
 })(jQuery);
@@ -3621,12 +3620,12 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
                         html = '<div role="alert" class="alert-warning"><p>An error has occurred retreiving the videos from YouTube.</p></div>';
                     }
 
-                    $youtubePlaylistGalleryTarget.html(html).find('.youtube-playlist-item p').elliptical();
+                    $youtubePlaylistGalleryTarget.html(html).find('.youtube-playlist-item p a').elliptical();
 
                     $youtubePlaylistGalleryTarget.children('.loadMoreButton').first().on('click', function(e) {
                         var $hiddenItems = $youtubePlaylistGalleryTarget.find('.hidden');
                         if ($hiddenItems.length) 
-                            var $revealed = $hiddenItems.slice(0,6).removeClass('hidden').find('p').elliptical();
+                            var $revealed = $hiddenItems.slice(0,6).removeClass('hidden').find('p a').elliptical();
                         if ($hiddenItems.length <= 6)
                             $(e.currentTarget).hide();
                     });
