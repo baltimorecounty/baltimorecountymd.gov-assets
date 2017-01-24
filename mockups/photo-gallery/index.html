@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html lang="en-us">
+<head>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="/dist/js/templateinside.min.js"></script>
+	<script src="/js/photo-gallery.js"></script>
+	
+	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+	<title>Photo Gallery</title>
+</head>
+<body>
+	<div class="bc-photo-gallery"></div>
+
+	<script id="photo-gallery-template" type="text/x-handlebars-template">
+		<svg height="0" width="0">
+			<defs>
+				<clipPath id="square">
+				<rect width="240" height="180"/>
+				</clipPath>
+			</defs>
+		</svg>
+
+		{{#each photoItem}}
+		<figure rel="gallery">
+            <a rel="gallery"  href="http://resources.dev.baltimorecountymd.gov{{url}}" class="fancybox" title="{{description}}">
+                <img src="http://resources.dev.baltimorecountymd.gov{{url}}" alt="{{description}}" />
+				<i class="fa fa-camera fa-2x photo-icon" aria-hidden="true"></i>
+            </a>
+			<figcaption>
+				<p>{{description}}</p>
+			</figcaption>
+		</figure>
+		{{/each}}
+	</script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
+    <script>
+    $(function() {
+        baltimoreCounty.photoGallery.init();
+        $('.fancybox').fancybox({
+			helpers: {
+				title: {
+					type: 'over'
+				}
+			},
+			beforeShow: function() {
+				this.title = '(Image ' + (this.index + 1) + ' of ' + this.group.length + ') ' + this.title;
+			}
+		});
+    });
+    </script>
+</body>
+</html>

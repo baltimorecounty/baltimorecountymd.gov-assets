@@ -39,7 +39,9 @@ gulp.task('concatTemplateJs', function() {
 	var files = ['js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
+					'js/utility/jquery.elliptical.js',
 					'js/lib/bootstrap-collapse.js',
+					'js/lib/handlebars.js', 
 					'js/skip-nav.js',
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
@@ -49,8 +51,7 @@ gulp.task('concatTemplateJs', function() {
 					'js/template-events.js', 
 					'js/inside-template.js',
 					'js/bc-content-filter.js', 
-					'js/accordion-menu.js',
-					'js/nifty-tables.js'];
+					'js/accordion-menu.js'];
   	return concatFiles(files, 'templateinside.js');
 });
 

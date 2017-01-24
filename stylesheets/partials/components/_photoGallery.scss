@@ -1,0 +1,50 @@
+$gallery-shadow: 1px 1px 3px #000;
+
+.bc-photo-gallery {
+    svg {
+        position: absolute;
+    }
+
+    figure {
+        box-shadow: $gallery-shadow;
+        box-sizing: content-box;
+        display: inline-block;
+        margin: 1em;
+        padding: 1em;
+        width: 240px;
+
+        a {
+            display: block;
+            overflow: hidden;
+            position: relative;
+
+            img {
+                clip-path: url(#square);
+                height: 180px;
+                width: auto;            
+            }
+
+            .photo-icon {
+                color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                text-shadow: $gallery-shadow;
+                transform: translate(-50%, -50%);
+            }
+
+        }
+
+        figcaption {
+
+            p {
+                height: 2.4em;
+                margin-bottom: 0;
+                overflow: auto;
+            }
+
+        }
+        
+   }
+
+}
