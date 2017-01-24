@@ -12,8 +12,7 @@
             return $(item).height() < item.scrollHeight;
         }).each(function(index, item) {
             var $item = $(item),
-                textArr = $item.text().split(settings.separator),
-                $deepestDescendent = $item.find(settings.deepestDescendentSelector);
+                textArr = $item.text().split(settings.separator);
 
             while (item.scrollHeight > $item.height()) {
                 textArr.pop();
