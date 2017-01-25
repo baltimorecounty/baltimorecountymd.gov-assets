@@ -193,7 +193,7 @@ Specific to the baltimorecoutymd.gov inside templates.  Initializes events for G
 ## Photo Gallery
 Creates a FancyBox photo gallery and links it to a preview image. See example setup for the HTML you'll need on the page. This should be customized in a HTML Snippet within a content inclusion.
 
-### Example Setup
+### HTML Snippet
 ```html
 <div class="bc-photo-gallery">
     <figure>
@@ -206,7 +206,19 @@ Creates a FancyBox photo gallery and links it to a preview image. See example se
         </figcaption>
     </figure>
 </div>
+<script>
+$(function() { baltimoreCounty.photoGallery.init('/path/to/photo-data.json'); });
+</script>
 ```
+
+### Content Inclusion Properties
+Add the following to the `<head>` of the content inclusion.
+
+```html
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+```
+
 
 **filename**: photo-gallery.js  
 **usage**: insidetemplate.min.js  
