@@ -210,6 +210,10 @@ Creates a FancyBox photo gallery and links it to a preview image. See example se
 
 **filename**: photo-gallery.js  
 **usage**: insidetemplate.min.js  
+### Dependencies
+* [jQuery](https://jquery.com/)
+* [FancyBox](http://fancyapps.com)
+* [FontAwesome](http://fontawesome.io)
 
 ## Skip Nav
 Specific to the baltimorecoutymd.gov website.  Fallback script for our Skip Nav Link that is displayed on the screen using CSS.
