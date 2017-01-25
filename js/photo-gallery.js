@@ -5,15 +5,15 @@ baltimoreCounty.photoGallery = (function(undefined) {
     /**
      * Makes the request to pull back the image data.
      */
-    var getPhotoData = function() {
-        return $.ajax('/mockups/photo-gallery/photos.json');
+    var getPhotoData = function(dataPath) {
+        return $.ajax(dataPath);
     },
 
     /**
      * Makes the ajax call to create the gallery, and attaches it to the 
      * click event of the gallery preview.
      */
-    init = function() {
+    init = function(dataPath) {
         var settings = {
 			helpers: {
 				title: {
@@ -25,7 +25,7 @@ baltimoreCounty.photoGallery = (function(undefined) {
 			}
         };
 
-        getPhotoData()
+        getPhotoData(dataPath)
             .done(function(data) {
                 $('.bc-photo-gallery a').on('click', function() {
                     $.fancybox.open(data, settings);
@@ -41,7 +41,3 @@ baltimoreCounty.photoGallery = (function(undefined) {
     };
 
 })();
-
-$(function() {
-    baltimoreCounty.photoGallery.init();
-});

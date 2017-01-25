@@ -51,7 +51,8 @@ gulp.task('concatTemplateJs', function() {
 					'js/template-events.js', 
 					'js/inside-template.js',
 					'js/bc-content-filter.js', 
-					'js/accordion-menu.js'];
+					'js/accordion-menu.js',
+					'js/photo-gallery.js'];
   	return concatFiles(files, 'templateinside.js');
 });
 
