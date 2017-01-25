@@ -2,10 +2,17 @@ namespacer('baltimoreCounty');
 
 baltimoreCounty.photoGallery = (function(undefined) {
 
+    /**
+     * Makes the request to pull back the image data.
+     */
     var getPhotoData = function() {
         return $.ajax('/mockups/photo-gallery/photos.json');
     },
 
+    /**
+     * Makes the ajax call to create the gallery, and attaches it to the 
+     * click event of the gallery preview.
+     */
     init = function() {
         var settings = {
 			helpers: {
