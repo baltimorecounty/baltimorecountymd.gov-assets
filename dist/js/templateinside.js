@@ -107,7 +107,6 @@ baltimoreCounty.utility.cdnFallback = (function() {
                 textArr.pop();
                 $item.text(textArr.join(settings.separator) + settings.suffix);  
             }
-
         });
     };
 })(jQuery);

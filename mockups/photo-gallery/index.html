@@ -14,46 +14,21 @@
 	<title>Photo Gallery</title>
 </head>
 <body>
-	<div class="bc-photo-gallery"></div>
 
-	<script id="photo-gallery-template" type="text/x-handlebars-template">
-		<svg height="0" width="0">
-			<defs>
-				<clipPath id="square">
-				<rect width="240" height="180"/>
-				</clipPath>
-			</defs>
-		</svg>
-
-		{{#each photoItem}}
-		<figure rel="gallery">
-            <a rel="gallery"  href="http://resources.dev.baltimorecountymd.gov{{url}}" class="fancybox" title="{{description}}">
-                <img src="http://resources.dev.baltimorecountymd.gov{{url}}" alt="{{description}}" />
+	<div class="bc-photo-gallery">
+		<figure>
+            <a href="javascript:;" class="fancybox">
+                <img src="http://resources.dev.baltimorecountymd.gov/sebin/p/o/carousel-made.jpg" />
 				<i class="fa fa-camera fa-2x photo-icon" aria-hidden="true"></i>
             </a>
 			<figcaption>
-				<p>{{description}}</p>
+				<p>A gallery description.</p>
 			</figcaption>
 		</figure>
-		{{/each}}
+	</div>
 	</script>	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>	
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
-    <script>
-    $(function() {
-        baltimoreCounty.photoGallery.init();
-        $('.fancybox').fancybox({
-			helpers: {
-				title: {
-					type: 'over'
-				}
-			},
-			beforeShow: function() {
-				this.title = '(Image ' + (this.index + 1) + ' of ' + this.group.length + ') ' + this.title;
-			}
-		});
-    });
-    </script>
 </body>
 </html>
