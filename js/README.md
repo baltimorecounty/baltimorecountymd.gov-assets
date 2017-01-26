@@ -212,7 +212,7 @@ $(function() { baltimoreCounty.photoGallery.init('/path/to/photo-data.json'); })
 ```
 
 ### Content Inclusion Properties
-Add the following to the `<head>` of the content inclusion.
+Add the following to the `<head>` of the **page**.
 
 ```html
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" />
