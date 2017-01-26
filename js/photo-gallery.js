@@ -17,7 +17,7 @@ baltimoreCounty.photoGallery = (function(undefined) {
         var settings = {
 			helpers: {
 				title: {
-					type: 'over'
+					type: 'float'
 				}
 			},
 			beforeShow: function() {
