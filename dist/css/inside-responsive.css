@@ -1444,33 +1444,22 @@ tbody.collapse.in {
 .fancybox-title-over-wrap {
   width: 100%; }
 
-/*
-.fancybox-prev span, .fancybox-next span {
-        background-image:url(https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/fancybox_sprite@2x.png) !important;
-        background-size: 44px 152px
-}
+.fancybox-next i {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  font-size: 3em;
+  color: white;
+  text-shadow: 1px 1px 3px #000; }
 
-.fancybox-next span {
-    right: 10px;
-    background-position: 0 -144px;
-}
+.fancybox-prev i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  font-size: 3em;
+  color: white;
+  text-shadow: 1px 1px 3px #000; }
 
-.fancybox-prev span {
-    right: 10px;
-    background-position: 0 -72px;
-}
-
-
-FA arrows
-
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    font-size: 3em;
-    color: white;
-    text-shadow: 1px 1px 3px #000;
-
-*/
 #maincontainer .bc-photo-gallery figure {
   background-color: #ebebeb;
   border-radius: 10px;
