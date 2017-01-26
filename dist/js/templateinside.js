@@ -3603,6 +3603,11 @@ baltimoreCounty.photoGallery = (function(undefined) {
 			beforeShow: function() {
 				this.title = '(Image ' + (this.index + 1) + ' of ' + this.group.length + ') ' + this.title;
 			}
+            /*,
+            tpl: {
+                next: '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>',
+                prev: '<a title="Prev" class="fancybox-nav fancybox-prev" href="javascript:;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>'
+            }*/
         };
 
         getPhotoData(dataPath)
