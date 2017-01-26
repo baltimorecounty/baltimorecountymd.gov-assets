@@ -70,6 +70,12 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 gulp.task('sassAndCompressCss', function () {
 	return gulp.src('stylesheets/*.scss')
 		.pipe(sass().on('error', sass.logError))
+		.pipe(cssnano({
+			autoprefixer: false
+		}))
+		.pipe(rename({
+			suffix: '.min'
+		}))
 		.pipe(gulp.dest('dist/css'));
 });
 
