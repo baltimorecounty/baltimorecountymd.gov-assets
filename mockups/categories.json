@@ -1,0 +1,153 @@
+[{
+	"name": "Trash and Recycling",
+	"types": [{
+		"name": "Trash not collected"
+	}, {
+		"name": "Recycling not collected"
+	}, {
+		"name": "Yard waste not collected"
+	}, {
+		"name": "Request to start new collection"
+	}, {
+		"name": "Can or lid lost or damaged"
+	}, {
+		"name": "Property damage during collection"
+	}, {
+		"name": "Other Trash and Recycling Problem"
+	}]
+}, {
+	"name": "Roads and Sidewalks",
+	"types": [{
+			"name": "Adopt-a-Road Inquiry"
+		},
+		{
+			"name": "Other Road or Sidewalk Complaint"
+		},
+		{
+			"name": "Icy conditions"
+		},
+		{
+			"name": "Tall grass or weeds near roadway"
+		},
+		{
+			"name": "Paving or re-paving needed"
+		},
+		{
+			"name": "Pothole"
+		},
+		{
+			"name": "Trash on roadside"
+		},
+		{
+			"name": "Flooded road"
+		},
+		{
+			"name": "Sidewalk or curb repair needed"
+		},
+		{
+			"name": "Trash in roadside stream"
+		},
+		{
+			"name": "Street cleaning needed"
+		},
+		{
+			"name": "Overgrown trees or bushes near roadway"
+		}
+	]
+}, {
+	"name": "Neighborhood and Neighbors",
+	"types": [
+
+		{
+			"name": "Tall grass and weeds in yard"
+		},
+		{
+			"name": "Junk, trash, or debris in yard or public space"
+		},
+		{
+			"name": "Rats "
+		},
+		{
+			"name": "Vacant property"
+		},
+		{
+			"name": "Problem with temporary dumpster"
+		},
+		{
+			"name": "Excessive animal feces in neighbor's yard"
+		},
+		{
+			"name": "Home needs exterior repair"
+		}
+
+
+	]
+}, {
+	"name": "Landlord Complaints",
+	"types": [{
+			"name": "Poor living conditions in a rental home"
+		},
+		{
+			"name": "Unregistered rental property		"
+		}
+	]
+}, {
+	"name": "Pets and Animals",
+	"types": [{
+			"name": "pets",
+			"types": [{
+					"name": "Pet out of yard or roaming"
+				},
+				{
+					"name": "Bite from a pet"
+				},
+				{
+					"name": "Excessive barking"
+				},
+				{
+					"name": "Animal cruelty"
+				},
+				{
+					"name": "Dangerous dog"
+				},
+				{
+					"name": "Nuisance animal"
+				},
+				{
+					"name": "Other Pet Complaint"
+				},
+				{
+					"name": "Stray pet found and needs pickup"
+				},
+				{
+					"name": "Pet waste was left in my yard"
+				}
+			]
+		},
+		{
+			"name": "Wild Animals/Livestock",
+			"types": [{
+					"name": "Wild animal caught in a trap"
+				},
+				{
+					"name": "Dead animal pickup"
+				},
+				{
+					"name": "Animals in vacant property"
+				},
+				{
+					"name": "Dangerous wild animal"
+				},
+				{
+					"name": "Wild animal shows signs of rabies"
+				},
+				{
+					"name": "Wild animal or livestock injured"
+				},
+				{
+					"name": "General complaint about wild animal/livestock"
+				}
+			]
+		}
+	]
+}]
