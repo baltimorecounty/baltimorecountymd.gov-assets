@@ -7,6 +7,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
         $categories = $form.find('#categories');
         
         init = function(jsonDocumentUrl) {
+            $form.on('submit', formSubmissionHandler);
+
             $.ajax(jsonDocumentUrl).done(function(data) {
                 selectOptionData = data;
 
@@ -41,19 +43,24 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
         selectChangeHandler = function(e) {
             var $select = $(e.target),
                 selectedValue = $select.val(),
-                existingSelectCount;
+                existingSelectCount,
+                $trackingField = $('#report-category')
 
             $select.nextAll().remove();
 
-            if (selectedValue === '-1') 
+            if (selectedValue === '-1') {
+                $trackingField.val('');
                 return;
-            
+            }            
+
             existingSelectCount = $select.siblings('select').length + 1;
 
             var jsonFragment = getJsonFragment(e.data.fragment, selectedValue);
 
             if (jsonFragment)
                 createSelectAndLoadOptions(jsonFragment, $select.parent(), existingSelectCount + 1)
+            else 
+                $trackingField.val(selectedValue);
         },
 
         getJsonFragment = function(data, value) {
@@ -70,6 +77,41 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
                 }
             });
             return match;
+        },
+
+        formSubmissionHandler = function(e) {
+            var fieldIds = ['report-category','description','address','map-latitude','map-longitude','firstName','lastName','email','phone'];
+            
+            console.log(validate(fieldIds));
+
+            e.preventDefault();
+        },
+
+        addressSearchHandler = function(e) {
+            var $target = $(e.target);
+        },
+
+        validate = function(fieldIds) {
+            var errorFieldIds = [];
+            
+            $.each(fieldIds, function(idx, item) {
+                var $field = $('#' + item);
+
+                if (!$field.val()) {
+                    errorFieldIds.push(item);
+                    $field.addClass('error');
+                } else {
+                    $field.removeClass('error')
+                }
+            });
+
+            if (errorFieldIds.length) {
+                console.log(errorFieldIds);
+                return false;
+            } else {
+                console.log('success');
+                return true;
+            }
         };
 
     return {

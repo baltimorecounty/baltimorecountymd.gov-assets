@@ -31,6 +31,7 @@
 
                         <div id="categories">
                         </div>
+                        <input type="hidden" id="report-category" value="" />
                         
                         <div>
                             <label for="description">Description</label>
@@ -42,13 +43,13 @@
                         <h2>Service Request Location</h2>
 
                         <div>
-                            <input type="text" id="address" />
+                            <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" />
                             <button id="addressSearch">Search</button>
                         </div>
 
-                        <div id="map">
-                            [map]
-                        </div>
+                        <div id="map" class="google-map"></div>
+                        <input type="hidden" id="map-latitude" value="" />
+                        <input type="hidden" id="map-longitude" value="" />
                     </div>
 
                     <div>
@@ -75,12 +76,45 @@
                         </div>
                     </div>
 
-                    <input type="submit" value="File Your Report" />
+                    <button type="submit">File Your Report</button>
 
                 </form>
             </div>
         </div>
         <script src="/dist/js/templateinside.min.js"></script>
         <script src="/js/page-specific/citysourced-reporter.js"></script>
+        <script>
+            var map, marker;
+
+            function initMap() {
+                // Create a map object and specify the DOM element for display.
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 39.5025, lng: -76.6090 },
+                    scrollwheel: false,
+                    zoom: 10,
+                    mapTypeId: 'roadmap',
+                    mapTypeControl: false,
+                    streetViewControl: false
+                });
+
+                google.maps.event.addListener(map, 'click', function( event ){
+                    var latitude = event.latLng.lat(),
+                        longitude = event.latLng.lng();
+                    
+                    if (marker)
+                        marker.setMap(null);
+
+                    marker = new google.maps.Marker({
+                        map: map,
+                        position: { lat: latitude, lng: longitude },
+                        animation:google.maps.Animation.DROP
+                    });
+
+                    document.getElementById('map-latitude').value = marker.position.lat();
+                    document.getElementById('map-longitude').value = marker.position.lng();                    
+                });
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&callback=initMap" async defer></script>
     </body>
 </html>

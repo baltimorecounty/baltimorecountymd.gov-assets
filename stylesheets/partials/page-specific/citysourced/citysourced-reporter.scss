@@ -59,6 +59,14 @@
         }
     }    
 
+    .google-map {
+        height: 350px;
+        width: 500px;
+    }
+
+    .error {
+        box-shadow: 0 0 3px $red;
+    }
 }
 
 @media (max-width: 500px) {
