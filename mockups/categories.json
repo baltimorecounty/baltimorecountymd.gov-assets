@@ -65,7 +65,7 @@
 			"name": "Junk, trash, or debris in yard or public space"
 		},
 		{
-			"name": "Rats "
+			"name": "Rats"
 		},
 		{
 			"name": "Vacant property"
@@ -88,13 +88,13 @@
 			"name": "Poor living conditions in a rental home"
 		},
 		{
-			"name": "Unregistered rental property		"
+			"name": "Unregistered rental property"
 		}
 	]
 }, {
 	"name": "Pets and Animals",
 	"types": [{
-			"name": "pets",
+			"name": "Pets",
 			"types": [{
 					"name": "Pet out of yard or roaming"
 				},

@@ -1,65 +1,8 @@
 @import "stylesheets/modules/all";
 
 .bc-citysourced-reporter {
-/*
+
     ol {
-        margin: 0; 
-        padding: 0;
-
-        li {
-            background-color: $lightest-gray;
-            color: $dark-gray;
-            display: block;
-            float: left;
-            margin: 0 10px;
-            padding: 0 15px;
-            height: 50px;
-            line-height: 50px;
-            position: relative;
-
-            &:after, &:before {
-                content: "";
-                height: 0;
-                position: absolute;                
-                width: 0;
-
-            }
-
-            &:after {
-                border-top: 25px solid transparent;
-                border-bottom: 25px solid transparent;  
-                border-left: 15px solid $lightest-gray;
-                right: -15px;
-            }
-
-            &:before {
-                border-top: 25px solid $lightest-gray;
-                border-bottom: 25px solid $lightest-gray;  
-                border-left: 15px solid transparent;
-                left: -15px;
-            }
-        }
-
-        li:first-child {
-            margin-left: 0;
-
-            &:before {
-                border: none;
-            }
-        }
-
-        li:last-child {
-            float: none;
-            margin-right: 0;
-            overflow: auto;
-
-            &:after {
-                border: none;
-            }
-        }
-    }*/
-
-   ol {
         display: flex;
         list-style-position: inside;
         margin: 0; 
@@ -116,4 +59,30 @@
         }
     }    
 
+}
+
+@media (max-width: 500px) {
+    .bc-citysourced-reporter {
+        ol {
+            display: block; 
+
+            li {
+                display: list-item;
+                float: none;
+                height: auto;
+                line-height: 1.4em;
+                margin: 0 0 2px 0;
+                padding: .5em;
+                width: 100%;
+
+                &:before, &:after {
+                    display: none;
+                }
+            }
+
+            li:last-child {
+                display: none;
+            }
+        }
+    }
 }

@@ -8,19 +8,78 @@
 
         <link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
         <link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
+
+        <!--[if lte IE 9]>
+            <link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
+        <![endif]-->
     </head>
     <body>
-        
-        <div class="bc-citysourced-reporter">
+        <div id="#maincontent">
+            <div class="bc-citysourced-reporter">
 
-            <ol class="bc-citysourced-reporter-steps">
-                <li>Service Request Description</li>
-                <li>Service Request Location</li>
-                <li>Contact Information</li>
-                <li> </li>
-            </ol>
+                <ol class="bc-citysourced-reporter-steps">
+                    <li>Service Request Description</li>
+                    <li>Service Request Location</li>
+                    <li>Contact Information</li>
+                    <li> </li>
+                </ol>
+
+                <form id="citysourced-reporter-form">
+
+                    <div>
+                        <h2>Service Request Description</h2>
+
+                        <div id="categories">
+                        </div>
+                        
+                        <div>
+                            <label for="description">Description</label>
+                            <textarea id="description"></textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2>Service Request Location</h2>
+
+                        <div>
+                            <input type="text" id="address" />
+                            <button id="addressSearch">Search</button>
+                        </div>
+
+                        <div id="map">
+                            [map]
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2>Your Contact Information</h2>
+
+                        <div>
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" value="" />
+                        </div>
+
+                        <div>
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" value="" />
+                        </div>
+
+                        <div>
+                            <label for="email">Email Address</label>
+                            <input type="text" id="email" name="email" value="" />
+                        </div>
+
+                        <div>
+                            <label for="phone">Phone</label>
+                            <input type="text" id="phone" name="phone" value="" />
+                        </div>
+                    </div>
+
+                    <input type="submit" value="File Your Report" />
+
+                </form>
+            </div>
         </div>
-
         <script src="/dist/js/templateinside.min.js"></script>
         <script src="/js/page-specific/citysourced-reporter.js"></script>
     </body>
