@@ -6,19 +6,22 @@
 
         ol {
             display: flex;
-            list-style-position: inside;
-            margin: 0; 
+            list-style-type: none;
             padding: 0;
 
             li {
                 background-color: $lightest-gray;
                 color: $dark-gray;
                 flex: 1 1 auto;
+                font-family: $headline-font;
                 margin: 0 10px;
-                padding: 0 15px;
-                height: 50px;
-                line-height: 50px;
+                padding: 15px;
+                height: 40px;
+                line-height: 20px;
                 position: relative;
+                -moz-box-sizing: content-box;
+                -webkit-box-sizing: content-box;
+                box-sizing: content-box;
 
                 &:after, &:before {
                     content: "";
@@ -29,17 +32,19 @@
                 }
 
                 &:after {
-                    border-top: 25px solid transparent;
-                    border-bottom: 25px solid transparent;  
+                    border-top: 35px solid transparent;
+                    border-bottom: 35px solid transparent;  
                     border-left: 15px solid $lightest-gray;
                     right: -15px;
+                    top: 0;
                 }
 
                 &:before {
-                    border-top: 25px solid $lightest-gray;
-                    border-bottom: 25px solid $lightest-gray;  
+                    border-top: 35px solid $lightest-gray;
+                    border-bottom: 35px solid $lightest-gray;  
                     border-left: 15px solid transparent;
                     left: -15px;
+                    top: 0;
                 }
             }
 
@@ -57,6 +62,19 @@
 
                 &:after {
                     border: none;
+                }
+            }
+
+            li.highlight {
+                background-color: $gold;
+
+                &:after {
+                    border-left-color: $gold;
+                }
+
+                &:before {
+                    border-top-color: $gold;
+                    border-bottom-color: $gold;  
                 }
             }
         }    
@@ -90,12 +108,16 @@
                     border: 1px solid $img-border-gray;
                 }              
 
-                label + select, label + textarea, label + input, input + input {
+                div > select:first-child, label + select, label + textarea, label + input, input + input {
                     margin-top: .25em;
                 }
 
                 &.panel {
                     display: none;
+                }
+
+                &.panel:first-child {
+                    display: block;
                 }
 
             }
@@ -120,8 +142,13 @@
                 }
             }
 
-        .error {
-                box-shadow: 0 0 3px $red;
+            .error {
+                label {
+                    color: $red;
+                }
+                input, textarea, select {
+                    box-shadow: 0 0 3px $red;
+                }
             }
         }
 

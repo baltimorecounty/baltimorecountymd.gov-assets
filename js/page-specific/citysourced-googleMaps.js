@@ -68,11 +68,14 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
         clearMarker();
 
         window.map.panTo(center);
-
+                        
+        var center = window.map.getCenter();
+        google.maps.event.trigger(window.map, 'resize');
+        map.setCenter(center);
+        
         window.map.setZoom(16);
 
         createMarker(latitude, longitude);
-
         trackLatLng(latitude, longitude);
     },
 

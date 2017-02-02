@@ -24,19 +24,13 @@
 </head>
 
 <body>
-
     <div class="bc-citysourced-reporter">
-        <!--<ol class="bc-citysourced-reporter-steps">
-                <li>Service Request Description</li>
-                <li>Service Request Location</li>
-                <li>Contact Information</li>
-                <li> </li>
-            </ol>-->
         <p>Using the form below, please describe your service request, mark its location, and then leave your contact information in case we need to follow up with you.
         <form id="citysourced-reporter-form">
             <fieldset>
                 <legend>Service Request Category</legend>
                 <p>Please use the categories below to describe your service request.</p>
+                <label for="categories[1]">Category</label>
                 <div id="category-selection"></div>
                 <input type="hidden" id="report-category" value="" />
                 <div class="form-control">
@@ -76,7 +70,7 @@
                     <input type="text" id="phone" name="phone" value="" />
                 </div>
             </fieldset>
-            <input type="submit" class="seButton" value="File Your Report" />
+            <input type="button" class="seButton" id="fileReportButton" value="File Your Report" />
         </form>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle" async defer></script>

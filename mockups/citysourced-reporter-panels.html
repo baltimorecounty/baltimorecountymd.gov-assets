@@ -30,19 +30,19 @@
 </head>
 
 <body id="mainContent">
-
-    <div class="bc-citysourced-reporter">
-        <!--<ol class="bc-citysourced-reporter-steps">
-                <li>Service Request Description</li>
-                <li>Service Request Location</li>
-                <li>Contact Information</li>
+        <div class="bc-citysourced-reporter">
+        <ol class="bc-citysourced-reporter-steps">
+                <li class="highlight">Service Request<br/>Category</li>
+                <li>Service Request<br/>Location</li>
+                <li>Your Contact<br/>Information</li>
                 <li> </li>
-            </ol>-->
+            </ol>
         <p>Using the form below, please describe your service request, mark its location, and then leave your contact information in case we need to follow up with you.</p>
         <form id="citysourced-reporter-form">
             <fieldset class="panel">
                 <legend>Service Request Category</legend>
                 <p>Please use the categories below to describe your service request.</p>
+                <label for="categories[1]">Category</label>
                 <div id="category-selection"></div>
                 <input type="hidden" id="report-category" value="" />
                 <div class="form-control">
@@ -83,10 +83,10 @@
                 </div>
             </fieldset>
 
-            <input type="button" class="seButton" id="prevButton" value="Previous" />
+            <input type="button" class="seButton hidden" id="prevButton" value="Previous" />
             <input type="button" class="seButton pull-right" id="nextButton" value="Next" />
-            <input type="submit" class="seButton pull-right" id="fileReportButton" value="File Your Report" />
-        </form>
+            <input type="button" class="seButton pull-right hidden" id="fileReportButton" value="File Your Report" />
+       </form>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle" async defer></script>
 </body>
