@@ -61,8 +61,9 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
      * with a selected address, this will center the map on that location and drop a pin.
      */
     autocompletePlaceChangedHandler = function() {
-        var latitude = autocomplete.getPlace().geometry.location.lat(),
-            longitude = autocomplete.getPlace().geometry.location.lng(),
+        var place = autocomplete.getPlace(),
+            latitude = place.geometry.location.lat(),
+            longitude = place.geometry.location.lng(),
             center = new google.maps.LatLng(latitude, longitude);
 
         clearMarker();
@@ -92,11 +93,11 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
     initGoogle = function() {
         var mapSettings = {
                 center: {
-                    lat: 39.5025,
-                    lng: -76.6090
+                    lat: 39.4003288,
+                    lng: -76.60652470000002
                 },
                 scrollwheel: false,
-                zoom: 10,
+                zoom: 14,
                 mapTypeId: 'roadmap',
                 mapTypeControl: false,
                 streetViewControl: false
