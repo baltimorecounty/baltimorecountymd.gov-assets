@@ -25,6 +25,7 @@ gulp.task('clean-dist', function() {
 gulp.task('concatHomepageJs', function() {
 	var files = ['js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
+					'js/utility/jsonTools.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
 					'js/lib/handlebars.js', 
@@ -39,6 +40,7 @@ gulp.task('concatTemplateJs', function() {
 	var files = ['js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
+					'js/utility/jsonTools.js',
 					'js/lib/bootstrap-collapse.js',
 					'js/skip-nav.js',
 					'js/text-resizer.js', 

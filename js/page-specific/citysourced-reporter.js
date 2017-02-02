@@ -1,12 +1,13 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
+baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undefined) {
     
     var selectOptionData,
-        $form = $('#citysourced-reporter-form'),
-        $categories = $form.find('#categories');
-        
+
         init = function(jsonDocumentUrl) {
+            var $form = $('#citysourced-reporter-form'),
+                $categories = $form.find('#category-selection');
+
             $form.on('submit', formSubmissionHandler);
 
             $.ajax(jsonDocumentUrl).done(function(data) {
@@ -24,7 +25,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
 
             var $option = $('<option>', {
                 value: -1,
-                text: '--- Select a request type ---',
+                text: '--- Select a request category ---',
                 selected: 'selected'
             });
             $select.append($option);
@@ -44,7 +45,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
             var $select = $(e.target),
                 selectedValue = $select.val(),
                 existingSelectCount,
-                $trackingField = $('#report-category')
+                $trackingField = $('#report-category');
 
             $select.nextAll().remove();
 
@@ -55,28 +56,12 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
 
             existingSelectCount = $select.siblings('select').length + 1;
 
-            var jsonFragment = getJsonFragment(e.data.fragment, selectedValue);
+            var jsonSubtree = jsonTools.getSubtree(e.data.fragment, 'name', 'types', selectedValue);
 
-            if (jsonFragment)
-                createSelectAndLoadOptions(jsonFragment, $select.parent(), existingSelectCount + 1)
+            if (jsonSubtree)
+                createSelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
             else 
                 $trackingField.val(selectedValue);
-        },
-
-        getJsonFragment = function(data, value) {
-            var match;
-
-            $.each(data, function(idx, item) {
-                if (item.types) {
-                    if (item.name === value) {
-                        match = item.types;   
-                        return false;                    
-                    } else {
-                        match = getJsonFragment(item.types, value);
-                    }
-                }
-            });
-            return match;
         },
 
         formSubmissionHandler = function(e) {
@@ -93,7 +78,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
 
         validate = function(fieldIds) {
             var errorFieldIds = [];
-            
+
             $.each(fieldIds, function(idx, item) {
                 var $field = $('#' + item);
 
@@ -101,7 +86,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
                     errorFieldIds.push(item);
                     $field.addClass('error');
                 } else {
-                    $field.removeClass('error')
+                    $field.removeClass('error');
                 }
             });
 
@@ -118,8 +103,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, undefined) {
         init: init
     };
 
-})(jQuery);
+})(jQuery, baltimoreCounty.utility.jsonTools);
 
 $(function() {
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/mockups/categories.json');
+    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/j/categories.json');
 });

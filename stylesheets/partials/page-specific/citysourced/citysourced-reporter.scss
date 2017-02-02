@@ -1,72 +1,134 @@
 @import "stylesheets/modules/all";
 
-.bc-citysourced-reporter {
+#mainContent {
 
-    ol {
-        display: flex;
-        list-style-position: inside;
-        margin: 0; 
-        padding: 0;
+    .bc-citysourced-reporter {
 
-        li {
-            background-color: $lightest-gray;
-            color: $dark-gray;
-            flex: 1 1 auto;
-            margin: 0 10px;
-            padding: 0 15px;
-            height: 50px;
-            line-height: 50px;
+        ol {
+            display: flex;
+            list-style-position: inside;
+            margin: 0; 
+            padding: 0;
+
+            li {
+                background-color: $lightest-gray;
+                color: $dark-gray;
+                flex: 1 1 auto;
+                margin: 0 10px;
+                padding: 0 15px;
+                height: 50px;
+                line-height: 50px;
+                position: relative;
+
+                &:after, &:before {
+                    content: "";
+                    height: 0;
+                    position: absolute;                
+                    width: 0;
+
+                }
+
+                &:after {
+                    border-top: 25px solid transparent;
+                    border-bottom: 25px solid transparent;  
+                    border-left: 15px solid $lightest-gray;
+                    right: -15px;
+                }
+
+                &:before {
+                    border-top: 25px solid $lightest-gray;
+                    border-bottom: 25px solid $lightest-gray;  
+                    border-left: 15px solid transparent;
+                    left: -15px;
+                }
+            }
+
+            li:first-child {
+                margin-left: 0;
+
+                &:before {
+                    border: none;
+                }
+            }
+
+            li:last-child {
+                list-style: none;
+                margin-right: 0;
+
+                &:after {
+                    border: none;
+                }
+            }
+        }    
+
+        h2:first-child {
+            margin-top: 1em;
+        }
+
+        .google-map {
+            border: 1px solid $img-border-gray;
+            margin-left: -10px;
+            height: 350px;
+            width: 100%;
+        }
+
+        form {
             position: relative;
 
-            &:after, &:before {
-                content: "";
-                height: 0;
-                position: absolute;                
-                width: 0;
+            fieldset {
+
+                label {
+                    font-weight: 700;
+                }
+
+                select, input, textarea, label, p {
+                    display: block;
+                    margin: 1em 0 0 -10px;
+                }              
+
+                select, input, textarea {
+                    border: 1px solid $img-border-gray;
+                }              
+
+                label + select, label + textarea, label + input, input + input {
+                    margin-top: .25em;
+                }
+
+                input[type=button] {
+                    border: 1px solid #666; /* \m/  */
+                }
+
+                &.panel {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
 
             }
 
-            &:after {
-                border-top: 25px solid transparent;
-                border-bottom: 25px solid transparent;  
-                border-left: 15px solid $lightest-gray;
-                right: -15px;
+            .form-control {
+                margin: .5em 0;
+
+                textarea {
+                    height: 5em;
+                }
+
             }
 
-            &:before {
-                border-top: 25px solid $lightest-gray;
-                border-bottom: 25px solid $lightest-gray;  
-                border-left: 15px solid transparent;
-                left: -15px;
+            input, select, textarea {
+                padding: .25em;
+                width: 100%;
+            }
+
+        .error {
+                box-shadow: 0 0 3px $red;
             }
         }
 
-        li:first-child {
-            margin-left: 0;
 
-            &:before {
-                border: none;
-            }
-        }
 
-        li:last-child {
-            list-style: none;
-            margin-right: 0;
-
-            &:after {
-                border: none;
-            }
-        }
-    }    
-
-    .google-map {
-        height: 350px;
-        width: 500px;
     }
 
-    .error {
-        box-shadow: 0 0 3px $red;
-    }
 }
 
 @media (max-width: 500px) {
