@@ -70,7 +70,6 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
         window.map.panTo(center);                            
         window.map.setZoom(16);
 
-        var center = window.map.getCenter();
         google.maps.event.trigger(window.map, 'resize');
         map.setCenter(center);
 
