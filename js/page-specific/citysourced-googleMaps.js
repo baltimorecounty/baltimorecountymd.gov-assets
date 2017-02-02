@@ -2,13 +2,13 @@ namespacer('baltimoreCounty.pageSpecific');
 
 baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
 
-    var map, marker, autocomplete,
+    var marker, autocomplete,
 
     /**
      * Creates the map, and renders it in the mapElementId element.
      */
     createMap = function(mapElementId, settings) {
-        map = new google.maps.Map(document.getElementById(mapElementId), settings);
+        window.map = new google.maps.Map(document.getElementById(mapElementId), settings);        
     },
 
     /**
@@ -23,7 +23,7 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
      */
     createMarker = function(latitude, longitude) {
         marker = new google.maps.Marker({
-            map: map,
+            map: window.map,
             position: {
                 lat: latitude,
                 lng: longitude
@@ -67,9 +67,9 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
 
         clearMarker();
 
-        map.panTo(center);
+        window.map.panTo(center);
 
-        map.setZoom(16);
+        window.map.setZoom(16);
 
         createMarker(latitude, longitude);
 

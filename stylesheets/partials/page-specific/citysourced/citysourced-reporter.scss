@@ -94,14 +94,8 @@
                     margin-top: .25em;
                 }
 
-                input[type=button] {
-                    border: 1px solid #666; /* \m/  */
-                }
-
                 &.panel {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
+                    display: none;
                 }
 
             }
@@ -118,6 +112,12 @@
             input, select, textarea {
                 padding: .25em;
                 width: 100%;
+
+                &[type=button], &[type=submit] {
+                    border: 1px solid #666; /* \m/  */
+                    padding: 5px 10px;
+                    width: auto;
+                }
             }
 
         .error {

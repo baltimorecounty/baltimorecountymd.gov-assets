@@ -9,6 +9,12 @@
     <script src="/js/page-specific/citysourced-reporter.js"></script>
     <script src="/js/page-specific/citysourced-googleMaps.js"></script>
 
+    <script>
+    $(function() {
+        baltimoreCounty.pageSpecific.citySourcedReporter.init('/mockups/categories.json');
+    });
+    </script>
+
     <link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
     <link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
     
@@ -23,7 +29,7 @@
     </style>
 </head>
 
-<body>
+<body id="mainContent">
 
     <div class="bc-citysourced-reporter">
         <!--<ol class="bc-citysourced-reporter-steps">
@@ -32,7 +38,7 @@
                 <li>Contact Information</li>
                 <li> </li>
             </ol>-->
-        <p>Using the form below, please describe your service request, mark its location, and then leave your contact information in case we need to follow up with you.
+        <p>Using the form below, please describe your service request, mark its location, and then leave your contact information in case we need to follow up with you.</p>
         <form id="citysourced-reporter-form">
             <fieldset class="panel">
                 <legend>Service Request Category</legend>
@@ -76,7 +82,10 @@
                     <input type="text" id="phone" name="phone" value="" />
                 </div>
             </fieldset>
-            <input type="submit" class="seButton" value="File Your Report" />
+
+            <input type="button" class="seButton" id="prevButton" value="Previous" />
+            <input type="button" class="seButton pull-right" id="nextButton" value="Next" />
+            <input type="submit" class="seButton pull-right" id="fileReportButton" value="File Your Report" />
         </form>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle" async defer></script>
