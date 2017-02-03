@@ -2,7 +2,10 @@ namespacer('baltimoreCounty.pageSpecific');
 
 baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
 
-    var marker, autocomplete,
+    var marker, 
+        autocomplete,
+        apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
+        targetCounty = 'Baltimore County',
 
     /**
      * Creates the map, and renders it in the mapElementId element.
@@ -52,7 +55,7 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
         clearMarker();
 
         createMarker(latitude, longitude);
-
+        reverseGeocode(latitude, longitude);
         trackLatLng(latitude, longitude);
     },
 
@@ -76,6 +79,60 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
 
         createMarker(latitude, longitude);
         trackLatLng(latitude, longitude);
+    },
+
+    /**
+     * Looks up the street address from the latitude and longitude.
+     */
+    reverseGeocode = function(latitude, longitude) {
+        var $target = $('#address');
+
+        $.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey).done(function(data) {
+            var address = getAddress(data.results);
+
+            if (address) {
+                $target.parent().removeClass('error');
+                $target.val(address);
+            } else {
+                $target.parent().addClass('error');
+                $target.val('');
+            }
+
+        });
+    },
+
+    /**
+     * Returns the friendly address string from the reverse geocoding.
+     */
+    getAddress = function(reverseGeocodeData) {
+        var streetAddressArr = $.grep(reverseGeocodeData, filterStreetAddressResults),
+            countyArr = $.grep(reverseGeocodeData, filterCountyResults);        
+        return isBaltimoreCounty(countyArr) ? streetAddressArr && streetAddressArr.length ? streetAddressArr[0].formatted_address : '' : '';
+    },
+
+    isBaltimoreCounty = function(countyArr) {
+        var county = '';
+        if (countyArr && countyArr.length) 
+            county = countyArr[0].formatted_address;
+        return county.indexOf(targetCounty) !== -1;
+    },
+
+    filterStreetAddressResults = function(item, index) {
+        return filterResults(item, index, 'street_address');
+    },
+
+    filterCountyResults = function(item, index) {
+        return filterResults(item, index, 'administrative_area_level_2');
+    },
+
+    filterResults = function(item, index, query) {
+        var matchArr;
+        if (item.types) {
+            matchArr = $.grep(item.types, function(item, index) {
+                return item === query;
+            });
+        }
+        return matchArr.length ? matchArr : false;
     },
 
     /**

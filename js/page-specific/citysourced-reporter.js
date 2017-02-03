@@ -3,6 +3,7 @@ namespacer('baltimoreCounty.pageSpecific');
 baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undefined) {
     
     var selectOptionData,
+        fieldIds = ['categories[1]', 'categories[2]', 'categories[3]', 'description','address','map-latitude','map-longitude','firstName','lastName','email','phone'],
 
         init = function(jsonDocumentUrl) {
             var $form = $('#citysourced-reporter-form'),
@@ -29,22 +30,27 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
             handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
             handlerData.$prevButton.on('click', handlerData, prevButtonClickHandler);
             handlerData.$fileReportButton.on('click', handlerData, fileReportButtonClickHandler);
+
+            $form.find('input, textarea').on('blur keyup', function(event) {
+                validate(this);
+            });
         },
 
         /**
          * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
          */
         fileReportButtonClickHandler = function(event) {
-            var fieldIds = ['report-category','description','address','map-latitude','map-longitude','firstName','lastName','email','phone'];            
-            if (validate(fieldIds)) {
-                alert('Woohoo.');
-            }
+            if (!validate(fieldIds)) 
+                alert('Thank you for successfully testing this form.');
         },
 
         /**
          * Click handler for the 'next' button, which flips to the next panel.
          */
         nextButtonClickHandler = function(event) {
+            if (validate(fieldIds))
+                return;
+
             var $visiblePanel = event.data.$panels.filter(':visible'),
                 $nextPanel = $visiblePanel.next('.panel').first();
 
@@ -79,6 +85,9 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
          * Click handler for the 'previous' button, which flips to the previous panel.
          */
         prevButtonClickHandler = function(event) {
+            if (validate(fieldIds))
+                return;
+
             var $visiblePanel = event.data.$panels.filter(':visible'),
                 $nextPanel = $visiblePanel.prev('.panel').first();
             
@@ -109,7 +118,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
             var $select = $('<select>', {
                 id: 'categories[' + depth + ']'
             });            
-            $parent.append($select);
+            $select.insertBefore($parent.find('.error-message'));
 
             var $option = $('<option>', {
                 value: -1,
@@ -117,6 +126,10 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
                 selected: 'selected'
             });
             $select.append($option);
+
+            $select.on('blur change', function(event) {
+                validate($select);
+            });
 
             $.each(data, function(idx, item) {
                 var $option = $('<option>', {
@@ -137,8 +150,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
                 selectedValue = $select.val(),
                 existingSelectCount,
                 $trackingField = $('#report-category');
-
-            $select.nextAll().remove();
+            
+            $select.nextAll('select').remove();
 
             if (selectedValue === '-1') {
                 $trackingField.val('');
@@ -156,29 +169,52 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
         },
 
         /**
-         * Simple validation that only makes sure a value is present.
+         * Validates a single field.
          */
-        validate = function(fieldIds) {
-            console.log(this);
-            var errorFieldIds = [];
-
-            $.each(fieldIds, function(idx, item) {
-                var $field = $('#' + item);
-
-                if (!$field.val()) {
-                    errorFieldIds.push(item);
+        validateField = function($field) {
+            var fieldId = $field.attr('id');
+            if ($field.is(':visible')) {
+                if (fieldId === 'address') {
+                    if (!$('#map-latitude').val() && !$('#map-longitude').val()) {
+                        $field.parent().addClass('error');
+                       return fieldId;
+                    }
+                };
+                if (!$field.val() || $field.val() === '-1') {
                     $field.parent().addClass('error');
+                    return fieldId;
                 } else {
                     $field.parent().removeClass('error');
                 }
-            });
-
-            if (errorFieldIds.length) {
-                return false;
-            } else {
-                console.log('success');
-                return true;
             }
+
+            return;
+        },
+
+        /**
+         * Simple validation that only makes sure a value is present.
+         */
+        validate = function(fieldIds) {
+            var errorFieldIds = [],
+                $field,
+                validatedFieldId;
+
+            if (fieldIds.length)
+                $.each(fieldIds, function(idx, item) {
+                    // Hack, since jQuery doesn't "see" newly appended items, and some of these fields are dynamic.
+                    $field = $(document.getElementById(item.id ? item.id : item));
+                    validatedFieldId = validateField($field);
+                    if (validatedFieldId)
+                        errorFieldIds.push(validatedFieldId);
+                    });
+            else {
+                $field = $(document.getElementById(fieldIds.id))
+                validatedFieldId = validateField($field);
+                if (validatedFieldId)
+                    errorFieldIds.push(validatedFieldId);
+            }
+
+            return errorFieldIds.length;
         };
 
     return {

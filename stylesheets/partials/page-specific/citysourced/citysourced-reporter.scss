@@ -142,6 +142,14 @@
                 }
             }
 
+            .error-message {
+                display: none;
+            }
+
+            .required {
+                color: $red;
+            }
+
             .error {
                 label {
                     color: $red;
@@ -149,13 +157,16 @@
                 input, textarea, select {
                     box-shadow: 0 0 3px $red;
                 }
+                .error-message {
+                    color: $red;
+                    display: block;
+                    font-size: .75em;
+                    margin-top: .5em;
+                    font-weight: 700;
+                }
             }
         }
-
-
-
     }
-
 }
 
 @media (max-width: 500px) {

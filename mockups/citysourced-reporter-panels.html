@@ -30,33 +30,39 @@
 </head>
 
 <body id="mainContent">
-        <div class="bc-citysourced-reporter">
+
+
+
+    <div class="bc-citysourced-reporter">
         <ol class="bc-citysourced-reporter-steps">
-                <li class="highlight">Service Request<br/>Category</li>
-                <li>Service Request<br/>Location</li>
-                <li>Your Contact<br/>Information</li>
-                <li> </li>
-            </ol>
+            <li class="highlight">Service Request<br/>Category</li>
+            <li>Service Request<br/>Location</li>
+            <li>Your Contact<br/>Information</li>
+            <li> </li>
+        </ol>
         <p>Using the form below, please describe your service request, mark its location, and then leave your contact information in case we need to follow up with you.</p>
         <form id="citysourced-reporter-form">
-            <fieldset class="panel">
+           <fieldset class="panel">
                 <legend>Service Request Category</legend>
                 <p>Please use the categories below to describe your service request.</p>
-                <label for="categories[1]">Category</label>
-                <div id="category-selection"></div>
+                <div id="category-selection">
+                    <label for="categories[1]">Category<span class="required">*</span></label>
+                    <p class="error-message">Please select a category for your report.</p>
+                </div>
                 <input type="hidden" id="report-category" value="" />
                 <div class="form-control">
-                    <label for="description">Details</label>
+                    <label for="description">Details<span class="required">*</span></label>
                     <textarea id="description"></textarea>
+                    <p class="error-message">Please enter details for your report.</p>
                 </div>
             </fieldset>
             <fieldset class="panel">
                 <legend>Service Request Location</legend>
                 <p>Please mark your service location on the map below, or use the address box to look up a location by address.</p>
                 <div class="form-control">
-                    <label for="address">Address Search</label>
+                    <label for="address">Address Search<span class="required">*</span></label>
                     <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" />
-                    <!--<input type="button" id="addressSearch" class="seButton" value="Search" />-->
+                    <p class="error-message">You must select a location inside Baltimore County.</p>
                 </div>
                 <div id="map" class="google-map"></div>
                 <input type="hidden" id="map-latitude" value="" />
@@ -66,29 +72,36 @@
                 <legend>Your Contact Information</legend>
                 <p>Please leave your contact information so we can send you details about how you can check the status of your report.</p>
                 <div class="form-control">
-                    <label for="firstName">First Name</label>
+                    <label for="firstName">First Name<span class="required">*</span></label>
                     <input type="text" id="firstName" name="firstName" value="" />
+                    <p class="error-message">Please enter your first name.</p>
                 </div>
                 <div class="form-control">
-                    <label for="lastName">Last Name</label>
+                    <label for="lastName">Last Name<span class="required">*</span></label>
                     <input type="text" id="lastName" name="lastName" value="" />
+                    <p class="error-message">Please enter your last name.</p>
                 </div class="form-control">
                 <div class="form-control">
-                    <label for="email">Email Address</label>
-                    <input type="text" id="email" name="email" value="" />
+                    <label for="email">Email Address<span class="required">*</span></label>
+                    <input type="text" id="email" name="email" value="" placeholder="name@domain.com" />
+                    <p class="error-message">Please enter your email address.</p>
                 </div>
                 <div class="form-control">
-                    <label for="phone">Phone</label>
-                    <input type="text" id="phone" name="phone" value="" />
+                    <label for="phone">Phone<span class="required">*</span></label>
+                    <input type="text" id="phone" name="phone" value="" placeholder="(410) 555-1212" />
+                    <p class="error-message">Please enter your phone number.</p>
                 </div>
             </fieldset>
 
             <input type="button" class="seButton hidden" id="prevButton" value="Previous" />
             <input type="button" class="seButton pull-right" id="nextButton" value="Next" />
             <input type="button" class="seButton pull-right hidden" id="fileReportButton" value="File Your Report" />
-       </form>
+        </form>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle" async defer></script>
+
+
+
 </body>
 
 </html>
