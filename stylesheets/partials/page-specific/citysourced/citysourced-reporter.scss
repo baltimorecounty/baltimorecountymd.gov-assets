@@ -23,6 +23,14 @@
                 -webkit-box-sizing: content-box;
                 box-sizing: content-box;
 
+                button {
+                    background: transparent;                
+                    border: none;
+                    font: inherit;
+                    padding: 0;
+                    text-align: left;
+                }
+
                 &:after, &:before {
                     content: "";
                     height: 0;

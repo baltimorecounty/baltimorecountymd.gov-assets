@@ -55,7 +55,7 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
         clearMarker();
 
         createMarker(latitude, longitude);
-        reverseGeocode(latitude, longitude);
+        reverseGeocode(latitude, longitude, true);
         trackLatLng(latitude, longitude);
     },
 
@@ -78,13 +78,14 @@ baltimoreCounty.pageSpecific.googleMaps = (function(googleMaps, undefined) {
         map.setCenter(center);
 
         createMarker(latitude, longitude);
+        reverseGeocode(latitude, longitude, false);
         trackLatLng(latitude, longitude);
     },
 
     /**
      * Looks up the street address from the latitude and longitude.
      */
-    reverseGeocode = function(latitude, longitude) {
+    reverseGeocode = function(latitude, longitude, shouldUpdateTextbox) {
         var $target = $('#address');
 
         $.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey).done(function(data) {

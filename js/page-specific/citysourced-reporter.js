@@ -1,15 +1,28 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undefined) {
+baltimoreCounty.pageSpecific.citySourcedReporter = (function(window, $, jsonTools, undefined) {
     
     var selectOptionData,
+        keys = {
+            end: 35,
+            home: 36,
+            left: 37,
+            up: 38,
+            right: 39,
+            down: 40,
+            delete: 46
+        },
         fieldIds = ['categories[1]', 'categories[2]', 'categories[3]', 'description','address','map-latitude','map-longitude','firstName','lastName','email','phone'],
 
         init = function(jsonDocumentUrl) {
-            var $form = $('#citysourced-reporter-form'),
+
+            var $wrapper = $('.bc-citysourced-reporter'),
+                $form = $wrapper.find('#citysourced-reporter-form'),
+                $tabs = $wrapper.find('[role="tab"]'),
+                $panels = $wrapper.find('[role="tabpanel"]'),
                 $categories = $form.find('#category-selection'),
                 $panels = $form.find('.panel'),
-                $steps = $('.bc-citysourced-reporter-steps li'),
+                $steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
                 handlerData = {
                     animationFactor: 300,
                     $form: $form,
@@ -29,8 +42,9 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
 
             handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
             handlerData.$prevButton.on('click', handlerData, prevButtonClickHandler);
-            handlerData.$fileReportButton.on('click', handlerData, fileReportButtonClickHandler);
-
+            handlerData.$fileReportButton.on('click', handlerData, fileReportButtonClickHandler);            
+            $tabs.on('keyup', handlerData, tabKeyupHandler);
+            
             $form.find('input, textarea').on('blur keyup', function(event) {
                 validate(this);
             });
@@ -76,9 +90,9 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
                 });
             }
 
-            $('html, body').animate({
-                scrollTop: $('#mainContent').offset().top
-            }, event.data.animationFactor);
+            $('html, body').animate({ scrollTop: $('#mainContent').offset().top }, event.data.animationFactor, function() {
+                focusFirstFormElementOfActivePanel(event.data.$panels);
+            });
         },
 
         /**
@@ -106,9 +120,31 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
                 });
             }
 
-            $('html, body').animate({
-                scrollTop: $('#mainContent').offset().top
-            }, event.data.animationFactor);
+            $('html, body').animate({ scrollTop: $('#mainContent').offset().top }, event.data.animationFactor, function() {
+                focusFirstFormElementOfActivePanel(event.data.$panels);
+            });
+       },
+
+        /**
+         * Handles the keyup event for the tabs, making them keyboard accessible.
+         */
+        tabKeyupHandler = function(event) {
+            var key = event.which || event.keyCode,
+                $target = $(event.target);
+            
+            if (key === keys.right) 
+                event.data.$nextButton.trigger('click');
+            
+            if (key === keys.left)
+                event.data.$prevButton.trigger('click');
+        },
+
+        /**
+         * Sets the focus to the first imput element of the active panel.
+         */
+        focusFirstFormElementOfActivePanel = function($panels) {
+            console.log($panels.filter(':visible').find('input, select, textarea').filter(':visible').first());
+            $panels.filter(':visible').find('input, select, textarea').filter(':visible').first().focus();
         },
 
         /**
@@ -145,8 +181,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
         /**
          * Updates the category dropdown options and visibility when the selected item changes.
          */
-        selectChangeHandler = function(e) {
-            var $select = $(e.target),
+        selectChangeHandler = function(event) {
+            var $select = $(event.target),
                 selectedValue = $select.val(),
                 existingSelectCount,
                 $trackingField = $('#report-category');
@@ -160,7 +196,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
 
             existingSelectCount = $select.siblings('select').length + 1;
 
-            var jsonSubtree = jsonTools.getSubtree(e.data.fragment, 'name', 'types', selectedValue);
+            var jsonSubtree = jsonTools.getSubtree(event.data.fragment, 'name', 'types', selectedValue);
 
             if (jsonSubtree)
                 createSelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
@@ -221,7 +257,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function($, jsonTools, undef
         init: init
     };
 
-})(jQuery, baltimoreCounty.utility.jsonTools);
+})(window, jQuery, baltimoreCounty.utility.jsonTools);
 
 $(function() {
     /* Auto-load the category data */
