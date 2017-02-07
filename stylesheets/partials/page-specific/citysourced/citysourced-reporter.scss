@@ -39,7 +39,6 @@
                     height: 0;
                     position: absolute;                
                     width: 0;
-
                 }
 
                 &:after {
@@ -180,27 +179,44 @@
     }
 }
 
-@media (max-width: 500px) {
-    .bc-citysourced-reporter {
-        ol {
-            display: block; 
+@media (max-width: 767px) {
+    #mainContent {
+        .bc-citysourced-reporter {
+            ol {
+                display: block; 
+                padding-right: 1em;
+                list-style-type: decimal;
+                list-style-position: inside;
 
-            li {
-                display: list-item;
-                float: none;
-                height: auto;
-                line-height: 1.4em;
-                margin: 0 0 2px 0;
-                padding: .5em;
-                width: 100%;
+                li {
+                    display: list-item;
+                    float: none;
+                    height: auto;
+                    line-height: 1.4em;
+                    margin: 0 0 2px 0;
+                    padding: .5em;
+                    width: 100%;
 
-                &:before, &:after {
+                    &:before, &:after {
+                        display: none;
+                    }
+
+                    br { 
+                        display: none; 
+                    }
+                }
+
+                li:last-child {
                     display: none;
                 }
             }
 
-            li:last-child {
-                display: none;
+            form {
+
+                input[type=button] {
+                    width: 100%;
+                }
+
             }
         }
     }

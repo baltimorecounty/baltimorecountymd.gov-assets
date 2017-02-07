@@ -28,13 +28,6 @@
 
 
     <div class="bc-citysourced-reporter">
-        <ol class="bc-citysourced-reporter-steps">
-            <li class="highlight">Service Request<br/>Category</li>
-            <li>Service Request<br/>Location</li>
-            <li>Your Contact<br/>Information</li>
-            <li> </li>
-        </ol>
-
         <form id="citysourced-reporter-form">
             <fieldset>
                 <legend>Service Request Category</legend>
@@ -50,6 +43,21 @@
                     <p role="alert" class="error-message">Please enter details for your report.</p>
                 </div>
             </fieldset>
+
+
+            <fieldset>
+                <legend>Service Request Location</legend>
+                <p>Please mark your service location on the map below, or use the address box to look up a location by address.</p>
+                <div class="form-control">
+                    <label for="address">Enter the closest address to your service request<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" />
+                    <p role="alert" class="error-message">You must select a location inside Baltimore County.</p>
+                </div>
+                <div id="map" class="google-map"></div>
+                <input type="hidden" id="map-latitude" value="" />
+                <input type="hidden" id="map-longitude" value="" />
+            </fieldset>
+
             <fieldset>
                 <legend>Your Contact Information</legend>
                 <p>Please leave your contact information so we can send you details about how you can check the status of your
