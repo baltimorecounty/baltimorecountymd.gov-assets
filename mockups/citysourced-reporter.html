@@ -28,61 +28,58 @@
 
 
     <div class="bc-citysourced-reporter">
+        <ol class="bc-citysourced-reporter-steps">
+            <li class="highlight">Service Request<br/>Category</li>
+            <li>Service Request<br/>Location</li>
+            <li>Your Contact<br/>Information</li>
+            <li> </li>
+        </ol>
+
         <form id="citysourced-reporter-form">
             <fieldset>
                 <legend>Service Request Category</legend>
                 <p>Please use the categories below to describe your service request.</p>
                 <div id="category-selection">
-                    <label for="categories[1]">Category<span class="required">*</span></label>
-                    <p class="error-message">Please select a category for your report.</p>
+                    <label id="categories-label">Select a category for your service request<span class="required" aria-hidden="true">*</span> <span class="sr-only">(required)</span></label>
+                    <p role="alert" class="error-message">Please select a category for your report.</p>
                 </div>
                 <input type="hidden" id="report-category" value="" />
                 <div class="form-control">
-                    <label for="description">Details<span class="required">*</span></label>
-                    <textarea id="description"></textarea>
-                    <p class="error-message">Please enter details for your report.</p>
+                    <label for="description">Add details to your report<span class="required" aria-hidden="true">*</span> <span class="sr-only">(required)</span></label>
+                    <textarea id="description" aria-required="true"></textarea>
+                    <p role="alert" class="error-message">Please enter details for your report.</p>
                 </div>
-            </fieldset>
-            <fieldset>
-                <legend>Service Request Location</legend>
-                <p>Please mark your service location on the map below, or use the address box to look up a location by address.</p>
-                <div class="form-control">
-                    <label for="address">Address Search<span class="required">*</span></label>
-                    <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" />
-                    <p class="error-message">You must select a location inside Baltimore County.</p>
-                </div>
-                <div id="map" class="google-map"></div>
-                <input type="hidden" id="map-latitude" value="" />
-                <input type="hidden" id="map-longitude" value="" />
             </fieldset>
             <fieldset>
                 <legend>Your Contact Information</legend>
-                <p>Please leave your contact information so we can send you details about how you can check the status of your report.</p>
+                <p>Please leave your contact information so we can send you details about how you can check the status of your
+                    report.</p>
                 <div class="form-control">
-                    <label for="firstName">First Name<span class="required">*</span></label>
-                    <input type="text" id="firstName" name="firstName" value="" />
-                    <p class="error-message">Please enter your first name.</p>
+                    <label for="firstName">First Name<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <input type="text" id="firstName" name="firstName" value="" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your first name.</p>
                 </div>
                 <div class="form-control">
-                    <label for="lastName">Last Name<span class="required">*</span></label>
-                    <input type="text" id="lastName" name="lastName" value="" />
-                    <p class="error-message">Please enter your last name.</p>
+                    <label for="lastName">Last Name<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <input type="text" id="lastName" name="lastName" value="" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your last name.</p>
                 </div class="form-control">
                 <div class="form-control">
-                    <label for="email">Email Address<span class="required">*</span></label>
-                    <input type="text" id="email" name="email" value="" placeholder="name@domain.com" />
-                    <p class="error-message">Please enter your email address.</p>
+                    <label for="email">Email Address<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <input type="text" id="email" name="email" value="" placeholder="name@domain.com" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your email address.</p>
                 </div>
                 <div class="form-control">
-                    <label for="phone">Phone<span class="required">*</span></label>
-                    <input type="text" id="phone" name="phone" value="" placeholder="(410) 555-1212" />
-                    <p class="error-message">Please enter your phone number.</p>
+                    <label for="phone">Phone<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <input type="text" id="phone" name="phone" value="" placeholder="(410) 555-1212" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your phone number.</p>
                 </div>
             </fieldset>
             <input type="button" class="seButton pull-right" id="fileReportButton" value="File Your Report" />
         </form>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle"
+        async defer></script>
 
 
 

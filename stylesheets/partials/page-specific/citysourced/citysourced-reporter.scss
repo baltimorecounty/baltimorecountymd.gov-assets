@@ -1,5 +1,16 @@
 @import "stylesheets/modules/all";
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
 #mainContent {
 
     .bc-citysourced-reporter {
@@ -21,15 +32,7 @@
                 position: relative;
                 -moz-box-sizing: content-box;
                 -webkit-box-sizing: content-box;
-                box-sizing: content-box;
-
-                button {
-                    background: transparent;                
-                    border: none;
-                    font: inherit;
-                    padding: 0;
-                    text-align: left;
-                }
+                box-sizing: content-box;               
 
                 &:after, &:before {
                     content: "";
