@@ -24,10 +24,11 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 			}
 		},
 		$spayNeuterForm = $('#spayNeuterForm'),
-		$isResidentField = $('#spayNeuterForm input[name=isBaltimoreCountyResident]'),
-		$isPublicAssistanceField = $('#spayNeuterForm input[name=isPublicAssistance]'),
-		$isCatPitBullField = $('#spayNeuterForm input[name=isCatPitBull]'),
+		$residentField = $('#spayNeuterForm input[name=isBaltimoreCountyResident]'),
+		$publicAssistanceField = $('#spayNeuterForm input[name=isPublicAssistance]'),
+		$catPitBullField = $('#spayNeuterForm input[name=isCatPitBull]'),
 		$zipCodeField = $('#spayNeuterForm #zipCode'),
+		$spayNeuterFormButton = $('#spayNeuterFormButton'),
 		isResident = false,
 		isPublicAssistance = false,
 		isCatPitBull = false,
@@ -41,22 +42,22 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		 */
 		isValid = function () {
 			var validationErrorFlag = false;
-			if (!baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($isResidentField)) {
-				errorNotification($isResidentField);
+			if ($residentField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($residentField)) {
+				errorNotification($residentField);
 				validationErrorFlag = true;
 			}
 
-			if (!baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($isPublicAssistanceField)) {
-				errorNotification($isPublicAssistanceField);
+			if ($publicAssistanceField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($publicAssistanceField)) {
+				errorNotification($publicAssistanceField);
 				validationErrorFlag = true;
 			}
 
-			if (!baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($isCatPitBullField)) {
-				errorNotification($isCatPitBullField);
+			if ($catPitBullField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($catPitBullField)) {
+				errorNotification($catPitBullField);
 				validationErrorFlag = true;
 			}
 
-			if (!baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($zipCodeField, textInputValidationRegExp)) {
+			if ($zipCodeField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($zipCodeField, textInputValidationRegExp)) {
 				errorNotification($zipCodeField);
 				validationErrorFlag = true;
 			}
@@ -129,9 +130,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		 */
 		readForm = function () {
 			var formData = {
-				isResident: $isResidentField.length ? getRadioButtonValue($isResidentField) == 'true' : isResident,
-				isPublicAssistance: $isPublicAssistanceField.length ? getRadioButtonValue($isPublicAssistanceField) == 'true' : isPublicAssistance,
-				isCatPitBull: $isCatPitBullField.length ? getRadioButtonValue($isCatPitBullField) == 'true' : isCatPitBull,
+				isResident: $residentField.length ? getRadioButtonValue($residentField) == 'true' : isResident,
+				isPublicAssistance: $publicAssistanceField.length ? getRadioButtonValue($publicAssistanceField) == 'true' : isPublicAssistance,
+				isCatPitBull: $catPitBullField.length ? getRadioButtonValue($catPitBullField) == 'true' : isCatPitBull,
 				zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode,
 			};
 
@@ -270,6 +271,39 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 				return true;
 			}
 			return false;
+		},
+
+		revealFormControl = function($formControl) {
+			var $formControlWrapper = $formControl.closest('.bc-form-control');
+
+			$formControlWrapper.fadeIn(300);
+			$formControlWrapper.attr('aria-hidden', false);
+		},
+
+		hideCompleteHandler = function() {
+			$(this).attr('aria-hidden', true);
+		},
+
+		init = function() {
+			$publicAssistanceField.closest('.bc-form-control').hide(hideCompleteHandler);
+			$catPitBullField.closest('.bc-form-control').hide(hideCompleteHandler);
+			$zipCodeField.closest('.bc-form-control').hide(hideCompleteHandler);
+			$spayNeuterFormButton.closest('.bc-form-control').hide(hideCompleteHandler);
+
+			$residentField.first().on('click', function() { revealFormControl($publicAssistanceField); });
+			$publicAssistanceField.first().on('click', function() { revealFormControl($catPitBullField); });
+			$publicAssistanceField.last().on('click', function() { 
+				revealFormControl($zipCodeField); 
+				revealFormControl($spayNeuterFormButton); 
+			});
+			$catPitBullField.first().on('click', function() { 
+				revealFormControl($zipCodeField); 
+				revealFormControl($spayNeuterFormButton); 
+			});
+			$spayNeuterFormButton.on('click', function () {
+				calculate();
+				return false;
+			});			
 		};
 
 	return {
@@ -279,7 +313,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		buildDiscountMessageHTML: buildDiscountMessageHTML,
 		buildFacilityListHTML: buildFacilityListHTML,
 		/* end-test-code */
-		calculate: calculate
+		init: init
 	};
 
 })(jQuery);
@@ -296,8 +330,5 @@ $(function () {
 		}
 	});
 
-	$('#spayNeuterFormButton').on('click', function (e) {
-		baltimoreCounty.pageSpecific.spayNeuterCalculator.calculate();
-		return false;
-	});
+	baltimoreCounty.pageSpecific.spayNeuterCalculator.init();
 });

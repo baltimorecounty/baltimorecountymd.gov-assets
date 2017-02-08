@@ -39,7 +39,7 @@ gulp.task('concatHomepageJs', function() {
 gulp.task('concatTemplateJs', function () {
 	var files = ['js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
-					'js/utility/cdnFallback.js',
+					'js/utility/*.js',
 					'js/lib/bootstrap-collapse.js',
 					'js/skip-nav.js',
 					'js/text-resizer.js', 
