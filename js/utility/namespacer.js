@@ -18,4 +18,8 @@ function namespacer(ns) {
 
 		parent = parent[nsPart];
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master

@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Mon Dec 26 2016 14:16:26 GMT-0500 (Eastern Standard Time)
-
 module.exports = function(config) {
   config.set({
 
@@ -10,16 +7,23 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'js/lib/jQuery.min.js',
+      'node_modules/jquery/dist/jquery.min.js',
+      'js/lib/require.js',
       'js/utility/namespacer.js',
       'js/utility/*.js',
       'js/polyfills/*.js',
-      'js/page-specific/*.js'
+      'spec/js/**/*.spec.js',
+      {
+        pattern: 'spec/js/fixtures/**/*.html',
+        watched: true,
+        included: false,
+        served: true
+      }
     ],
 
 
@@ -27,6 +31,12 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    plugins: [
+      'karma-mocha-reporter',
+      'karma-jasmine',
+      'karma-jasmine-jquery-2',
+      'karma-phantomjs-launcher'
+    ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -68,5 +78,5 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};
