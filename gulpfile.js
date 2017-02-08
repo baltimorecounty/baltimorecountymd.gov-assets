@@ -67,6 +67,19 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 		.pipe(gulp.dest('dist/js'));
 });
 
+gulp.task('compressPageSpecificFiles', function () {
+	return gulp.src(['!./js/page-specific/*.spec.js', './js/page-specific/*.js'])
+		.pipe(stripCode({
+			start_comment: 'test-code',
+			end_comment: 'end-test-code'
+		}))
+		.pipe(uglify())
+		.pipe(rename({
+			suffix: '.min'
+		}))
+		.pipe(gulp.dest('dist/js/page-specific'));
+});
+
 gulp.task('sassAndCompressCss', function () {
 	return gulp.src('stylesheets/*.scss')
 		.pipe(sass().on('error', sass.logError))
@@ -88,9 +101,9 @@ gulp.task('watch', function() {
 gulp.task('linter', function() {
 	return gulp.src(['!js/lib/**/*','js/**/*.js'])
 		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
+		.pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('default', ['clean-dist'], function(callback) {
-	return runSequence(['compressFiles', 'sassAndCompressCss'], callback);
+	return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss'], callback);
 });

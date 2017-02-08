@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-# Javascript
-This folder contains **global** Javascript files used on the Baltimore County Governement Website
-=======
 # JavaScript Utilities
->>>>>>> master
 
 ## Namespacer
 This is a shortcut function to safely create a namespace for you. 
@@ -19,11 +14,7 @@ baltimoreCounty.modules.myModule = (function() {
 ```
 
 ### Example (after)
-<<<<<<< HEAD
-```Javascript
-=======
 ```JavaScript
->>>>>>> master
 namespacer('baltimoreCounty.modules');
 
 baltimoreCounty.modules.myModule = (function() {
@@ -36,7 +27,6 @@ baltimoreCounty.modules.myModule = (function() {
 ### Dependencies
 * [jQuery](https://jquery.com/)
 
-<<<<<<< HEAD
 ## Form Validation
 Form field validation library.
 
@@ -44,7 +34,7 @@ Form field validation library.
 **usage**: template.min.js  
 ### Dependencies
 * [jQuery](https://jquery.com/)
-=======
+
 ## cdnFallback
 Loads local version of a JS library when the CDN load fails.
 
@@ -67,4 +57,3 @@ Adds inline validation to SiteExecutive forms.
 ### Dependencies
 * [jQuery](https://jquery.com/)
 * [Validate](https://validatejs.org/)
->>>>>>> master
