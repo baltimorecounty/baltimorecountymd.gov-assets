@@ -89,7 +89,13 @@ Currently we are tracking:
 Displays a video gallery of YouTube videos from an existing playlist. 
 
 ### Usage
-Create a HTML Snippet with the following code, and you're ready to go. All you need to do is customize the playlistId value near the bottom.
+You'll need to reference the CSS in the page's `<head>`, and then create a HTML Snippet with the following code. All you need to do is customize the playlistId value near the bottom.
+
+```html
+<!-- Place in the document's <head> tag -->
+<link href="/sebin/h/k/jquery.fancybox.css" rel="stylesheet" />
+```
+
 
 ```html
 <div class="bc-youtube-playlist-gallery"></div>
@@ -110,8 +116,8 @@ Create a HTML Snippet with the following code, and you're ready to go. All you n
 	<div style="clear: both"></div>
 </script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
+<script src="/sebin/v/f/jquery.fancybox.js"></script>
+<script src="/sebin/b/l/jquery.fancybox-media.js"></script>
 <script>
 	$(document).ready(function() { 
 		baltimoreCounty.youtubePlaylistGallery.init({
