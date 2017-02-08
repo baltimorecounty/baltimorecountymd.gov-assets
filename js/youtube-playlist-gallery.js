@@ -56,7 +56,7 @@ baltimoreCounty.youtubePlaylistGallery = (function($) {
          * Makes the requst to the YouTube v3 API.
          */
         getPlaylistDataFromYouTube = function(playlistId) {
-            var url = 'http://testservices.baltimorecountymd.gov/api/playlistgallery/' + playlistId;
+            var url = 'https://testservices.baltimorecountymd.gov/api/playlistgallery/' + playlistId;
 
             return $.getJSON(url);
         },
