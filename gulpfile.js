@@ -24,7 +24,8 @@ gulp.task('clean-dist', function () {
 });
 
 gulp.task('concatHomepageJs', function() {
-	var files = ['js/utility/namespacer.js', 
+	var files = ['js/polyfills/*.js',
+					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
@@ -37,7 +38,7 @@ gulp.task('concatHomepageJs', function() {
 });
 
 gulp.task('concatTemplateJs', function () {
-	var files = ['js/polyfills/array.some.js',
+	var files = ['js/polyfills/*.js',
 					'js/utility/namespacer.js', 
 					'js/utility/*.js',
 					'js/lib/bootstrap-collapse.js',
