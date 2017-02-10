@@ -30,7 +30,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		$catPitBullField = $('#spayNeuterForm input[name=isCatPitBull]'),
 		$zipCodeField = $('#spayNeuterForm #zipCode'),
 		$spayNeuterFormButton = $('#spayNeuterFormButton'),
-		$spayNeuterFormResults = $('#spayNeuterFormResults'),				
+		$spayNeuterFormResults = $('#spayNeuterFormResults'),
 		isResident = false,
 		isPublicAssistance = false,
 		isCatPitBull = false,
@@ -43,22 +43,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		 * Form validation!
 		 */
 		isValid = function () {
+
 			var validationErrorFlag = false;
-
-			if ($residentField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($residentField)) {
-				errorNotification($residentField);
-				validationErrorFlag = true;
-			}
-
-			if ($publicAssistanceField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($publicAssistanceField)) {
-				errorNotification($publicAssistanceField);
-				validationErrorFlag = true;
-			}
-
-			if ($catPitBullField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($catPitBullField)) {
-				errorNotification($catPitBullField);
-				validationErrorFlag = true;
-			}
 
 			if ($zipCodeField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($zipCodeField, textInputValidationRegExp)) {
 				errorNotification($zipCodeField);
@@ -80,7 +66,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 
 				switch (inputType) {
 					case 'radio':
-						$input.on('click', validationClickHandler);
+						//$input.on('click', validationClickHandler);
 						break;
 					case 'text':
 						$input.on('keyup', validationKeyupHandler);
@@ -133,9 +119,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		 */
 		readForm = function () {
 			var formData = {
-				isResident: $residentField.length ? getRadioButtonValue($residentField) == 'true' : isResident,
-				isPublicAssistance: $publicAssistanceField.length ? getRadioButtonValue($publicAssistanceField) == 'true' : isPublicAssistance,
-				isCatPitBull: $catPitBullField.length ? getRadioButtonValue($catPitBullField) == 'true' : isCatPitBull,
+				isResident: $residentField.length ? getRadioButtonValue($residentField) : isResident,
+				isPublicAssistance: $publicAssistanceField.length ? getRadioButtonValue($publicAssistanceField) : isPublicAssistance,
+				isCatPitBull: $catPitBullField.length ? getRadioButtonValue($catPitBullField) : isCatPitBull,
 				zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode,
 			};
 
@@ -148,16 +134,14 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		 * Pulls Radio Button value safely.
 		 */
 		getRadioButtonValue = function ($radioButton) {
+			var YES_RADIO_INDEX = 0;
+
 			if ($radioButton.length === 0)
 				return undefined;
 
 			var $selectedRadioButton = $radioButton.filter(':checked');
 
-			if ($selectedRadioButton.length > 0) {
-				return $selectedRadioButton.val();
-			}
-
-			return undefined;
+			return $radioButton.eq(YES_RADIO_INDEX).is($selectedRadioButton);
 		},
 
 		/*
@@ -264,72 +248,57 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 				discountMessageHTML = buildDiscountMessageHTML(facilities, cost),
 				facilityListHTML = buildFacilityListHTML(facilities);
 
-			if (isValid()) {
+			if (isValid())
 				displayResults(discountMessageHTML, facilityListHTML);
-			}			
 		},
 
-		displayResults = function(discountMessageHTML, facilityListHTML) {
-			$spayNeuterFormResults.addClass(facilityListHTML ? 'alert-success' : 'alert-warning').attr('role','alert');
+		/** 
+		 * Displays the final judgement of the calculator.
+		 */
+		displayResults = function (discountMessageHTML, facilityListHTML) {
+			$spayNeuterFormResults.removeClass('alert-success alert-warning');
+			$spayNeuterFormResults.addClass(facilityListHTML ? 'alert-success' : 'alert-warning').attr('role', 'alert');
 			$spayNeuterFormResults.html(discountMessageHTML + facilityListHTML);
 			$spayNeuterFormResults.attr('aria-hidden', false);
-			
+
 			setVisibility($spayNeuterFormResults, false);
-			/*
+			
 			$('html, body').animate({
 				scrollTop: $spayNeuterFormResults.offset().top
-			}, 1000);
-			*/
+			}, 1000);			
 		},
 
 		/**
 		 * Sets the visibility of the target, and fires a callback when done.
 		 */
-		setVisibility = function($target, shouldHide, completedCallback) {
-			var SLIDE_DURATION = 300,
-				visibilityFilterSelector = shouldHide ? ':hidden' : ':visible';
-			
-			completedCallback = completedCallback || function() {};
+		setVisibility = function ($target, shouldHide, callback) {
+			var ANIMATION_DURATION = 300,
+				visibilityFilterSelector = shouldHide ? ':hidden' : ':visible',
+				$formControlWrapper = $target.closest('.bc-form-control');
 
-			if ($target.is(visibilityFilterSelector)) {
-				completedCallback();
+			callback = callback || function() {};
+
+			if ($formControlWrapper.is(visibilityFilterSelector)) {
+				callback();
 				return;
 			}
 
-			if (shouldHide)
-				$target.slideUp(SLIDE_DURATION, completedCallback);
+			$formControlWrapper.attr('aria-hidden', shouldHide);
+
+			if (shouldHide) 
+				$formControlWrapper.fadeOut(ANIMATION_DURATION, callback);
 			else
-				$target.slideDown(SLIDE_DURATION, completedCallback);
-				
-			$target.attr('aria-hidden', shouldHide);
-		},
-
-		/**
-		 * Will display hidden form controls, and update aria attributes accordingly.
-		 */
-		setFormControlVisibility = function($formControls, shouldHide, completedCallback) {
-			$.each($formControls, function(index, formControl) {
-				var $formControl = $(formControl),
-					$formControlWrapper = $formControl.closest('.bc-form-control');
-
-				setVisibility($formControlWrapper, shouldHide, completedCallback);
-			});
+				$formControlWrapper.fadeIn(ANIMATION_DURATION, callback);				
 		},
 
 		/**
 		 * Clears all hidden form elements, so they're not already filled out when they're revealed. 
 		 * This is really just a safeguard for anyone who gets click-happy.
 		 */
-		clearEverythingOnTheFormAfterThis = function($target, callback) {
+		clearEverythingOnTheFormAfterThis = function ($target) {
 			var targetIndex = $spayNeuterFormInputElements.index($target);
 
-			callback = callback || function() {};
-
-			$spayNeuterFormResults.removeClass('alert-success alert-warning');
-			if ($spayNeuterFormResults.is(':visible'))
-				setVisibility($spayNeuterFormResults, true, callback);
-
-			$spayNeuterFormInputElements.map(function(index, item) {
+			$spayNeuterFormInputElements.map(function (index, item) {
 				var $item = $(item);
 
 				if ($spayNeuterFormInputElements.index(item) > targetIndex)
@@ -340,49 +309,76 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		/**
 		 * Event binding.
 		 */
-		init = function() {
+		init = function () {
 			var YES_RADIO_INDEX = 0,
 				NO_RADIO_INDEX = 1;
 
-			$residentField.eq(YES_RADIO_INDEX).on('click', function(event) { 
-				setFormControlVisibility([$catPitBullField, $zipCodeField, $spayNeuterFormButton], true, function() {
-					clearEverythingOnTheFormAfterThis($(event.target));
-					setFormControlVisibility([$publicAssistanceField], false); 
+			$residentField.eq(YES_RADIO_INDEX).on('click', function (event) {
+				clearEverythingOnTheFormAfterThis(event.target);
+				setVisibility($spayNeuterFormResults, true, function () {
+					setVisibility($spayNeuterFormButton, true, function () {
+						setVisibility($zipCodeField, true, function () {
+							setVisibility($catPitBullField, true, function () {
+								setVisibility($publicAssistanceField, false);
+							});
+						});
+					});
 				});
 			});
-			$residentField.eq(NO_RADIO_INDEX).on('click', function(event) { 
-				setFormControlVisibility([$publicAssistanceField, $catPitBullField, $zipCodeField, $spayNeuterFormButton], true, function() {
-					clearEverythingOnTheFormAfterThis($(event.target));
-					calculate(); 
+			$residentField.eq(NO_RADIO_INDEX).on('click', function (event) {
+				clearEverythingOnTheFormAfterThis(event.target);
+				setVisibility($spayNeuterFormResults, true, function () {
+					setVisibility($spayNeuterFormButton, true, function () {
+						setVisibility($zipCodeField, true, function () {
+							setVisibility($catPitBullField, true, function () {
+								setVisibility($publicAssistanceField, true, function () {
+									calculate();
+								});
+							});
+						});
+					});
 				});
 			});
-
-			$publicAssistanceField.eq(YES_RADIO_INDEX).on('click', function(event) { 
-				setFormControlVisibility([$zipCodeField, $spayNeuterFormButton], true, function() {
-					clearEverythingOnTheFormAfterThis($(event.target));
-					setFormControlVisibility([$catPitBullField], false); 
+			$publicAssistanceField.eq(YES_RADIO_INDEX).on('click', function (event) {
+				clearEverythingOnTheFormAfterThis(event.target);
+				setVisibility($spayNeuterFormResults, true, function () {
+					setVisibility($spayNeuterFormButton, true, function () {
+						setVisibility($zipCodeField, true, function () {
+							setVisibility($catPitBullField, false)
+						});
+					});
 				});
 			});
-			$publicAssistanceField.eq(NO_RADIO_INDEX).on('click', function(event) { 
-				setFormControlVisibility([$catPitBullField], true, function() {
-					clearEverythingOnTheFormAfterThis($(event.target));
-					setFormControlVisibility([$zipCodeField, false, $spayNeuterFormButton]); 
+			$publicAssistanceField.eq(NO_RADIO_INDEX).on('click', function (event) {
+				clearEverythingOnTheFormAfterThis(event.target)
+				setVisibility($spayNeuterFormResults, true, function () {
+					setVisibility($zipCodeField, false, function () {
+						setVisibility($spayNeuterFormButton, false, function () {
+							setVisibility($catPitBullField, true);
+						});
+					});
 				});
 			});
-			
-			$catPitBullField.eq(YES_RADIO_INDEX).on('click', function(event) { 
-				setFormControlVisibility([$zipCodeField, $spayNeuterFormButton], true, function() {
-					clearEverythingOnTheFormAfterThis($(event.target));
-					calculate();
+			$catPitBullField.eq(YES_RADIO_INDEX).on('click', function (event) {
+				clearEverythingOnTheFormAfterThis(event.target);
+				setVisibility($spayNeuterFormResults, true, function () {
+					setVisibility($spayNeuterFormButton, true, function () {
+						setVisibility($zipCodeField, true, function () {
+							calculate();
+						});
+					});
 				});
 			});
-			$catPitBullField.eq(NO_RADIO_INDEX).on('click', function(event) { 
-				setFormControlVisibility([$zipCodeField, $spayNeuterFormButton], false); 
+			$catPitBullField.eq(NO_RADIO_INDEX).on('click', function (event) {
+				setVisibility($spayNeuterFormResults, true, function () {
+					setVisibility($zipCodeField, false, function () {
+						setVisibility($spayNeuterFormButton, false);
+					});
+				});
 			});
-			
 			$spayNeuterFormButton.on('click', function () {
 				calculate();
-			});			
+			});
 		};
 
 	return {
