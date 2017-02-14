@@ -38,7 +38,6 @@ gulp.task('concatHomepageJs', function() {
 
 gulp.task('concatTemplateJs', function() {
 	var files = ['js/polyfills/array.some.js',
-					'js/utility/jquery.elliptical.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/utility/jquery.elliptical.js',
