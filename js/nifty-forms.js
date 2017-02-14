@@ -11,7 +11,7 @@ baltimoreCounty.niftyForms = (function() {
         radiosSelector = '.seRadio',
 
         /*
-         * Toggle the click label's checkbox/radion button. This is necessary because
+         * Toggle the click label's checkbox/radio button. This is necessary because
          * the niftyness is the ::before pseudo-element of the label tag, and not the 
          * input itself.
          */
@@ -87,10 +87,10 @@ baltimoreCounty.niftyForms = (function() {
         $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
     });
 
-    /* test code */
+    /* test-code */
     return {
         toggleChecked: toggleChecked
     };
-    /* end test code */
+    /* end-test-code */
 
 })();
