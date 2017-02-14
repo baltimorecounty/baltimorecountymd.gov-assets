@@ -25,31 +25,6 @@ if (!Array.prototype.some) {
     return false;
   };
 }
-;(function($, undefined) {
-    'use strict';
-
-    $.fn.elliptical = function(options) {
-
-        var settings = $.extend({
-            separator: ' ',
-            suffix: '...'
-        }, options);
-
-        return this.filter(function(index, item) { 
-            return $(item).height() < item.scrollHeight;
-        }).each(function(index, item) {
-            var $item = $(item),
-                textArr = $item.text().split(settings.separator);
-
-            while (item.scrollHeight > $item.height()) {
-                textArr.pop();
-                $item.text(textArr.join(settings.separator));
-            }
-            textArr.pop();
-            $item.text(textArr.join(settings.separator) + settings.suffix);
-        });
-    };
-})(jQuery);
 /*
  * Creates namespaces safely and conveniently, reusing 
  * existing objects instead of overwriting them.
@@ -112,6 +87,31 @@ baltimoreCounty.utility.cdnFallback = (function() {
     };
 
 })();
+;(function($, undefined) {
+    'use strict';
+
+    $.fn.elliptical = function(options) {
+
+        var settings = $.extend({
+            separator: ' ',
+            suffix: '...'
+        }, options);
+
+        return this.filter(function(index, item) { 
+            return $(item).height() < item.scrollHeight;
+        }).each(function(index, item) {
+            var $item = $(item),
+                textArr = $item.text().split(settings.separator);
+
+            while (item.scrollHeight > $item.height()) {
+                textArr.pop();
+                $item.text(textArr.join(settings.separator));
+            }
+            textArr.pop();
+            $item.text(textArr.join(settings.separator) + settings.suffix);
+        });
+    };
+})(jQuery);
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
