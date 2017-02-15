@@ -25,6 +25,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
                 handlerData = {
                     animationFactor: 300,
                     $form: $form,
+                    $categories: $categories,
                     $panels: $panels,
                     $steps: $steps,
                     $firstPanel: $panels.first(),
@@ -54,8 +55,37 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
          * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
          */
         fileReportButtonClickHandler = function (event) {
-            if (!validate(fieldIds))
-                alert('Thank you for successfully testing this form.');
+            if (!validate(fieldIds)) {
+                
+                var $form = event.data.$form,
+                    $lastCategory = event.data.$categories.find('select').last(),
+                    formData = {
+                        CategoryId: $lastCategory.val(),
+                        CategoryName: $lastCategory.find('option[value=' + $lastCategory.val() + ']').text(),
+                        Details: $form.find('#details').val(),
+                        Longitude: $form.find('#map-longitude').val(),
+                        Latitude: $form.find('#map-latitude').val(),
+                        FirstName: $form.find('#firstName').val(),
+                        LastName: $form.find('#lastName').val(), 
+                        Email: $form.find('#email').val(),
+                        Phone: $form.find('#phone').val()
+                    };
+
+                var settings = {
+                    data: formData,
+                    dataType: 'json',
+                    method: 'POST',
+                    cache: false
+                };
+
+                $.ajax('http://ba224964:1000/api/citysourced/createreport', settings)
+                    .done(function(data, textStatus, jqXHR) {
+                        console.log(data, textStatus);
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    });
+            }                
         },
 
         /**
@@ -172,7 +202,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
             $.each(data, function (idx, item) {
                 var $option = $('<option>', {
-                    value: item.name,
+                    value: item.id,
                     text: item.name
                 });
                 $select.append($option);
@@ -189,6 +219,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
         selectChangeHandler = function (event) {
             var $select = $(event.target),
                 selectedValue = $select.val(),
+                selectedName = $select.find('option[value=' + selectedValue + ']').text(),
                 existingSelectCount,
                 $trackingField = $('#report-category');
 
@@ -201,7 +232,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
             existingSelectCount = $select.siblings('select').length + 1;
 
-            var jsonSubtree = jsonTools.getSubtree(event.data.fragment, 'name', 'types', selectedValue);
+            var jsonSubtree = jsonTools.getSubtree(event.data.fragment, 'name', 'types', selectedName);
 
             if (jsonSubtree)
                 createSelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
@@ -268,5 +299,5 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
 $(function () {
     /* Auto-load the category data */
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/j/categories.json');
+    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
 });
