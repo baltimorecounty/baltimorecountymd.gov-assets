@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<title>CitySourced Mockup</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+	    crossorigin="anonymous"></script>
+	<script src="/dist/js/templateinside.min.js"></script>
+	<script src="/js/page-specific/citysourced-login.js"></script>
+	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
+	<link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
+	<!--[if lte IE 9]>
+        <link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
+    <![endif]-->
+</head>
+
+<body id="mainContent">
+
+	<div class="bc-citysourced-reporter">
+		<form id="citysourced-reporter-login-form">
+			<fieldset class="panel">
+				<legend>Service Request Login</legend>
+				<p>Please use the form below to log in and create or view service request(s).<br />Or, <a href="#">register as a new user</a>.</p>
+				<input type="hidden" id="report-category" value="" />
+				<div class="form-control">
+					<label for="details">Email<span class="required" aria-hidden="true">*</span> <span class="sr-only">(required)</span></label>
+					<input type="text" id="email" aria-required="true" />
+					<p role="alert" class="error-message">Please enter your email address.</p>
+				</div>
+				<div class="form-control">
+					<label for="details">Password<span class="required" aria-hidden="true">*</span> <span class="sr-only">(required)</span></label>
+					<input type="password" id="password" aria-required="true" />
+					<p role="alert" class="error-message">Please enter your password.</p>
+				</div>
+				<p><a href="#">Forgot password?</a></p>
+			</fieldset>
+			<input type="button" class="seButton pull-right" id="login" value="Log in to BALTCOGO" />
+		</form>
+	</div>
+
+</body>
+
+</html>

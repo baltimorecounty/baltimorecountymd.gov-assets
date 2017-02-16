@@ -1,6 +1,6 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonTools, undefined) {
+baltimoreCounty.pageSpecific.citySourcedLogin = (function (window, $, undefined) {
     'use strict';
 
     var selectOptionData,
@@ -23,7 +23,6 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
                 $panels = $form.find('.panel'),
                 $steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
                 handlerData = {
-                    $wrapper: $wrapper,
                     animationFactor: 300,
                     $form: $form,
                     $categories: $categories,
@@ -59,8 +58,6 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
             if (!validate(fieldIds)) {
                 
                 var $form = event.data.$form,
-                    $wrapper = event.data.$wrapper,
-                    animationFactor = event.data.animationFactor,
                     $lastCategory = event.data.$categories.find('select').last(),
                     formData = {
                         CategoryId: $lastCategory.val(),
@@ -81,17 +78,11 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
                     cache: false
                 };
 
-                $.ajax('//ba224964:1000/api/citysourced/createreport', settings)
+                $.ajax('http://ba224964:1000/api/citysourced/createreport', settings)
                     .done(function(data, textStatus, jqXHR) {
-                        $wrapper.fadeOut(animationFactor, function() {
-                            $('.bc-citysourced-reporter-alert.alert-success').fadeIn(animationFactor);
-                        });
                         console.log(data, textStatus);
                     })
                     .fail(function(jqXHR, textStatus, errorThrown) {
-                        $wrapper.fadeOut(animationFactor, function() {
-                            $('.bc-citysourced-reporter-alert.alert-warning').fadeIn(animationFactor);
-                        });
                         console.log(textStatus, errorThrown);
                     });
             }                
@@ -308,6 +299,5 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
 $(function () {
     /* Auto-load the category data */
-    //baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/e/b/categories-with-ids.json');
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');    	
+    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
 });
