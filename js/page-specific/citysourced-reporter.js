@@ -81,7 +81,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
                     cache: false
                 };
 
-                $.ajax('//ba224964:1000/api/citysourced/createreport', settings)
+                $.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)
                     .done(function(data, textStatus, jqXHR) {
                         $wrapper.fadeOut(animationFactor, function() {
                             $('.bc-citysourced-reporter-alert.alert-success').fadeIn(animationFactor);
@@ -308,6 +308,5 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
 $(function () {
     /* Auto-load the category data */
-    //baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/e/b/categories-with-ids.json');
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');    	
+    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/s/o/categories-v5.json');
 });
