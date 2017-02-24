@@ -299,5 +299,6 @@ baltimoreCounty.pageSpecific.citySourcedLogin = (function (window, $, undefined)
 
 $(function () {
     /* Auto-load the category data */
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
+    //baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
+    baltimoreCounty.pageSpecific.citySourcedReporter.init('http://ba224964:1100/mockups/categories.json');
 });

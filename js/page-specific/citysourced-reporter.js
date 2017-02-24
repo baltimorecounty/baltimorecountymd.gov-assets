@@ -52,6 +52,10 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
             });
         },
 
+        searchButtonClickHandler = function(event) {
+
+        },
+
         /**
          * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
          */
@@ -308,5 +312,6 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
 $(function () {
     /* Auto-load the category data */
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/s/o/categories-v5.json');
+    //baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/s/o/categories-v5.json');
+    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
 });

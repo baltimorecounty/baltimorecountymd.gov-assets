@@ -1,279 +1,241 @@
 [
 	{
-		"name": "Animals",
-		"id": 1021959,
+		"name": "Building and Development",
+		"id": 1022189,
 		"types": [
 			{
-				"name": "Domestic Animals",
-				"id": 1021994,
-				"types": [
-					{
-						"name": "Animal At Large",
-						"id": 1021998
-					},
-					{
-						"name": "Animal Bite",
-						"id": 1021999
-					},
-					{
-						"name": "Barking, Excessive",
-						"id": 1022000
-					},
-					{
-						"name": "Cruelty",
-						"id": 1022001
-					},
-					{
-						"name": "Dangerous Dog",
-						"id": 1022002
-					},
-					{
-						"name": "Nuisance",
-						"id": 1022003
-					},
-					{
-						"name": "Stray Animal Confined",
-						"id": 1022004
-					},
-					{
-						"name": "Unwelcome Deposits",
-						"id": 1022005
-					},
-					{
-						"name": "Pest",
-						"id": 1021996
-					}
-				]
+				"name": "Failure to obtain Inspection",
+				"id": 1022246
 			},
 			{
-				"name": "Wild Animals/Livestock",
-				"id": 1021995,
-				"types": [
-					{
-						"name": "Animal In Trap",
-						"id": 1022007
-					},
-					{
-						"name": "Dead Animal",
-						"id": 1022008
-					},
-					{
-						"name": "Menacing Animal",
-						"id": 1022009
-					},
-					{
-						"name": "Rabies Lab Specimen for Lab",
-						"id": 1022010
-					},
-					{
-						"name": "Rabies Suspect Animal",
-						"id": 1022011
-					},
-					{
-						"name": "Sick/Injured",
-						"id": 1022012
-					},
-					{
-						"name": "Wildlife Complaint",
-						"id": 1022013
-					}
-				]
+				"name": "Working without a plumbing permit",
+				"id": 1022247
 			}
 		]
 	},
 	{
-		"name": "Building/Code Complaints",
-		"id": 1021960,
+		"name": "Neighborhood",
+		"id": 1022188,
 		"types": [
 			{
-				"name": "Building Complaints: Failure To Obtain Inspection",
-				"id": 1022016
+				"name": "Abandoned Vehicle",
+				"id": 1022241
 			},
 			{
-				"name": "Building Complaints: Unsafe Structure",
-				"id": 1022017
+				"name": "Building without a Permit",
+				"id": 1022244
 			},
 			{
-				"name": "Building Complaints: Work Without A Building Permit",
-				"id": 1022015
+				"name": "Excessive animal feces in neighbor's yard",
+				"id": 1022243
 			},
 			{
-				"name": "Electrical Complaints: Dangerous Conditions",
-				"id": 1022020
+				"name": "Junk, trash, or debris in yard or public space",
+				"id": 1022238
 			},
 			{
-				"name": "Electrical Complaints: Work Without Electrical Permit",
-				"id": 1022018
+				"name": "Rats",
+				"id": 1022240
 			},
 			{
-				"name": "Electrical Complaints: Working without License",
-				"id": 1022019
+				"name": "Tall grass and weeds in yard",
+				"id": 1022239
 			},
 			{
-				"name": "Grading Complaints: Failure To Comply With Approved Plan",
-				"id": 1022022
-			},
-			{
-				"name": "Grading Complaints: Grading Without Permit",
-				"id": 1022021
-			},
-			{
-				"name": "Grading Complaints: Mud On Roadway",
-				"id": 1022023
-			},
-			{
-				"name": "Plumbing and Gasfitting Complaints: Discharge Of Untreated Sewage",
-				"id": 1022026
-			},
-			{
-				"name": "Plumbing and Gasfitting Complaints: Failure To Maintain Plumbing System",
-				"id": 1022025
-			},
-			{
-				"name": "Plumbing and Gasfitting Complaints: Work Without A Plumbing Permit",
-				"id": 1022024
-			},
-			{
-				"name": "Rental Registration Complaints: Unregistered Rental Property",
-				"id": 1022027
+				"name": "Vacant Property",
+				"id": 1022242
 			}
 		]
 	},
 	{
-		"name": "Home & Neighborhood",
-		"id": 1021957,
+		"name": "Pets and Animals",
+		"id": 1022187,
 		"types": [
 			{
-				"name": "Garbage/ Recycling Collection",
-				"id": 1021962,
+				"name": "Pets",
+				"id": 1022217,
 				"types": [
 					{
-						"name": "Begin Collection (New Home)",
-						"id": 1021968
+						"name": "Animal cruelty",
+						"id": 1022224
 					},
 					{
-						"name": "Can/Lid Missing",
-						"id": 1021970
+						"name": "Bite from a pet",
+						"id": 1022222
 					},
 					{
-						"name": "Property Damage",
-						"id": 1021969
+						"name": "Dangerous dog",
+						"id": 1022225
 					},
 					{
-						"name": "Recycling Not Collected",
-						"id": 1021966
+						"name": "Excessive barking",
+						"id": 1022223
 					},
 					{
-						"name": "Trash accumulation in public place or on a neighbor's property",
-						"id": 1021971
+						"name": "Nuisance animal",
+						"id": 1022226
 					},
 					{
-						"name": "Trash Not Collected (Refused)",
-						"id": 1021965
+						"name": "Other Pet Complaint",
+						"id": 1022227
 					},
 					{
-						"name": "Yard Material Not Collected",
-						"id": 1021967
+						"name": "Pet out of yard or roaming",
+						"id": 1022221
+					},
+					{
+						"name": "Pet waste was left in my yard",
+						"id": 1022229
+					},
+					{
+						"name": "Stray pet found and needs pickup",
+						"id": 1022228
 					}
 				]
 			},
 			{
-				"name": "Houses & Vehicles",
-				"id": 1021963,
+				"name": "Wild Animals",
+				"id": 1022218,
 				"types": [
 					{
-						"name": "Abandoned Vehicle",
-						"id": 1021973
+						"name": "Animal caught in a trap",
+						"id": 1022231
 					},
 					{
-						"name": "Empty/Abandoned Property Contains Abandoned Animal(s)",
-						"id": 1021976
+						"name": "Animal shows signs of rabies",
+						"id": 1022235
 					},
 					{
-						"name": "Tall Grass and Weeds",
-						"id": 1021977
+						"name": "Animals in vacant property",
+						"id": 1022233
 					},
 					{
-						"name": "Unsanitary Conditions Observed In Neighbor's Property",
-						"id": 1021975
+						"name": "Dangerous wild animal",
+						"id": 1022234
 					},
 					{
-						"name": "Vacant Property",
-						"id": 1021974
+						"name": "Dead animal pickup",
+						"id": 1022232
+					},
+					{
+						"name": "Injured animal",
+						"id": 1022236
+					},
+					{
+						"name": "Other wild animal complaint",
+						"id": 1022237
 					}
 				]
 			}
 		]
 	},
 	{
-		"name": "Roads and Walkways",
-		"id": 1021958,
+		"name": "Rental Property",
+		"id": 1022186,
 		"types": [
 			{
-				"name": "Adopt-A-Road",
-				"id": 1021979
+				"name": "Failure to maintain plumbing system",
+				"id": 1022214
 			},
 			{
-				"name": "Flooding",
-				"id": 1021982
+				"name": "Failure to provide carbon monoxide detectors",
+				"id": 1022213
 			},
 			{
-				"name": "Ice",
-				"id": 1021980
+				"name": "Poor living conditions in a rental home",
+				"id": 1022212
+			},
+			{
+				"name": "Unregistered rental property",
+				"id": 1022215
 			}
 		]
 	},
 	{
-		"name": "Residential Driveway Access",
-		"id": 1021985,
+		"name": "Roads and Sidewalks",
+		"id": 1022185,
 		"types": [
 			{
-				"name": "Utility Cuts",
-				"id": 1021992
+				"name": "Adopt-a-Road Inquiry",
+				"id": 1022199
+			},
+			{
+				"name": "Flooded road",
+				"id": 1022206
+			},
+			{
+				"name": "Icy conditions",
+				"id": 1022201
+			},
+			{
+				"name": "Other Road or Sidewalk Complaint",
+				"id": 1022200
+			},
+			{
+				"name": "Overgrown trees or bushes near roadway",
+				"id": 1022210
+			},
+			{
+				"name": "Paving or re-paving needed",
+				"id": 1022203
+			},
+			{
+				"name": "Pothole",
+				"id": 1022204
+			},
+			{
+				"name": "Sidewalk or curb repair needed",
+				"id": 1022207
+			},
+			{
+				"name": "Street cleaning needed",
+				"id": 1022209
+			},
+			{
+				"name": "Tall grass or weeds near roadway",
+				"id": 1022202
+			},
+			{
+				"name": "Trash in roadside stream",
+				"id": 1022208
+			},
+			{
+				"name": "Trash on roadside",
+				"id": 1022205
 			}
 		]
 	},
 	{
-		"name": "Road Maintenance",
-		"id": 1021984,
+		"name": "Trash and Recycling",
+		"id": 1022184,
 		"types": [
 			{
-				"name": "Paving",
-				"id": 1022034
+				"name": "Can or lid lost or damaged",
+				"id": 1022195
 			},
 			{
-				"name": "Potholes",
-				"id": 1022035
+				"name": "Other Trash and Recycling Problem",
+				"id": 1022197
 			},
 			{
-				"name": "Street Sweeping",
-				"id": 1022033
-			}
-		]
-	},
-	{
-		"name": "Roadside Maintenance",
-		"id": 1021981,
-		"types": [
-			{
-				"name": "Mowing",
-				"id": 1022028
+				"name": "Property damage during collection",
+				"id": 1022196
 			},
 			{
-				"name": "Roadside Litter",
-				"id": 1022029
+				"name": "Recycling not collected",
+				"id": 1022192
 			},
 			{
-				"name": "Stream Cleaning",
-				"id": 1022030
+				"name": "Request to start new collection",
+				"id": 1022194
 			},
 			{
-				"name": "Trees and Bushes Trimming",
-				"id": 1022031
+				"name": "Trash not collected",
+				"id": 1022191
 			},
 			{
-				"name": "Sidewalk/ Curb Maintenance",
-				"id": 1021983
+				"name": "Yard waste not collected",
+				"id": 1022193
 			}
 		]
 	}
