@@ -22,6 +22,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				$categories = $form.find('#category-selection'),
 				$panels = $form.find('.panel'),
 				$steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
+				$deviceNumber = $wrapper.find('#deviceNumber'),
 				handlerData = {
 					$wrapper: $wrapper,
 					animationFactor: 300,
@@ -49,12 +50,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				var keyupKey = event.which || event.keyCode;
 				if (keyupKey !== 9)
 					validate([event.target.id]);
-			});
-		},
-
-		searchButtonClickHandler = function (event) {
-
-		},
+			});			
+		},		
 
 		/**
 		 * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
@@ -261,13 +258,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		 */
 		validateField = function ($field) {
 			var fieldId = $field.attr('id');
+
 			if ($field.is(':visible')) {
-				if (fieldId === 'address') {
-					if (!$('#map-latitude').val() && !$('#map-longitude').val()) {
-						$field.parent().addClass('error');
-						return fieldId;
-					}
-				}
 				if (!$field.val() || $field.val() === '-1') {
 					$field.parent().addClass('error');
 					$field.attr('aria-invalid', 'true');
@@ -276,6 +268,26 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					$field.parent().removeClass('error');
 					$field.attr('aria-invalid', 'false');
 				}
+
+				if (fieldId === 'address') {
+					if (!$('#map-latitude').val() && !$('#map-longitude').val()) {
+						$field.parent().addClass('error');
+						return fieldId;
+					}
+				}
+				
+				// Check that phone is composted of 10 digits
+				if (fieldId=='deviceNumber') {
+					var deviceNumber = $field.val(),
+						digits = deviceNumber.match(/\d+/g),
+						combinedDigits = digits ? digits.join('') : '';
+
+					if (combinedDigits.length != 10) {
+						$field.parent().addClass('error');
+						return fieldId;
+					}
+				}
+
 			}
 
 			return;

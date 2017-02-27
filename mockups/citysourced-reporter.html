@@ -96,7 +96,11 @@
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle"
         async defer></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+    <script>
+        $('#deviceNumber').inputmask('999-999-9999', { 'clearIncomplete': true });
+        $('#email').inputmask('email', { 'clearIncomplete': true });
+    </script>
 
 
 </body>
