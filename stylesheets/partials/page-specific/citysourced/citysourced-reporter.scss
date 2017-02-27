@@ -171,6 +171,10 @@
                     padding: 5px 10px;
                     width: auto;
                 }
+
+                &[type=button]:disabled {
+                    background-color: $lightest-gray;
+                }
             }
 
             .error-message {

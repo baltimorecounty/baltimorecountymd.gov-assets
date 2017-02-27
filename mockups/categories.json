@@ -1,9 +1,7 @@
-[
-	{
+[{
 		"name": "Building and Development",
 		"id": 1022189,
-		"types": [
-			{
+		"types": [{
 				"name": "Failure to obtain Inspection",
 				"id": 1022246
 			},
@@ -16,8 +14,7 @@
 	{
 		"name": "Neighborhood",
 		"id": 1022188,
-		"types": [
-			{
+		"types": [{
 				"name": "Abandoned Vehicle",
 				"id": 1022241
 			},
@@ -50,12 +47,10 @@
 	{
 		"name": "Pets and Animals",
 		"id": 1022187,
-		"types": [
-			{
+		"types": [{
 				"name": "Pets",
 				"id": 1022217,
-				"types": [
-					{
+				"types": [{
 						"name": "Animal cruelty",
 						"id": 1022224
 					},
@@ -76,10 +71,6 @@
 						"id": 1022226
 					},
 					{
-						"name": "Other Pet Complaint",
-						"id": 1022227
-					},
-					{
 						"name": "Pet out of yard or roaming",
 						"id": 1022221
 					},
@@ -90,14 +81,18 @@
 					{
 						"name": "Stray pet found and needs pickup",
 						"id": 1022228
+					}, 
+					{
+						"name": "Other Pet Complaint",
+						"id": 1022227
 					}
+
 				]
 			},
 			{
 				"name": "Wild Animals",
 				"id": 1022218,
-				"types": [
-					{
+				"types": [{
 						"name": "Animal caught in a trap",
 						"id": 1022231
 					},
@@ -132,8 +127,7 @@
 	{
 		"name": "Rental Property",
 		"id": 1022186,
-		"types": [
-			{
+		"types": [{
 				"name": "Failure to maintain plumbing system",
 				"id": 1022214
 			},
@@ -154,8 +148,7 @@
 	{
 		"name": "Roads and Sidewalks",
 		"id": 1022185,
-		"types": [
-			{
+		"types": [{
 				"name": "Adopt-a-Road Inquiry",
 				"id": 1022199
 			},
@@ -166,10 +159,6 @@
 			{
 				"name": "Icy conditions",
 				"id": 1022201
-			},
-			{
-				"name": "Other Road or Sidewalk Complaint",
-				"id": 1022200
 			},
 			{
 				"name": "Overgrown trees or bushes near roadway",
@@ -202,20 +191,19 @@
 			{
 				"name": "Trash on roadside",
 				"id": 1022205
+			}, 
+			{
+				"name": "Other Road or Sidewalk Complaint",
+				"id": 1022200
 			}
 		]
 	},
 	{
 		"name": "Trash and Recycling",
 		"id": 1022184,
-		"types": [
-			{
+		"types": [{
 				"name": "Can or lid lost or damaged",
 				"id": 1022195
-			},
-			{
-				"name": "Other Trash and Recycling Problem",
-				"id": 1022197
 			},
 			{
 				"name": "Property damage during collection",
@@ -236,6 +224,10 @@
 			{
 				"name": "Yard waste not collected",
 				"id": 1022193
+			}, 
+			{
+				"name": "Other Trash and Recycling Problem",
+				"id": 1022197
 			}
 		]
 	}

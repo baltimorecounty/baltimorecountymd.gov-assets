@@ -1,317 +1,322 @@
 namespacer('baltimoreCounty.pageSpecific');
 
 baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonTools, undefined) {
-    'use strict';
+	'use strict';
 
-    var selectOptionData,
-        keys = {
-            end: 35,
-            home: 36,
-            left: 37,
-            up: 38,
-            right: 39,
-            down: 40,
-            delete: 46
-        },
-        fieldIds = ['categories[1]', 'categories[2]', 'categories[3]', 'description', 'address', 'map-latitude', 'map-longitude', 'firstName', 'lastName', 'email', 'phone'],
+	var selectOptionData,
+		keys = {
+			end: 35,
+			home: 36,
+			left: 37,
+			up: 38,
+			right: 39,
+			down: 40,
+			delete: 46
+		},
+		fieldIds = ['categories[1]', 'categories[2]', 'categories[3]', 'description', 'address', 'map-latitude', 'map-longitude', 'firstName', 'lastName', 'email', 'deviceNumber'],
 
-        init = function (jsonDocumentUrl) {
+		init = function (jsonDocumentUrl) {
 
-            var $wrapper = $('.bc-citysourced-reporter'),
-                $form = $wrapper.find('#citysourced-reporter-form'),
-                $categories = $form.find('#category-selection'),
-                $panels = $form.find('.panel'),
-                $steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
-                handlerData = {
-                    $wrapper: $wrapper,
-                    animationFactor: 300,
-                    $form: $form,
-                    $categories: $categories,
-                    $panels: $panels,
-                    $steps: $steps,
-                    $firstPanel: $panels.first(),
-                    $lastPanel: $panels.last(),
-                    $prevButton: $('#prevButton'),
-                    $nextButton: $('#nextButton'),
-                    $fileReportButton: $('#fileReportButton')
-                };
+			var $wrapper = $('.bc-citysourced-reporter'),
+				$form = $wrapper.find('#citysourced-reporter-form'),
+				$categories = $form.find('#category-selection'),
+				$panels = $form.find('.panel'),
+				$steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
+				handlerData = {
+					$wrapper: $wrapper,
+					animationFactor: 300,
+					$form: $form,
+					$categories: $categories,
+					$panels: $panels,
+					$steps: $steps,
+					$firstPanel: $panels.first(),
+					$lastPanel: $panels.last(),
+					$prevButton: $('#prevButton'),
+					$nextButton: $('#nextButton'),
+					$fileReportButton: $('#fileReportButton')
+				};
 
-            $.ajax(jsonDocumentUrl).done(function (data) {
-                selectOptionData = data;
-                createSelectAndLoadOptions(selectOptionData, $categories, 1);
-            });
+			$.ajax(jsonDocumentUrl).done(function (data) {
+				selectOptionData = data;
+				createSelectAndLoadOptions(selectOptionData, $categories, 1);
+			});
 
-            handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
-            handlerData.$prevButton.on('click', handlerData, prevButtonClickHandler);
-            handlerData.$fileReportButton.on('click', handlerData, fileReportButtonClickHandler);
+			handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
+			handlerData.$prevButton.on('click', handlerData, prevButtonClickHandler);
+			handlerData.$fileReportButton.on('click', handlerData, fileReportButtonClickHandler);
 
-            $form.find('input, textarea').on('blur keyup', function (event) {
-                var keyupKey = event.which || event.keyCode;
-                if (keyupKey !== 9)
-                    validate([event.target.id]);
-            });
-        },
+			$form.find('input, textarea').on('blur keyup', function (event) {
+				var keyupKey = event.which || event.keyCode;
+				if (keyupKey !== 9)
+					validate([event.target.id]);
+			});
+		},
 
-        searchButtonClickHandler = function(event) {
+		searchButtonClickHandler = function (event) {
 
-        },
+		},
 
-        /**
-         * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
-         */
-        fileReportButtonClickHandler = function (event) {
-            if (!validate(fieldIds)) {
-                
-                var $form = event.data.$form,
-                    $wrapper = event.data.$wrapper,
-                    animationFactor = event.data.animationFactor,
-                    $lastCategory = event.data.$categories.find('select').last(),
-                    formData = {
-                        CategoryId: $lastCategory.val(),
-                        CategoryName: $lastCategory.find('option[value=' + $lastCategory.val() + ']').text(),
-                        Details: $form.find('#details').val(),
-                        Longitude: $form.find('#map-longitude').val(),
-                        Latitude: $form.find('#map-latitude').val(),
-                        FirstName: $form.find('#firstName').val(),
-                        LastName: $form.find('#lastName').val(), 
-                        Email: $form.find('#email').val(),
-                        Phone: $form.find('#phone').val()
-                    };
+		/**
+		 * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
+		 */
+		fileReportButtonClickHandler = function (event) {
+			if (!validate(fieldIds)) {
 
-                var settings = {
-                    data: formData,
-                    dataType: 'json',
-                    method: 'POST',
-                    cache: false
-                };
+				$(event.target).prop('disabled', 'true').val('Submitting request...');
 
-                $.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)
-                    .done(function(data, textStatus, jqXHR) {
-                        $wrapper.fadeOut(animationFactor, function() {
-                            $('.bc-citysourced-reporter-alert.alert-success').fadeIn(animationFactor);
-                        });
-                        console.log(data, textStatus);
-                    })
-                    .fail(function(jqXHR, textStatus, errorThrown) {
-                        $wrapper.fadeOut(animationFactor, function() {
-                            $('.bc-citysourced-reporter-alert.alert-warning').fadeIn(animationFactor);
-                        });
-                        console.log(textStatus, errorThrown);
-                    });
-            }                
-        },
+				var $form = event.data.$form,
+					$wrapper = event.data.$wrapper,
+					animationFactor = event.data.animationFactor,
+					$lastCategory = event.data.$categories.find('select').last(),
+					formData = {
+						CategoryId: $lastCategory.val(),
+						CategoryName: $lastCategory.find('option[value=' + $lastCategory.val() + ']').text(),
+						Details: $form.find('#details').val(),
+						Longitude: $form.find('#map-longitude').val(),
+						Latitude: $form.find('#map-latitude').val(),
+						FirstName: $form.find('#firstName').val(),
+						LastName: $form.find('#lastName').val(),
+						Email: $form.find('#email').val(),
+						DeviceNumber: $form.find('#deviceNumber').val()
+					};
 
-        /**
-         * Click handler for the 'next' button, which flips to the next panel.
-         */
-        nextButtonClickHandler = function (event) {
-            if (validate(fieldIds)) {
-                event.data.$form.find('[aria-invalid=true]').first().focus();
-                return;
-            }
+				var settings = {
+					data: formData,
+					dataType: 'json',
+					method: 'POST',
+					cache: false
+				};
 
-            var $visiblePanel = event.data.$panels.filter(':visible'),
-                $nextPanel = $visiblePanel.next('.panel').first();
+				//$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)
+				$.ajax('//ba224964:1000/api/citysourced/createreport', settings)
+					.done(function (data, textStatus, jqXHR) {
+						$wrapper.fadeOut(animationFactor, function () {
+							var jsonResponse = JSON.parse(data);
+							$("#issueId").text(jsonResponse.CsResponse.ReportId);
+							$('.bc-citysourced-reporter-alert.alert-success').fadeIn(animationFactor);
+						});
+						console.log(data, textStatus);
+					})
+					.fail(function (jqXHR, textStatus, errorThrown) {
+						$wrapper.fadeOut(animationFactor, function () {
+							$('.bc-citysourced-reporter-alert.alert-warning').fadeIn(animationFactor);
+						});
+						console.log(textStatus, errorThrown);
+					});
+			}
+		},
 
-            if ($nextPanel.is(event.data.$lastPanel)) {
-                $(event.target).addClass('hidden');
-                event.data.$fileReportButton.removeClass('hidden');
-                event.data.$fileReportButton.attr('aria-hidden', false);
-            } else {
-                $(event.target).removeClass('hidden');
-            }
+		/**
+		 * Click handler for the 'next' button, which flips to the next panel.
+		 */
+		nextButtonClickHandler = function (event) {
+			if (validate(fieldIds)) {
+				event.data.$form.find('[aria-invalid=true]').first().focus();
+				return;
+			}
 
-            $(event.target).attr('aria-hidden', $(event.target).hasClass('hidden'));
+			var $visiblePanel = event.data.$panels.filter(':visible'),
+				$nextPanel = $visiblePanel.next('.panel').first();
 
-            if ($nextPanel.length) {
-                $visiblePanel.fadeOut(event.data.animationFactor, function () {
-                    $nextPanel.fadeIn(event.data.animationFactor);
-                    $visiblePanel.attr('aria-hidden', 'true');
-                    $nextPanel.attr('aria-hidden', 'false');
-                    event.data.$steps.eq($nextPanel.index()).toggleClass('highlight');
-                    event.data.$prevButton.removeClass('hidden');
+			if ($nextPanel.is(event.data.$lastPanel)) {
+				$(event.target).addClass('hidden');
+				event.data.$fileReportButton.removeClass('hidden');
+				event.data.$fileReportButton.attr('aria-hidden', false);
+			} else {
+				$(event.target).removeClass('hidden');
+			}
 
-                    if ($nextPanel.find('#map').length) {
-                        if (google.maps) {
-                            var center = map.getCenter();
-                            google.maps.event.trigger(map, 'resize');
-                            map.setCenter(center);
-                        }
-                    }
-                });
-            }
+			$(event.target).attr('aria-hidden', $(event.target).hasClass('hidden'));
 
-            $('html, body').animate({
-                scrollTop: $('#mainContent').offset().top
-            }, event.data.animationFactor, function () {
-                focusFirstFormElementOfActivePanel(event.data.$panels);
-            });
-        },
+			if ($nextPanel.length) {
+				$visiblePanel.fadeOut(event.data.animationFactor, function () {
+					$nextPanel.fadeIn(event.data.animationFactor);
+					$visiblePanel.attr('aria-hidden', 'true');
+					$nextPanel.attr('aria-hidden', 'false');
+					event.data.$steps.eq($nextPanel.index()).toggleClass('highlight');
+					event.data.$prevButton.removeClass('hidden');
 
-        /**
-         * Click handler for the 'previous' button, which flips to the previous panel.
-         */
-        prevButtonClickHandler = function (event) {
-            if (validate(fieldIds)) {
-                event.data.$form.find('[aria-invalid=true]').first().focus();
-                return;
-            }
+					if ($nextPanel.find('#map').length) {
+						if (google.maps) {
+							var center = map.getCenter();
+							google.maps.event.trigger(map, 'resize');
+							map.setCenter(center);
+						}
+					}
+				});
+			}
 
-            var $visiblePanel = event.data.$panels.filter(':visible'),
-                $nextPanel = $visiblePanel.prev('.panel').first();
+			$('html, body').animate({
+				scrollTop: $('#mainContent').offset().top
+			}, event.data.animationFactor, function () {
+				focusFirstFormElementOfActivePanel(event.data.$panels);
+			});
+		},
 
-            event.data.$fileReportButton.addClass('hidden');
+		/**
+		 * Click handler for the 'previous' button, which flips to the previous panel.
+		 */
+		prevButtonClickHandler = function (event) {
+			if (validate(fieldIds)) {
+				event.data.$form.find('[aria-invalid=true]').first().focus();
+				return;
+			}
 
-            if ($nextPanel.is(event.data.$firstPanel))
-                $(event.target).addClass('hidden');
-            else
-                $(event.target).removeClass('hidden');
+			var $visiblePanel = event.data.$panels.filter(':visible'),
+				$nextPanel = $visiblePanel.prev('.panel').first();
 
-            $(event.target).attr('aria-hidden', $(event.target).hasClass('hidden'));
+			event.data.$fileReportButton.addClass('hidden');
 
-            if ($nextPanel.length) {
-                event.data.$steps.eq($nextPanel.index() + 1).toggleClass('highlight');
-                $visiblePanel.fadeOut(event.data.animationFactor, function () {
-                    $nextPanel.fadeIn(event.data.animationFactor);
-                    event.data.$nextButton.removeClass('hidden');
-                });
-            }
+			if ($nextPanel.is(event.data.$firstPanel))
+				$(event.target).addClass('hidden');
+			else
+				$(event.target).removeClass('hidden');
 
-            $('html, body').animate({
-                scrollTop: $('#mainContent').offset().top
-            }, event.data.animationFactor, function () {
-                focusFirstFormElementOfActivePanel(event.data.$panels);
-            });
-        },
+			$(event.target).attr('aria-hidden', $(event.target).hasClass('hidden'));
 
-        /**
-         * Sets the focus to the first imput element of the active panel.
-         */
-        focusFirstFormElementOfActivePanel = function ($panels) {
-            $panels.filter(':visible').find('input, select, textarea').filter(':visible').first().focus();
-        },
+			if ($nextPanel.length) {
+				event.data.$steps.eq($nextPanel.index() + 1).toggleClass('highlight');
+				$visiblePanel.fadeOut(event.data.animationFactor, function () {
+					$nextPanel.fadeIn(event.data.animationFactor);
+					event.data.$nextButton.removeClass('hidden');
+				});
+			}
 
-        /**
-         * Creates the series of dropdowns for the category selection.
-         */
-        createSelectAndLoadOptions = function (data, $parent, depth) {
-            var $select = $('<select>', {
-                id: 'categories[' + depth + ']',
-                'aria-labelledby': 'categories-label',
-                'aria-required': true
-            });
-            $select.insertBefore($parent.find('.error-message'));
+			$('html, body').animate({
+				scrollTop: $('#mainContent').offset().top
+			}, event.data.animationFactor, function () {
+				focusFirstFormElementOfActivePanel(event.data.$panels);
+			});
+		},
 
-            var $option = $('<option>', {
-                value: -1,
-                text: '--- Select a request category ---',
-                selected: 'selected'
-            });
-            $select.append($option);
+		/**
+		 * Sets the focus to the first imput element of the active panel.
+		 */
+		focusFirstFormElementOfActivePanel = function ($panels) {
+			$panels.filter(':visible').find('input, select, textarea').filter(':visible').first().focus();
+		},
 
-            $select.on('blur change', function (event) {
-                validate([event.target.id]);
-            });
+		/**
+		 * Creates the series of dropdowns for the category selection.
+		 */
+		createSelectAndLoadOptions = function (data, $parent, depth) {
+			var $select = $('<select>', {
+				id: 'categories[' + depth + ']',
+				'aria-labelledby': 'categories-label',
+				'aria-required': true
+			});
+			$select.insertBefore($parent.find('.error-message'));
 
-            $.each(data, function (idx, item) {
-                var $option = $('<option>', {
-                    value: item.id,
-                    text: item.name
-                });
-                $select.append($option);
-            });
+			var $option = $('<option>', {
+				value: -1,
+				text: '--- Select a request category ---',
+				selected: 'selected'
+			});
+			$select.append($option);
 
-            $select.on('change', {
-                fragment: data
-            }, selectChangeHandler);
-        },
+			$select.on('blur change', function (event) {
+				validate([event.target.id]);
+			});
 
-        /**
-         * Updates the category dropdown options and visibility when the selected item changes.
-         */
-        selectChangeHandler = function (event) {
-            var $select = $(event.target),
-                selectedValue = $select.val(),
-                selectedName = $select.find('option[value=' + selectedValue + ']').text(),
-                existingSelectCount,
-                $trackingField = $('#report-category');
+			$.each(data, function (idx, item) {
+				var $option = $('<option>', {
+					value: item.id,
+					text: item.name
+				});
+				$select.append($option);
+			});
 
-            $select.nextAll('select').remove();
+			$select.on('change', {
+				fragment: data
+			}, selectChangeHandler);
+		},
 
-            if (selectedValue === '-1') {
-                $trackingField.val('');
-                return;
-            }
+		/**
+		 * Updates the category dropdown options and visibility when the selected item changes.
+		 */
+		selectChangeHandler = function (event) {
+			var $select = $(event.target),
+				selectedValue = $select.val(),
+				selectedName = $select.find('option[value=' + selectedValue + ']').text(),
+				existingSelectCount,
+				$trackingField = $('#report-category');
 
-            existingSelectCount = $select.siblings('select').length + 1;
+			$select.nextAll('select').remove();
 
-            var jsonSubtree = jsonTools.getSubtree(event.data.fragment, 'name', 'types', selectedName);
+			if (selectedValue === '-1') {
+				$trackingField.val('');
+				return;
+			}
 
-            if (jsonSubtree)
-                createSelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
-            else
-                $trackingField.val(selectedValue);
-        },
+			existingSelectCount = $select.siblings('select').length + 1;
 
-        /**
-         * Validates a single field.
-         */
-        validateField = function ($field) {
-            var fieldId = $field.attr('id');
-            if ($field.is(':visible')) {
-                if (fieldId === 'address') {
-                    if (!$('#map-latitude').val() && !$('#map-longitude').val()) {
-                        $field.parent().addClass('error');
-                        return fieldId;
-                    }
-                }
-                if (!$field.val() || $field.val() === '-1') {
-                    $field.parent().addClass('error');
-                    $field.attr('aria-invalid', 'true');
-                    return fieldId;
-                } else {
-                    $field.parent().removeClass('error');
-                    $field.attr('aria-invalid', 'false');
-                }
-            }
+			var jsonSubtree = jsonTools.getSubtree(event.data.fragment, 'name', 'types', selectedName);
 
-            return;
-        },
+			if (jsonSubtree)
+				createSelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
+			else
+				$trackingField.val(selectedValue);
+		},
 
-        /**
-         * Simple validation that only makes sure a value is present.
-         */
-        validate = function (fieldIds) {
-            var errorFieldIds = [],
-                $field,
-                validatedFieldId;
+		/**
+		 * Validates a single field.
+		 */
+		validateField = function ($field) {
+			var fieldId = $field.attr('id');
+			if ($field.is(':visible')) {
+				if (fieldId === 'address') {
+					if (!$('#map-latitude').val() && !$('#map-longitude').val()) {
+						$field.parent().addClass('error');
+						return fieldId;
+					}
+				}
+				if (!$field.val() || $field.val() === '-1') {
+					$field.parent().addClass('error');
+					$field.attr('aria-invalid', 'true');
+					return fieldId;
+				} else {
+					$field.parent().removeClass('error');
+					$field.attr('aria-invalid', 'false');
+				}
+			}
 
-            if (fieldIds.length)
-                $.each(fieldIds, function (idx, item) {
-                    // Hack, since jQuery doesn't "see" newly appended items, and some of these fields are dynamic.
-                    $field = $(document.getElementById(item.id ? item.id : item));
-                    validatedFieldId = validateField($field);
-                    if (validatedFieldId)
-                        errorFieldIds.push(validatedFieldId);
-                });
-            else {
-                $field = $(document.getElementById(fieldIds.id));
-                validatedFieldId = validateField($field);
-                if (validatedFieldId)
-                    errorFieldIds.push(validatedFieldId);
-            }
+			return;
+		},
 
-            return errorFieldIds.length;
-        };
+		/**
+		 * Simple validation that only makes sure a value is present.
+		 */
+		validate = function (fieldIds) {
+			var errorFieldIds = [],
+				$field,
+				validatedFieldId;
 
-    return {
-        init: init
-    };
+			if (fieldIds.length)
+				$.each(fieldIds, function (idx, item) {
+					// Hack, since jQuery doesn't "see" newly appended items, and some of these fields are dynamic.
+					$field = $(document.getElementById(item.id ? item.id : item));
+					validatedFieldId = validateField($field);
+					if (validatedFieldId)
+						errorFieldIds.push(validatedFieldId);
+				});
+			else {
+				$field = $(document.getElementById(fieldIds.id));
+				validatedFieldId = validateField($field);
+				if (validatedFieldId)
+					errorFieldIds.push(validatedFieldId);
+			}
+
+			return errorFieldIds.length;
+		};
+
+	return {
+		init: init
+	};
 
 })(window, jQuery, baltimoreCounty.utility.jsonTools);
 
 $(function () {
-    /* Auto-load the category data */
-    //baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/s/o/categories-v5.json');
-    baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
+	/* Auto-load the category data */
+	//baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/s/o/categories-v5.json');
+	baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
 });

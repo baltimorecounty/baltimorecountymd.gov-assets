@@ -66,7 +66,8 @@ baltimoreCounty.pageSpecific.googleMaps = (function (googleMaps, undefined) {
 					trackLatLng(latitude, longitude);
 				}
 
-				callback(isCounty);
+				if(callback)
+					callback(isCounty);
 			});
 		},
 
@@ -75,6 +76,8 @@ baltimoreCounty.pageSpecific.googleMaps = (function (googleMaps, undefined) {
 		 * with a selected address, this will center the map on that location and drop a pin.
 		 */
 		autocompletePlaceChangedHandler = function () {
+			$('#address').val(removeCountry($('#address').val()));
+			
 			var place = autocomplete.getPlace();
 
 			if (place.geometry) {
@@ -158,7 +161,7 @@ baltimoreCounty.pageSpecific.googleMaps = (function (googleMaps, undefined) {
 
 				if (address) {
 					$target.parent().removeClass('error');
-					$target.val(address);
+					$target.val(removeCountry(address));
 				} else {
 					$target.parent().addClass('error');
 					$target.val('');
@@ -209,6 +212,13 @@ baltimoreCounty.pageSpecific.googleMaps = (function (googleMaps, undefined) {
 		trackLatLng = function (latitude, longitude) {
 			document.getElementById('map-latitude').value = latitude;
 			document.getElementById('map-longitude').value = longitude;
+		},
+
+		/**
+		 * Remove "USA", since this is only for USA addresses.
+		 */
+		removeCountry = function(addressString) {
+			return addressString.replace(', USA', '');
 		},
 
 		/**

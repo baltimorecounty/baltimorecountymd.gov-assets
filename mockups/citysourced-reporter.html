@@ -26,21 +26,27 @@
 <body>
 
 
-    <div role="alert" class="bc-citysourced-reporter-alert alert-success" style="display: none" aria-hidden="true"><h2>Success</h2><p>Your report has been sucessfully submitted. Thank you!</p></div>
-    <div role="alert" class="bc-citysourced-reporter-alert alert-warning" style="display: none" aria-hidden="true"><h2>Warning</h2><p>There was a problem with your report submission. The right people have been emailed and will look into it.</p></div>
+    <div role="alert" class="bc-citysourced-reporter-alert alert-success" style="display: none" aria-hidden="true">
+        <h2>Your Submission Has Been Received</h2>
+        <p>Thank you for submitting your report. Your tracking number is: <span id="issueId"></span>.</p>
+        <p>You will receive an email in a few minutes with information about what happens next. You can also track your status online by entering your tracking number at <a href="/followup" title="Track your issue status online.">http://www.baltimorecountymd.gov/followup</a>.</p>
+    </div>
+    <div role="alert" class="bc-citysourced-reporter-alert alert-warning" style="display: none" aria-hidden="true">
+        <h2>Your Report Was Not Submitted</h2>
+        <p>We encountered a problem processing your submission. Our team has been notified and is working to resolve it.</p>
+    </div>
 
     <div class="bc-citysourced-reporter">
         <form id="citysourced-reporter-form">
             <fieldset>
-                <legend>Service Request Category</legend>
-                <p>Please use the categories below to describe your service request.</p>
+                <legend>How Can We Help?</legend>
                 <div id="category-selection">
-                    <label id="categories-label">Select a category for your service request<span class="required" aria-hidden="true">*</span> <span class="sr-only">(required)</span></label>
+                    <label id="categories-label">Request Category</label>
                     <p role="alert" class="error-message">Please select a category for your report.</p>
                 </div>
                 <input type="hidden" id="report-category" value="" />
                 <div class="form-control">
-                    <label for="details">Add details to your report<span class="required" aria-hidden="true">*</span> <span class="sr-only">(required)</span></label>
+                    <label for="details">Description</label>
                     <textarea id="details" aria-required="true"></textarea>
                     <p role="alert" class="error-message">Please enter details for your report.</p>
                 </div>
@@ -48,10 +54,10 @@
 
 
             <fieldset>
-                <legend>Service Request Location</legend>
-                <p>Please mark your service location on the map below, or use the address box to look up a location by address.</p>
+                <legend>Add a Location</legend>
+                <p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
                 <div class="form-control">
-                    <label for="address">Enter the closest address to your service request<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <label for="address">Enter the closest address to your service request</label>
                     <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" />
                     <a id="addressSearch" class="contentButton"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search</span></a>
                     <p role="alert" class="error-message">You must select a location inside Baltimore County.</p>
@@ -63,26 +69,25 @@
 
             <fieldset>
                 <legend>Your Contact Information</legend>
-                <p>Please leave your contact information so we can send you details about how you can check the status of your
-                    report.</p>
+                <p>We require some basic contact information in order to process your request. You'll receive status updates by email, but we'll only call you if we need more information.</p>
                 <div class="form-control">
-                    <label for="firstName">First Name<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <label for="firstName">First Name</label>
                     <input type="text" id="firstName" name="firstName" value="" aria-required="true" />
                     <p role="alert" class="error-message">Please enter your first name.</p>
                 </div>
                 <div class="form-control">
-                    <label for="lastName">Last Name<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <label for="lastName">Last Name</label>
                     <input type="text" id="lastName" name="lastName" value="" aria-required="true" />
                     <p role="alert" class="error-message">Please enter your last name.</p>
                 </div class="form-control">
                 <div class="form-control">
-                    <label for="email">Email Address<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                    <label for="email">Email Address</label>
                     <input type="text" id="email" name="email" value="" placeholder="name@domain.com" aria-required="true" />
                     <p role="alert" class="error-message">Please enter your email address.</p>
                 </div>
                 <div class="form-control">
-                    <label for="phone">Phone<span class="required" aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                    <input type="text" id="phone" name="phone" value="" placeholder="(410) 555-1212" aria-required="true" />
+                    <label for="phone">Phone</label>
+                    <input type="text" id="deviceNumber" name="deviceNumber" value="" placeholder="410-555-1212" aria-required="true" />
                     <p role="alert" class="error-message">Please enter your phone number.</p>
                 </div>
             </fieldset>
