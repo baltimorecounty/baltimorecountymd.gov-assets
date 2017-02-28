@@ -26,47 +26,44 @@
 <body>
 
 
-    <div role="alert" class="bc-citysourced-reporter-alert alert-warning" style="display: none" aria-hidden="true">
-        <h2>Your Report Was Not Submitted</h2>
-        <p>We encountered a problem processing your submission. Our team has been notified and is working to resolve it.</p>
+    <div role="alert" class="bc-citysourced-viewer-alert alert-warning" style="display: none" aria-hidden="true">
+        <h2>Report Not Found</h2>
+        <p>Sorry, buddy. We tried.</p>
     </div>
 
     <div class="bc-citysourced-reporter">
-        <div class="callout_gray">
-            <h2>Report Status</h2>                
-            <dl id="meta">
-                <dt>Request Type</dt>
-                <dd>Junk, trash, or debris in yard or public space</dd>
-                <dt>Date Created</dt>
-                <dd>1/2/1980</dd>
-                <dt>Last Updated</dt>
-                <dd>2/3/1980</dd>
-                <dt>Status</dt>
-                <dd>Received [<span class="open">OPEN</span>]</dd>
-                <dt>Description</dt>
-                <dd>There’s garbage everywhere!</dd>
-            </dl>
-			<h3>Comments</h3>
-			<ul id="comments">
-				<li>
-					<p>This is my comment. There are many comments like it, but this one is mine.</p>
-					<div class="attribution">
-						<span class="author-name">Author Name</span>, <span class="author-date">1/2/1980</span>
-					</div>
-				</li>
-				<li>
-					<p>This is my comment. There are many comments like it, but this one is mine.</p>
-					<div class="attribution">
-						<span class="author-name">Author Name</span>, <span class="author-date">1/2/1980</span>
-					</div>
-				</li>
-				<li>
-					<p>This is my comment. There are many comments like it, but this one is mine.</p>
-					<div class="attribution">
-						<span class="author-name">Author Name</span>, <span class="author-date">1/2/1980</span>
-					</div>
-				</li>
-			</ul>
+        <div class="callout_gray" id="citysourced-viewer">
+
+			Loading... <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+			<span class="sr-only">Loading...</span>
+
+			<script id="citysourced-viewer-template" type="text/x-handlebars-template">
+				<h2>Report Status</h2>                
+				<dl id="meta">
+					<dt>Request Type</dt>
+					<dd>{{RequestType}}</dd>
+					<dt>Date Created</dt>
+					<dd>{{DateCreated}}</dd>
+					<dt>Last Updated</dt>
+					<dd>{{DateUpdated}}</dd>
+					<dt>Status</dt>
+					<dd>{{Status}} [<span class="{{IsOpen}}">{{IsOpen}}</span>]</dd>
+					<dt>Description</dt>
+					<dd>{{Description}}</dd>
+				</dl>
+				<h3>Comments</h3>
+				<ul id="comments">
+					{{#each Comments}}
+					<li>
+						<p>{{Text}}</p>
+						<div class="attribution">
+							<span class="author-name">{{Author}}</span>, <span class="author-date">{{Created}}</span>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
+			</script>
+
         </div>
     </div>
     <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle"

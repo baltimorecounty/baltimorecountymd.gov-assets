@@ -1,0 +1,75 @@
+@import "stylesheets/modules/all";
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+#mainContent {
+
+    .bc-citysourced-reporter {
+
+		h2 {
+			margin-top: 0;
+		}
+
+		.open, .closed {
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.open {
+			color: $icon-success-color;
+		}
+
+		.closed {
+			color: $red;
+		}
+
+		dl {
+			dt {
+				font-weight: bold;
+			}
+
+			dd {
+				margin: 0 0 1.5em;
+			}
+		}
+
+		#comments {				
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				padding: 1.5em 0;
+				border-top: 1px solid #ccc;
+
+				p { 
+					margin: 0;
+				}
+
+				.author-name {
+					font-weight: bold;
+				}
+
+				.author-date {
+					font-style: italic;
+				}
+			}
+
+			li:first-child {
+				border: none;
+			}
+
+		}
+
+	}
+
+}
