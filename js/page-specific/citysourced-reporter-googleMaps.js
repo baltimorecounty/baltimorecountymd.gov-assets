@@ -1,6 +1,6 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.googleMaps = (function (googleMaps, undefined) {
+baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefined) {
 
 	var marker,
 		autocomplete,

@@ -34,12 +34,24 @@
 
 		dl {
 			dt {
+				float: left;
 				font-weight: bold;
+				width: 40%;
 			}
 
 			dd {
+				float: left;
 				margin: 0 0 1.5em;
+				width: 60%;
 			}
+		}
+
+		.google-map {
+			display: block;
+			height: 350px;
+			margin: 0 10px 20px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
 		}
 
 		#comments {				
@@ -48,8 +60,11 @@
 			padding: 0;
 
 			li {
-				padding: 1.5em 0;
-				border-top: 1px solid #ccc;
+				padding: 1.5em;
+				border-radius: 10px;
+				background-color: #fcfcfc;
+				margin: 0 10px 20px;
+				border: 1px solid #ccc;
 
 				p { 
 					margin: 0;
@@ -62,10 +77,6 @@
 				.author-date {
 					font-style: italic;
 				}
-			}
-
-			li:first-child {
-				border: none;
 			}
 
 		}

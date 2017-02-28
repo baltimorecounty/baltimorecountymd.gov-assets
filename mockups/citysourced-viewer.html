@@ -34,7 +34,7 @@
     <div class="bc-citysourced-reporter">
         <div class="callout_gray" id="citysourced-viewer">
 
-			Loading... <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+			Loading... <i class="fa fa-spinner fa-pulse fa-fw"></i>
 			<span class="sr-only">Loading...</span>
 
 			<script id="citysourced-viewer-template" type="text/x-handlebars-template">
@@ -51,7 +51,13 @@
 					<dt>Description</dt>
 					<dd>{{Description}}</dd>
 				</dl>
+				
+				<h3>Location</h3>
+
+                <div id="map" class="google-map"></div>
+				
 				<h3>Comments</h3>
+				
 				<ul id="comments">
 					{{#each Comments}}
 					<li>
@@ -62,12 +68,18 @@
 					</li>
 					{{/each}}
 				</ul>
+				<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.viewerGoogleMaps.initGoogle"
+					async defer></script>-->
+
+
 			</script>
 
         </div>
     </div>
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.googleMaps.initGoogle"
-        async defer></script>-->
+
+
+
+
 
 </body>
 
