@@ -68,6 +68,58 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		},		
 
 		/**
+		 * Looks up the street address from the latitude and longitude.
+		 */
+		reverseGeocode = function (latitude, longitude, callback) {
+			$.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey)
+				.done(function (data) {
+					var address = getAddress(data.results);
+					callback(address);
+				});
+		},
+
+		/**
+		 * Returns the friendly address string from the reverse geocoding.
+		 */
+		getAddress = function (reverseGeocodeData) {
+			var streetAddressArr = $.grep(reverseGeocodeData, filterStreetAddressResults),
+				countyArr = $.grep(reverseGeocodeData, filterCountyResults);
+			return isBaltimoreCounty(countyArr) ? streetAddressArr && streetAddressArr.length ? streetAddressArr[0].formatted_address : false : false;
+		},
+
+		isBaltimoreCounty = function (countyArr) {
+			var county = '';
+			if (countyArr && countyArr.length)
+				county = countyArr[0].formatted_address;
+			return county.indexOf(targetCounty) !== -1;
+		},
+
+		filterStreetAddressResults = function (item, index) {
+			return filterResults(item, index, 'street_address');
+		},
+
+		filterCountyResults = function (item, index) {
+			return filterResults(item, index, 'administrative_area_level_2');
+		},
+
+		filterResults = function (item, index, query) {
+			var matchArr;
+			if (item.types) {
+				matchArr = $.grep(item.types, function (item, index) {
+					return item === query;
+				});
+			}
+			return matchArr.length ? matchArr : false;
+		},
+
+		/**
+		 * Remove "USA", since this is only for USA addresses.
+		 */
+		removeCountry = function(addressString) {
+			return addressString.replace(', USA', '');
+		},
+
+		/**
 		 * Create the map and autocomplete, and attach up the click and place_changed handler.
 		 */
 		initGoogle = function () {
@@ -89,6 +141,9 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 
 			createMap('map', mapSettings);
 			createMarker(mapSettings.center.lat, mapSettings.center.lng);
+			reverseGeocode(mapSettings.center.lat, mapSettings.center.lng, function(address) {
+				$('#address').text(address);
+			});
 		};
 
 	return {
