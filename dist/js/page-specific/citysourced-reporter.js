@@ -1,10 +1,9 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonTools, undefined) {
+baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonTools, querystringer, undefined) {
 	'use strict';
 
-	var selectOptionData,
-		keys = {
+	var keys = {
 			end: 35,
 			home: 36,
 			left: 37,
@@ -23,6 +22,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				$panels = $form.find('.panel'),
 				$steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
 				$deviceNumber = $wrapper.find('#deviceNumber'),
+				queryString = querystringer.getAsDictionary(),
 				handlerData = {
 					$wrapper: $wrapper,
 					animationFactor: 300,
@@ -38,8 +38,9 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				};
 
 			$.ajax(jsonDocumentUrl).done(function (data) {
-				selectOptionData = data;
-				createSelectAndLoadOptions(selectOptionData, $categories, 1);
+				createSelectAndLoadOptions(data, $categories, 1);
+				//if (queryString.categoryId)
+				//	preloadCategory(queryString.categoryId, data);
 			});
 
 			handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
@@ -50,7 +51,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				var keyupKey = event.which || event.keyCode;
 				if (keyupKey !== 9)
 					validate([event.target.id]);
-			});			
+			});								
 		},		
 
 		/**
@@ -254,6 +255,15 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		},
 
 		/**
+		 * Loads the category ID from the "categoryId" querystring.
+		 */
+		//preloadCategory = function(categoryId, categoryData) {
+		//	categoryData.filter(function(item, index) { 
+		//
+		//	});
+		//},
+
+		/**
 		 * Validates a single field.
 		 */
 		validateField = function ($field) {
@@ -323,7 +333,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		init: init
 	};
 
-})(window, jQuery, baltimoreCounty.utility.jsonTools);
+})(window, jQuery, baltimoreCounty.utility.jsonTools, baltimoreCounty.utility.querystringer);
 
 $(function () {
 	/* Auto-load the category data */
