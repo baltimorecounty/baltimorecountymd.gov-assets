@@ -27,6 +27,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 						$('body').append('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.viewerGoogleMaps.initGoogle" async defer></script>');
 					})
 					.fail(function (jqXHR, textStatus, errorThrown) {
+						$('#reportId').text(reportId);
 						$('.bc-citysourced-reporter').hide();
 						$('.bc-citysourced-viewer-alert').slideDown(300);
 					});
