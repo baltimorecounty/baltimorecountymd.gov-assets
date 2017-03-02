@@ -99,7 +99,7 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
     /**
      * Extracts a subtree of a json document based on a property match.
      */
-    var getSubtree = function(jsonData, matchPropertyName, subtreePropertyName, searchValue) {
+   var getSubtree = function(jsonData, matchPropertyName, subtreePropertyName, searchValue) {
         var match;
         $.each(jsonData, function(idx, item) {
             if (item[subtreePropertyName]) {
@@ -112,10 +112,21 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
             }
         });
         return match;
-    };
+    },
+	
+	getSubtreePath = function(data, matchProperty, subtreeProperty, searchValue) {
+		for (var x = 0; x < data.length; x++) {
+			if (data[x][matchProperty] == searchValue) {
+				return data[x][matchProperty];
+			}
+			if (data[x][subtreeProperty] && getSubtreePath(data[x][subtreeProperty], 'id', 'types', searchValue))
+				return [data[x][matchProperty], getSubtreePath(data[x][subtreeProperty], 'id', 'types', searchValue)];
+		}
+	};
 
     return {
-        getSubtree: getSubtree
+        getSubtree: getSubtree,
+		getSubtreePath: getSubtreePath
     };
 
 })();

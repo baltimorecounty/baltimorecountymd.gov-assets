@@ -38,9 +38,13 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				};
 
 			$.ajax(jsonDocumentUrl).done(function (data) {
-				createSelectAndLoadOptions(data, $categories, 1);
-				//if (queryString.categoryId)
-				//	preloadCategory(queryString.categoryId, data);
+				if (queryString.categoryId)
+					var categoryPathArr = jsonTools.getSubtreePath(data, 'id', 'types', queryString.categoryId);
+				
+				if (categoryPathArr)
+					preloadCategory($categories, data, categoryPathArr);
+				else 
+					createSelectAndLoadOptions(data, $categories, 1);
 			});
 
 			handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
@@ -195,7 +199,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		/**
 		 * Creates the series of dropdowns for the category selection.
 		 */
-		createSelectAndLoadOptions = function (data, $parent, depth) {
+		createSelectAndLoadOptions = function (data, $parent, depth, preselectId) {
 			var $select = $('<select>', {
 				id: 'categories[' + depth + ']',
 				'aria-labelledby': 'categories-label',
@@ -206,7 +210,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			var $option = $('<option>', {
 				value: -1,
 				text: '--- Select a request category ---',
-				selected: 'selected'
+				selected: preselectId ? false : 'selected'
 			});
 			$select.append($option);
 
@@ -217,7 +221,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			$.each(data, function (idx, item) {
 				var $option = $('<option>', {
 					value: item.id,
-					text: item.name
+					text: item.name,
+					selected: item.id === preselectId
 				});
 				$select.append($option);
 			});
@@ -257,11 +262,23 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		/**
 		 * Loads the category ID from the "categoryId" querystring.
 		 */
-		//preloadCategory = function(categoryId, categoryData) {
-		//	categoryData.filter(function(item, index) { 
-		//
-		//	});
-		//},
+		preloadCategory = function($target, categoryData, categoryPathArr) {	
+			var pathArr = $.map(categoryPathArr, function(n) {
+				return n;
+			});
+
+			for (var x = 0; x < pathArr.length; x++) {
+				createSelectAndLoadOptions(categoryData, $target, x + 1, pathArr[x]);
+				for (var y = 0; y < categoryData.length; y++) {
+					if (categoryData[y].id === pathArr[x]) {
+						categoryData = categoryData[y].types;
+						break;
+					}
+				}
+			}
+
+			$('#report-category').val(pathArr[pathArr.length-1]);
+		},
 
 		/**
 		 * Validates a single field.

@@ -81,7 +81,7 @@
 					{
 						"name": "Stray pet found and needs pickup",
 						"id": 1022228
-					}, 
+					},
 					{
 						"name": "Other Pet Complaint",
 						"id": 1022227
@@ -191,7 +191,7 @@
 			{
 				"name": "Trash on roadside",
 				"id": 1022205
-			}, 
+			},
 			{
 				"name": "Other Road or Sidewalk Complaint",
 				"id": 1022200
@@ -224,7 +224,7 @@
 			{
 				"name": "Yard waste not collected",
 				"id": 1022193
-			}, 
+			},
 			{
 				"name": "Other Trash and Recycling Problem",
 				"id": 1022197
