@@ -53,7 +53,7 @@ baltimoreCounty.pageSpecific.fasTrack = (function($, undefined) {
 			var errorCounter = 0;
 
 			if (jsonpResult.ResponseStatus == 1) {
-				var url = '/iwant/getstatus.html?correspondenceId=' + jsonpResult.ResponseError;
+				var url = 'getstatus.html?correspondenceId=' + jsonpResult.ResponseError;
 				$(window.location).attr('href', url);
 			} else {
 				// bug # 2127
