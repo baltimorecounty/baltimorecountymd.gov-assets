@@ -4,7 +4,7 @@ baltimoreCounty.pageSpecific.docket = (function($, undefined) {
 	'use strict';
 
 	var loadDocketInfo = function(callback) {
-		$.ajax('//ba224964:1000/api/docket')
+		$.ajax('//testservices.baltimorecountymd.gov/api/docket')
 			.done(function(data) {
 				callback(data);
 			})
