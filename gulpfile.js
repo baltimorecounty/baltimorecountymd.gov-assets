@@ -58,8 +58,13 @@ gulp.task('concatTemplateJs', function() {
   	return concatFiles(files, 'templateinside.js');
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
-		return gulp.src(['!dist/js/*min.js', 'dist/js/*.js'])
+gulp.task('movePageSpecificJs', function() {
+	return gulp.src('js/page-specific/*.js')
+		.pipe(gulp.dest('dist/js/page-specific'));
+});
+
+gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
+		return gulp.src(['dist/js/**/*.js'])
 			.pipe(stripCode({
 				start_comment: 'test-code',
 				end_comment: 'end-test-code'			
@@ -72,7 +77,7 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 });
 
 gulp.task('sassAndCompressCss', function () {
-	return gulp.src('stylesheets/*.scss')
+	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss'])
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cssnano({
 			autoprefixer: false
