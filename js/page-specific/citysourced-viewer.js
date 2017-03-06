@@ -11,8 +11,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			if (reportId) {
 				$.ajax("//testservices.baltimorecountymd.gov/api/citysourced/getreport/" + reportId)
 					.done(function (data, textStatus, jqXHR) {
-						window.citySourcedData = data;
-
+										
 						if (data && data.IsOpen) 
 							data.IsOpen = data.IsOpen ? 'open' : 'closed';
 						var sourceHtml = $('#citysourced-viewer-template').html(),
