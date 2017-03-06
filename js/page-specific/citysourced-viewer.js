@@ -11,7 +11,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			if (reportId) {
 				$.ajax("//testservices.baltimorecountymd.gov/api/citysourced/getreport/" + reportId)
 					.done(function (data, textStatus, jqXHR) {
-										
+						window.citySourcedData = data;				
 						if (data && data.IsOpen) 
 							data.IsOpen = data.IsOpen ? 'open' : 'closed';
 						var sourceHtml = $('#citysourced-viewer-template').html(),
@@ -19,11 +19,10 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 							html = template(data);
 
 						var $element = $('#citysourced-viewer');
+						$('body').append('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.viewerGoogleMaps.initGoogle" async defer></script>');
 						$element.hide();
 						$element.html(html);
 						$element.slideDown(300);
-
-						$('body').append('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.viewerGoogleMaps.initGoogle" async defer></script>');
 					})
 					.fail(function (jqXHR, textStatus, errorThrown) {
 						$('#reportId').text(reportId);
