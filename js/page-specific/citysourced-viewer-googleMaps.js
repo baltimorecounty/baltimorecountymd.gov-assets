@@ -139,7 +139,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		 */
 		getInfoWindowHtml = function(dataItem) {
 			var html = '<div class="maps-info-window">'
-					+ '<p><strong><a href="/_test/citysourced-viewer?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></strong><br/>'
+					+ '<p><strong><a href="/CitySourced/preview/viewer?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></strong><br/>'
 					+ 'Reported on ' + dataItem.DateCreated + '</p>'
 					+ '</div>';
 			return html;
