@@ -4,7 +4,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 	'use strict';
 
 	var getNearbyData = function(settings, callback) {
-			$.ajax('//ba224964:1000/api/citysourced/getreportsbylatlng', {
+			$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng', {
 				method: 'POST',
 				data: settings
 			})
