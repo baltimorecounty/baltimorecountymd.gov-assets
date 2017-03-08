@@ -17,6 +17,35 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 				});
 		},
 
+		/**
+		 * Descending date sort.
+		 */
+		commentDateComparer = function(a, b) {
+			var aMoment = moment(a.Created),
+				bMoment = moment(b.Created);
+
+			if (aMoment.isAfter(bMoment)) 
+				return -1;
+			else 
+				return 1;
+		},
+
+		/**
+		 * Hides all but the top `numberToShow` comments in the `$target` list.
+		 */
+		hideMostComments = function($target, commentData, numberToShow) {
+			if (commentData && commentData.length > numberToShow) {
+				$target.find('li').not(function(index, element) {
+					return index <= numberToShow - 1;
+				}).hide();
+				$target.after('<p><a href="javascript:;" id="show-comments" aria-role="button">Load ' + (commentData.length-numberToShow) +' more comments</a></p>');
+				$('#show-comments').on('click', function() {
+					$target.find('li').slideDown(500);
+					$(this).hide();
+				});	
+			}
+		},
+
 		init = function() {
 
 			var qs = querystringer.getAsDictionary(),
@@ -35,9 +64,16 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 						};
 
 						baltimoreCounty.pageSpecific.citySourcedData = data;
-				
-						if (data && data.IsOpen) 
+
+						if (data) {
 							data.IsOpen = data.IsOpen ? 'open' : 'closed';
+							if (data.Status === "On Hold")
+								data.IsOpen = 'on-hold';
+
+							if (data.Comments && data.Comments.length > 0) {
+								data.Comments.sort(commentDateComparer);
+							}
+						}
 
 						var sourceHtml = $('#citysourced-viewer-template').html(),
 							template = Handlebars.compile(sourceHtml),
@@ -47,6 +83,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 						getNearbyData(nearbyDataSettings, function(nearbyData) {
 							$element.hide();
 							$element.html(html);
+							hideMostComments($('#comments'), data.Comments, 3);															
 							$element.slideDown(300, function() {
 								baltimoreCounty.pageSpecific.nearbyData = nearbyData;
 								$('body').append('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.viewerGoogleMaps.initGoogle" async defer></script>');

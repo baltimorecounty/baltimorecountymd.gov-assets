@@ -8,10 +8,10 @@
 	<script src="/dist/js/templateinside.min.js"></script>
 	<script src="/js/page-specific/citysourced-reporter.js"></script>
 	<script src="/js/page-specific/citysourced-googleMaps.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
 	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
 	<link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
-
 	<!--[if lte IE 9]>
         <link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
     <![endif]-->
@@ -41,13 +41,8 @@
 			Loading... <i class="fa fa-spinner fa-pulse fa-fw"></i>
 			<span class="sr-only">Loading...</span>
 
-<!--
-<dt>Status</dt>
-<dd>{{Status}} [<span class="{{IsOpen}}">{{IsOpen}}</span>]</dd>
--->
-
 			<script id="citysourced-viewer-template" type="text/x-handlebars-template">
-				<h2>Report Status</h2>
+				<h2>Report Status <span class="{{IsOpen}}">{{Status}}</span></h2>
 				<dl id="meta">
 					<dt>Request ID</dt>
 					<dd>{{Id}}</dd>

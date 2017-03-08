@@ -1,51 +1,59 @@
 @import "stylesheets/modules/all";
-
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    border: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
 }
 
 #mainContent {
-
-    .bc-citysourced-reporter {
-
+	.bc-citysourced-reporter {
 		h2 {
 			margin-top: 0;
+			position: relative;
 		}
-
-		.open, .closed {
+		.open,
+		.closed,
+		.on-hold {
+			border-radius: 8px;
+			color: white;
+			display: inline-block;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 14px;
 			font-weight: bold;
-			text-transform: uppercase;
+			left: 40%;
+			padding: .5em;
+			position: absolute;
+			text-align: left;
 		}
-
 		.open {
+			background-color: $icon-success-color;
+		}
+		.on-hold {
+			border: 2px solid $icon-success-color;
 			color: $icon-success-color;
+			background-color: rgba($icon-success-color, .15);
+			top: 7px;
 		}
-
 		.closed {
-			color: $red;
+			background-color: $darker-gray;
 		}
-
 		dl {
 			dt {
 				float: left;
 				font-weight: bold;
 				width: 40%;
 			}
-
 			dd {
 				float: left;
 				margin: 0 0 1.5em;
 				width: 60%;
 			}
 		}
-
 		.google-map {
 			border: 1px solid #ccc;
 			border-radius: 10px;
@@ -54,34 +62,26 @@
 			height: 350px;
 			margin: 0 10px 20px;
 		}
-
-		#comments {				
+		#comments {
 			list-style: none;
 			margin: 0;
 			padding: 0;
-
 			li {
 				padding: 1.5em;
 				border-radius: 10px;
 				background-color: #fcfcfc;
 				margin: 0 10px 20px;
 				border: 1px solid #ccc;
-
-				p { 
+				p {
 					margin: 0;
 				}
-
 				.author-name {
 					font-weight: bold;
 				}
-
 				.author-date {
 					font-style: italic;
 				}
 			}
-
 		}
-
 	}
-
 }
