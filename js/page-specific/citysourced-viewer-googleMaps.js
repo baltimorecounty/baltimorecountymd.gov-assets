@@ -88,7 +88,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		reverseGeocode = function (latitude, longitude, callback) {
 			$.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey)
 				.done(function (data) {
-					var address = getAddress(data.results);
+					var address = getAddress(data.results).replace(', USA', '');
 					callback(address);
 				});
 		},
