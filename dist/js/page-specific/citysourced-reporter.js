@@ -76,7 +76,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 						CategoryName: $firstCategory.find('option[value=' + $firstCategory.val() + ']').text(),
 						IssueId: $lastCategory.val(),
 						IssueName: $lastCategory.find('option[value=' + $lastCategory.val() + ']').text(),
-						Details: $form.find('#details').val(),
+						Description: $form.find('#description').val(),
 						Longitude: $form.find('#map-longitude').val(),
 						Latitude: $form.find('#map-latitude').val(),
 						FirstName: $form.find('#firstName').val(),
@@ -92,7 +92,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					cache: false
 				};
 
-				$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)				
+				//$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)				
+				$.ajax('//ba224964:1000/api/citysourced/createreport', settings)				
 					.done(function (data, textStatus, jqXHR) {
 						$wrapper.fadeOut(animationFactor, function () {
 							var jsonResponse = JSON.parse(data);

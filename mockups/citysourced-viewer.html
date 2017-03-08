@@ -41,19 +41,22 @@
 			Loading... <i class="fa fa-spinner fa-pulse fa-fw"></i>
 			<span class="sr-only">Loading...</span>
 
+<!--
+<dt>Status</dt>
+<dd>{{Status}} [<span class="{{IsOpen}}">{{IsOpen}}</span>]</dd>
+-->
+
 			<script id="citysourced-viewer-template" type="text/x-handlebars-template">
 				<h2>Report Status</h2>
 				<dl id="meta">
-					<dt>Request Type</dt>
-					<dd>{{RequestType}}</dd>
+					<dt>Request ID</dt>
+					<dd>{{Id}}</dd>
 					<dt>Issue Type</dt>
 					<dd>{{IssueType}}</dd>
 					<dt>Date Created</dt>
 					<dd>{{DateCreated}}</dd>
 					<dt>Last Updated</dt>
-					<dd>{{DateUpdated}}</dd>
-					<dt>Status</dt>
-					<dd>{{Status}} [<span class="{{IsOpen}}">{{IsOpen}}</span>]</dd>
+					<dd>{{DateUpdated}}</dd>					
 					<dt>Description</dt>
 					<dd>{{Description}}</dd>
 					<dt>Location</dt>

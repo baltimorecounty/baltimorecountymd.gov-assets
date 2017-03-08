@@ -76,7 +76,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 						CategoryName: $firstCategory.find('option[value=' + $firstCategory.val() + ']').text(),
 						IssueId: $lastCategory.val(),
 						IssueName: $lastCategory.find('option[value=' + $lastCategory.val() + ']').text(),
-						Details: $form.find('#details').val(),
+						Description: $form.find('#description').val(),
 						Longitude: $form.find('#map-longitude').val(),
 						Latitude: $form.find('#map-latitude').val(),
 						FirstName: $form.find('#firstName').val(),
