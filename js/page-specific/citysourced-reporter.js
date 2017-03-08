@@ -54,7 +54,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			$form.find('input, textarea').on('blur keyup', function (event) {
 				var keyupKey = event.which || event.keyCode;
 				if (keyupKey !== 9)
-					validate([event.target.id]);
+					validate([event.target.id], event);
 			});								
 		},		
 
@@ -62,7 +62,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		 * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
 		 */
 		fileReportButtonClickHandler = function (event) {
-			if (!validate(fieldIds)) {
+			if (!validate(fieldIds, event)) {
 
 				$(event.target).prop('disabled', 'true').val('Submitting request...');
 
@@ -113,7 +113,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		 * Click handler for the 'next' button, which flips to the next panel.
 		 */
 		nextButtonClickHandler = function (event) {
-			if (validate(fieldIds)) {
+			if (validate(fieldIds, event)) {
 				event.data.$form.find('[aria-invalid=true]').first().focus();
 				return;
 			}
@@ -160,7 +160,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		 * Click handler for the 'previous' button, which flips to the previous panel.
 		 */
 		prevButtonClickHandler = function (event) {
-			if (validate(fieldIds)) {
+			if (validate(fieldIds, event)) {
 				event.data.$form.find('[aria-invalid=true]').first().focus();
 				return;
 			}
@@ -286,7 +286,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		/**
 		 * Validates a single field.
 		 */
-		validateField = function ($field) {
+		validateField = function ($field, event) {
 			var fieldId = $field.attr('id');
 
 			if ($field.is(':visible')) {
@@ -306,8 +306,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					}
 				}
 				
-				// Check that phone is composted of 10 digits
-				if (fieldId=='deviceNumber') {
+				// Check that phone is composted of 10 digits on blur only
+				if (fieldId=='deviceNumber' && event.type === 'blur') {
 					var deviceNumber = $field.val(),
 						digits = deviceNumber.match(/\d+/g),
 						combinedDigits = digits ? digits.join('') : '';
@@ -326,7 +326,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		/**
 		 * Simple validation that only makes sure a value is present.
 		 */
-		validate = function (fieldIds) {
+		validate = function (fieldIds, event) {
 			var errorFieldIds = [],
 				$field,
 				validatedFieldId;
@@ -335,13 +335,13 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				$.each(fieldIds, function (idx, item) {
 					// Hack, since jQuery doesn't "see" newly appended items, and some of these fields are dynamic.
 					$field = $(document.getElementById(item.id ? item.id : item));
-					validatedFieldId = validateField($field);
+					validatedFieldId = validateField($field, event);
 					if (validatedFieldId)
 						errorFieldIds.push(validatedFieldId);
 				});
 			else {
 				$field = $(document.getElementById(fieldIds.id));
-				validatedFieldId = validateField($field);
+				validatedFieldId = validateField($field, event);
 				if (validatedFieldId)
 					errorFieldIds.push(validatedFieldId);
 			}
