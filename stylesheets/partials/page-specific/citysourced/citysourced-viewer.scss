@@ -93,3 +93,16 @@
 		}
 	}
 }
+
+@media (max-width: 767px) {
+	#mainContent {
+		.bc-citysourced-reporter {
+			.open,
+			.closed,
+			.on-hold {
+				left: initial;
+				right: 0;				
+			}
+		}
+	}
+}
