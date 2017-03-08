@@ -139,8 +139,11 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		 */
 		getInfoWindowHtml = function(dataItem) {
 			var html = '<div class="maps-info-window">'
-					+ '<p><strong><a href="/CitySourced/preview/viewer?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></strong><br/>'
-					+ 'Reported on ' + dataItem.DateCreated + '</p>'
+					+ '<h4><strong><a href="/CitySourced/preview/viewer?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></strong></h4>'
+					+ '<ul>'
+					+ '<li>Status: ' + dataItem.StatusType + '</li>'
+					+ '<li>Reported on ' + dataItem.DateCreated + '</li>'
+					+ '</ul>'
 					+ '</div>';
 			return html;
 		},
