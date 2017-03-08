@@ -357,5 +357,6 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 
 $(function () {
 	/* Auto-load the category data */
+	//baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/y/z/categories-production.json');
 	baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
 });
