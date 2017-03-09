@@ -13,10 +13,19 @@
 #mainContent {
 	.maps-info-window {
 		h4 {
+			font-family: Arial, Helvetica, sans-serif;
 			margin-bottom: .5em;
+
+			a {
+				font-weight: 700;
+			}
 		}
 		ul {
 			margin-top: 0;
+
+			li {
+				font-family: Arial, Helvetica, sans-serif;			
+			}
 		}
 	}
 	.bc-citysourced-reporter {
