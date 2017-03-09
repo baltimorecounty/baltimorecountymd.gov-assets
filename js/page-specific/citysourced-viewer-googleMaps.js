@@ -74,7 +74,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 					var center = new google.maps.LatLng(latitude, longitude);
 
 					window.map.panTo(center);
-					window.map.setZoom(15);
+					window.map.setZoom(14);
 
 					google.maps.event.trigger(window.map, 'resize');
 					map.setCenter(center);
@@ -161,7 +161,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 						lng: data.Longitude
 					},
 					scrollwheel: false,
-					zoom: 16,
+					zoom: 14,
 					mapTypeId: 'roadmap',
 					mapTypeControl: false,
 					streetViewControl: false

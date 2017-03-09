@@ -47,7 +47,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 		},
 
 		/**
-		 * Removes the seconds from a date string.
+		 * Removes seconds from the date strings of a data item.
 		 */
 		processTimeForViewerDataItem = function(data) {
 
@@ -65,6 +65,9 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			return data;
 		},
 
+		/**
+		 * Runs processTimeForViewerDataItem for each item in the array.
+		 */
 		processTimeForMapDataArray = function(dataArr) {
 			for (var i = 0; i < dataArr.length; i++) {
 				dataArr[i] = processTimeForViewerDataItem(dataArr[i]);
@@ -72,6 +75,9 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			return dataArr;
 		},
 
+		/**
+		 * Removes the seconds from a date string.
+		 */
 		removeSeconds = function(dateString) {
 			var secondsRegex = /:\d+ (\w\w)$/;
 			return dateString.replace(secondsRegex, ' $1');
