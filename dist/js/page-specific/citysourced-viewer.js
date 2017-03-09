@@ -46,6 +46,37 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			}
 		},
 
+		/**
+		 * Removes the seconds from a date string.
+		 */
+		processTimeForViewerDataItem = function(data) {
+
+			if (data.DateCreated)
+				data.DateCreated = removeSeconds(data.DateCreated);
+			
+			if (data.DateUpdated)
+				data.DateUpdated = removeSeconds(data.DateUpdated);
+
+			if (data.Comments)
+				for (var n = 0; n < data.Comments.length; n++) {
+					data.Comments[n].Created = removeSeconds(data.Comments[n].Created);
+				}
+
+			return data;
+		},
+
+		processTimeForMapDataArray = function(dataArr) {
+			for (var i = 0; i < dataArr.length; i++) {
+				dataArr[i] = processTimeForViewerDataItem(dataArr[i]);
+			}
+			return dataArr;
+		},
+
+		removeSeconds = function(dateString) {
+			var secondsRegex = /:\d+ (\w\w)$/;
+			return dateString.replace(secondsRegex, ' $1');
+		},
+
 		init = function() {
 
 			var qs = querystringer.getAsDictionary(),
@@ -54,14 +85,16 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			if (reportId) {
 				$.ajax("//testservices.baltimorecountymd.gov/api/citysourced/getreport/" + reportId)
 					.done(function (data, textStatus, jqXHR) {
-						var endDate = new Date();
-						endDate.setDate(-90);
+						var startDate = new Date();
+						startDate.setDate(-90);
 
 						var nearbyDataSettings = {
 							Latitude: data.Latitude,
 							Longitude: data.Longitude,
-							StartDate: endDate.toLocaleDateString('en-US')
+							StartDate: startDate.toLocaleDateString('en-US')
 						};
+
+						data = processTimeForViewerDataItem(data);
 
 						baltimoreCounty.pageSpecific.citySourcedData = data;
 
@@ -81,6 +114,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 							$element = $('#citysourced-viewer');
 
 						getNearbyData(nearbyDataSettings, function(nearbyData) {
+							nearbyData = processTimeForMapDataArray(nearbyData);
 							$element.hide();
 							$element.html(html);
 							hideMostComments($('#comments'), data.Comments, 3);															
