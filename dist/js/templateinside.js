@@ -176,6 +176,12 @@ baltimoreCounty.niftyForms = (function() {
         $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
     });
 
+    /* test code */
+    return {
+        toggleChecked: toggleChecked
+    };
+    /* end test code */
+
 })();
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
