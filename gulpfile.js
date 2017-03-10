@@ -4,9 +4,10 @@ var clean = require('gulp-clean'),
 	gulp = require('gulp'),
 	jshint = require('gulp-jshint'),
 	rename = require('gulp-rename'),
-	requirejsOptimize = require('gulp-requirejs-optimize'),
 	runSequence = require('run-sequence'),
 	sass = require('gulp-sass'),
+	stripCode = require('gulp-strip-code'),
+	stylish = require('jshint-stylish'),
 	uglify = require('gulp-uglify');
 
 var concatFiles = function(files, name, dest) {
@@ -18,13 +19,15 @@ var concatFiles = function(files, name, dest) {
 };
 
 gulp.task('clean-dist', function() {
-	return gulp.src(['dist/js', 'dist/css'])
+	return gulp.src('dist')
 		.pipe(clean());
 });
 
-gulp.task('concatHomepageJs', ['clean-dist'], function() {
+gulp.task('concatHomepageJs', function() {
 	var files = ['js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
+					'js/utility/querystringer.js',
+					'js/utility/jsonTools.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
 					'js/lib/handlebars.js', 
@@ -39,8 +42,11 @@ gulp.task('concatTemplateJs', function() {
 	var files = ['js/polyfills/array.some.js',
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
-					'js/nifty-forms.js',
+					'js/utility/querystringer.js',
+					'js/utility/jsonTools.js',
+					'js/utility/jquery.elliptical.js',
 					'js/lib/bootstrap-collapse.js',
+					'js/lib/handlebars.js', 
 					'js/skip-nav.js',
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
@@ -50,10 +56,16 @@ gulp.task('concatTemplateJs', function() {
 					'js/template-events.js', 
 					'js/inside-template.js',
 					'js/bc-content-filter.js', 
-					'js/accordion-menu.js'];
+					'js/accordion-menu.js',
+					'js/youtube-playlist-gallery.js',
+					'js/photo-gallery.js'];
   	return concatFiles(files, 'templateinside.js');
 });
 
+gulp.task('movePageSpecificJs', function() {
+	return gulp.src('js/page-specific/*.js')
+		.pipe(gulp.dest('dist/js/page-specific'));
+});
 
 gulp.task('concatFormsJs', function() {
 	var files = ['js/lib/moment.min.js',
@@ -62,8 +74,12 @@ gulp.task('concatFormsJs', function() {
 	return concatFiles(files, 'forms.js');
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatFormsJs'], function() {
-	return gulp.src(['dist/js/*.js'])
+gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
+	return gulp.src(['dist/js/**/*.js', '!dist/js/**/*min.js'])
+		.pipe(stripCode({
+			start_comment: 'test-code',
+			end_comment: 'end-test-code'			
+		}))
 		.pipe(uglify())
 		.pipe(rename({
 			suffix: '.min'
@@ -71,13 +87,22 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'concatForms
 		.pipe(gulp.dest('dist/js'));
 });
 
-
 gulp.task('sassAndCompressCss', function () {
-	return gulp.src('stylesheets/*.scss')
+	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss'])
 		.pipe(sass().on('error', sass.logError))
-		.pipe(cssnano())
-		.pipe(rename({ suffix: '.min' }))
+		.pipe(cssnano({
+			autoprefixer: false
+		}))
+		.pipe(rename({
+			suffix: '.min'
+		}))
 		.pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('linter', function() {
+	return gulp.src(['js/**/*.js', '!js/lib/*'])
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('watch', function() {
@@ -92,5 +117,5 @@ gulp.task('linter', function() {
 });
 
 gulp.task('default', ['clean-dist'], function(callback) {
-	return runSequence(['compressFiles', 'sassAndCompressCss'], callback);
+	return runSequence(['compressFiles', 'sassAndCompressCss', 'concatFormsJs'], callback);
 });

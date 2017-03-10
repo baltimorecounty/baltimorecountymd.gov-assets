@@ -1,0 +1,79 @@
+$youTubePlayListItemWidth: 30%;
+
+.youtube-playlist-item {
+    background: white;
+    box-shadow: 1px 1px 4px #999;
+    float: left;
+    margin: 10px;
+    position: relative;
+    width: $youTubePlayListItemWidth;
+
+    figure {
+        margin: 0;
+
+        a {
+            display: block;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .fa-play-circle-o {
+            color: white;
+            font-size: 3em;
+            left: 50%;
+            position: absolute;
+            text-shadow: 1px 1px 4px #000;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        img {
+            border: 0 !important;
+            margin: 0 !important;
+            padding: 0;
+            width: 100%;
+        }
+
+        figcaption {
+            clear: both;
+            padding: .5em;
+
+            p {
+                margin: 0 !important;
+                padding: 0;
+                overflow: hidden;
+                height: 2.6em;
+            }
+
+        }
+        
+        a:hover {
+            .fa-play-circle-o {
+                color: $gold;
+            }
+        }
+
+    }
+}
+
+.loadMoreButton, #maintContent .loadMoreButton {
+    clear: both;
+    display: block;
+    margin: 10px;
+    width: auto;
+}
+
+@media (max-width: 992px) {
+    .youtube-playlist-item {
+        width: 47%;
+    }
+}
+
+@media (max-width: 767px) {
+    .youtube-playlist-item {
+        width: 96%;
+   }
+}

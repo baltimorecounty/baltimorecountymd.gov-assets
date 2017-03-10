@@ -1,0 +1,234 @@
+[{
+		"name": "Building and Development",
+		"id": 1022189,
+		"types": [{
+				"name": "Failure to obtain Inspection",
+				"id": 1022246
+			},
+			{
+				"name": "Working without a plumbing permit",
+				"id": 1022247
+			}
+		]
+	},
+	{
+		"name": "Neighborhood",
+		"id": 1022188,
+		"types": [{
+				"name": "Abandoned Vehicle",
+				"id": 1022241
+			},
+			{
+				"name": "Building without a Permit",
+				"id": 1022244
+			},
+			{
+				"name": "Excessive animal feces in neighbor's yard",
+				"id": 1022243
+			},
+			{
+				"name": "Junk, trash, or debris in yard or public space",
+				"id": 1022238
+			},
+			{
+				"name": "Rats",
+				"id": 1022240
+			},
+			{
+				"name": "Tall grass and weeds in yard",
+				"id": 1022239
+			},
+			{
+				"name": "Vacant Property",
+				"id": 1022242
+			}
+		]
+	},
+	{
+		"name": "Pets and Animals",
+		"id": 1022187,
+		"types": [{
+				"name": "Pets",
+				"id": 1022217,
+				"types": [{
+						"name": "Animal cruelty",
+						"id": 1022224
+					},
+					{
+						"name": "Bite from a pet",
+						"id": 1022222
+					},
+					{
+						"name": "Dangerous dog",
+						"id": 1022225
+					},
+					{
+						"name": "Excessive barking",
+						"id": 1022223
+					},
+					{
+						"name": "Nuisance animal",
+						"id": 1022226
+					},
+					{
+						"name": "Pet out of yard or roaming",
+						"id": 1022221
+					},
+					{
+						"name": "Pet waste was left in my yard",
+						"id": 1022229
+					},
+					{
+						"name": "Stray pet found and needs pickup",
+						"id": 1022228
+					},
+					{
+						"name": "Other Pet Complaint",
+						"id": 1022227
+					}
+
+				]
+			},
+			{
+				"name": "Wild Animals",
+				"id": 1022218,
+				"types": [{
+						"name": "Animal caught in a trap",
+						"id": 1022231
+					},
+					{
+						"name": "Animal shows signs of rabies",
+						"id": 1022235
+					},
+					{
+						"name": "Animals in vacant property",
+						"id": 1022233
+					},
+					{
+						"name": "Dangerous wild animal",
+						"id": 1022234
+					},
+					{
+						"name": "Dead animal pickup",
+						"id": 1022232
+					},
+					{
+						"name": "Injured animal",
+						"id": 1022236
+					},
+					{
+						"name": "Other wild animal complaint",
+						"id": 1022237
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Rental Property",
+		"id": 1022186,
+		"types": [{
+				"name": "Failure to maintain plumbing system",
+				"id": 1022214
+			},
+			{
+				"name": "Failure to provide carbon monoxide detectors",
+				"id": 1022213
+			},
+			{
+				"name": "Poor living conditions in a rental home",
+				"id": 1022212
+			},
+			{
+				"name": "Unregistered rental property",
+				"id": 1022215
+			}
+		]
+	},
+	{
+		"name": "Roads and Sidewalks",
+		"id": 1022185,
+		"types": [{
+				"name": "Adopt-a-Road Inquiry",
+				"id": 1022199
+			},
+			{
+				"name": "Flooded road",
+				"id": 1022206
+			},
+			{
+				"name": "Icy conditions",
+				"id": 1022201
+			},
+			{
+				"name": "Overgrown trees or bushes near roadway",
+				"id": 1022210
+			},
+			{
+				"name": "Paving or re-paving needed",
+				"id": 1022203
+			},
+			{
+				"name": "Pothole",
+				"id": 1022204
+			},
+			{
+				"name": "Sidewalk or curb repair needed",
+				"id": 1022207
+			},
+			{
+				"name": "Street cleaning needed",
+				"id": 1022209
+			},
+			{
+				"name": "Tall grass or weeds near roadway",
+				"id": 1022202
+			},
+			{
+				"name": "Trash in roadside stream",
+				"id": 1022208
+			},
+			{
+				"name": "Trash on roadside",
+				"id": 1022205
+			},
+			{
+				"name": "Other Road or Sidewalk Complaint",
+				"id": 1022200
+			}
+		]
+	},
+	{
+		"name": "Trash and Recycling",
+		"id": 1022184,
+		"types": [{
+				"name": "Can or lid lost or damaged",
+				"id": 1022195
+			},
+			{
+				"name": "Property damage during collection",
+				"id": 1022196
+			},
+			{
+				"name": "Recycling not collected",
+				"id": 1022192
+			},
+			{
+				"name": "Request to start new collection",
+				"id": 1022194
+			},
+			{
+				"name": "Trash not collected",
+				"id": 1022191
+			},
+			{
+				"name": "Yard waste not collected",
+				"id": 1022193
+			},
+			{
+				"name": "Other Trash and Recycling Problem",
+				"id": 1022197
+			}
+		]
+	}
+]

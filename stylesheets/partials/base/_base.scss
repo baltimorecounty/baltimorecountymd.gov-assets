@@ -1,15 +1,23 @@
 @import "../../modules/all";
 html {
-  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
-  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
-  box-sizing: border-box;         /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
+	-webkit-box-sizing: border-box;
+	/* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+	-moz-box-sizing: border-box;
+	/* Firefox 1 - 28 */
+	box-sizing: border-box;
+	/* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
 }
 
-*, *:before, *:after {
-  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
-  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
-  box-sizing: border-box;
+*,
+*:before,
+*:after {
+	/* Firefox 1 - 28 */
+	-moz-box-sizing: border-box;
+	/* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
+
 
 /*Remove IOS Broder Radius*/
 
@@ -19,6 +27,6 @@ input[type="search"],
 input[type="text"],
 input[type="button"],
 input[type="submit"] {
-     -webkit-border-radius: 0;
-     border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
 }

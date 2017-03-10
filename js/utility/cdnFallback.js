@@ -32,7 +32,7 @@ baltimoreCounty.utility.cdnFallback = (function() {
             document.getElementsByTagName('head')[0].appendChild(scriptTag);
         else 
             document.getElementsByTagName('body')[0].appendChild(scriptTag);
-    }
+    };
 
     return { 
         load: load

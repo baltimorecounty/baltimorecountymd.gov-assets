@@ -1,0 +1,36 @@
+@import "stylesheets/modules/all";
+
+.bc-citysourced-reporter {
+
+    ol {
+        padding-bottom: 1.5em !important;
+        height: 80px !important;
+        width: 100%;
+
+        li {
+            float: left;
+            margin: 0 !important;
+            width: 27%;
+            
+            &:nth-child(3) {
+                &:after {
+                    border: none !important;
+                }
+            }
+
+            &:last-child {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+
+    .bc-citysourced-reporter {
+
+        ol {
+            height: auto !important;
+        }
+    }
+}
