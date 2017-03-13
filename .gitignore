@@ -4,3 +4,4 @@
 **/*.css
 !dist/css/*.css
 node_modules/**/*
+.vscode/
