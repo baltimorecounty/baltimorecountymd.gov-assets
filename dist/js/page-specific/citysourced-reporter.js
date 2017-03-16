@@ -59,23 +59,41 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		},		
 
 		/**
+		 * Builds the key-value list of category and issue types.
+		 */
+		getCategoryNameIdArr = function($categoryWrapper) {
+			var $selects = $categoryWrapper.find('select'),
+				categoryNameIdArr = [];
+
+			for (var i = 0; i < $selects.length; i++) {
+				var id = $selects.eq(i).val(),
+					name = $selects.eq(i).find('option[value=' + id + ']').text();
+				
+				categoryNameIdArr.push({
+					name: name,
+					id: id
+				});
+			}
+
+			return categoryNameIdArr;
+		},
+
+		/**
 		 * Click handler for the 'File Your Report' button. Runs basic validation, then submits.
 		 */
 		fileReportButtonClickHandler = function (event) {
 			if (!validate(fieldIds, event)) {
 
-				$(event.target).prop('disabled', 'true').val('Submitting request...');
+				$(event.target).prop('disabled', 'true').val('Submitting request...');				
 
 				var $form = event.data.$form,
+					categoryNameIdArr = getCategoryNameIdArr(event.data.$categories),
 					$wrapper = event.data.$wrapper,
 					animationFactor = event.data.animationFactor,
 					$firstCategory = event.data.$categories.find('select').first(),
 					$lastCategory = event.data.$categories.find('select').last(),
 					formData = {
-						CategoryId: $firstCategory.val(),
-						CategoryName: $firstCategory.find('option[value=' + $firstCategory.val() + ']').text(),
-						IssueId: $lastCategory.val(),
-						IssueName: $lastCategory.find('option[value=' + $lastCategory.val() + ']').text(),
+						CategoryNamesAndIds: categoryNameIdArr,
 						Description: $form.find('#description').val(),
 						Longitude: $form.find('#map-longitude').val(),
 						Latitude: $form.find('#map-latitude').val(),
@@ -92,7 +110,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					cache: false
 				};
 
-				$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)				
+				//$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)				
+				$.ajax('//ba224964:1000/api/citysourced/createreport', settings)				
 					.done(function (data, textStatus, jqXHR) {
 						$wrapper.fadeOut(animationFactor, function () {
 							var jsonResponse = JSON.parse(data);

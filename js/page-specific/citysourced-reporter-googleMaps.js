@@ -177,7 +177,7 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 		getAddress = function (reverseGeocodeData) {
 			var streetAddressArr = $.grep(reverseGeocodeData, filterStreetAddressResults),
 				countyArr = $.grep(reverseGeocodeData, filterCountyResults);
-			return isBaltimoreCounty(countyArr) ? streetAddressArr && streetAddressArr.length ? streetAddressArr[0].formatted_address : false : false;
+			return isBaltimoreCounty(countyArr) ? reverseGeocodeData[0].formatted_address : false;
 		},
 
 		isBaltimoreCounty = function (countyArr) {
@@ -185,10 +185,6 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 			if (countyArr && countyArr.length)
 				county = countyArr[0].formatted_address;
 			return county.indexOf(targetCounty) !== -1;
-		},
-
-		filterStreetAddressResults = function (item, index) {
-			return filterResults(item, index, 'street_address');
 		},
 
 		filterCountyResults = function (item, index) {
