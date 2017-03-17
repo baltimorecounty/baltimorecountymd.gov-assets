@@ -175,8 +175,7 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 		 * Returns the friendly address string from the reverse geocoding.
 		 */
 		getAddress = function (reverseGeocodeData) {
-			var streetAddressArr = $.grep(reverseGeocodeData, filterStreetAddressResults),
-				countyArr = $.grep(reverseGeocodeData, filterCountyResults);
+			var countyArr = $.grep(reverseGeocodeData, filterCountyResults);
 			return isBaltimoreCounty(countyArr) ? reverseGeocodeData[0].formatted_address : false;
 		},
 
