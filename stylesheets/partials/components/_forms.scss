@@ -1,33 +1,16 @@
 $error-shadow: 0 0 5px $red;
 
-#mainContent .seLabelCell {
-    padding-top: .5em;
-    vertical-align: top;
-}
-
-.SEAFGroupVertical > div {
-    margin-bottom: .5em;
-}
-
-.error-field {
-    -webkit-box-shadow: $error-shadow;
-    -moz-box-shadow: $error-shadow;
-    box-shadow: $error-shadow;
-}
-
-.error-label {
-    color: $red;
-}
-
-.seCheckbox, .seRadio {
+.seCheckbox {
 	display: none;
 }
 
 .seCheckboxLabel {    
-
+    cursor: pointer;
+    
     &.checked::before {
         font-family: FontAwesome;
         content: '\f00c';
+        color: black;
     }    
 
     &.error-field {
@@ -43,57 +26,16 @@ $error-shadow: 0 0 5px $red;
     }    
 
     &::before {
+        font-family: FontAwesome;
         background-color: #eee;
         border: 1px solid #ccc;
-        content: '\13';
+        color: transparent;
+        content: '\f00c';
         cursor: pointer;
         display: inline-block;
-        height: 20px;
         margin-right: .5em;
+        padding: 1px;
         text-align: center;
         width: 20px;
     }
-
-}
-
-.seRadioLabel {    
-    white-space: nowrap;
-
-    &.checked::before {
-        content: '\f111';
-        font-family: FontAwesome;
-        font-size: .75em;
-        line-height: 1.5em;
-        position: relative;
-        top: -2px;
-    }    
-
-    &.error-field {
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-    }
-
-    &.error-field::before {
-        -webkit-box-shadow: $error-shadow;
-        -moz-box-shadow: $error-shadow;
-        box-shadow: $error-shadow;
-    }    
-
-    &::before {
-        background-color: #eee;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        content: '\13';
-        display: inline-block;
-        height: 20px;
-        margin-right: .5em;
-        text-align: center;
-        width: 20px;
-    }
-
-}
-
-.seRequiredMarker, .inline-form-error-message {
-    font-size: .75em;
 }
