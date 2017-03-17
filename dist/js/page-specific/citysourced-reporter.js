@@ -110,8 +110,8 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					cache: false
 				};
 
-				//$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)				
-				$.ajax('//ba224964:1000/api/citysourced/createreport', settings)				
+				$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/createreport', settings)				
+				//$.ajax('//ba224964:1000/api/citysourced/createreport', settings)				
 					.done(function (data, textStatus, jqXHR) {
 						$wrapper.fadeOut(animationFactor, function () {
 							var jsonResponse = JSON.parse(data);
