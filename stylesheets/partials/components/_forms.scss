@@ -1,99 +1,68 @@
-$error-shadow: 0 0 5px $red;
-
 #mainContent .seLabelCell {
     padding-top: .5em;
     vertical-align: top;
 }
 
-.SEAFGroupVertical > div {
-    margin-bottom: .5em;
+.SEAFGroupVertical>div {
+    margin-bottom: 1em;
 }
 
-.error-field {
-    -webkit-box-shadow: $error-shadow;
-    -moz-box-shadow: $error-shadow;
-    box-shadow: $error-shadow;
+.seCheckbox,
+.seRadio {
+    display: none;
 }
 
-.error-label {
-    color: $red;
-}
-
-.seCheckbox, .seRadio {
-	display: none;
-}
-
-.seCheckboxLabel {    
-
-    &.checked::before {
-        font-family: FontAwesome;
-        content: '\f00c';
-    }    
-
-    &.error-field {
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
+.seCheckboxLabel,
+.seRadioLabel {
+    cursor: pointer;
+    
+    &:focus {
+        outline: none;
     }
 
-    &.error-field::before {
-        -webkit-box-shadow: $error-shadow;
-        -moz-box-shadow: $error-shadow;
-        box-shadow: $error-shadow;
-    }    
+    &::before,
+    &.checked::before {
+        font-family: FontAwesome;
+    }
 
     &::before {
         background-color: #eee;
         border: 1px solid #ccc;
-        content: '\13';
-        cursor: pointer;
+        color: transparent;
         display: inline-block;
-        height: 20px;
-        margin-right: .5em;
         text-align: center;
+        -webkit-font-smoothing: antialiased;
         width: 20px;
     }
 
+    &.checked::before {
+        color: #444;
+    }
 }
 
-.seRadioLabel {    
+.seCheckboxLabel {
+    &.checked::before {
+        content: '\f00c';
+    }
+    &::before {
+        content: '\f00c';
+        margin-right: .5em;
+        padding: 1px;
+    }
+}
+
+.seRadioLabel {
     white-space: nowrap;
 
     &.checked::before {
         content: '\f111';
-        font-family: FontAwesome;
-        font-size: .75em;
-        line-height: 1.5em;
-        position: relative;
-        top: -2px;
-    }    
-
-    &.error-field {
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
     }
-
-    &.error-field::before {
-        -webkit-box-shadow: $error-shadow;
-        -moz-box-shadow: $error-shadow;
-        box-shadow: $error-shadow;
-    }    
-
     &::before {
-        background-color: #eee;
-        border: 1px solid #ccc;
         border-radius: 20px;
-        content: '\13';
-        display: inline-block;
-        height: 20px;
-        margin-right: .5em;
-        text-align: center;
-        width: 20px;
-    }
-
-}
-
-.seRequiredMarker, .inline-form-error-message {
-    font-size: .75em;
+        content: '\f111';
+        font-size: .7em;
+        margin-right: 1em;
+        padding: 3px;
+        vertical-align: 20%;
+    }   
 }
