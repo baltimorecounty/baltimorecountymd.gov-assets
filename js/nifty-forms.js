@@ -10,6 +10,26 @@ baltimoreCounty.niftyForms = (function() {
         checkboxesSelector = '.seCheckbox',
         radiosSelector = '.seRadio',
 
+        init = function(preventDefault) {
+            var $forms = $('form'),
+                $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
+                $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
+                $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
+                $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
+                $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
+
+            $checkboxAndRadioLabels
+                .on('click', function(e) {
+                    makeItemCheckedOnClickHandler(e, preventDefault);
+                })
+                .on('keyup', makeItemCheckedOnKeyupHandler)
+                .attr('tabindex', '0')
+                .attr('aria-checked', false);
+            
+            $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
+            $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');
+        },
+
         /*
          * Toggle the click label's checkbox/radion button. This is necessary because
          * the niftyness is the ::before pseudo-element of the label tag, and not the 
@@ -38,10 +58,13 @@ baltimoreCounty.niftyForms = (function() {
         /*
          * Toggles the checkedness of the underlying input when the user clicks the label. 
          */
-        makeItemCheckedOnClickHandler = function(e) {
+        makeItemCheckedOnClickHandler = function(e, preventDefault) {
             var $label = $(e.target);
             
-            e.preventDefault();
+            if (preventDefault) {
+                e.preventDefault();
+            }
+
             toggleChecked($label);
         },
 
@@ -64,32 +87,22 @@ baltimoreCounty.niftyForms = (function() {
         singleCheckboxAndRadioFilter = function(index, item) {
             return $(item).siblings('label').length === 0;
         };
+    
+    
 
     /*
      * Attach events and add aria roles to labels. 
      */
     $(function() {
-
-        var $forms = $('form'),
-            $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
-            $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
-            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
-            $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
-            $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
-
-        $checkboxAndRadioLabels
-            .on('click', makeItemCheckedOnClickHandler)
-            .on('keyup', makeItemCheckedOnKeyupHandler)
-            .attr('tabindex', '0')
-            .attr('aria-checked', false);
-        
-        $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
-        $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
+        init(true); 
     });
 
     /* test code */
     return {
-        toggleChecked: toggleChecked
+        toggleChecked: toggleChecked,
+        reInit: function() {
+            init(false);
+        }
     };
     /* end test code */
 
