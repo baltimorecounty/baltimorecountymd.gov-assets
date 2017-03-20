@@ -48,6 +48,7 @@
         content: '\f00c';
         margin-right: .5em;
         padding: 1px;
+        margin-top: 1px;
     }
 }
 
@@ -78,4 +79,7 @@
 #mainContent .seRadioLabel {
     font-size: 1em;
     margin-right: 15px;
+}
+#mainContent .SEAFGroupHorizontal.horizontal  .seText {
+    padding: 0;
 }
