@@ -3,7 +3,7 @@ namespacer('baltimoreCounty');
 /*
  * Adds nifty checkboxes and radio buttons to a Site Executive form.
  */
-baltimoreCounty.niftyForms = (function() {
+baltimoreCounty.niftyForms = (function($) {
 
     var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
         checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
@@ -106,4 +106,4 @@ baltimoreCounty.niftyForms = (function() {
     };
     /* end test code */
 
-})();
+})(jQuery);
