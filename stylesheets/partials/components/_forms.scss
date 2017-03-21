@@ -31,6 +31,7 @@
         color: transparent;
         display: inline-block;
         line-height: normal;
+        margin-bottom: 10px;
         text-align: center;
         -webkit-font-smoothing: antialiased;
         width: 20px;
@@ -77,7 +78,8 @@
     margin-bottom: 6px;
     padding: 0;
 }
-#mainContent .seRadioLabel {
+#mainContent .seRadioLabel,
+#mainContent .seCheckboxLabel {
     font-size: 1em;
     margin-right: 15px;
 }
