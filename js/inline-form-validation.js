@@ -16,7 +16,6 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
         FIELD_WRAPPER_CLASS = '.seFieldCell',
         LABEL_WRAPPER_CLASS = '.seLabelCell',
         REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message',
-
         /*
         * Loads up the field IDs and error messages that SE renders in inline JavaScript.
         */
@@ -218,7 +217,8 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
 
             $form.on('keyup click', $allRequiredFields, allFieldsKeyupClickHandler);
             $form.on('blur', $inputsSelectsTextboxes, inputsSelectsTextboxesBlurHandler);
-            $('#submit').on('click', submitClickHandler);
+
+            $(document).on('click', $form.find('input[type=submit]'), submitClickHandler);
         };
 
     /*
