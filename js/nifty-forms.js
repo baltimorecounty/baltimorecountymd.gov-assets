@@ -87,9 +87,7 @@ baltimoreCounty.niftyForms = (function($) {
         singleCheckboxAndRadioFilter = function(index, item) {
             return $(item).siblings('label').length === 0;
         };
-    
-    
-
+        
     /*
      * Attach events and add aria roles to labels. 
      */
