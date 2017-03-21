@@ -136,7 +136,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
             if ($targets.hasClass('required-checkbox-single'))
                 $targets = $targets.closest('.seCheckboxLabel');
 
-            if (!isValid($targets)) {                
+            if (!isValid($targets) && $targets.length) {                
                 $errorMessage.removeClass('hidden');
                 $targets.addClass('error-field');
                 $label.addClass('error-label');
@@ -218,7 +218,9 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
             $form.on('keyup click', $allRequiredFields, allFieldsKeyupClickHandler);
             $form.on('blur', $inputsSelectsTextboxes, inputsSelectsTextboxesBlurHandler);
 
-            $(document).on('click', $form.find('input[type=submit]'), submitClickHandler);
+            var submitId = $form.find('input[type="submit"]').attr('id');
+
+            $(document).on('click', '#' + submitId, submitClickHandler);
         };
 
     /*
