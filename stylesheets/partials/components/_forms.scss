@@ -21,7 +21,8 @@ $error-shadow: 0 0 5px $red;
 
 .seCheckbox,
 .seRadio {
-    display: none;
+    position: absolute;
+    margin-left: -19191919px;
 }
 
 .seCheckboxLabel,
@@ -35,6 +36,12 @@ $error-shadow: 0 0 5px $red;
     &::before,
     &.checked::before {
         font-family: FontAwesome;
+    }
+
+    &.is-focused::before,
+    &.checked.is-focused::before {
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border: 1px solid rgba(81, 203, 238, 1);
     }
 
     &::before {

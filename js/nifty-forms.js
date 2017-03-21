@@ -10,12 +10,43 @@ baltimoreCounty.niftyForms = (function() {
         checkboxesSelector = '.seCheckbox',
         radiosSelector = '.seRadio',
 
+        inputChanged = function(e) {
+            var $input = $(e.currentTarget),
+                inputId = $input.attr('id'),
+                isChecked = $input.prop('checked'),
+                $label = $('label[for="' + inputId + '"]');
+                
+                if ($input.is('[type=radio]')) {
+                    var radioName = $input.attr('name')
+                    var $radioInputs = $('input[name="' + radioName + '"]');
+
+                    $radioInputs.each(function() {
+                        var $radioLabel = $('label[for="' + $(this).attr('id') + '"]');
+
+                        $radioLabel.removeClass('checked');
+                    });
+                }
+
+            $label.toggleClass('checked')
+        },
+
+        focusChanged = function(e) {
+            var $input = $(e.currentTarget),
+                inputId = $input.attr('id'),
+                $label = $('label[for="' + inputId + '"]');
+            
+            removeFocus();
+            $label.addClass('is-focused');
+        }
+
         /*
          * Toggle the click label's checkbox/radion button. This is necessary because
          * the niftyness is the ::before pseudo-element of the label tag, and not the 
          * input itself.
          */
         toggleChecked = function($label) {
+            console.log('got here');
+
             var labelFor = $label.attr('for'),
                 $input = $label.siblings('#' + labelFor);
 
@@ -30,6 +61,8 @@ baltimoreCounty.niftyForms = (function() {
                     .siblings(checkboxesAndRadiosLabelSelector)
                     .removeClass('checked');
             }
+
+            $input.focus();
 
             $label.toggleClass('checked');
             $input.prop('checked', $label.hasClass('checked'));
@@ -58,6 +91,10 @@ baltimoreCounty.niftyForms = (function() {
                 }
         },
 
+        removeFocus = function() {
+            $('.is-focused').removeClass('is-focused');
+        }
+
         /*
          * Filter that finds checkboxes and radios that aren't in a list.
          */ 
@@ -80,8 +117,13 @@ baltimoreCounty.niftyForms = (function() {
         $checkboxAndRadioLabels
             .on('click', makeItemCheckedOnClickHandler)
             .on('keyup', makeItemCheckedOnKeyupHandler)
-            .attr('tabindex', '0')
+            // .attr('tabindex', '-1')
             .attr('aria-checked', false);
+
+        $(document)
+            .on('change', checkboxesAndRadiosSelector, inputChanged)
+            .on('focus', checkboxesAndRadiosSelector, focusChanged)
+            .on('blur', checkboxesAndRadiosSelector, removeFocus);
         
         $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
         $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
