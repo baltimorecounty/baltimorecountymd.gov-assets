@@ -10,6 +10,15 @@ baltimoreCounty.niftyForms = (function() {
         checkboxesSelector = '.seCheckbox',
         radiosSelector = '.seRadio',
 
+        focusChanged = function(e) {
+            var $input = $(e.currentTarget),
+                inputId = $input.attr('id'),
+                $label = $('label[for="' + inputId + '"]');
+            
+            removeFocus();
+            $label.addClass('is-focused');
+        },
+
         inputChanged = function(e) {
             var $input = $(e.currentTarget),
                 inputId = $input.attr('id'),
@@ -29,15 +38,6 @@ baltimoreCounty.niftyForms = (function() {
 
             $label.toggleClass('checked')
         },
-
-        focusChanged = function(e) {
-            var $input = $(e.currentTarget),
-                inputId = $input.attr('id'),
-                $label = $('label[for="' + inputId + '"]');
-            
-            removeFocus();
-            $label.addClass('is-focused');
-        }
 
         /*
          * Toggle the click label's checkbox/radion button. This is necessary because
@@ -72,7 +72,6 @@ baltimoreCounty.niftyForms = (function() {
         makeItemCheckedOnClickHandler = function(e) {
             var $label = $(e.target);
             
-            e.preventDefault();
             toggleChecked($label);
         },
 
