@@ -45,8 +45,6 @@ baltimoreCounty.niftyForms = (function() {
          * input itself.
          */
         toggleChecked = function($label) {
-            console.log('got here');
-
             var labelFor = $label.attr('for'),
                 $input = $label.siblings('#' + labelFor);
 
