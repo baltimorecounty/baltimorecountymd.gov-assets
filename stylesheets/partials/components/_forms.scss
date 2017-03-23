@@ -9,7 +9,8 @@
 
 .seCheckbox,
 .seRadio {
-    display: none;
+    position: absolute;
+    margin-left: -19191919px;
 }
 
 .seCheckboxLabel,
