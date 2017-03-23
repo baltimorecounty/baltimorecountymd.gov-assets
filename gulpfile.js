@@ -62,6 +62,11 @@ gulp.task('concatTemplateJs', function() {
   	return concatFiles(files, 'templateinside.js');
 });
 
+gulp.task('moveGenericJs', function() {
+	return gulp.src('js/*.js')
+		.pipe(gulp.dest('dist/js'));
+});
+
 gulp.task('movePageSpecificJs', function() {
 	return gulp.src('js/page-specific/*.js')
 		.pipe(gulp.dest('dist/js/page-specific'));
@@ -74,7 +79,7 @@ gulp.task('concatFormsJs', function() {
 	return concatFiles(files, 'forms.js');
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
+gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'moveGenericJs', 'movePageSpecificJs'], function() {
 	return gulp.src(['dist/js/**/*.js', '!dist/js/**/*min.js'])
 		.pipe(stripCode({
 			start_comment: 'test-code',
