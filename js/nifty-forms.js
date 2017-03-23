@@ -36,7 +36,12 @@ baltimoreCounty.niftyForms = (function() {
                     });
                 }
 
-            $label.toggleClass('checked')
+            if (isChecked) {
+                $label.addClass('checked'); 
+            }
+            else {
+                $label.removeClass('checked'); 
+            }
         },
 
         /*
@@ -51,19 +56,7 @@ baltimoreCounty.niftyForms = (function() {
             if (!$input.length)
                 $input = $label.find('input').first();
 
-            if ($input.is('[type=radio]')) {
-                var inputName = $input.attr('name');
-
-                $label.closest('form').find('input[name=' + inputName + ']')
-                    .prop('checked', false)
-                    .siblings(checkboxesAndRadiosLabelSelector)
-                    .removeClass('checked');
-            }
-
-            $input.focus();
-
-            $label.toggleClass('checked');
-            $input.prop('checked', $label.hasClass('checked'));
+            $input.focus().trigger('change');
         },
 
         /*
