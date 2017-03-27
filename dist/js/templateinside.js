@@ -3636,8 +3636,8 @@ baltimoreCounty.contentFilter = (function($) {
 
             $errorMessage.hide();
 
-            if (contentType === 'table')
-                $wrapper.find('th').each(setColumnWidthToInitialWidth);
+            /*if (contentType === 'table')
+                $wrapper.find('th').each(setColumnWidthToInitialWidth);*/
 
             $searchBox.on('keyup', function(eventObject) {
                 switch (contentType) {
