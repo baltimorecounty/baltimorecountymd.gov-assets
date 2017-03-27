@@ -3485,8 +3485,8 @@ baltimoreCounty.niftyTables = (function ($, numericStringTools, undefined) {
          * Then we can compare the two rows that are passed in.
          */
         clickedColumnSorter = function (aTableRow, bTableRow) {
-            var aContent = getFirstTextFromCell(aTableRow, columnIndex),
-                bContent = getFirstTextFromCell(bTableRow, columnIndex),
+            var aContent = getFirstTextFromCell(aTableRow, columnIndex).toLowerCase(),
+                bContent = getFirstTextFromCell(bTableRow, columnIndex).toLowerCase(),
                 aExtractedContent = numericStringTools.extractNumbersIfPresent(aContent),
                 bExtractedContent = numericStringTools.extractNumbersIfPresent(bContent),
                 directionComparer = shouldSortAscending ? ascendingComparer : descendingComparer;
