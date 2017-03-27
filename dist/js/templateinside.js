@@ -3675,10 +3675,10 @@ baltimoreCounty.contentFilter = (function($) {
          * Tokenized search that returns the matches found in the list or table.
          */
         findMatches = function($wrapper, selector, criteria) {
-            var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
+            var criteriaTokens = criteria.trim().toLowerCase().replace(',','').split(' '); 
 
             var $matches = $wrapper.find(selector).filter(function(idx, element) {
-                var selectorText = $(element).text().toLowerCase();            
+                var selectorText = $(element).text().toLowerCase().replace(',','');            
                 return criteriaTokens.every(function(tokenValue) {
                     return selectorText.indexOf(tokenValue) > -1;
                 });
