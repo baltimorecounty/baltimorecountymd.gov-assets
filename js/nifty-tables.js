@@ -1,11 +1,10 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.niftyTables = (function ($) {
+baltimoreCounty.niftyTables = (function ($, numericStringTools, undefined) {
     'use strict';
 
     var columnIndex = 0,
         shouldSortAscending = true,
-        numericStringTools = baltimoreCounty.utility.numericStringTools,
 
         /*
          * Since we're sorting a table, we need to work out what we're 
@@ -91,6 +90,19 @@ baltimoreCounty.niftyTables = (function ($) {
             $tableRows.detach();
             $tableRows.sort(clickedColumnSorter);
             $niftyTable.append($tableRows);
+
+            resetTableStripes($tableRows, 'tr:visible:even', '#ebebeb');
+            resetTableStripes($tableRows, 'tr:visible:odd', '#fff');
+        },
+
+        /*
+         * Since the current table stripes are based on :nth-child(), they'll get funky
+         * when the filter removes rows. So, let's reset the row striping when there's a search. 
+         * This is using inline styles since there's inline CSS that sets the color and 
+         * has to be overwritten.
+         */
+        resetTableStripes = function($matches, selector, color) {
+            $matches.parent().children(selector).has('td').css('background-color', color);
         },
 
         /*
@@ -117,7 +129,7 @@ baltimoreCounty.niftyTables = (function ($) {
         init: init
     };
 
-})(jQuery);
+})(jQuery, baltimoreCounty.utility.numericStringTools);
 
 $(document).ready(function () {
     baltimoreCounty.niftyTables.init();

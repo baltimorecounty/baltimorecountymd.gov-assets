@@ -56,6 +56,7 @@ gulp.task('concatTemplateJs', function() {
 					'js/mobile-search.js',
 					'js/template-events.js', 
 					'js/inside-template.js',
+					'js/nifty-tables.js', 
 					'js/bc-content-filter.js', 
 					'js/accordion-menu.js',
 					'js/youtube-playlist-gallery.js',
