@@ -1,0 +1,248 @@
+@import "stylesheets/modules/all";
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+#mainContent {
+
+    .bc-citysourced-reporter {
+
+        ol {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+
+            li {
+                background-color: $lightest-gray;
+                color: $dark-gray;
+                flex: 1 1 auto;
+                font-family: $headline-font;
+                margin: 0 10px;
+                padding: 15px;
+                height: 40px;
+                line-height: 20px;
+                position: relative;
+                -moz-box-sizing: content-box;
+                -webkit-box-sizing: content-box;
+                box-sizing: content-box;               
+
+                &:after, &:before {
+                    content: "";
+                    height: 0;
+                    position: absolute;                
+                    width: 0;
+                }
+
+                &:after {
+                    border-top: 35px solid transparent;
+                    border-bottom: 35px solid transparent;  
+                    border-left: 15px solid $lightest-gray;
+                    right: -15px;
+                    top: 0;
+                }
+
+                &:before {
+                    border-top: 35px solid $lightest-gray;
+                    border-bottom: 35px solid $lightest-gray;  
+                    border-left: 15px solid transparent;
+                    left: -15px;
+                    top: 0;
+                }
+            }
+
+            li:first-child {
+                margin-left: 0;
+
+                &:before {
+                    border: none;
+                }
+            }
+
+            li:last-child {
+                list-style: none;
+                margin-right: 0;
+
+                &:after {
+                    border: none;
+                }
+            }
+
+            li.highlight {
+                background-color: $gold;
+
+                &:after {
+                    border-left-color: $gold;
+                }
+
+                &:before {
+                    border-top-color: $gold;
+                    border-bottom-color: $gold;  
+                }
+            }
+        }    
+
+        h2:first-child {
+            margin-top: 1em;
+        }
+
+        .google-map {
+            border: 1px solid $img-border-gray;
+            margin-right: 20px;
+            height: 350px;
+            width: auto;
+        }
+
+        form {
+            position: relative;
+
+            fieldset {
+
+                label {
+                    font-weight: 700;
+                }
+
+                select, input, textarea, label, p {
+                    display: block;
+                    margin: 1em 0 0;
+                }              
+
+                select, input, textarea {
+                    border: 1px solid $img-border-gray;
+                }              
+
+                div > select:first-child, label + select, label + textarea, label + input, input + input {
+                    margin-top: .25em;
+                }
+
+                &.panel {
+                    display: none;
+                }
+
+                &.panel:first-child {
+                    display: block;
+                }
+
+                p {
+                    padding-right: 20px;
+                }
+
+            }
+
+            #category-selection {
+                padding-right: 20px;
+            }
+
+            .form-control {
+                margin: .5em 0;
+                padding-right: 20px;
+
+                textarea {
+                    height: 5em;
+                }
+
+                #address {
+                    display: inline-block;
+                    width: 90%;
+                    width: calc(90% - 5px);
+                }
+
+                #addressSearch {
+                    width: 10%;
+                    margin: 1em 0 0;
+                    display: inline-block;
+                }
+
+            }
+
+            input, select, textarea {
+                padding: .25em;
+                width: 100%;
+
+                &[type=button], &[type=submit] {
+                    border: 1px solid #666; /* \m/  */
+                    padding: 5px 10px;
+                    width: auto;
+                }
+
+                &[type=button]:disabled {
+                    background-color: #999;
+                }
+            }
+
+            .error-message {
+                display: none;
+            }
+
+            .required {
+                color: $red;
+            }
+
+            .error {
+                label {
+                    color: $red;
+                }
+                input, textarea, select {
+                    box-shadow: 0 0 3px $red;
+                }
+                .error-message {
+                    color: $red;
+                    display: block;
+                    font-size: .75em;
+                    margin-top: .5em;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    #mainContent {
+        .bc-citysourced-reporter {
+            ol {
+                display: block; 
+                padding-right: 1em;
+                list-style-type: decimal;
+                list-style-position: inside;
+
+                li {
+                    display: list-item;
+                    float: none;
+                    height: auto;
+                    line-height: 1.4em;
+                    margin: 0 0 2px 0;
+                    padding: .5em;
+                    width: 100%;
+
+                    &:before, &:after {
+                        display: none;
+                    }
+
+                    br { 
+                        display: none; 
+                    }
+                }
+
+                li:last-child {
+                    display: none;
+                }
+            }
+
+            form {
+
+                input[type=button] {
+                    width: 100%;
+                }
+
+            }
+        }
+    }
+}

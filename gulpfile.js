@@ -1,13 +1,14 @@
-var gulp = require('gulp'),
+var clean = require('gulp-clean'),
 	concat = require('gulp-concat'),
-	uglify = require('gulp-uglify'),
-	rename = require('gulp-rename'),
-	sass = require('gulp-sass'),
-	jshint = require('gulp-jshint'),
 	cssnano = require('gulp-cssnano'),
-	clean = require('gulp-clean'),
-	runSequence = require('run-sequence'), 
-	stripCode = require('gulp-strip-code');
+	gulp = require('gulp'),
+	jshint = require('gulp-jshint'),
+	rename = require('gulp-rename'),
+	runSequence = require('run-sequence'),
+	sass = require('gulp-sass'),
+	stripCode = require('gulp-strip-code'),
+	stylish = require('jshint-stylish'),
+	uglify = require('gulp-uglify');
 
 var concatFiles = function(files, name, dest) {
 	dest = dest || 'dist/js';
@@ -25,6 +26,8 @@ gulp.task('clean-dist', function() {
 gulp.task('concatHomepageJs', function() {
 	var files = ['js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
+					'js/utility/querystringer.js',
+					'js/utility/jsonTools.js',
 					'js/lib/jQuery.min.js', 
 					'js/lib/slick.min.js', 
 					'js/lib/handlebars.js', 
@@ -40,7 +43,11 @@ gulp.task('concatTemplateJs', function() {
 					'js/utility/namespacer.js', 
 					'js/utility/cdnFallback.js',
 					'js/utility/numericStringTools.js',
+					'js/utility/querystringer.js',
+					'js/utility/jsonTools.js',
+					'js/utility/jquery.elliptical.js',
 					'js/lib/bootstrap-collapse.js',
+					'js/lib/handlebars.js', 
 					'js/skip-nav.js',
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
@@ -51,12 +58,18 @@ gulp.task('concatTemplateJs', function() {
 					'js/inside-template.js',
 					'js/bc-content-filter.js', 
 					'js/accordion-menu.js',
-					'js/nifty-tables.js'];
+					'js/youtube-playlist-gallery.js',
+					'js/photo-gallery.js'];
   	return concatFiles(files, 'templateinside.js');
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() {
-	return gulp.src(['dist/js/*.js'])
+gulp.task('movePageSpecificJs', function() {
+	return gulp.src('js/page-specific/*.js')
+		.pipe(gulp.dest('dist/js/page-specific'));
+});
+
+gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
+	return gulp.src(['dist/js/**/*.js'])
 		.pipe(stripCode({
 			start_comment: 'test-code',
 			end_comment: 'end-test-code'			
@@ -69,11 +82,21 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs'], function() 
 });
 
 gulp.task('sassAndCompressCss', function () {
-	return gulp.src('stylesheets/*.scss')
+	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss'])
 		.pipe(sass().on('error', sass.logError))
-		.pipe(cssnano())
-		.pipe(rename({ suffix: '.min' }))
+		.pipe(cssnano({
+			autoprefixer: false
+		}))
+		.pipe(rename({
+			suffix: '.min'
+		}))
 		.pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('linter', function() {
+	return gulp.src(['js/**/*.js', '!js/lib/*'])
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('watch', function() {
