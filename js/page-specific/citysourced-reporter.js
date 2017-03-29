@@ -179,10 +179,10 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 		 * Click handler for the 'previous' button, which flips to the previous panel.
 		 */
 		prevButtonClickHandler = function (event) {
-			/*if (validate(fieldIds, event)) {
+			if (validate(fieldIds, event)) {
 				event.data.$form.find('[aria-invalid=true]').first().focus();
 				return;
-			}*/
+			}
 
 			var $visiblePanel = event.data.$panels.filter(':visible'),
 				$nextPanel = $visiblePanel.prev('.panel').first();
