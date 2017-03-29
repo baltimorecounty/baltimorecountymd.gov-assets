@@ -46,7 +46,7 @@
             <li> </li>
         </ol>
 
-        <form id="citysourced-reporter-form">
+         <form id="citysourced-reporter-form">
             <fieldset class="panel">
                 <legend>How Can We Help?</legend>
                 <div id="category-selection">
@@ -55,9 +55,9 @@
                 </div>
                 <input type="hidden" id="report-category" value="" />
                 <div class="form-control">
-                    <label for="details">Description</label>
-                    <textarea id="details" aria-required="true"></textarea>
-                    <p role="alert" class="error-message">Please enter details for your report.</p>
+                    <label for="description">Description</label>
+                    <textarea id="description" aria-required="true"></textarea>
+                    <p role="alert" class="error-message">Please enter a description for your report.</p>
                 </div>
             </fieldset>
 
@@ -100,15 +100,18 @@
                     <p role="alert" class="error-message">Please enter your phone number.</p>
                 </div>
             </fieldset>
-            <input type="button" class="seButton pull-right" id="fileReportButton" value="File Your Report" />
-        </form>
+			<input type="button" class="seButton hidden" id="prevButton" value="Previous" />
+            <input type="button" class="seButton pull-right" id="nextButton" value="Next" />
+            <input type="button" class="seButton pull-right hidden" aria-hidden="true" id="fileReportButton" value="File Your Report" />
+         </form>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.reporterGoogleMaps.initGoogle"
         async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
-
-
-
+    <script>
+        $('#deviceNumber').inputmask('999-999-9999', { 'clearIncomplete': true, jitMasking: true });
+        $('#email').inputmask('email', { 'clearIncomplete': true, jitMasking: true });
+    </script>
     
 </body>
 
