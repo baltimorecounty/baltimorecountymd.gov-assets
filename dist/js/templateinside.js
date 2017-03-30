@@ -3750,8 +3750,8 @@ baltimoreCounty.contentFilter = (function($) {
         clearFilter = function($wrapper, $searchbox, $errorMessage) {
             var $everythingWeFilter = $wrapper.find('li, div, tr');
 			$everythingWeFilter.show();
-            resetTableStripes($everythingWeFilter, 'tr:visible:even', '#ebebeb');
-            resetTableStripes($everythingWeFilter, 'tr:visible:odd', '#fff');
+            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
+            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
         };
