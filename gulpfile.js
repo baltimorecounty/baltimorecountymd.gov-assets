@@ -67,7 +67,7 @@ gulp.task('movePageSpecificJs', function() {
 });
 
 gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
-	return gulp.src(['dist/js/**/*.js'])
+	return gulp.src(['!dist/js/**/*.min.js', 'dist/js/**/*.js'])
 		.pipe(stripCode({
 			start_comment: 'test-code',
 			end_comment: 'end-test-code'			
