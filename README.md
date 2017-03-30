@@ -2,6 +2,7 @@
 Assets used on the [Baltimore County Website](https://www.baltimorecountymd.gov/index.html)
 
 ## Building Files for Distribution
+
 ### Setup
 You will need to do these steps the first time you setup the project.
 
@@ -26,7 +27,7 @@ You will need to do these steps the first time you setup the project.
 
 *You may need to configure node for proxy, [here's](http://jjasonclark.com/how-to-setup-node-behind-web-proxy/) how.
 
-### Run Unit Tests
+### Run Unit Tests - Karma
 
 1. Open terminal or command prompt to the root of your local repository
 2. Run the ``karma start`` command

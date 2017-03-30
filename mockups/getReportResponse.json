@@ -1,0 +1,185 @@
+{
+	"CsResponse": {
+		"Message": "Congratulations! The report you requested is below.",
+		"Report": {
+			"Id": "256258",
+			"DateCreated": "2/27/2017 2:34:12 PM",
+			"DateCreatedSortable": "2017-02-27T14:34:12",
+			"DateCreatedUniversal": "2017-02-27 14:34:12Z",
+			"DateUpdated": "2/28/2017 1:46:01 PM",
+			"DateUpdatedSortable": "2017-02-28T13:46:01",
+			"DateUpdatedUniversal": "2017-02-28 13:46:01Z",
+			"RequestType": "Junk, trash, or debris in yard or public space",
+			"RequestTypeId": "1022238",
+			"ImageUrl": "https://api.citysourced.net/reportimage.ashx?reportid=256258&imagesize=",
+			"ImageUrlXl": "https://api.citysourced.net/reportimage.ashx?reportid=256258&imagesize=XLarge",
+			"ImageUrlLg": "https://api.citysourced.net/reportimage.ashx?reportid=256258&imagesize=Large",
+			"ImageUrlMd": "https://api.citysourced.net/reportimage.ashx?reportid=256258&imagesize=Medium",
+			"ImageUrlSm": "https://api.citysourced.net/reportimage.ashx?reportid=256258&imagesize=Small",
+			"ImageUrlXs": "https://api.citysourced.net/reportimage.ashx?reportid=256258&imagesize=XSmall",
+			"Latitude": "39.4044298",
+			"Longitude": "-76.6049623",
+			"UrlDetail": "https://www.citysourced.net/report/256258/junk-trash-or-debris-in-yard-or-public-space",
+			"UrlShortened": null,
+			"StatusType": "Received",
+			"StatusTypeIsClosed": "False",
+			"StatusTypeReadable": "Received",
+			"StatusTypeAsVendor": null,
+			"VendorStatusCurrent": null,
+			"VendorTicketId": null,
+			"TotalReportItems": "2",
+			"TotalKeyValuePairs": "15",
+			"TotalComments": "2",
+			"TotalVotes": "0",
+			"TotalMedia": "0",
+			"Address": "714 York Rd, Towson, MD 21204",
+			"DeviceType": "Web",
+			"DeviceModel": "BaltimoreCountyGov_1.0",
+			"Description": null,
+			"AuthorId": "913832",
+			"AuthorScreenName": "Citizen7058060",
+			"AuthorImageUrl": "https://x.citysourced.com/images/no-member.jpg",
+			"ReportItems": {
+				"TotalReportItems": "2",
+				"ReportItem": [{
+					"DateCreated": "2/27/2017 2:34:14 PM",
+					"DateCreatedSortable": "2017-02-27T14:34:14",
+					"DateCreatedUniversal": "2017-02-27 14:34:14Z",
+					"IsPk": "True",
+					"Key": "ReportType",
+					"Text": "Issue Type:",
+					"Value": "Junk, trash, or debris in yard or public space",
+					"VariableType": "String"
+				}, {
+					"DateCreated": "2/27/2017 2:34:14 PM",
+					"DateCreatedSortable": "2017-02-27T14:34:14",
+					"DateCreatedUniversal": "2017-02-27 14:34:14Z",
+					"IsPk": "False",
+					"Key": "Description",
+					"Text": "Description:",
+					"Value": "asdasdasdasdasd",
+					"VariableType": "String"
+				}]
+			},
+			"KeyValuePairs": {
+				"TotalKeyValuePairs": "15",
+				"KeyValuePair": [{
+					"DateCreated": "2/27/2017 2:35:04 PM",
+					"DateCreatedSortable": "2017-02-27T14:35:04",
+					"DateCreatedUniversal": "2017-02-27 14:35:04Z",
+					"Key": "InitialBoundaryName",
+					"Value": "Baltimore County, MD"
+				}, {
+					"DateCreated": "2/27/2017 2:35:05 PM",
+					"DateCreatedSortable": "2017-02-27T14:35:05",
+					"DateCreatedUniversal": "2017-02-27 14:35:05Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 3:00:11 PM",
+					"DateCreatedSortable": "2017-02-27T15:00:11",
+					"DateCreatedUniversal": "2017-02-27 15:00:11Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 3:30:08 PM",
+					"DateCreatedSortable": "2017-02-27T15:30:08",
+					"DateCreatedUniversal": "2017-02-27 15:30:08Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 4:00:10 PM",
+					"DateCreatedSortable": "2017-02-27T16:00:10",
+					"DateCreatedUniversal": "2017-02-27 16:00:10Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 4:30:14 PM",
+					"DateCreatedSortable": "2017-02-27T16:30:14",
+					"DateCreatedUniversal": "2017-02-27 16:30:14Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 5:00:12 PM",
+					"DateCreatedSortable": "2017-02-27T17:00:12",
+					"DateCreatedUniversal": "2017-02-27 17:00:12Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 5:30:11 PM",
+					"DateCreatedSortable": "2017-02-27T17:30:11",
+					"DateCreatedUniversal": "2017-02-27 17:30:11Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 6:00:12 PM",
+					"DateCreatedSortable": "2017-02-27T18:00:12",
+					"DateCreatedUniversal": "2017-02-27 18:00:12Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 6:30:14 PM",
+					"DateCreatedSortable": "2017-02-27T18:30:14",
+					"DateCreatedUniversal": "2017-02-27 18:30:14Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 7:00:08 PM",
+					"DateCreatedSortable": "2017-02-27T19:00:08",
+					"DateCreatedUniversal": "2017-02-27 19:00:08Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}, {
+					"DateCreated": "2/27/2017 7:30:01 PM",
+					"DateCreatedSortable": "2017-02-27T19:30:01",
+					"DateCreatedUniversal": "2017-02-27 19:30:01Z",
+					"Key": "VendorIntegrationId",
+					"Value": "36"
+				}, {
+					"DateCreated": "2/27/2017 7:30:02 PM",
+					"DateCreatedSortable": "2017-02-27T19:30:02",
+					"DateCreatedUniversal": "2017-02-27 19:30:02Z",
+					"Key": "VendorName",
+					"Value": "Accela"
+				}, {
+					"DateCreated": "2/27/2017 7:30:02 PM",
+					"DateCreatedSortable": "2017-02-27T19:30:02",
+					"DateCreatedUniversal": "2017-02-27 19:30:02Z",
+					"Key": "VendorType",
+					"Value": "AccelaV3"
+				}, {
+					"DateCreated": "2/27/2017 7:30:02 PM",
+					"DateCreatedSortable": "2017-02-27T19:30:02",
+					"DateCreatedUniversal": "2017-02-27 19:30:02Z",
+					"Key": "VendorPostReport [FAILED]",
+					"Value": "REST Url=https://apis.accela.com/v3/records; Error Code=GenerateCreateData() is NULL."
+				}]
+			},
+			"Comments": {
+				"TotalComments": "2",
+				"Comment": [{
+					"DateCreated": "2/28/2017 1:45:22 PM",
+					"DateCreatedSortable": "2017-02-28T13:45:22",
+					"DateCreatedUniversal": "2017-02-28 13:45:22Z",
+					"Text": "This is a comment.",
+					"AuthorScreenName": "BALTCOGO Stage",
+					"AuthorImageUrl": "https://d2p5liwq1c5kwh.cloudfront.net/Customers/BaltimoreCountyMdStg/Icon-300.png"
+				}, {
+					"DateCreated": "2/28/2017 1:45:36 PM",
+					"DateCreatedSortable": "2017-02-28T13:45:36",
+					"DateCreatedUniversal": "2017-02-28 13:45:36Z",
+					"Text": "This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment. This is a much longer comment.",
+					"AuthorScreenName": "BALTCOGO Stage",
+					"AuthorImageUrl": "https://d2p5liwq1c5kwh.cloudfront.net/Customers/BaltimoreCountyMdStg/Icon-300.png"
+				}]
+			},
+			"Votes": {
+				"TotalVotes": "0"
+			},
+			"Medias": {
+				"TotalMedia": "0"
+			}
+		},
+		"ResponseTime": "0.2759689 Seconds"
+	}
+}
