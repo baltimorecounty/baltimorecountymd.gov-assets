@@ -3748,7 +3748,10 @@ baltimoreCounty.contentFilter = (function($) {
          * Clears the filter and displays all nodes in the list.
          */
         clearFilter = function($wrapper, $searchbox, $errorMessage) {
-            $wrapper.find('li, div, tr').show();
+            var $everythingWeFilter = $wrapper.find('li, div, tr');
+			$everythingWeFilter.show();
+            resetTableStripes($everythingWeFilter, 'tr:visible:even', '#ebebeb');
+            resetTableStripes($everythingWeFilter, 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
         };
