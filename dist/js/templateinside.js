@@ -3589,7 +3589,13 @@ baltimoreCounty.niftyTables = (function ($, numericStringTools, undefined) {
 
             // Create sorting links    
             if ($sortableTables.length) {
-                $sortableColumnHeadings.children().wrap('<a href="javascript:;" class="btn-sort" role="button"></a>');
+				var $headingChildren = $sortableColumnHeadings.children();
+				if ($headingChildren.length) {
+	                $sortableColumnHeadings.children().wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
+				} else {
+				    $sortableColumnHeadings.wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
+				}
+
                 $sortableColumnHeadings.find('.btn-sort').on('click', tableSort);
             }
         };
