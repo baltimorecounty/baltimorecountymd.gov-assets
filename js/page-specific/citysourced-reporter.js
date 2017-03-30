@@ -92,6 +92,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					animationFactor = event.data.animationFactor,
 					$firstCategory = event.data.$categories.find('select').first(),
 					$lastCategory = event.data.$categories.find('select').last(),
+					$instructions = $('.bc-citysourced-reporter-instructions'),
 					formData = {
 						CategoryNamesAndIds: categoryNameIdArr,
 						Description: $form.find('#description').val(),
@@ -116,12 +117,16 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 						$wrapper.fadeOut(animationFactor, function () {
 							var jsonResponse = JSON.parse(data);
 							$("#issueId").text(jsonResponse.CsResponse.ReportId);
-							$('.bc-citysourced-reporter-alert.alert-success').fadeIn(animationFactor);
+							$instructions.fadeOut(animationFactor, function() {
+								$('.bc-citysourced-reporter-alert.alert-success').fadeIn(animationFactor);
+							});
 						});
 					})
 					.fail(function (jqXHR, textStatus, errorThrown) {
 						$wrapper.fadeOut(animationFactor, function () {
-							$('.bc-citysourced-reporter-alert.alert-warning').fadeIn(animationFactor);
+							$instructions.fadeOut(animationFactor, function() {
+								$('.bc-citysourced-reporter-alert.alert-warning').fadeIn(animationFactor);
+							});
 						});
 						console.log(textStatus, errorThrown);
 					});
