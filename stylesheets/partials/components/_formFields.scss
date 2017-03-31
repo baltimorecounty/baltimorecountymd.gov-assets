@@ -1,0 +1,11 @@
+$required-red: #c00;
+
+.required {
+    color: $required-red;
+}
+
+.required-field-error-message {
+    color: $required-red;
+    font-size: 75%;
+    padding: .5em 0;
+}

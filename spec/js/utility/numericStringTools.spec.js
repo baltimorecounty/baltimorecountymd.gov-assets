@@ -1,9 +1,8 @@
-jasmine.getFixtures().fixturesPath = '/spec/js/fixtures';
+console.log(!baltimoreCounty.utility.numericStringTools);
 
 describe('NumericStringTools', function() {
 
     describe('getIndexOfFirstDigit', function() {
-        //getIndexOfFirstDigit = function(numberString)
 
         it('returns 1 when the first character is a dollar sign', function() {
             var actual = baltimoreCounty.utility.numericStringTools.getIndexOfFirstDigit('$123');
@@ -60,7 +59,6 @@ describe('NumericStringTools', function() {
     });
 
     describe('getFirstSetOfNumbersAndRemoveNonDigits', function() {
-        //getFirstSetOfNumbersAndRemoveNonDigits = function(numbersAndAssortedOtherCharacters)
 
         it('returns a number when input is all numeric and starts with a number', function() {
             var actual = baltimoreCounty.utility.numericStringTools.getFirstSetOfNumbersAndRemoveNonDigits('123456789');
