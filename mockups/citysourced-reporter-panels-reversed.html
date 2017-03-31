@@ -44,28 +44,14 @@
     <div class="bc-citysourced-reporter">
 
         <ol class="bc-citysourced-reporter-steps">
-            <li class="highlight">Choose a<br/>Report Type</li>
-            <li>Enter a<br/>Location</li>
+            <li class="highlight">Enter a<br/>Location</li>
+            <li>Choose a<br/>Report Type</li>
             <li>Provide Your<br/>Contact Information</li>
             <li> </li>
         </ol>
 
          <form id="citysourced-reporter-form">
-            <fieldset class="panel">
-                <legend>How Can We Help?</legend>
-                <div id="category-selection">
-                    <label id="categories-label">Request Category</label>
-                    <p role="alert" class="error-message">Please select a category for your report.</p>
-                </div>
-                <input type="hidden" id="report-category" value="" />
-                <div class="cs-form-control">
-                    <label for="description">Description</label>
-                    <textarea id="description" aria-required="true"></textarea>
-                    <p role="alert" class="error-message">Please enter a description for your report.</p>
-                </div>
-            </fieldset>
-
-
+            
             <fieldset class="panel">
                 <legend>Add a Location</legend>
                 <p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
@@ -79,6 +65,21 @@
                 <input type="hidden" id="map-latitude" value="" />
                 <input type="hidden" id="map-longitude" value="" />
             </fieldset>
+
+			<fieldset class="panel">
+                <legend>How Can We Help?</legend>
+                <div id="category-selection">
+                    <label id="categories-label">Request Category</label>
+                    <p role="alert" class="error-message">Please select a category for your report.</p>
+                </div>
+                <input type="hidden" id="report-category" value="" />
+                <div class="cs-form-control">
+                    <label for="description">Description</label>
+                    <textarea id="description" aria-required="true"></textarea>
+                    <p role="alert" class="error-message">Please enter a description for your report.</p>
+                </div>
+            </fieldset>
+
 
             <fieldset class="panel">
                 <legend>Your Contact Information</legend>
