@@ -2,5 +2,5 @@
 **/.sass-cache/*
 **/*.map
 **/*.css
-!dist/css/*.css
+!dist/css/**/*.css
 node_modules/**/*
