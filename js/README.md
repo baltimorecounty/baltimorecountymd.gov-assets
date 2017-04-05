@@ -253,6 +253,21 @@ Specific to the baltimorecoutymd.gov inside templates.  Initializes events for G
 **filename**: inside-template.js  
 **usage**: n/a
 
+## Nifty Tables
+This module adds extra functionality to an HTML table. You only need to add a few CSS classes to a `<table>` element to activate:
+
+### Activation
+* `nifty-table` -- Activates the module but does not add functionality without one of the additional feature classes.
+### Feature Classes
+* `nifty-table-sortable` -- Makes the column headers sort the table. The column header cells must be `<th>` elements. Optional.
+
+**filename**: nifty-tables.js  
+**usage**: insidetemplate.min.js
+### Dependencies
+* [jQuery](https://jquery.com/)
+* Namespacer.js utility
+
+
 ## Photo Gallery
 Creates a FancyBox photo gallery and links it to a preview image. See example setup for the HTML you'll need on the page. This should be customized in a HTML Snippet within a content inclusion.
 
@@ -294,7 +309,7 @@ Add the following to the `<head>` of the **page**.
 Specific to the baltimorecoutymd.gov website.  Fallback script for our Skip Nav Link that is displayed on the screen using CSS.
 
 **filename**: skip-nav.js  
-**usage**: insidetemplate.min.js  
+**usage**: templateinside.min.js  
 ### Dependencies
 * [jQuery](https://jquery.com/)
 
@@ -302,7 +317,7 @@ Specific to the baltimorecoutymd.gov website.  Fallback script for our Skip Nav 
 Tool used through the baltimorecoutymd.gov website.  Is located near the top of the screen on larger screen devices. Allows the user toincrease the size of the text on the site.
 
 **filename**: text-resizer.js  
-**usage**: insidetemplate.min.js  
+**usage**: templateinside.min.js  
 ### Dependencies
 * [jQuery](https://jquery.com/)
 
