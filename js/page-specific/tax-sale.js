@@ -221,7 +221,7 @@ $(document).ready(function () {
 
             //Show the form for the selected progress-menu item
             
-            $('div.taxStep').find('legend:contains(' + $(this).text() + ')').parents().eq(11).show();
+            $('div.taxStep').find('legend:contains(' + $(this).text() + ')').closest('.taxStep').show();
             $('ul.progress-menu li p').removeClass('active');
             $('p', this).addClass('active');
             next_text = $('p', this).text();
@@ -255,7 +255,7 @@ $(document).ready(function () {
 				$(form_element_container).hide();
 
 				//Show the right piece of the form
-				$('div.taxStep').find('legend:contains(' + next_text + ')').parents().eq(11).fadeIn(function () {});
+				$('div.taxStep').find('legend:contains(' + next_text + ')').closest('.taxStep').fadeIn(function () {});
 
 			}
 			
@@ -281,7 +281,7 @@ $(document).ready(function () {
             $(form_element_container).hide();
 
             //Show the right piece of the form
-            $('div.taxStep').find('legend:contains(' + prev_text + ')').parents().eq(11).show();
+            $('div.taxStep').find('legend:contains(' + prev_text + ')').closest('.taxStep').show();
             enableNextButton();
         }
 
