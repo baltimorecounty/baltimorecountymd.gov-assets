@@ -233,9 +233,11 @@ $(document).ready(function () {
                 $('input', this).attr('disabled', 'disabled');
                 $(this).css('color', 'gray');
             });
+        } //end of ajax call
+    });
 
-            //determine if the user is answering each question correctly
-            $('div.questions :input').click(function () {
+    //determine if the user is answering each question correctly
+            $(document).on('click', 'div.questions :input', function() {
                 //count the number of clicked inputs
                 j++;
                 //Disable all qtips
@@ -246,86 +248,119 @@ $(document).ready(function () {
 				
 				//Custom code for shoplifting, sometimes shoplifting is a theft so this compensates for that
 				//This is dependent on the question Is there a known suspect? being first.
-				if ($(this).parent().hasClass('shoplifting') && $(this).parent().children('p').text() == "Is there a known suspect?") {
+                var $parent = $(this).parent();
+                var isShoplifting = $parent.hasClass('shoplifting');
+                var isKnownSuspect = $parent.children('p').text() == "Is there a known suspect?";
+
+
+				if (isShoplifting && isKnownSuspect) {
 					var answer_text = $(this).val();
 					if (answer_text == "No") {
 						$('div.questions ul li:not(:first), .noreport').hide();
-						$('div.success').html("<p>Since there is no known suspect, you will need to file a theft report.</p>&nbsp;<a href='" + link.theft.sepage + "' class='goToForm'>File a Theft Report Now</a>").css('color', 'green');
+						$('div.success')
+                            .html("<p>Since there is no known suspect, you will need to file a theft report.</p>&nbsp;<a href='" + link.theft.sepage + "' class='goToForm'>File a Theft Report Now</a>")
+                            .css('color', 'green');
 					}
 					
 				}
-				
+
+                var hasNoAnswer = $(this).hasClass('noanswer');
+                var hasNoMotor = $(this).hasClass('nomotor');
+                var hasMotor = $(this).hasClass('motor');
+                var isDesturctionOfProperty = $('div.questions').hasClass("destructionofproperty");
+				var $targetDiv = $('div.success');
+
+
+                var buildHtml = function(link) {
+                    return [
+                        "<p>Your report is qualified to file online.</p>&nbsp;<a href='",
+                        link,
+                        "' class='startReport'>File a Report Now</a>"
+                    ].join("");
+                };
+
+
                 //if there is a question that doesn't have an answer, do these things
-                if ($(this).hasClass('noanswer')) {
-                    if ($(this).hasClass('nomotor')) {
-                        $('div.success').html("<p>Your report is qualified to file online.</p>&nbsp;<a href='" + link.theft.nomotor + "' class='startReport'>File a Report Now</a>").css('color', 'green');
+                if (hasNoAnswer) {
+                    if (hasNoMotor) {
+                        $targetDiv.html(buildHtml(link.theft.nomotor));
                     }
-                    else if ($(this).hasClass('motor')) {
-                        $('div.success').html("<p>Your report is qualified to file online.</p>&nbsp;<a href='" + link.theft.motor + "' class='startReport'>File a Report Now</a>").css('color', 'green');
+                    else if (hasMotor) {
+                        $targetDiv.html(buildHtml(link.theft.motor));
                     }
-					if ($('div.questions').hasClass("destructionofproperty")) {
-					/*if (questionType == "destructionofproperty") {*/
-						if ($(this).hasClass('nomotor')) {
-							$('div.success').html("<p>Your report is qualified to file online.</p>&nbsp;<a href='" + link.des_of_property.nomotor + "' class='startReport'>File a Report Now</a>").css('color', 'green');
+					if (isDesturctionOfProperty) {
+						if (hasNoMotor) {
+							$targetDiv.html(buildHtml(link.des_of_property.nomotor));
 						}
-						else if ($(this).hasClass('motor')) {
-							$('div.success').html("<p>Your report is qualified to file online.</p>&nbsp;<a href='" + link.des_of_property.motor + "' class='startReport'>File a Report Now</a>").css('color', 'green');
+						else if (hasMotor) {
+							$targetDiv.html(buildHtml(link.des_of_property.motor));
 						}
 					}
+                    $targetDiv.css('color', 'green');
                 }
 
                 //question has been answered correctly
-                if ($(this).hasClass('correct')) {
+                var isCorrect = $(this).hasClass('correct');
+
+                if (isCorrect) {
                     //add a class of answered for selecting purposes
-                    $(this).parent().addClass("answered").css('color', 'gray');
-                    $(this).parent().children(':input').attr('disabled', 'disabled');
-                    $(this).parent().children().children().attr('style', 'color:gray;');
-                    $(this).parent().removeClass('active');
-                    $(this).parent().next().addClass('active').css('color','black');
-                    $(this).parent().next().children(':input').removeAttr('disabled');
-                    $(this).parent().next().children().children().attr('style', '').css('color', '');
+                    var $parent = $(this).parent();
+
+                    $parent.addClass("answered").css('color', 'gray');
+                    
+                    $(this).closest('li').addClass('block-ui');
+                    
+                    $parent.children().children().attr('style', 'color:gray;');
+                    $parent.removeClass('active');
+                    $parent.next().addClass('active').css('color','black');
+                    $parent.next().children(':input').removeAttr('disabled');
+                    $parent.next().children().children().attr('style', '').css('color', '');
 
                     //if answer of correct = answer of questions show file link button
                     if (i == j) {
+                        var $this = $(this);
                         //modify the link based on which type of report it is
-						generateLink($(this),'lostproperty', link.lost_property);
-						generateLink($(this),'hitandrun', link.hit_and_run);
-						generateLink($(this),'abandonedvehicle', link.abandoned);
-						generateLink($(this),'shoplifting', link.shop_lifting);
+						generateLink($this,'lostproperty', link.lost_property);
+						generateLink($this,'hitandrun', link.hit_and_run);
+						generateLink($this,'abandonedvehicle', link.abandoned);
+						generateLink($this,'shoplifting', link.shop_lifting);
                     }
 					
-					if ($(this).parent().next().children().html() != null) {
+					if ($parent.next().children().html() != null) {
 						//qtips only show after the question has been enabled
 						generateQtip($(this).parent().next().children().html(), keywordArray);
 
 					}
 				}
-
                 //wrong answer
                 else {
+                    var $noReport = $('div.noreport');
+
                     $(this).parent().css('color', 'gray');
-                    $(this).parent().children(':input').attr('disabled', 'disabled');
+                    //$(this).parent().children(':input').attr('disabled', 'disabled');
                     $(this).parent().siblings(':not(.answered)').hide();
                     if ($(this).parent().html().indexOf("Baltimore County, Maryland?") > -1) {
-                        $('div.noreport').html("<p>Sorry, you cannot file your report with Baltimore County. Notify the jurisidiction where the incident occured.").css('color', 'red');
+                        $noReport
+                            .html("<p>Sorry, you cannot file your report with Baltimore County. Notify the jurisidiction where the incident occured.")
+                            
                     }
                     else {
                         if ($(this).hasClass('noanswer')) {
-                            $('div.noreport').hide();
+                            $noReport
+                                .hide();
                         }
                         else {
-                            $('div.noreport').html("<p>Sorry, your report does not qualify to file online. You need to  file by calling the non-emergency number at 410-887-2222 or visiting your <a href='" + link.precincts + "'>local precinct.</a>").css('color', 'red');
+                            $noReport
+                                .html("<p>Sorry, your report does not qualify to file online. You need to  file by calling the non-emergency number at 410-887-2222 or visiting your <a href='" + link.precincts + "'>local precinct.</a>");
                         }
 
                     }
+                    $noReport.css('color', 'red');
 
                 }
             });
-            if (baltimoreCounty && baltimoreCounty.niftyForms) {
-                baltimoreCounty.niftyForms.reInit();
-            }
-        } //end of ajax call
-    });
+
+
 
     $('a.startReport').live('click', function () {
 
