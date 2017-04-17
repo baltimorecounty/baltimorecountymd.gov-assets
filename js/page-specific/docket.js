@@ -30,21 +30,31 @@ baltimoreCounty.pageSpecific.docket = (function($, undefined) {
 				infoLine = reformattedArr.shift(),
 				dateString = infoLine.split(' ')[1];
 
-			$docketDate.text(new Date(dateString).toLocaleDateString());
+			if (reformattedArr.length) {
 
-			$.each(reformattedArr, function(index, item) {	
-				if (item.trim().length > 0) {
-					var rowString = "<tr>"
-						+ "<td>" + item.slice(0, NAME_WIDTH - 1).trim() + "</td>"
-						+ "<td>" + item.slice(NAME_WIDTH, NAME_WIDTH + CASE_WIDTH - 1).trim() + "</td>"
-						+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH, NAME_WIDTH + CASE_WIDTH + TIME_WIDTH - 1).trim() + "</td>"
-						+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH, NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH - 1).trim() + "</td>"
-						+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH).trim() + "</td>"
-						+ "</tr>";
-					$tbody.append(rowString);
-				}
-			});
-			$target.append($tbody);
+				$docketDate.text(new Date(dateString).toLocaleDateString());
+
+				$.each(reformattedArr, function(index, item) {	
+					if (item.trim().length > 0) {
+						var rowString = "<tr>"
+							+ "<td>" + item.slice(0, NAME_WIDTH - 1).trim() + "</td>"
+							+ "<td>" + item.slice(NAME_WIDTH, NAME_WIDTH + CASE_WIDTH - 1).trim() + "</td>"
+							+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH, NAME_WIDTH + CASE_WIDTH + TIME_WIDTH - 1).trim() + "</td>"
+							+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH, NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH - 1).trim() + "</td>"
+							+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH).trim() + "</td>"
+							+ "</tr>";
+						$tbody.append(rowString);
+					}
+				});
+				$target.append($tbody);
+
+			} else {
+				
+				$target.hide();
+				
+				$('docket-error').show();
+				// need to add <p class="docket-error"> to page
+			}
 		});
 	};
 
