@@ -22,7 +22,7 @@ baltimoreCounty.niftyForms = (function() {
         inputChanged = function(e) {
             var $input = $(e.currentTarget),
                 inputId = $input.attr('id'),
-                isChecked = $input.prop('checked'),
+                isChecked = $input.is(':checked'),
                 $label = $('label[for="' + inputId + '"]');
                 
                 if ($input.is('[type=radio]')) {
@@ -104,9 +104,10 @@ baltimoreCounty.niftyForms = (function() {
             $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
             $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
 
-        $checkboxAndRadioLabels
-            .on('click', makeItemCheckedOnClickHandler)
-            .on('keyup', makeItemCheckedOnKeyupHandler)
+
+        $(document)
+            .on('click', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnClickHandler)
+            .on('keyup', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnKeyupHandler)
             // .attr('tabindex', '-1')
             .attr('aria-checked', false);
 
