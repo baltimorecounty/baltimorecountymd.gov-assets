@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html lang="en-us">
+<head>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+	<script>
+		$.ajax('http://ba224964:1000/api/citysourced/news')
+			.done(function(data) {
+				var $items = $(data).find('item'),
+					$tweets = $('#tweets');
+
+				$items.each(function(index, item) {
+					var $item = $(item),
+						title = $item.find('title').text(),
+						pubDate = new Date($item.find('pubDate').text()),
+						link = $item.find('link').text(),
+						months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+						days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+						displayDate = days[pubDate.getDay()] + " " + (pubDate.getHours() > 12 ? pubDate.getHours() - 12 : pubDate.getHours()) + ":" + (pubDate.getMinutes() < 10 ? "0" + pubDate.getMinutes() : pubDate.getMinutes()) + (pubDate.getHours() < 12 ? "a.m. " : "p.m. ") + months[pubDate.getMonth()] + " " + pubDate.getDate() + ", " + pubDate.getFullYear(),
+						html = "<div class=\"tweet\"><p><a href=\""+link+"\" title=\""+ title +"\">" + title + "</a></p><p><em>" + displayDate + "</em></p></div>"
+					
+					//html = html.replace(/(https?:[^\s<]+)/, "<a href=\"$1\">$1</a>");
+					//html = html.replace(/(pic\.twitter\.com[^\s<]+)/, "<a href=\"http://$1\">$1</a>");
+
+					$tweets.append(html);
+				});
+			});
+
+	</script>
+
+	<title>CitySourced - Blog</title>
+
+	<style>
+		body {
+			background: #999; 
+			font-family: Arial, Helvetica, sans-serif;
+			margin: 0;
+			padding: 0;
+			font-size: 16px;
+		}
+		.tweet {
+			background: white;
+			margin: 1em;
+			padding: 1em;
+			box-shadow: 0px 4px 10px #666;
+			border-radius: 4px;
+		}
+
+		.tweet p {
+			color: #333;
+			margin: .5em;
+		}			
+
+		.tweet p em {
+			color: #999;
+			font-size: .8em;
+		}
+	</style>
+</head>
+<body>
+	<div id="tweets"></div>
+</body>
+</html>
