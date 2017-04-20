@@ -4,8 +4,7 @@ baltimoreCounty.pageSpecific.docket = (function($, undefined) {
 	'use strict';
 
 	var loadDocketInfo = function(callback) {
-//		$.ajax('//services.baltimorecountymd.gov/api/docket')
-		$.ajax('//ba224964:1000/api/docket')
+		$.ajax('//services.baltimorecountymd.gov/api/docket')
 			.done(function(data) {
 				callback(data);
 			})
@@ -63,7 +62,7 @@ baltimoreCounty.pageSpecific.docket = (function($, undefined) {
 
 			if (isError) {
 				$target.parent().children().hide();
-				$target.parent().find('.docket-error-message').show();
+				$target.parent().find('.docket-error-message').show(); 
 			}
 		});
 	};
