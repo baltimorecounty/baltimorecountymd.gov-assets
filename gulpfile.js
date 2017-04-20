@@ -111,7 +111,8 @@ gulp.task('linter', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(['js/*.js', 'js/lib/*.js', 'js/page-specific/*.js'], ['compressFiles']);
+	gulp.watch(['js/page-specific/*.js'], ['compressPageSpecificFiles']);
+	gulp.watch(['js/*.js', 'js/lib/*.js'], ['compressFiles']);
 	gulp.watch(['stylesheets/*.scss'], ['sassAndCompressCss']);
 
 });
