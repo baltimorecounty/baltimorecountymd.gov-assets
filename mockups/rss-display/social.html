@@ -8,7 +8,7 @@
 		$.ajax('https://twitrss.me/twitter_user_to_rss/?user=baltcogov')
 			.done(function(data) {
 				var $items = $(data).find('item'),
-					$tweets = $('#tweets');
+					$tweets = $('#socialData');
 
 				$items.each(function(index, item) {
 					var $item = $(item),
@@ -17,13 +17,50 @@
 						months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 						days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 						displayDate = days[pubDate.getDay()] + " " + (pubDate.getHours() > 12 ? pubDate.getHours() - 12 : pubDate.getHours()) + ":" + (pubDate.getMinutes() < 10 ? "0" + pubDate.getMinutes() : pubDate.getMinutes()) + (pubDate.getHours() < 12 ? "a.m. " : "p.m. ") + months[pubDate.getMonth()] + " " + pubDate.getDate() + ", " + pubDate.getFullYear(),
-						html = "<div class=\"tweet\"><p>" + title + "</p><p><em>" + displayDate + "</em></p></div>"
+						html = "<div class=\"social twitter\"><div class=\"logo\"></div><p>" + title + "</p><p><em class=\"date\" data-date-code=\"" + pubDate.getTime() + "\">" + displayDate + "</em></p></div>"
 					
 					html = html.replace(/(https?:[^\s<]+)/, "<a href=\"$1\">$1</a>");
 					html = html.replace(/(pic\.twitter\.com[^\s<]+)/, "<a href=\"http://$1\">$1</a>");
 
 					$tweets.append(html);
+
 				});
+			
+				$.ajax('http://ba224964:1000/api/citysourced/feeds/facebook')
+					.done(function(data) {
+						var $socialData = $('#socialData');
+						
+						$.each(data, function(index, item) {
+							var message = item.Message,
+								pubDate = new Date(item.Created_Time),
+								months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+								days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+								displayDate = days[pubDate.getDay()] + " " + (pubDate.getHours() > 12 ? pubDate.getHours() - 12 : pubDate.getHours()) + ":" + (pubDate.getMinutes() < 10 ? "0" + pubDate.getMinutes() : pubDate.getMinutes()) + (pubDate.getHours() < 12 ? "a.m. " : "p.m. ") + months[pubDate.getMonth()] + " " + pubDate.getDate() + ", " + pubDate.getFullYear(),
+								html = "<div class=\"social facebook\"><div class=\"logo\"></div><p>" + message + "</p><p><em class=\"date\" data-date-code=\"" + pubDate.getTime() + "\">" + displayDate + "</em></p></div>"
+
+							html = html.replace(/(https?:[^\s<]+)/, "<a href=\"$1\">$1</a>");
+							
+							$socialData.append(html);
+						});
+
+						$(function() {
+							var $socialData = $('#socialData');
+							var sortedChildren = $socialData.children().toArray().sort(function(a, b) {
+								var a_date = $(a).find('.date').attr('data-date-code'),
+									b_date = $(b).find('.date').attr('data-date-code');
+
+								if (a_date > b_date)
+									return -1;
+								if (a_date === b_date)
+									return 0;
+								if (a_date < b_date)
+									return 1;
+							});
+							$socialData.detach();
+							
+							$("body").append(sortedChildren);
+						});
+					});
 			});
 
 	</script>
@@ -38,7 +75,9 @@
 			padding: 0;
 			font-size: 16px;
 		}
-		.tweet {
+
+		.social {
+			position: relative;
 			background: white;
 			margin: 1em;
 			padding: 1em;
@@ -46,18 +85,46 @@
 			border-radius: 4px;
 		}
 
-		.tweet p {
+		.facebook {
+			border-left: 40px solid #3B5998;
+		}
+
+		.twitter {
+			border-left: 40px solid #4099FF;
+		}
+
+		.social p {
 			color: #333;
 			margin: .5em;
 		}			
 
-		.tweet p em {
+		.social p em {
 			color: #999;
 			font-size: .8em;
+		}
+
+		.logo {
+			position: absolute;
+			left: -32px;
+			top: 8px;
+			height: 24px;
+			width: 24px;
+		}
+
+		.facebook .logo {
+			background: url(images/social-logo-facebook.png);
+		}
+
+		.twitter .logo {
+			background: url(images/social-logo-twitter.png);
 		}
 	</style>
 </head>
 <body>
-	<div id="tweets"></div>
+	<div id="socialData"></div>
+
+	<script>
+		
+	</script>
 </body>
 </html>
