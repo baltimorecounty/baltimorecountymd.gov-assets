@@ -27,8 +27,8 @@ baltimoreCounty.contentFilter = (function($) {
 
             $errorMessage.hide();
 
-            if (contentType === 'table')
-                $wrapper.find('th').each(setColumnWidthToInitialWidth);
+            /*if (contentType === 'table')
+                $wrapper.find('th').each(setColumnWidthToInitialWidth);*/
 
             $searchBox.on('keyup', function(eventObject) {
                 switch (contentType) {
@@ -66,10 +66,10 @@ baltimoreCounty.contentFilter = (function($) {
          * Tokenized search that returns the matches found in the list or table.
          */
         findMatches = function($wrapper, selector, criteria) {
-            var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
+            var criteriaTokens = criteria.trim().toLowerCase().replace(',','').split(' '); 
 
             var $matches = $wrapper.find(selector).filter(function(idx, element) {
-                var selectorText = $(element).text().toLowerCase();            
+                var selectorText = $(element).text().toLowerCase().replace(',','');            
                 return criteriaTokens.every(function(tokenValue) {
                     return selectorText.indexOf(tokenValue) > -1;
                 });
@@ -133,7 +133,10 @@ baltimoreCounty.contentFilter = (function($) {
          * Clears the filter and displays all nodes in the list.
          */
         clearFilter = function($wrapper, $searchbox, $errorMessage) {
-            $wrapper.find('li, div, tr').show();
+            var $everythingWeFilter = $wrapper.find('li, div, tr');
+			$everythingWeFilter.show();
+            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
+            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
         };

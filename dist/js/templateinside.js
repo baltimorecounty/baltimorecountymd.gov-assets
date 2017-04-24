@@ -1,3 +1,64 @@
+// Production steps of ECMA-262, Edition 5, 15.4.4.14
+// Reference: http://es5.github.io/#x15.4.4.14
+if (!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function(searchElement, fromIndex) {
+
+    var k;
+
+    // 1. Let o be the result of calling ToObject passing
+    //    the this value as the argument.
+    if (this == null) {
+      throw new TypeError('"this" is null or not defined');
+    }
+
+    var o = Object(this);
+
+    // 2. Let lenValue be the result of calling the Get
+    //    internal method of o with the argument "length".
+    // 3. Let len be ToUint32(lenValue).
+    var len = o.length >>> 0;
+
+    // 4. If len is 0, return -1.
+    if (len === 0) {
+      return -1;
+    }
+
+    // 5. If argument fromIndex was passed let n be
+    //    ToInteger(fromIndex); else let n be 0.
+    var n = fromIndex | 0;
+
+    // 6. If n >= len, return -1.
+    if (n >= len) {
+      return -1;
+    }
+
+    // 7. If n >= 0, then Let k be n.
+    // 8. Else, n<0, Let k be len - abs(n).
+    //    If k is less than 0, then let k be 0.
+    k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+    // 9. Repeat, while k < len
+    while (k < len) {
+      // a. Let Pk be ToString(k).
+      //   This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the
+      //    HasProperty internal method of o with argument Pk.
+      //   This step can be combined with c
+      // c. If kPresent is true, then
+      //    i.  Let elementK be the result of calling the Get
+      //        internal method of o with the argument ToString(k).
+      //   ii.  Let same be the result of applying the
+      //        Strict Equality Comparison Algorithm to
+      //        searchElement and elementK.
+      //  iii.  If same is true, return k.
+      if (k in o && o[k] === searchElement) {
+        return k;
+      }
+      k++;
+    }
+    return -1;
+  };
+}
 // Production steps of ECMA-262, Edition 5, 15.4.4.17
 // Reference: http://es5.github.io/#x15.4.4.17
 if (!Array.prototype.some) {
@@ -46,6 +107,7 @@ function namespacer(ns) {
 		parent = parent[nsPart];
 	}
 }
+
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.cdnFallback = (function() {
@@ -89,36 +151,82 @@ baltimoreCounty.utility.cdnFallback = (function() {
 })();
 namespacer('baltimoreCounty.utility');
 
-baltimoreCounty.utility.querystringer = (function(undefined) {
-    'use strict';
+baltimoreCounty.utility.formValidator = (function($) {
 
-    var getAsDictionary = function() {
+    /*
+     * Simple validation, just makes sure there's a value.
+     */
+    var requiredFieldValidator = function($field) {
+            if (!$field || typeof $field.val() === 'undefined' || $field.val().length === 0)
+                return false;
+            return true;
+        },
 
-        if (window.location.search) {
-            var qs = window.location.search.slice(1),
-                qsArray = qs.split('&'),
-                qsDict = {};
+        /*
+         * RequiredFieldValidator for radio buttons
+         */
+        requiredFieldRadioValidator = function($field) {
+            var fieldName = $field.attr('name');
+            var $radioButtonGroup = $field.closest('form').find('input[name=' + fieldName + ']');
+            var $checkedRadioButton = $radioButtonGroup.filter(':checked');
 
-            for (var i = 0; i < qsArray.length; i++) {            
-                var KEY = 0,
-                    VALUE = 1,
-                    keyValueArr = qsArray[i].split('='),
-                    entry = {};
+            if ($checkedRadioButton.length > 0)
+                return requiredFieldValidator($checkedRadioButton);
+            return false;
+        },
 
-                qsDict[keyValueArr[KEY]] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
+        /*
+         * Makes sure there's a value, and that the value mates the supplied regex.
+         */
+        requiredFieldPatternValidator = function($field, patternRegex) {
+            if (typeof patternRegex === 'string') {
+                try {
+                    patternRegex = new RegExp(patternRegex);
+                } catch (exception) {
+                    console.log(exception);
+                    return false;
+                }
             }
 
-            return qsDict;
-        }
+            if (requiredFieldValidator($field)) {
+                var value = $field.val();
+                return patternRegex.test(value);
+            }
 
-        return false;
+            return false;
+        };
+
+        return {
+            requiredFieldValidator: requiredFieldValidator,
+            requiredFieldRadioValidator: requiredFieldRadioValidator,
+            requiredFieldPatternValidator: requiredFieldPatternValidator
+        };
+})(jQuery);
+;(function($, undefined) {
+    'use strict';
+
+    $.fn.elliptical = function(options) {
+
+        var settings = $.extend({
+            separator: ' ',
+            suffix: '...'
+        }, options);
+
+        return this.filter(function(index, item) { 
+            return $(item).height() < item.scrollHeight;
+        }).each(function(index, item) {
+            var $item = $(item),
+                textArr = $item.text().split(settings.separator);
+
+            while (item.scrollHeight > $item.height()) {
+                textArr.pop();
+                $item.text(textArr.join(settings.separator));
+            }
+            textArr.pop();
+            $item.text(textArr.join(settings.separator) + settings.suffix);
+        });
     };
-
-    return {
-        getAsDictionary: getAsDictionary
-    };
-
-})();
+})(jQuery);
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.jsonTools = (function(undefined) {
@@ -157,31 +265,81 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
     };
 
 })();
-;(function($, undefined) {
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.numericStringTools = (function() {
+	'use strict';
+
+	var
+		/*
+         * We want to consider the column text to be a number if it starts with a dollar 
+         * sign, so let's peek at the first character and see if that's the case.
+         * Don't worry, if it's just a normal number, it's handled elsewhere.
+         */
+    	getIndexOfFirstDigit = function(numberString) {
+            var startsWithCurrencyRegex = /[\$]/;
+            return startsWithCurrencyRegex.test(numberString[0]) && numberString.length > 1 ? 1 : 0;
+        },
+
+        /*
+         * Is the first character of the value in question a number (without the dollar sign, if present)? 
+         * If so, return the value as an actual number, rather than a string of numbers.
+         */
+        extractNumbersIfPresent = function(stringOrNumber) {
+            var firstCharacterIndex = getIndexOfFirstDigit(stringOrNumber),
+                stringOrNumberPossiblyWithoutFirstCharacter = stringOrNumber.slice(firstCharacterIndex),
+                firstSetOfNumbers = getFirstSetOfNumbersAndRemoveNonDigits(stringOrNumberPossiblyWithoutFirstCharacter);                
+            return typeof firstSetOfNumbers === 'number' ? firstSetOfNumbers : stringOrNumber;
+        },
+
+        /*
+         * Here, we're converting the first group of characters to a number, so we can sort 
+         * numbers numerically, rather than alphabetically.
+         */
+        getFirstSetOfNumbersAndRemoveNonDigits = function(numbersAndAssortedOtherCharacters) {
+            var allTheDigitsRegex = /^\.{0,1}(\d+[\,\.]{0,1})*\d+\b/,
+                extractedNumerics = numbersAndAssortedOtherCharacters.match(allTheDigitsRegex);
+            return extractedNumerics ? parseFloat(extractedNumerics[0].split(',').join('')) : numbersAndAssortedOtherCharacters;
+        };
+
+	return {
+		getIndexOfFirstDigit: getIndexOfFirstDigit,
+		extractNumbersIfPresent: extractNumbersIfPresent,
+		getFirstSetOfNumbersAndRemoveNonDigits: getFirstSetOfNumbersAndRemoveNonDigits
+	};		
+})();
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.querystringer = (function(undefined) {
     'use strict';
 
-    $.fn.elliptical = function(options) {
+    var getAsDictionary = function() {
 
-        var settings = $.extend({
-            separator: ' ',
-            suffix: '...'
-        }, options);
+        if (window.location.search) {
+            var qs = window.location.search.slice(1),
+                qsArray = qs.split('&'),
+                qsDict = {};
 
-        return this.filter(function(index, item) { 
-            return $(item).height() < item.scrollHeight;
-        }).each(function(index, item) {
-            var $item = $(item),
-                textArr = $item.text().split(settings.separator);
+            for (var i = 0; i < qsArray.length; i++) {            
+                var KEY = 0,
+                    VALUE = 1,
+                    keyValueArr = qsArray[i].split('='),
+                    entry = {};
 
-            while (item.scrollHeight > $item.height()) {
-                textArr.pop();
-                $item.text(textArr.join(settings.separator));
+                qsDict[keyValueArr[KEY]] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
             }
-            textArr.pop();
-            $item.text(textArr.join(settings.separator) + settings.suffix);
-        });
+
+            return qsDict;
+        }
+
+        return false;
     };
-})(jQuery);
+
+    return {
+        getAsDictionary: getAsDictionary
+    };
+
+})();
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -3430,6 +3588,148 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 })(jQuery, TextResizer);
 namespacer('baltimoreCounty');
 
+baltimoreCounty.niftyTables = (function ($, numericStringTools, undefined) {
+    'use strict';
+
+    var columnIndex = 0,
+        shouldSortAscending = true,
+
+        /*
+         * Since we're sorting a table, we need to work out what we're 
+         * comparing against, based on the column header that was clicked. 
+         * Then we can compare the two rows that are passed in.
+         */
+        clickedColumnSorter = function (aTableRow, bTableRow) {
+            var aContent = getFirstTextFromCell(aTableRow, columnIndex).toLowerCase(),
+                bContent = getFirstTextFromCell(bTableRow, columnIndex).toLowerCase(),
+                aExtractedContent = numericStringTools.extractNumbersIfPresent(aContent),
+                bExtractedContent = numericStringTools.extractNumbersIfPresent(bContent),
+                directionComparer = shouldSortAscending ? ascendingComparer : descendingComparer;
+            return comparer(directionComparer, aExtractedContent, bExtractedContent);
+        },
+
+        /*
+         * Use the supplied comparerFunction to compare a and b.
+         */
+        comparer = function (comparerFunction, a, b) {
+            return comparerFunction(a, b);
+        },
+
+        /*
+         * Compares two values, and returns a result that incidates whether 
+         * or not the values are in ascending order.
+         */
+        ascendingComparer = function (a, b) {
+            if (a > b)
+                return 1;
+
+            if (b > a)
+                return -1;
+
+            return 0;
+        },
+
+        /*
+         * Compares two values, and returns a result that incidates whether 
+         * or not the values are in descending order.
+         */
+        descendingComparer = function (a, b) {
+            if (a < b)
+                return 1;
+
+            if (b < a)
+                return -1;
+
+            return 0;
+        },
+
+        /*
+         * Finds the content of the first <p> in a cell from the clicked column 
+         * of the supplied row. If there's no <p>, returns the raw text of the cell.
+         */
+        getFirstTextFromCell = function (tableRow, clickedColumnIndex) {
+            var $cell = $(tableRow).find('td').eq(clickedColumnIndex),
+                $p = $cell.find('p');
+
+            return $p.length ? $p.text() : $cell.text();
+        },
+
+        /*
+         * Sorts the table based on the column header that was clicked.
+         */
+        tableSort = function (e) {
+            var $clickedLink = $(e.target).closest('a'),
+                $niftyTable = $clickedLink.closest('table'),
+                $tableRows = $niftyTable.find('tr').has('td'),
+                SORT_ASCENDING_CLASS = 'sort-ascending',
+                SORT_DESCENDING_CLASS = 'sort-descending';
+
+            columnIndex = $clickedLink.closest('th').index();
+
+            shouldSortAscending = !($clickedLink.hasClass(SORT_ASCENDING_CLASS) || $clickedLink.hasClass(SORT_DESCENDING_CLASS)) || $clickedLink.hasClass(SORT_DESCENDING_CLASS);
+
+            if (shouldSortAscending)
+                $clickedLink.removeClass(SORT_DESCENDING_CLASS).addClass(SORT_ASCENDING_CLASS);
+            else
+                $clickedLink.removeClass(SORT_ASCENDING_CLASS).addClass(SORT_DESCENDING_CLASS);
+
+            $clickedLink.closest('tr').find('a').not($clickedLink).removeClass(SORT_ASCENDING_CLASS).removeClass(SORT_DESCENDING_CLASS);
+
+            $tableRows.detach();
+            $tableRows.sort(clickedColumnSorter);
+            $niftyTable.append($tableRows);
+
+            resetTableStripes($tableRows, 'tr:visible:even', '#ebebeb');
+            resetTableStripes($tableRows, 'tr:visible:odd', '#fff');
+        },
+
+        /*
+         * Since the current table stripes are based on :nth-child(), they'll get funky
+         * when the filter removes rows. So, let's reset the row striping when there's a search. 
+         * This is using inline styles since there's inline CSS that sets the color and 
+         * has to be overwritten.
+         */
+        resetTableStripes = function($matches, selector, color) {
+            $matches.parent().children(selector).has('td').css('background-color', color);
+        },
+
+        /*
+         * Build links and attach event handlers.
+         */
+        init = function () {
+
+            var $niftyTables = $('table.nifty-table'),
+                $sortableTables = $('.nifty-table').filter('.nifty-table-sortable'),
+                $sortableColumnHeadings = $sortableTables.find('th');
+
+            // Create sorting links    
+            if ($sortableTables.length) {
+				var $headingChildren = $sortableColumnHeadings.children();
+				if ($headingChildren.length) {
+	                $sortableColumnHeadings.children().wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
+				} else {
+				    $sortableColumnHeadings.wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
+				}
+
+                $sortableColumnHeadings.find('.btn-sort').on('click', tableSort);
+            }
+        };
+
+    return {
+        /* test-code */
+        getFirstTextFromCell: getFirstTextFromCell,
+        tableSort: tableSort,
+        /* end-test-code */
+        init: init
+    };
+
+})(jQuery, baltimoreCounty.utility.numericStringTools);
+
+$(document).ready(function () {
+    baltimoreCounty.niftyTables.init();
+});
+namespacer('baltimoreCounty');
+
 baltimoreCounty.contentFilter = (function($) {
 
     var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
@@ -3457,8 +3757,8 @@ baltimoreCounty.contentFilter = (function($) {
 
             $errorMessage.hide();
 
-            if (contentType === 'table')
-                $wrapper.find('th').each(setColumnWidthToInitialWidth);
+            /*if (contentType === 'table')
+                $wrapper.find('th').each(setColumnWidthToInitialWidth);*/
 
             $searchBox.on('keyup', function(eventObject) {
                 switch (contentType) {
@@ -3496,10 +3796,10 @@ baltimoreCounty.contentFilter = (function($) {
          * Tokenized search that returns the matches found in the list or table.
          */
         findMatches = function($wrapper, selector, criteria) {
-            var criteriaTokens = criteria.trim().toLowerCase().split(' '); 
+            var criteriaTokens = criteria.trim().toLowerCase().replace(',','').split(' '); 
 
             var $matches = $wrapper.find(selector).filter(function(idx, element) {
-                var selectorText = $(element).text().toLowerCase();            
+                var selectorText = $(element).text().toLowerCase().replace(',','');            
                 return criteriaTokens.every(function(tokenValue) {
                     return selectorText.indexOf(tokenValue) > -1;
                 });
@@ -3563,7 +3863,10 @@ baltimoreCounty.contentFilter = (function($) {
          * Clears the filter and displays all nodes in the list.
          */
         clearFilter = function($wrapper, $searchbox, $errorMessage) {
-            $wrapper.find('li, div, tr').show();
+            var $everythingWeFilter = $wrapper.find('li, div, tr');
+			$everythingWeFilter.show();
+            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
+            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
         };
