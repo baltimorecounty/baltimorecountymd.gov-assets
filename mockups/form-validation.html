@@ -1,0 +1,112 @@
+<!doctype html>
+
+<html lang="en-us">
+<head>
+    <title>Inline Form Validation</title>
+
+    <link href="/dist/css/inside-responsive.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+    <script>
+        function _CF_checkbcpscleangreen15(_CF_this) {
+                    //reset on submit
+                    _CF_error_messages = new Array();
+                    _CF_error_fields = new Object();
+                    _CF_FirstErrorField = null;
+
+                        if( _CF_hasValue(_CF_this['fieldName2'], "TEXT", true ) )
+                        {	
+                    
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName2", _CF_this['fieldName2'].value, "Enter your name.");
+                            }
+                    
+                        if( _CF_hasValue(_CF_this['fieldName1'], "TEXT", true ) )
+                        {	
+                    
+                                        if (!_CF_checkEmail(_CF_this['fieldName1'].value, false))
+                                        {
+                                            _CF_onError(_CF_this, "fieldName1",  _CF_this['fieldName1'].value,"Enter your email address.");
+                                        }
+                                
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName1", _CF_this['fieldName1'].value, "Enter your email address.");
+                            }
+                    
+                        if( _CF_hasValue(_CF_this['fieldName5'], "TEXT", true ) )
+                        {	
+                    
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName5", _CF_this['fieldName5'].value, "Enter the number of volunteers.");
+                            }
+                    
+                        if( _CF_hasValue(_CF_this['fieldName4'], "TEXT", true ) )
+                        {	
+                    
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName4", _CF_this['fieldName4'].value, "Enter a name for the volunteer group.");
+                            }
+                    
+                        if( _CF_hasValue(_CF_this['fieldName12'], "TEXT", true ) )
+                        {	
+                    
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName12", _CF_this['fieldName12'].value, "Enter a Baltimore County school.");
+                            }
+                    
+                        if( _CF_hasValue(_CF_this['fieldName8'], "TEXT", true ) )
+                        {	
+                    
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName8", _CF_this['fieldName8'].value, "Enter date of clean up.");
+                            }
+                    
+                        if( _CF_hasValue(_CF_this['fieldName22'], "TEXT", true ) )
+                        {	
+                    
+                        }else {
+                                    _CF_onError(_CF_this, "fieldName22", _CF_this['fieldName22'].value, "Enter an address or location description.");
+                            }
+                    _SE_checkbcpscleangreen15(_CF_this);	
+                //display error messages and return success
+                if( _CF_error_messages.length > 0 )
+                {
+                    // show alert() message
+                    _CF_onErrorAlert(_CF_error_messages);
+                    // set focus to first form error, if the field supports js focus().
+                    if( _CF_this[_CF_FirstErrorField].type == "text" )
+                    { _CF_this[_CF_FirstErrorField].focus(); }
+
+                    return false;
+                }else {
+                    var submitTime = new Date();
+                    var jsFieldId = "_SEAFM_submitTime_"+_CF_this.id;
+                    var jsField = document.getElementById(jsFieldId)
+                    if(!jsField)
+                    {
+                        jsField = document.createElement("input");
+                        jsField.setAttribute("type","hidden");
+                        jsField.setAttribute("id",jsFieldId);
+                        jsField.setAttribute("name",jsFieldId);
+                        _CF_this.appendChild(jsField);
+                    }
+                    jsField.value = (submitTime - AFMStart)/1000; 
+                    
+                    return true;
+                }
+        }
+    </script>    
+</head>
+
+<body>
+
+    <main>
+
+
+
+    </main>
+
+    <script src="/js/inline-form-validation.js"></script>
+</body>
+</html>

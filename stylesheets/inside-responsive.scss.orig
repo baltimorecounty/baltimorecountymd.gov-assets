@@ -12,6 +12,7 @@
 @import "partials/base/image";
 
 @import "partials/components/alert";
+@import "partials/components/blockUI";
 @import "partials/components/social";
 @import "partials/components/textResizer";
 @import "partials/components/buttons";
@@ -22,6 +23,9 @@
 @import "partials/components/facebookWidget.scss";
 @import "partials/components/filter";
 @import "partials/components/rateForm";
+<<<<<<< HEAD
+@import "partials/components/forms";
+=======
 @import "partials/components/formFields";
 @import "partials/components/spayNeuter";
 
@@ -32,6 +36,7 @@
 @import "partials/bootstrap/forms";
 @import "partials/bootstrap/labels";
 @import "partials/components/niftyTables";
+>>>>>>> master
 @import "partials/components/youtubePlaylistGallery";
 @import "partials/components/collapse";
 @import "partials/components/accordionMenu";
