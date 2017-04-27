@@ -5,16 +5,15 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
 	<script>
-		$.ajax('http://ba224964:1000/api/citysourced/news')
+		$.ajax('http://ba224964:1000/api/citysourced/feeds/news')
 			.done(function(data) {
-				var $items = $(data).find('item'),
-					$tweets = $('#tweets');
+				var items = $(data)[0].rss.channel.item,
+					$news = $('#news');
 
-				$items.each(function(index, item) {
-					var $item = $(item),
-						title = $item.find('title').text(),
-						pubDate = new Date($item.find('pubDate').text()),
-						link = $item.find('link').text(),
+				$.each(items, function(index, item) {
+					var title = item.title,
+						pubDate = new Date(item.pubDate),
+						link = item.link,
 						months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 						days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 						displayDate = days[pubDate.getDay()] + " " + (pubDate.getHours() > 12 ? pubDate.getHours() - 12 : pubDate.getHours()) + ":" + (pubDate.getMinutes() < 10 ? "0" + pubDate.getMinutes() : pubDate.getMinutes()) + (pubDate.getHours() < 12 ? "a.m. " : "p.m. ") + months[pubDate.getMonth()] + " " + pubDate.getDate() + ", " + pubDate.getFullYear(),
@@ -23,7 +22,7 @@
 					//html = html.replace(/(https?:[^\s<]+)/, "<a href=\"$1\">$1</a>");
 					//html = html.replace(/(pic\.twitter\.com[^\s<]+)/, "<a href=\"http://$1\">$1</a>");
 
-					$tweets.append(html);
+					$news.append(html);
 				});
 			});
 
@@ -59,6 +58,6 @@
 	</style>
 </head>
 <body>
-	<div id="tweets"></div>
+	<div id="news"></div>
 </body>
 </html>
