@@ -5,7 +5,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
 	<script>
-		$.ajax('http://ba224964:1000/api/citysourced/feeds/twitter')
+		$.ajax('https://testservices.baltimorecountymd.gov/api/citysourced/feeds/twitter')
 			.done(function(data) {
 				var $tweets = $('#socialData');
 
@@ -24,7 +24,7 @@
 
 				});
 			
-				$.ajax('http://ba224964:1000/api/citysourced/feeds/facebook')
+				$.ajax('https://testservices.baltimorecountymd.gov/api/citysourced/feeds/facebook')
 					.done(function(data) {
 						var $socialData = $('#socialData');
 						
