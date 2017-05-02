@@ -1,0 +1,95 @@
+#mainContent .seLabelCell {
+    padding-top: .5em;
+    vertical-align: top;
+}
+
+.SEAFGroupVertical > div {
+    margin-bottom: .75em;
+}
+
+.seCheckbox,
+.seRadio {
+    position: absolute;
+    margin-left: -19191919px;
+}
+
+.seCheckboxLabel,
+.seRadioLabel {
+    cursor: pointer;
+    
+    &:focus {
+        outline: none;
+    }
+
+    &::before,
+    &.checked::before {
+        font-family: FontAwesome;
+    }
+
+    &.is-focused::before,
+    &.checked.is-focused::before {
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border: 1px solid rgba(81, 203, 238, 1);
+    }
+
+    &::before {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        color: transparent;
+        display: inline-block;
+        line-height: normal;
+        margin-bottom: 10px;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        width: 20px;
+    }
+
+    &.checked::before {
+        color: #444;
+    }
+}
+
+.seCheckboxLabel {
+    &.checked::before {
+        content: '\f00c';
+    }
+    &::before {
+        content: '\f00c';
+        margin-right: .5em;
+        padding: 1px;
+        margin-top: 1px;
+    }
+}
+
+.seRadioLabel {
+    white-space: nowrap;
+
+    &.checked::before {
+        content: '\f111';
+    }
+    &::before {
+        border-radius: 20px;
+        content: '\f111';
+        font-size: .7em;
+        margin-right: 1em;
+        padding: 3px;
+        vertical-align: 20%;
+    }   
+}
+
+/* Overrides */
+/* TODO - This should be fixed in red-inside.css */
+#column3 .seRadioLabel {
+    display: inline-block;
+    line-height: normal;
+    margin-bottom: 6px;
+    padding: 0;
+}
+#mainContent .seRadioLabel,
+#mainContent .seCheckboxLabel {
+    font-size: 1em;
+    margin-right: 15px;
+}
+#mainContent .SEAFGroupHorizontal.horizontal  .seText {
+    padding: 0;
+}
