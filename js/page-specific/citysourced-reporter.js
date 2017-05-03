@@ -19,6 +19,11 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			var $wrapper = $('.bc-citysourced-reporter'),
 				$form = $wrapper.find('#citysourced-reporter-form'),
 				$categories = $form.find('#category-selection'),
+				$animalsOther = $form.find('#other-pet-type-selection'),
+				$breedsPrimary = $form.find('#primary-breed-selection'),
+				$breedsSecondary = $form.find('#secondary-breed-selection'),
+				$colorsPrimary = $form.find('#primary-color-selection'),
+				$colorsSecondary = $form.find('#secondary-color-selection'),
 				$panels = $form.find('.panel'),
 				$steps = $wrapper.find('.bc-citysourced-reporter-steps li'),
 				$deviceNumber = $wrapper.find('#deviceNumber'),
@@ -37,14 +42,28 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					$fileReportButton: $('#fileReportButton')
 				};
 
-			$.ajax(jsonDocumentUrl).done(function (data) {
+			loadDocument(jsonDocumentUrl, function (data) {
 				if (queryString.categoryId)
 					var categoryPathArr = jsonTools.getSubtreePath(data, 'id', 'types', queryString.categoryId);
 				
 				if (categoryPathArr)
 					preloadCategory($categories, data, categoryPathArr);
 				else 
-					createSelectAndLoadOptions(data, $categories, 1);
+					createCategorySelectAndLoadOptions(data, $categories, 1);
+			})
+
+			loadDocument('animal-breeds.json', function(breedData) {
+				createGenericSelectAndLoadOptions('breeds', breedData[0].breeds, $breedsPrimary, 1, 'Select a primary breed');
+				//createGenericSelectAndLoadOptions('breeds', breedData[0].breeds, $breedsSecondary, 2, 'Select a secondary breed');
+			});
+
+			loadDocument('animal-colors.json', function(colorsData) {
+				createGenericSelectAndLoadOptions('colors', colorsData.colors, $colorsPrimary, 1, 'Select a primary color');
+				//createGenericSelectAndLoadOptions('colors', colorsData.colors, $colorsSecondary, 2, 'Select a secondary breed');
+			});
+
+			loadDocument('animal-types.json', function(animalData) {
+				createGenericSelectAndLoadOptions('animals', animalData, $animalsOther, 1, 'Select an animal type');
 			});
 
 			handlerData.$nextButton.on('click', handlerData, nextButtonClickHandler);
@@ -57,6 +76,16 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 					validate([event.target.id], event);
 			});								
 		},		
+
+		loadDocument = function(url, callback) {
+			$.ajax(url)
+				.done(function(data) {
+					callback(data);
+				})
+				.fail(function(err) {
+					console.log(err);
+				});
+		},
 
 		/**
 		 * Builds the key-value list of category and issue types.
@@ -223,27 +252,26 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			$panels.filter(':visible').find('input, select, textarea').filter(':visible').first().focus();
 		},
 
-		/**
-		 * Creates the series of dropdowns for the category selection.
-		 */
-		createSelectAndLoadOptions = function (data, $parent, depth, preselectId) {
+		createGenericSelectAndLoadOptions = function(selectType, data, $parent, index, instructionOptionText, preselectId) {
+
 			var $select = $('<select>', {
-				id: 'categories[' + depth + ']',
-				'aria-labelledby': 'categories-label',
-				'aria-required': true
-			});
-			$select.insertBefore($parent.find('.error-message'));
+					id: selectType + '[' + index + ']',
+					'aria-labelledby': $parent.find('label').attr('id'),
+					'aria-required': true
+				}),
+				$errorMessage = $parent.find('.error-message');
+
+			if ($errorMessage.length)
+				$select.insertBefore($errorMessage);
+			else 
+				$parent.append($select);
 
 			var $option = $('<option>', {
 				value: -1,
-				text: '--- Select a request category ---',
+				text: '--- ' + instructionOptionText + ' ---',
 				selected: preselectId ? false : 'selected'
 			});
 			$select.append($option);
-
-			$select.on('blur change', function (event) {
-				validate([event.target.id]);
-			});
 
 			$.each(data, function (idx, item) {
 				var $option = $('<option>', {
@@ -254,20 +282,40 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 				$select.append($option);
 			});
 
+			return $select;
+		},
+
+		/**
+		 * Creates the series of dropdowns for the category selection.
+		 */
+		createCategorySelectAndLoadOptions = function (data, $parent, depth, preselectId) {
+
+			var $select = createGenericSelectAndLoadOptions('categories', data, $parent, depth, 'Select a request category', preselectId);
+
+			$select.on('blur change', function (event) {
+				validate([event.target.id]);
+			});
+
 			$select.on('change', {
 				fragment: data
-			}, selectChangeHandler);
+			}, categorySelectChangeHandler);
 		},
 
 		/**
 		 * Updates the category dropdown options and visibility when the selected item changes.
 		 */
-		selectChangeHandler = function (event) {
-			var $select = $(event.target),
+		categorySelectChangeHandler = function (event) {
+			var $select = $(event.currentTarget),
 				selectedValue = $select.val(),
 				selectedName = $select.find('option[value=' + selectedValue + ']').text(),
 				existingSelectCount,
+				$selectFields = $('#category-selection')
 				$trackingField = $('#report-category');
+
+			if (selectedName.toLowerCase() === "pets") {
+				$('#pet-type').fadeIn(250);
+				$('#pet-type select').on('change', petTypeSelectChangedHandler);
+			}
 
 			$select.nextAll('select').remove();
 
@@ -281,9 +329,29 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			var jsonSubtree = jsonTools.getSubtree(event.data.fragment, 'name', 'types', selectedName);
 
 			if (jsonSubtree)
-				createSelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
+				createCategorySelectAndLoadOptions(jsonSubtree, $select.parent(), existingSelectCount + 1);
 			else
 				$trackingField.val(selectedValue);
+		},
+
+		petTypeSelectChangedHandler = function(event) {
+			var $select = $(event.currentTarget),
+				selectedValue = $select.val(),
+				selectedName = $select.find('option[value=' + selectedValue + ']').text();
+			
+			$('#breeds-and-colors, #other-pet-type').fadeOut(250);
+
+			switch(selectedName.toLowerCase()) {
+				case "cat":
+					$('#breeds-and-colors').fadeIn(250);
+					break;
+				case "dog":
+					$('#breeds-and-colors').fadeIn(250);
+					break;
+				case "other":
+					$('#other-pet-type').fadeIn(250);
+					break;
+			}
 		},
 
 		/**
@@ -295,7 +363,7 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 			});
 
 			for (var x = 0; x < pathArr.length; x++) {
-				createSelectAndLoadOptions(categoryData, $target, x + 1, pathArr[x]);
+				createCategorySelectAndLoadOptions(categoryData, $target, x + 1, pathArr[x]);
 				for (var y = 0; y < categoryData.length; y++) {
 					if (categoryData[y].id === pathArr[x]) {
 						categoryData = categoryData[y].types;
@@ -382,5 +450,5 @@ baltimoreCounty.pageSpecific.citySourcedReporter = (function (window, $, jsonToo
 $(function () {
 	/* Auto-load the category data */
 	//baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/y/z/categories-production.json');
-	baltimoreCounty.pageSpecific.citySourcedReporter.init('/sebin/q/k/categories.json');
+	baltimoreCounty.pageSpecific.citySourcedReporter.init('categories.json');
 });

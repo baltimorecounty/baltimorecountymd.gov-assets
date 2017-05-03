@@ -3,25 +3,23 @@
 
 <head>
     <title>CitySourced Mockup</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-        crossorigin="anonymous"></script>
-        <script src="/dist/js/templateinside.min.js"></script>
-        <script src="/js/page-specific/citysourced-reporter.js"></script>
-        <script src="/js/page-specific/citysourced-googleMaps.js"></script>
-        <script>
-            $(function () {
-                baltimoreCounty.pageSpecific.citySourcedReporter.init('/mockups/categories.json');
-            });
-        </script>
-        <link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
-        <link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
-        <!--[if lte IE 9]>
-        <link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="/dist/js/templateinside.min.js"></script>
+	<script src="/js/page-specific/citysourced-reporter.js"></script>
+	<script src="/js/page-specific/citysourced-reporter-googleMaps.js"></script>
+	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
+	<link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
+	<!--[if lte IE 9]>
+	<link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
     <![endif]-->
         <style>
             #map {
                 height: 350px;
             }
+
+			body {
+				padding: 4em;
+			}
         </style>
 </head>
 
@@ -57,13 +55,45 @@
                     <label id="categories-label">Request Category</label>
                     <p role="alert" class="error-message">Please select a category for your report.</p>
                 </div>
-                <input type="hidden" id="report-category" value="" />
-                <div class="cs-form-control">
-                    <label for="description">Description</label>
-                    <textarea id="description" aria-required="true"></textarea>
-                    <p role="alert" class="error-message">Please enter a description for your report.</p>
-                </div>
-            </fieldset>
+				<div id="pet-type" style="display: none">
+					<label id="pet-type-label">Pet Type</label>
+					<select id="pet-type">
+						<option value="-1">-- Select a pet type --</option>
+						<option value="Cat">Cat</option>
+						<option value="Dog">Dog</option>
+						<option value="Horse">Horse</option>
+						<option value="Other">Other</option>
+					</select>
+                    <p role="alert" class="error-message">Please select a pet type.</p>
+				</div>
+				<div id="other-pet-type" style="display: none">
+					<div id="other-pet-type-selection">
+						<label id="other-pet-type-label">Other pet type</label>
+					</div>
+				</div>
+				<div id="breeds-and-colors" style="display: none">
+					<div id="primary-breed-selection">
+						<label id="primary-breed-label">Primary Animal Breed</label>
+						<p role="alert" class="error-message">Please select a primary animal breed.</p>
+					</div>
+					<!--<div id="secondary-breed-selection">
+						<label id="secondary-breed-label">Secondary Animal Breed</label>
+						<p role="alert" class="error-message">Please select a secondary animal breed.</p>
+					</div>-->
+					<div id="primary-color-selection">
+						<label id="primary-color-label">Primary Animal Color</label>
+					</div>
+					<!--<div id="secondary-color-selection">
+						<label id="secondary-color-label">Secondary Animal Color</label>
+					</div>-->
+					<input type="hidden" id="report-category" value="" />
+				</div>
+				<div class="cs-form-control">
+					<label for="description">Description</label>
+					<textarea id="description" aria-required="true"></textarea>
+					<p role="alert" class="error-message">Please enter a description for your report.</p>
+				</div>
+			</fieldset>
 
 
             <fieldset class="panel">

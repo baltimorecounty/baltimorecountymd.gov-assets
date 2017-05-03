@@ -121,15 +121,7 @@
                 div > select:first-child, label + select, label + textarea, label + input, input + input {
                     margin-top: .25em;
                 }
-
-                &.panel {
-                    display: none;
-                }
-
-                &.panel:first-child {
-                    display: block;
-                }
-
+				
                 p {
                     padding-right: 20px;
                 }
@@ -159,8 +151,6 @@
                     margin: 1em 0 0;
                     display: inline-block;
                 }
-
-				#sldkjhfksdjhfkshdfksjhdfkjh {}
 
             }
 

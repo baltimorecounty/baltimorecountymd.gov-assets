@@ -45,83 +45,44 @@
 		]
 	},
 	{
-		"name": "Pets and Animals",
-		"id": 1022187,
+		"name": "Pets",
+		"id": 1022187,		
 		"types": [{
-				"name": "Pets",
-				"id": 1022217,
-				"types": [{
-						"name": "Animal cruelty",
-						"id": 1022224
-					},
-					{
-						"name": "Bite from a pet",
-						"id": 1022222
-					},
-					{
-						"name": "Dangerous dog",
-						"id": 1022225
-					},
-					{
-						"name": "Excessive barking",
-						"id": 1022223
-					},
-					{
-						"name": "Nuisance animal",
-						"id": 1022226
-					},
-					{
-						"name": "Pet out of yard or roaming",
-						"id": 1022221
-					},
-					{
-						"name": "Pet waste was left in my yard",
-						"id": 1022229
-					},
-					{
-						"name": "Stray pet found and needs pickup",
-						"id": 1022228
-					},
-					{
-						"name": "Other Pet Complaint",
-						"id": 1022227
-					}
-
-				]
+				"name": "Animal cruelty",
+				"id": 1022224
 			},
 			{
-				"name": "Wild Animals",
-				"id": 1022218,
-				"types": [{
-						"name": "Animal caught in a trap",
-						"id": 1022231
-					},
-					{
-						"name": "Animal shows signs of rabies",
-						"id": 1022235
-					},
-					{
-						"name": "Animals in vacant property",
-						"id": 1022233
-					},
-					{
-						"name": "Dangerous wild animal",
-						"id": 1022234
-					},
-					{
-						"name": "Dead animal pickup",
-						"id": 1022232
-					},
-					{
-						"name": "Injured animal",
-						"id": 1022236
-					},
-					{
-						"name": "Other wild animal complaint",
-						"id": 1022237
-					}
-				]
-			}
+				"name": "Bite from a pet",
+				"id": 1022222
+			},
+			{
+				"name": "Dangerous dog",
+				"id": 1022225
+			},
+			{
+				"name": "Excessive barking",
+				"id": 1022223
+			},
+			{
+				"name": "Nuisance animal",
+				"id": 1022226
+			},
+			{
+				"name": "Pet out of yard or roaming",
+				"id": 1022221
+			},
+			{
+				"name": "Pet waste was left in my yard",
+				"id": 1022229
+			},
+			{
+				"name": "Stray pet found and needs pickup",
+				"id": 1022228
+			},
+			{
+				"name": "Other Pet Complaint",
+				"id": 1022227
+			}			
 		]
 	},
 	{
