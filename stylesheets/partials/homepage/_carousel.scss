@@ -75,26 +75,27 @@
 }
 
 @media only screen and (max-width: 992px) {
-	.carousel {
+	.carousel, #mainContent .carousel  {
 		h2 {
 			font-size: 1.75em;
 			margin: 0;
 		}
-	}
-	/*Plugin Specific Overrides*/
-	.slick-dots {
-		display: none !important;
-		/*Overriding an element style attr added by slick */
-	}
-	.slick-prev,
-	.slick-next {
-		top: 30%;
-	}
-	.slick-prev {
-		left: 25px;
-	}
-	.slick-next {
-		right: 25px;
+	
+		/*Plugin Specific Overrides*/
+		.slick-dots {
+			display: none !important;
+			/*Overriding an element style attr added by slick */
+		}
+		.slick-prev,
+		.slick-next {
+			top: 30%;
+		}
+		.slick-prev {
+			left: 25px;
+		}
+		.slick-next {
+			right: 25px;
+		}
 	}
 }
 
@@ -123,13 +124,18 @@
 }
 
 @media only screen and (max-width: 767px) {
-	.carousel {
+	.carousel, #mainContent .carousel {
 		a {
 			color: $navy;
 			&:hover {
 				color: $light-blue;
 			}
 		}
+
+		img {
+			float: none;
+		}
+
 		.carousel-message {
 			background: white;
 			color: $dark-gray;
@@ -139,32 +145,40 @@
 				color: $dark-gray;
 				font-size: 1.5em;
 			}
+
+			p {
+				color: $dark-gray;
+			}
 		}
 	}
 }
 
 @media only screen and (max-width: 600px) {
-	/*Plugin Specific Overrides*/
-	.slick-prev,
-	.slick-next {
-		top: 25%;
-	}
-	.slick-prev {
-		left: 10px;
-	}
-	.slick-next {
-		right: 10px;
+	.carousel, #mainContent .carousel {
+		/*Plugin Specific Overrides*/
+		.slick-prev,
+		.slick-next {
+			top: 25%;
+		}
+		.slick-prev {
+			left: 10px;
+		}
+		.slick-next {
+			right: 10px;
+		}
 	}
 }
 
 @media only screen and (max-width: 400px) {
-	/*Plugin Specific Overrides*/
-	.slick-prev,
-	.slick-next {
-		height: 58.5px;
-		/*3/4 of the original height of 78px*/
-		width: 33.75px;
-		/*3/4 of the original height of 78px*/
-		top: 15%;
+	.carousel, #mainContent .carousel {
+		/*Plugin Specific Overrides*/
+		.slick-prev,
+		.slick-next {
+			height: 58.5px;
+			/*3/4 of the original height of 78px*/
+			width: 33.75px;
+			/*3/4 of the original height of 78px*/
+			top: 15%;
+		}
 	}
 }
