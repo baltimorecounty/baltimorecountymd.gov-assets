@@ -5686,6 +5686,29 @@ function ReView(){this.mode="default";this.v=new Viewport;this.v.viewport();this
 "core";reView.success()},reView.failure)}else this.failure()};this.setDefault=function(){if(this.mode==="default")this.success();else if(this.v.bSupported){try{sessionStorage.setItem("reViewMode","default")}catch(a){}this.v.setDefault(function(){reView.mode="default";reView.success()},reView.failure)}else this.failure()};this.success=function(){var a=reView;a.v.bSupported&&a.updateAnchors();a.successPolicy!==void 0&&a.successPolicy()};this.updateAnchors=function(){var a=document.getElementsByClassName("reView"),
 b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-coreText")?a[b].getAttribute("data-coreText"):"Default View";else for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-defaultText")?a[b].getAttribute("data-defaultText"):"Core View"};return!0};
 }
+namespacer('baltimoreCounty');
+
+baltimoreCounty.internalCarousel = (function($) {
+
+	var init = function() {
+		$('#mainContent .carousel').slick({ 
+			autoplay: true,
+			adaptiveHeight: true,
+			autoplaySpeed: 5000,
+			dots: true,
+			/*Show dot navigation*/
+			nextArrow: "<img src='//baltimorecountymd.gov/sebin/v/i/carousel-arrow-right.png' class='slick-next' />",
+			/*Starts on slide 4*/
+			prevArrow: "<img src='//baltimorecountymd.gov/sebin/f/m/carousel-arrow-left.png 'class='slick-prev' />"
+		});
+	};
+
+	return {
+		init: init
+	};
+})(jQuery);
+
+$(function() { baltimoreCounty.internalCarousel.init(); });
 (function ($) {
     window.addEventListener("message",
 
