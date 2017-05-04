@@ -5713,7 +5713,6 @@ baltimoreCounty.internalCarousel = (function($) {
 				autoplay: true,
 				adaptiveHeight: true,
 				autoplaySpeed: 5000,
-				lazyLoad: true,
 				dots: true,
 				/*Show dot navigation*/
 				nextArrow: "<img src='//baltimorecountymd.gov/sebin/v/i/carousel-arrow-right.png' class='slick-next' />",
