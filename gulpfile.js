@@ -49,6 +49,7 @@ gulp.task('concatTemplateJs', function () {
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
 					'js/bc-google-analytics-custom-events.js', 
+					'js/lib/slick.min.js', 
 					'js/lib/review.js', 
 					'js/mobile-search.js',
 					'js/template-events.js', 

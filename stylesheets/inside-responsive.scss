@@ -11,6 +11,8 @@
 @import "partials/base/footer";
 @import "partials/base/image";
 
+@import "vendor/slick-carousel";
+
 @import "partials/components/alert";
 @import "partials/components/social";
 @import "partials/components/textResizer";
@@ -24,6 +26,8 @@
 @import "partials/components/rateForm";
 @import "partials/components/formFields";
 @import "partials/components/spayNeuter";
+@import "partials/homepage/carousel";
+@import "partials/components/carousel-internal";
 
 /* Bootstrap elements */
 @import "partials/bootstrap/variables";
