@@ -1,0 +1,17 @@
+{
+  "name": "baltimorecountymd.gov-assets",
+  "description": "Static assets (CSS and JS) for the baltimorecountymd.gov website.",
+  "main": "gulpfile.js",
+  "authors": [
+    "Baltimore County Government"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/baltimorecounty/baltimorecountymd.gov-assets",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

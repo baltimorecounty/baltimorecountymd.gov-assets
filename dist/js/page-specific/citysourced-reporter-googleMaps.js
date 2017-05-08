@@ -75,29 +75,30 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 		 * Handler for the autocomplete's 'place_changed' event. When the autocomplete populates 
 		 * with a selected address, this will center the map on that location and drop a pin.
 		 */
-		autocompletePlaceChangedHandler = function () {
+		autocompletePlaceChangedHandler = function (place, map) {
+
 			$('#address').val(removeCountry($('#address').val()));
 			
-			var place = autocomplete.getPlace();
+			//var place = autocomplete.getPlace();
 
 			if (place.geometry) {
 				latitude = place.geometry.location.lat(),
 				longitude = place.geometry.location.lng();
 
-				centerMapOnLatLng(latitude, longitude);
+				centerMapOnLatLng(map, latitude, longitude);
 			}
 		},
 
 		/**
 		 * Centers the map on the given latitude and longitude, them places a marker.
 		 */
-		centerMapOnLatLng = function(latitude, longitude) {
+		centerMapOnLatLng = function(map, latitude, longitude) {
 			placeMarker(latitude, longitude, false, function(isCounty) {
 				if (isCounty) {
 					var center = new google.maps.LatLng(latitude, longitude);
 
-					window.map.panTo(center);
-					window.map.setZoom(16);
+					map.panTo(center);
+					map.setZoom(16);
 
 					google.maps.event.trigger(window.map, 'resize');
 					map.setCenter(center);
@@ -137,7 +138,7 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 					if (data.results.length) {
 						var latitude = data.results[0].geometry.location.lat;
 						var longitude = data.results[0].geometry.location.lng;
-						centerMapOnLatLng(latitude, longitude);
+						centerMapOnLatLng(map, latitude, longitude);
 
 						$addressBox.parent().removeClass('error');
 						$addressBox.val(data.results[0].formatted_address);
@@ -205,8 +206,8 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 		 * a dropped pin or an address search.
 		 */
 		trackLatLng = function (latitude, longitude) {
-			document.getElementById('map-latitude').value = latitude;
-			document.getElementById('map-longitude').value = longitude;
+			$('#map-latitude').val(latitude);
+			$('#map-longitude').val(longitude);
 		},
 
 		/**
@@ -244,7 +245,9 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 		};
 
 	return {
-		initGoogle: initGoogle
+		initGoogle: initGoogle,
+		mapClickHandler: mapClickHandler,
+		autocompletePlaceChangedHandler: autocompletePlaceChangedHandler
 	};
 
 })();

@@ -3,23 +3,29 @@
 
 <head>
     <title>CitySourced Mockup</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-aria.min.js"></script>
-	<script src="/dist/js/templateinside.min.js"></script>
-	<script src="/js/page-specific/baltcogo-reporter-app/app.js"></script>
-	<script src="/js/page-specific/baltcogo-reporter-app/BaltCoGoReporterCtrl.js"></script>
-	<script src="/js/page-specific/citysourced-reporter-googleMaps.js"></script>
+
 	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
 	<link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<!--[if lte IE 9]>
 	<link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
     <![endif]-->
-        <style>
-            #map {
-                height: 350px;
-            }
 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-aria.min.js"></script>
+	<script src="http://maps.google.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places"></script>
+
+	<script src="/bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+
+	<script src="/dist/js/templateinside.min.js"></script>
+
+	<script src="/js/page-specific/citysourced-reporter-googleMaps-init.js"></script>
+	<script src="/js/page-specific/baltcogo-reporter-app/app.js"></script>
+	<script src="/js/page-specific/baltcogo-reporter-app/services/map-service.js"></script>
+	<script src="/js/page-specific/baltcogo-reporter-app/BaltCoGoReporterCtrl.js"></script>
+
+        <style>
 			body {
 				padding: 4em;
 			}
@@ -51,64 +57,78 @@
             <li> </li>
         </ol>
 
-         <form id="citysourced-reporter-form">
-            <fieldset class="panel" ng-show="reporter.page === 1">
+         <form novalidate id="citysourced-reporter-form" name="citySourcedReporterForm">
+            <fieldset class="panel" ng-show="reporter.page === 2">
                 <legend>How Can We Help?</legend>
                 <div id="category-selection">
                     <label id="categories-label">Request Category</label>
 
-					<select id="categories" 
+					<select id="categories" name="categories" 
 						ng-model="reporter.category" 
 						ng-change="reporter.loadSubCategories(reporter.category)" 
-						ng-options="cat.id as cat.name for cat in reporter.categoryData track by cat.id">
+						ng-options="cat.id as cat.name for cat in reporter.categoryData track by cat.id" 
+						required>
 						<option value="">-- Please select a category --</option>
 					</select>
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.categories.$dirty" ng-show="citySourcedReporterForm.categories.$error.required">Please select a category for your report.</p>
 
                     <label id="subcategories-label" ng-if="reporter.subCategories.length">Request Sub-Category</label>
-					<select id="subCategories" 
+					<select id="subCategories" name="subCategories" 
 						ng-model="reporter.subCategory"
 						ng-if="reporter.subCategories.length"					
-						ng-options="cat.id as cat.name for cat in reporter.subCategories track by cat.id">
+						ng-options="cat.id as cat.name for cat in reporter.subCategories track by cat.id"
+						required>
 						<option value="">-- Please select a sub-category --</option>
 					</select>
-
-                    <p role="alert" class="error-message">Please select a category for your report.</p>
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.subCategories.$dirty" ng-show="citySourcedReporterForm.subCategories.$error.required">Please select a category for your report.</p>
                 </div>
 
 				<div id="pet-type" ng-if="reporter.isAnimal && reporter.subCategory">
 					<label id="pet-type-label">Pet Type</label>
-					<select id="pet-type" ng-model="reporter.petType" ng-change="reporter.trackBreed(reporter.petType)" 
-						ng-options="pet.id as pet.name for pet in reporter.petTypeData track by pet.id">
+					<select id="pet-type" name="petType" 
+						ng-model="reporter.petType" 
+						ng-change="reporter.trackBreed()" 
+						ng-options="pet as pet.name for pet in reporter.petTypeData track by pet.id" 
+						required>
 						<option value="">-- Select a pet type --</option>
 					</select>
-                    <p role="alert" class="error-message">Please select a pet type.</p>
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.petType.$dirty" ng-show="citySourcedReporterForm.petType.$error.required">Please select a pet type.</p>
 				</div>
 				
-				<div id="other-pet-type" ng-if="reporter.petType === 'Other'">
+				<div id="other-pet-type" ng-if="reporter.petType.name === 'Other'">
 					<div id="other-pet-type-selection">
 						<label id="other-pet-type-label">Other pet type</label>
-						<select id="other-pet-type" 
+						<select id="other-pet-type" id="otherPetType" 
 							ng-model="reporter.otherPetType" 
-							ng-options="cat.id as cat.name for cat in reporter.animalTypeData track by cat.id">
+							ng-options="cat.id as cat.name for cat in reporter.animalTypeData track by cat.id" 
+							required>
 							<option value="">-- Select an "other" pet type --</option>
 						</select>
+                    	<p role="alert" class="error-message" ng-if="citySourcedReporterForm.otherPetType.$dirty" ng-show="citySourcedReporterForm.otherPetType.$error.required">Please select an other pet type.</p>
 					</div>
 				</div>
 				
-				<div id="breeds-and-colors" ng-if="reporter.petType.toLowerCase() === 'dog' || reporter.petType.toLowerCase() === 'cat'">
+				<div id="breeds-and-colors" ng-if="reporter.petType.name.toLowerCase() === 'dog' || reporter.petType.name.toLowerCase() === 'cat'">
 					<div id="primary-breed-selection">
 						<label id="primary-breed-label">Primary Animal Breed</label>
-						<select id="primary-breed" ng-model="reporter.primaryBreed" ng-options="cat.id as cat.name for cat in reporter.breeds track by cat.id">
+						<select id="primary-breed" name="primaryBreed" 
+							ng-model="reporter.primaryBreed" 
+							ng-options="cat.id as cat.name for cat in reporter.breeds track by cat.id" 
+							required>
 							<option value="">-- Select a primary breed pet type --</option>
 						</select>
-						<p role="alert" class="error-message">Please select a primary animal breed.</p>
+						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.primaryBreed.$dirty" ng-show="citySourcedReporterForm.primaryBreed.$error.required">Please select a primary animal breed.</p>
 					</div>
 
 					<div id="primary-color-selection">
 						<label id="primary-color-label">Primary Animal Color</label>
-						<select id="primary-color" ng-model="reporter.primaryColor" ng-options="cat.id as cat.name for cat in reporter.animalColorData.colors track by cat.id">
+						<select id="primary-color" name="primaryColor" 
+							ng-model="reporter.primaryColor" 
+							ng-options="cat.id as cat.name for cat in reporter.animalColorData.colors track by cat.id"
+							required>
 							<option value="">-- Select a Primary Animal Color --</option>
 						</select>
+						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.primaryColor.$dirty" ng-show="citySourcedReporterForm.primaryColor.$error.required">Please select a primary animal color.</p>
 					</div>
 
 					<input type="hidden" id="report-category" value="" />
@@ -116,24 +136,38 @@
 				
 				<div class="cs-form-control">
 					<label for="description">Description</label>
-					<textarea id="description" aria-required="true"></textarea>
-					<p role="alert" class="error-message">Please enter a description for your report.</p>
+					<textarea id="description" name="description" ng-model="reporter.description" aria-required="true" required></textarea>
+					<p role="alert" class="error-message" ng-if="citySourcedReporterForm.description.$dirty" ng-show="citySourcedReporterForm.description.$error.required">Please enter a description for your report.</p>
 				</div>
 
 			</fieldset>
 
-            <fieldset class="panel" ng-show="reporter.page === 2">
+            <fieldset class="panel" ng-show="reporter.page === 1">
                 <legend>Add a Location</legend>
                 <p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
                 <div class="cs-form-control">
                     <label for="address">Enter the closest address to your service request</label>
-                    <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" />
-                    <a id="addressSearch" class="contentButton"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search</span></a>
-                    <p role="alert" class="error-message">You must select a location inside Baltimore County.</p>
+                    <input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" required 
+						places-auto-complete 
+						types="['geocode']" 
+						on-place-changed="reporter.autocompletePlaceChanged()" 
+						component-restrictions="{country:'us'}" />
+                    <button id="addressSearch" class="contentButton" ng-click="reporter.addressLookup()"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search</span></button>
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.address.$dirty" ng-show="citySourcedReporterForm.address.$error.required">You must select a location inside Baltimore County.</p>
                 </div>
-                <div id="map" class="google-map"></div>
-                <input type="hidden" id="map-latitude" value="" />
-                <input type="hidden" id="map-longitude" value="" />
+
+				<ng-map center="[39.4003288, -76.60652470000002]" 
+					zoom="14" 
+					scrollwheel="false" 
+					street-view-control="false" 
+					map-type-control="false" 
+					class="google-map" 
+					default-style="false"
+					on-click="reporter.mapClicked()">
+				</ng-map>
+				
+                <input type="hidden" id="map-latitude" name="mapLatitude" ng-model="reporter.latitude" required />
+                <input type="hidden" id="map-longitude" name="mapLongitude" ng-model="reporter.longitude" required />
             </fieldset>
 
             <fieldset class="panel" ng-show="reporter.page === 3">
@@ -141,23 +175,23 @@
                 <p>We require some basic contact information in order to process your request. You'll receive status updates by email, but we'll only call you if we need more information.</p>
                 <div class="cs-form-control">
                     <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" value="" aria-required="true" />
-                    <p role="alert" class="error-message">Please enter your first name.</p>
+                    <input type="text" id="firstName" name="firstName" ng-model="reporter.firstName" value="" aria-required="true" required />
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.firstName.$dirty" ng-show="citySourcedReporterForm.firstName.$error.required">Please enter your first name.</p>
                 </div>
                 <div class="cs-form-control">
                     <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" value="" aria-required="true" />
-                    <p role="alert" class="error-message">Please enter your last name.</p>
+                    <input type="text" id="lastName" name="lastName" ng-model="reporter.lastName" value="" aria-required="true" required />
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.lastName.$dirty" ng-show="citySourcedReporterForm.lastName.$error.required">Please enter your last name.</p>
                 </div class="cs-form-control">
                 <div class="cs-form-control">
                     <label for="email">Email Address</label>
-                    <input type="text" id="email" name="email" value="" placeholder="name@domain.com" aria-required="true" />
-                    <p role="alert" class="error-message">Please enter your email address.</p>
+                    <input type="text" id="email" name="email" ng-model="reporter.email" value="" placeholder="name@domain.com" aria-required="true" required />
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.email.$dirty" ng-show="citySourcedReporterForm.email.$error.required">Please enter your email address.</p>
                 </div>
                 <div class="cs-form-control">
                     <label for="phone">Phone</label>
-                    <input type="text" id="deviceNumber" name="deviceNumber" value="" placeholder="410-555-1212" aria-required="true" />
-                    <p role="alert" class="error-message">Please enter your phone number.</p>
+                    <input type="text" id="deviceNumber" name="deviceNumber" ng-model="reporter.deviceNumber" value="" placeholder="410-555-1212" aria-required="true" required />
+                    <p role="alert" class="error-message" ng-if="citySourcedReporterForm.deviceNumber.$dirty" ng-show="citySourcedReporterForm.deviceNumber.$error.required">Please enter your phone number.</p>
                 </div>
             </fieldset>
 			<input type="button" class="seButton" ng-if="reporter.page > 1" id="prevButton" value="Previous" ng-click="reporter.prevClick()" />
@@ -165,8 +199,8 @@
             <input type="button" class="seButton pull-right" ng-if="reporter.page === 3" id="fileReportButton" value="File Your Report" />
          </form>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.reporterGoogleMaps.initGoogle"
-        async defer></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.reporterGoogleMaps.initGoogle"
+        async defer></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
     <script>
         $('#deviceNumber').inputmask('999-999-9999', { 'clearIncomplete': true, jitMasking: true });
