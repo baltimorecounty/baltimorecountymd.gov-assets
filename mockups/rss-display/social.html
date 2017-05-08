@@ -3,11 +3,12 @@
 <html lang="en-us">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
 	<script>
-		$.ajax('https://testservices.baltimorecountymd.gov/api/citysourced/feeds/twitter')
+		$.ajax('https://services.baltimorecountymd.gov/api/citysourced/feeds/twitter')
 			.done(function(data) {
 				var $tweets = $('#socialData');
 
@@ -26,7 +27,7 @@
 
 				});
 			
-				$.ajax('https://testservices.baltimorecountymd.gov/api/citysourced/feeds/facebook')
+				$.ajax('https://services.baltimorecountymd.gov/api/citysourced/feeds/facebook')
 					.done(function(data) {
 						var $socialData = $('#socialData');
 						
