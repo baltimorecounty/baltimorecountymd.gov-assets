@@ -58,12 +58,10 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 		 * Puts a market on the map.
 		 */
 		placeMarker = function(latitude, longitude, shouldUpdateTextbox, callback) {
-			clearMarker();
 
 			var isCounty = reverseGeocode(latitude, longitude, shouldUpdateTextbox, function(isCounty) {
 				if (isCounty) {
 					createMarker(latitude, longitude);
-					trackLatLng(latitude, longitude);
 				}
 
 				if(callback)
@@ -199,55 +197,19 @@ baltimoreCounty.pageSpecific.reporterGoogleMaps = (function (googleMaps, undefin
 				});
 			}
 			return matchArr.length ? matchArr : false;
-		},
-
-		/**
-		 * Updates the hidden fields with the values of the latitude and longitude from 
-		 * a dropped pin or an address search.
-		 */
-		trackLatLng = function (latitude, longitude) {
-			$('#map-latitude').val(latitude);
-			$('#map-longitude').val(longitude);
-		},
+		},		
 
 		/**
 		 * Remove "USA", since this is only for USA addresses.
 		 */
 		removeCountry = function(addressString) {
 			return addressString.replace(', USA', '');
-		},
-
-		/**
-		 * Create the map and autocomplete, and attach up the click and place_changed handler.
-		 */
-		initGoogle = function () {
-			var mapSettings = {
-					center: {
-						lat: 39.4003288,
-						lng: -76.60652470000002
-					},
-					scrollwheel: false,
-					zoom: 14,
-					mapTypeId: 'roadmap',
-					mapTypeControl: false,
-					streetViewControl: false
-				},
-				autocompleteSettings = {
-					types: ['geocode']
-				};
-
-			createMap('map', mapSettings);
-			createAutoComplete('address', autocompleteSettings);
-			google.maps.event.addListener(map, 'click', mapClickHandler);
-			autocomplete.addListener('place_changed', autocompletePlaceChangedHandler);
-			document.getElementById('addressSearch').addEventListener('click', addressSearchButtonClickHandler);
-			document.getElementById('address').addEventListener('keyup', addressKeyupHandler);
 		};
 
 	return {
-		initGoogle: initGoogle,
 		mapClickHandler: mapClickHandler,
-		autocompletePlaceChangedHandler: autocompletePlaceChangedHandler
+		autocompletePlaceChangedHandler: autocompletePlaceChangedHandler,
+		placeMarker: placeMarker
 	};
 
 })();

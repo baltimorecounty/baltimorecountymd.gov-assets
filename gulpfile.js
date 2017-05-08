@@ -23,6 +23,14 @@ gulp.task('clean-dist', function() {
 		.pipe(clean());
 });
 
+gulp.task('concatBaltCoGoAppJs', function() {
+	var files = ['js/vendor/ng-map.min.js',
+				'js/page-specific/baltcogo-reporter-app/app.js',
+				'js/page-specific/baltcogo-reporter-app/services/map-service.js',
+				'js/page-specific/baltcogo-reporter-app/BaltCoGoReporterCtrl.js'];
+	return concatFiles(files, 'baltcogo-reporter.js');
+});
+
 gulp.task('concatHomepageJs', function() {
 	var files = ['js/polyfills/*.js',
 					'js/utility/namespacer.js', 
@@ -67,7 +75,7 @@ gulp.task('movePageSpecificJs', function() {
 		.pipe(gulp.dest('dist/js/page-specific'));
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
+gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
 	return gulp.src(['!dist/js/**/*.min.js', 'dist/js/**/*.js'])
 		.pipe(stripCode({
 			start_comment: 'test-code',

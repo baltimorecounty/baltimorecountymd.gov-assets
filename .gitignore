@@ -4,4 +4,5 @@
 **/*.css
 !dist/css/*.css
 node_modules/**/*
+bower_components/**/*
 .vscode/
