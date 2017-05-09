@@ -331,6 +331,11 @@
 		{ "name": "Wlfhnd,Russn,Borzoi", "id": 1024211 },
 		{ "name": "Xoloitzcuintli", "id": 1024212 },
 		{ "name": "Yorkshire Terrier", "id": 1024213 }
+	],
+	"sex": [ 
+		{ "name": "Male", "id": 1023814 },
+		{ "name": "Female", "id": 1023813 },
+		{ "name": "Unknown", "id": 1023815 }
 	]
 }, {
 	"animal": "cat",
@@ -398,5 +403,11 @@
 		{ "name": "Toyger", "id": 1024562 },
 		{ "name": "Turkish Angora", "id": 1024563 },
 		{ "name": "Turkish Van", "id": 1024564 }
+	],
+	"sex": [ 
+		{ "name": "Male", "id": 1023814 },
+		{ "name": "Female", "id": 1023813 },
+		{ "name": "Unknown", "id": 1023815 }
 	]
+
 }]

@@ -1,4 +1,5 @@
-[{
+[
+	{
 		"name": "Building and Development",
 		"id": 1022189,
 		"types": [{
@@ -13,34 +14,41 @@
 	},
 	{
 		"name": "Neighborhood",
-		"id": 1022188,
+		"id": 1023378,
 		"types": [{
-				"name": "Abandoned Vehicle",
-				"id": 1022241
+				"name": "Abandoned vehicle (unregistered and/or inoperable)",
+				"id": 1023415
+
 			},
 			{
 				"name": "Building without a Permit",
-				"id": 1022244
+				"id": 1023416
+
 			},
 			{
 				"name": "Excessive animal feces in neighbor's yard",
-				"id": 1022243
+				"id": 1023417
+
+			},
+			{
+				"name": "Graffiti",
+				"id": 1023414
+
+
 			},
 			{
 				"name": "Junk, trash, or debris in yard or public space",
-				"id": 1022238
-			},
-			{
-				"name": "Rats",
-				"id": 1022240
+				"id": 1023412
+
 			},
 			{
 				"name": "Tall grass and weeds in yard",
-				"id": 1022239
+				"id": 1023413
+
 			},
 			{
-				"name": "Vacant Property",
-				"id": 1022242
+				"name": "Other code complaint",
+				"id": 1023418
 			}
 		],
 		"states": [{
@@ -255,46 +263,85 @@
 				"name": "WY",
 				"id": 1023644
 			}
-		]
+		],
+		"fields": {
+			"streetAddress": 1023588,
+			"city": 1023589,
+			"zipCode": 1023591
+		}
 	},
 	{
-		"name": "Pets",
-		"id": 1022187,
+		"name": "Pets and Animals",
+		"id": 1023379,
 		"types": [{
+				"name": "Animal caught in a trap",
+				"id": 1023421
+
+			},
+			{
 				"name": "Animal cruelty",
-				"id": 1022224
+				"id": 1023420
+
+			},
+			{
+				"name": "Animal shows signs of rabies",
+				"id": 1023422
+
+			},
+			{
+				"name": "Animals in vacant property",
+				"id": 1023423
+
 			},
 			{
 				"name": "Bite from a pet",
-				"id": 1022222
+				"id": 1023424
+
 			},
 			{
 				"name": "Dangerous dog",
-				"id": 1022225
+				"id": 1023425
+
 			},
 			{
 				"name": "Excessive barking",
-				"id": 1022223
+				"id": 1023427
+
+			},
+			{
+				"name": "Menacing animal",
+				"id": 1023428
+
 			},
 			{
 				"name": "Nuisance animal",
-				"id": 1022226
+				"id": 1023429
+
 			},
 			{
 				"name": "Pet out of yard or roaming",
-				"id": 1022221
+				"id": 1023431
+
 			},
 			{
 				"name": "Pet waste was left in my yard",
-				"id": 1022229
+				"id": 1023432
+
+			},
+			{
+				"name": "Sick or injured animal",
+				"id": 1023433
+
 			},
 			{
 				"name": "Stray pet found and needs pickup",
-				"id": 1022228
+				"id": 1023434
+
 			},
 			{
-				"name": "Other Pet Complaint",
-				"id": 1022227
+				"name": "Other animal complaint",
+				"id": 1023430
+
 			}
 		],
 		"states": [{
@@ -509,26 +556,41 @@
 				"name": "WY",
 				"id": 1023585
 			}
-		]
+		],
+		"fields": {
+			"streetAddress": 1023529,
+			"city": 1023530,
+			"zipCode": 1023532
+		}
 	},
 	{
 		"name": "Rental Property",
-		"id": 1022186,
+		"id": 1023377,
 		"types": [{
 				"name": "Failure to maintain plumbing system",
-				"id": 1022214
+				"id": 1023408
+
 			},
 			{
 				"name": "Failure to provide carbon monoxide detectors",
-				"id": 1022213
+				"id": 1023407
+
 			},
 			{
 				"name": "Poor living conditions in a rental home",
-				"id": 1022212
+				"id": 1023406
+
 			},
 			{
 				"name": "Unregistered rental property",
-				"id": 1022215
+				"id": 1023409
+
+			},
+			{
+				"name": "Other rental complaint",
+				"id": 1023410
+
+
 			}
 		],
 		"states": [{
@@ -743,91 +805,115 @@
 				"name": "WY",
 				"id": 1023510
 			}
-		]
+		],
+		"fields": {
+			"streetAddress": 1023454,
+			"city": 1023455,
+			"zipCode": 1023511
+		}
 	},
 	{
 		"name": "Roads and Sidewalks",
-		"id": 1022185,
+		"id": 1023376,
 		"types": [{
 				"name": "Adopt-a-Road Inquiry",
-				"id": 1022199
+				"id": 1023393
+
 			},
 			{
 				"name": "Flooded road",
-				"id": 1022206
+				"id": 1023400
+
 			},
 			{
 				"name": "Icy conditions",
-				"id": 1022201
+				"id": 1023395
+
 			},
 			{
 				"name": "Overgrown trees or bushes near roadway",
-				"id": 1022210
+				"id": 1023404
+
 			},
 			{
 				"name": "Paving or re-paving needed",
-				"id": 1022203
+				"id": 1023397
+
 			},
 			{
 				"name": "Pothole",
-				"id": 1022204
+				"id": 1023398
+
 			},
 			{
 				"name": "Sidewalk or curb repair needed",
-				"id": 1022207
+				"id": 1023401
+
 			},
 			{
 				"name": "Street cleaning needed",
-				"id": 1022209
+				"id": 1023403
+
 			},
 			{
 				"name": "Tall grass or weeds near roadway",
-				"id": 1022202
+				"id": 1023396
+
 			},
 			{
 				"name": "Trash in roadside stream",
-				"id": 1022208
+				"id": 1023402
+
 			},
 			{
 				"name": "Trash on roadside",
-				"id": 1022205
+				"id": 1023399
+
 			},
 			{
 				"name": "Other Road or Sidewalk Complaint",
-				"id": 1022200
+				"id": 1023394
+
 			}
 		]
 	},
 	{
 		"name": "Trash and Recycling",
-		"id": 1022184,
+		"id": 1023375,
 		"types": [{
 				"name": "Can or lid lost or damaged",
-				"id": 1022195
+				"id": 1023389
+
 			},
 			{
 				"name": "Property damage during collection",
-				"id": 1022196
+				"id": 1023390
+
 			},
 			{
 				"name": "Recycling not collected",
-				"id": 1022192
+				"id": 1023386
+
 			},
 			{
 				"name": "Request to start new collection",
-				"id": 1022194
+				"id": 1023388
+
 			},
 			{
 				"name": "Trash not collected",
-				"id": 1022191
+				"id": 1023385
+
 			},
 			{
 				"name": "Yard waste not collected",
-				"id": 1022193
+				"id": 1023387
+
 			},
 			{
 				"name": "Other Trash and Recycling Problem",
-				"id": 1022197
+				"id": 1023391
+
 			}
 		]
 	}
