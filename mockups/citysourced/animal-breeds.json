@@ -410,4 +410,22 @@
 		{ "name": "Unknown", "id": 1023815 }
 	]
 
+}, {
+	"animal": "horse",
+	"id": 1023515,
+	"sex": [ 
+		{ "name": "Male", "id": 1023814 },
+		{ "name": "Female", "id": 1023813 },
+		{ "name": "Unknown", "id": 1023815 }
+	]
+
+}, {
+	"animal": "other",
+	"id": 1023516,
+	"sex": [ 
+		{ "name": "Male", "id": 1023814 },
+		{ "name": "Female", "id": 1023813 },
+		{ "name": "Unknown", "id": 1023815 }
+	]
+
 }]
