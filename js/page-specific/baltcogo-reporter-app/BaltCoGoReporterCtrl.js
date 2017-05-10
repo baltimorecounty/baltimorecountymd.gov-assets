@@ -22,6 +22,10 @@
 
 		self.isAnimal = false;
 		self.page = 1;		
+		self.isDone = false;
+		self.isSuccess = false;
+		self.issueId = '';
+		self.isLoading = false;
 
 		NgMap.getMap().then(function (map) {
 			self.map = map;
@@ -119,6 +123,9 @@
 		};
 
 		self.fileReportClick = function () {
+
+			if (!validatePanel()) 
+				return;
 
 			/*** Static fields **********/
 			
@@ -236,9 +243,19 @@
 
 			/*** POST **********/
 
-			createReportService.post(data, function(isSuccess) {
-				console.log(isSuccess);
-			});
+			self.isLoading = true;
+			self.isDone = true;
+
+			createReportService.post(data, 
+				function(responseData) {
+					self.isLoading = false;
+					self.isSuccess = true;
+					self.issueId = JSON.parse(responseData).CsResponse.ReportId;
+				}, 
+				function(errorData) {
+					self.isLoading = false;
+					console.log(errorData);
+				});
 		};
 
 		/*** Private functions *********/
@@ -259,12 +276,14 @@
 		function validatePanel() {
 			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]'),
 				requiredElementsCount = requiredElements.length,
-				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length;
-
-			angular.forEach($scope.citySourcedReporterForm.$$controls, function (value, key, obj) {
-				if (value.$$element.closest('.panel').is(':visible') && value.$pristine) {
-					value.$setDirty();
-				}
+				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length,
+				controls = $scope.citySourcedReporterForm.$$controls;
+			
+			angular.forEach(controls, function (value, key, obj) {
+				if (value.$$element.is(':visible')) {
+					if (value.$pristine)
+						value.$setDirty();
+				}			
 			});
 
 			return requiredElementsCount === visibleRequiredElementsCount;

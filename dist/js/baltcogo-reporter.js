@@ -36,7 +36,7 @@ t&&p[t]?r.resolve(p[t].map):!t&&s&&s.map?r.resolve(s.map):n>i?r.reject("could no
 
 	function createReportService($http) {
 
-		function post(data, callback) {
+		function post(data, successCallback, errorCallback) {
 			var postOptions = {
 				headers: {
 					'Content-Type': 'application/json'
@@ -46,11 +46,10 @@ t&&p[t]?r.resolve(p[t].map):!t&&s&&s.map?r.resolve(s.map):n>i?r.reject("could no
 			$http.post("http://ba224964:1000/api/baltcogo/createreport", data, postOptions)
 				.then(
 					function (response) {
-						callback(true);
+						successCallback(response.data);
 					},
 					function (error) {
-						callback(false);
-						console.log('error', error);
+						errorCallback(error);
 					}
 				);
 		}
@@ -169,34 +168,25 @@ t&&p[t]?r.resolve(p[t].map):!t&&s&&s.map?r.resolve(s.map):n>i?r.reject("could no
 
 		var targetCounty = 'Baltimore County';
 
-		/*$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);*/
-		$http.get('categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		/*$http.get('categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('animal-colors.json').then(colorSuccessHandler, errorHandler);
 		$http.get('animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		$http.get('pet-types.json').then(petTypeSuccessHandler, errorHandler);*/
 
 		self.isAnimal = false;
-		self.page = 1;
-
-		$scope.$watch(self.page, function(newValue, oldValue) {
-			console.log('newValue', newValue);
-			console.log('oldValue', oldValue);
-
-			if (newValue === 2) {
-				google.maps.event.trigger(self.map, "resize");
-			}
-		});
+		self.page = 1;		
+		self.isDone = false;
+		self.isSuccess = false;
+		self.issueId = '';
+		self.isLoading = false;
 
 		NgMap.getMap().then(function (map) {
-			var center = map.getCenter();
-			google.maps.event.trigger(map, "resize");
-			map.setCenter(center);
-
 			self.map = map;
 		});	
 
@@ -292,6 +282,9 @@ t&&p[t]?r.resolve(p[t].map):!t&&s&&s.map?r.resolve(s.map):n>i?r.reject("could no
 		};
 
 		self.fileReportClick = function () {
+
+			if (!validatePanel()) 
+				return;
 
 			/*** Static fields **********/
 			
@@ -409,9 +402,19 @@ t&&p[t]?r.resolve(p[t].map):!t&&s&&s.map?r.resolve(s.map):n>i?r.reject("could no
 
 			/*** POST **********/
 
-			createReportService.post(data, function(isSuccess) {
-				console.log(isSuccess);
-			});
+			self.isLoading = true;
+			self.isDone = true;
+
+			createReportService.post(data, 
+				function(responseData) {
+					self.isLoading = false;
+					self.isSuccess = true;
+					self.issueId = JSON.parse(responseData).CsResponse.ReportId;
+				}, 
+				function(errorData) {
+					self.isLoading = false;
+					console.log(errorData);
+				});
 		};
 
 		/*** Private functions *********/
@@ -432,12 +435,14 @@ t&&p[t]?r.resolve(p[t].map):!t&&s&&s.map?r.resolve(s.map):n>i?r.reject("could no
 		function validatePanel() {
 			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]'),
 				requiredElementsCount = requiredElements.length,
-				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length;
-
-			angular.forEach($scope.citySourcedReporterForm.$$controls, function (value, key, obj) {
-				if (value.$$element.closest('.panel').is(':visible') && value.$pristine) {
-					value.$setDirty();
-				}
+				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length,
+				controls = $scope.citySourcedReporterForm.$$controls;
+			
+			angular.forEach(controls, function (value, key, obj) {
+				if (value.$$element.is(':visible')) {
+					if (value.$pristine)
+						value.$setDirty();
+				}			
 			});
 
 			return requiredElementsCount === visibleRequiredElementsCount;
