@@ -13,6 +13,10 @@
 
 #mainContent {
 
+	.baltcogo-loading {
+		text-align: center;
+	}
+
     .bc-citysourced-reporter {
 
         ol {
@@ -128,7 +132,7 @@
 
             }
 
-            #category-selection {
+            .category-selection {
                 padding-right: 20px;
             }
 
@@ -167,10 +171,6 @@
                 &[type=button]:disabled {
                     background-color: #999;
                 }
-            }
-
-            .error-message {
-                /*display: none;*/
             }
 
             .required {
