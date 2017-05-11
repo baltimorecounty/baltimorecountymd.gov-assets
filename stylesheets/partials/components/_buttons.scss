@@ -31,3 +31,8 @@ button {
 	  	color: $dark-gray;
 	  }
 }
+input[type=button][disabled], 
+input[type=submit][disabled], 
+button[disabled] {
+    color: #999;
+}
