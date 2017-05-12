@@ -1,24 +1,24 @@
 (function (app) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', 'NgMap', 'mapService', 'createReportService', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'createReportService', reporterController]);
 
-	function reporterController($http, $scope, NgMap, mapService, createReportService) {
+	function reporterController($http, $scope, $timeout, mapService, createReportService) {
 
 		var self = this;
 
 		var targetCounty = 'Baltimore County';
 
-		$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
+		/*$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
-		/*$http.get('categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);*/
+		$http.get('categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('animal-colors.json').then(colorSuccessHandler, errorHandler);
 		$http.get('animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('pet-types.json').then(petTypeSuccessHandler, errorHandler);*/
+		$http.get('pet-types.json').then(petTypeSuccessHandler, errorHandler);
 
 		self.isAnimal = false;
 		self.page = 1;		
@@ -27,43 +27,95 @@
 		self.issueId = '';
 		self.isLoading = false;
 
-		NgMap.getMap().then(function (map) {
-			self.map = map;
-		});	
+		var mapSettings = {
+				center: {
+					lat: 39.4003288,
+					lng: -76.60652470000002
+				},
+				scrollwheel: false,
+				zoom: 14,
+				mapTypeId: 'roadmap',
+				mapTypeControl: false,
+				streetViewControl: false
+			},
+			autocompleteSettings = {
+				types: ['geocode']
+			};
 
-		self.mapClicked = function (event) {
-			self.latitude = event.latLng.lat();
-			self.longitude = event.latLng.lng();
+		self.map = mapService.createMap('map', mapSettings);
 
-			mapService.createMarker(self.map, self.latitude, self.longitude);
-			mapService.reverseGeocode(self.latitude, self.longitude, function (address) {
-				self.address = address;
-			});
-		};
+		var autocomplete = mapService.createAutoComplete('address', autocompleteSettings);
 
-		self.autocompletePlaceChanged = function () {
-			var place = this.getPlace();
+		google.maps.event.addListener(self.map, 'click', mapClicked);
+		autocomplete.addListener('place_changed', autocompletePlaceChanged);
+		document.getElementById('addressSearch').addEventListener('click', addressLookup);
+		document.getElementById('address').addEventListener('keyup', addressKeyupHandler);
 
-			self.latitude = place.geometry.location.lat();
-			self.longitude = place.geometry.location.lng();
+		function addressKeyupHandler(event) {
+			if (event.which === 13) {
+				$timeout(function() {
 
-			mapService.createMarker(self.map, self.latitude, self.longitude);
-			self.map.panTo({
-				lat: self.latitude,
-				lng: self.longitude
-			});
-			mapService.reverseGeocode(self.latitude, self.longitude, function (address) {
-				self.address = address;
-			});
-		};
+					/*angular.element('#address').trigger({
+						type: 'keypress',
+						which: 40
+					});*/
 
-		self.addressLookup = function () {
-			mapService.addressLookup(self.address, function (address, latitude, longitude) {
-				self.address = address;
+					/*var addressParts = [];
+					angular.element('.pac-item').first().find('span').each(function(index, element) {
+						addressParts.push(angular.element(element).text());
+					});
+
+					self.address = addressParts.join(' ');
+
+					console.log(addressParts.join(' '));*/
+				});
+			}
+		}
+
+		function autocompletePlaceChanged() {
+			self.address = mapService.removeCountry(self.address);
+			
+			var place = autocomplete.getPlace();
+
+			if (place.geometry) {
+				var latitude = place.geometry.location.lat(),
+					longitude = place.geometry.location.lng();
+
+				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
+					self.address = checkAddress(foundAddress, latitude, longitude);
+				});
+			}
+		}
+
+		function checkAddress(foundAddress, latitude, longitude) {
+			if (foundAddress) {
 				mapService.createMarker(self.map, latitude, longitude);
 				self.map.panTo({
 					lat: latitude,
 					lng: longitude
+				});
+				return foundAddress;
+			} else {
+				return '';
+			}
+		}
+
+		function mapClicked(event) {
+			self.latitude = event.latLng.lat();
+			self.longitude = event.latLng.lng();
+
+			mapService.reverseGeocode(self.latitude, self.longitude, function (address) {
+				if (address) {
+					self.address = address;
+					mapService.createMarker(self.map, self.latitude, self.longitude);
+				}
+			});
+		}
+
+		function addressLookup() {
+			mapService.addressLookup(self.address, function (address, latitude, longitude) {
+				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
+					self.address = checkAddress(foundAddress, latitude, longitude);
 				});
 			});
 		};
@@ -114,12 +166,10 @@
 		};
 
 		self.prevClick = function () {
-			if (validatePanel()) {
-				self.page--; 
-				setTimeout(function() {
-					google.maps.event.trigger(self.map, "resize");
-				}, 500);
-			}
+			self.page--; 
+			setTimeout(function() {
+				google.maps.event.trigger(self.map, "resize");
+			}, 500);
 		};
 
 		self.fileReportClick = function () {

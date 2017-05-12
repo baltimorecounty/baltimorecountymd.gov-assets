@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en-us">
 
 <head>
@@ -18,11 +19,11 @@
 	
 	<script src="/dist/js/templateinside.min.js"></script>
 
-	<script src="/dist/js/baltcogo-reporter.min.js"></script>
+	<script src="/dist/js/baltcogo-reporter.js"></script>
 
         <style>
 			body {
-				padding: 4em;
+				padding: 2em;
 			}
         </style>
 </head>
@@ -54,13 +55,13 @@
 
 			<ol class="bc-citysourced-reporter-steps">
 				<li class="highlight">Choose a<br/>Report Type</li>
-				<li>Enter a<br/>Location</li>
-				<li>Provide Your<br/>Contact Information</li>
+				<li ng-class="{'highlight': reporter.page > 1}">Enter a<br/>Location</li>
+				<li ng-class="{'highlight': reporter.page > 2}">Provide Your<br/>Contact Information</li>
 				<li> </li>
 			</ol>
 
 			<form novalidate id="citysourced-reporter-form" name="citySourcedReporterForm">
-				<fieldset class="panel" ng-show="reporter.page === 1">
+				<fieldset class="panel" ng-show="reporter.page === 2">
 					<legend>How Can We Help?</legend>
 					<div id="category-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.categories.$dirty &&  citySourcedReporterForm.categories.$invalid }">
 						<label id="categories-label">Request Category<span class="required">*</span></label>
@@ -112,15 +113,13 @@
 						</div>
 					</div>
 
-					<div id="pet-sex" ng-if="reporter.isAnimal && reporter.petType" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.petSex.$dirty &&  citySourcedReporterForm.petSex.$invalid }">
-						<label id="pet-sex-label">Pet Sex<span class="required">*</span></label>
+					<div id="pet-sex" ng-if="reporter.isAnimal && reporter.petType" class="category-selection">
+						<label id="pet-sex-label">Pet Sex</label>
 						<select id="pet-sex" name="petSex" 
 							ng-model="reporter.petSex" 
-							ng-options="pet as pet.name for pet in reporter.sex track by pet.id" 
-							required>
+							ng-options="pet as pet.name for pet in reporter.sex track by pet.id">
 							<option value="">-- Select a pet sex --</option>
 						</select>
-						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.petSex.$dirty" ng-show="citySourcedReporterForm.petSex.$error.required">Please select a pet sex.</p>
 					</div>
 									
 					<div id="breeds-and-colors" ng-if="reporter.petType.name.toLowerCase() === 'dog' || reporter.petType.name.toLowerCase() === 'cat'" ng-class="{ 'error': citySourcedReporterForm.primaryColor.$dirty &&  citySourcedReporterForm.primaryColor.$invalid }">
@@ -158,21 +157,17 @@
 
 				</fieldset>
 
-				<fieldset class="panel" ng-show="reporter.page === 2">
+				<fieldset class="panel" ng-show="reporter.page === 1">
 					<legend>Add a Location</legend>
 					<p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
 					<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.address.$dirty &&  citySourcedReporterForm.address.$invalid }">
 						<label for="address">Enter the closest address to your service request<span class="required">*</span></label>
-						<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" required 
-							places-auto-complete 
-							types="['geocode']" 
-							on-place-changed="reporter.autocompletePlaceChanged()" 
-							component-restrictions="{country:'us'}" />
+						<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" required />
 						<button id="addressSearch" class="contentButton" ng-click="reporter.addressLookup()"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search</span></button>
 						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.address.$dirty" ng-show="citySourcedReporterForm.address.$error.required">You must select a location inside Baltimore County.</p>
 					</div>
 
-					<ng-map center="[39.4003288, -76.60652470000002]" 
+					<!--<ng-map center="[39.4003288, -76.60652470000002]" 
 						zoom="14" 
 						scrollwheel="false" 
 						street-view-control="false" 
@@ -180,8 +175,10 @@
 						class="google-map" 
 						default-style="false"
 						on-click="reporter.mapClicked()">
-					</ng-map>
+					</ng-map>-->
 
+					<div id="map" class="google-map"></div>
+<div>{{ reporter.address }}</div>
 					<div class="cs-form-control">
 						<label for="description">Location Description</label>
 						<textarea id="locationDescription" name="locationDescription" data-cs-id="1023525" ng-model="reporter.locationDescription"></textarea>

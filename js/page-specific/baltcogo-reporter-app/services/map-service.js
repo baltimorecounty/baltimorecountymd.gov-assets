@@ -8,7 +8,20 @@
 		var apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
 			targetCounty = 'Baltimore County',
 			marker,
-			
+
+			clearMarker = function () {
+				if (marker)
+					marker.setMap(null);
+			},
+
+			createAutoComplete = function (autocompleteElementId, settings) {
+				return new google.maps.places.Autocomplete(document.getElementById(autocompleteElementId), settings);
+			},
+
+			createMap = function(mapElementId, settings) {
+				return new google.maps.Map(document.getElementById(mapElementId), settings);
+			},
+
 			createMarker = function(map, latitude, longitude) {
 				if (marker) {
 					marker.setMap(null);
@@ -34,6 +47,7 @@
 						callback(removeCountry(address));
 					} else {
 						$target.parent().addClass('error');
+						clearMarker();
 						callback('');
 					}
 				});
@@ -53,7 +67,9 @@
 					}, function (error) {
 						console.log('error!', error);
 					});		
-			}
+			
+			};
+
 
 		/*** Private Functions **********/
 
@@ -90,7 +106,10 @@
 		return {
 			createMarker: createMarker,
 			reverseGeocode: reverseGeocode,
-			addressLookup: addressLookup
+			addressLookup: addressLookup,
+			createMap: createMap,
+			createAutoComplete: createAutoComplete,
+			removeCountry: removeCountry
 		};
 	};
 

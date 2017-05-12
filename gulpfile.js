@@ -24,8 +24,7 @@ gulp.task('clean-dist', function() {
 });
 
 gulp.task('concatBaltCoGoAppJs', function() {
-	var files = ['js/lib/ng-map.min.js',
-				'js/page-specific/baltcogo-reporter-app/app.js',
+	var files = ['js/page-specific/baltcogo-reporter-app/app.js',
 				'js/page-specific/baltcogo-reporter-app/services/**/*.js',
 				'js/page-specific/baltcogo-reporter-app/BaltCoGoReporterCtrl.js'];
 	return concatFiles(files, 'baltcogo-reporter.js');
