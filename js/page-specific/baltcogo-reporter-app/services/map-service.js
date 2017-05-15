@@ -54,7 +54,7 @@
 			},
 
 			addressLookup = function(addressQuery, callback) {
-				$http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + addressQuery + '&key=' + apiKey)
+				$http.get('https://maps.googleapis.com/maps/api/geocode/json?bounds=39.4579705,-76.8882835|39.7264469,-76.3322764&region=US&address=' + addressQuery + '&key=' + apiKey)
 					.then(function (response) {
 						if (response.data.results.length) {
 							var latitude = response.data.results[0].geometry.location.lat;

@@ -90,7 +90,7 @@
 			},
 
 			addressLookup = function(addressQuery, callback) {
-				$http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + addressQuery + '&key=' + apiKey)
+				$http.get('https://maps.googleapis.com/maps/api/geocode/json?bounds=39.4579705,-76.8882835|39.7264469,-76.3322764&region=US&address=' + addressQuery + '&key=' + apiKey)
 					.then(function (response) {
 						if (response.data.results.length) {
 							var latitude = response.data.results[0].geometry.location.lat;
@@ -204,23 +204,15 @@
 		document.getElementById('address').addEventListener('keyup', addressKeyupHandler);
 
 		function addressKeyupHandler(event) {
-			if (event.which === 13) {
-				$timeout(function() {
+			if (event.which === 13 || event.keyCode === 13) {
+				event.preventDefault();
 
-					/*angular.element('#address').trigger({
-						type: 'keypress',
-						which: 40
-					});*/
-
-					/*var addressParts = [];
-					angular.element('.pac-item').first().find('span').each(function(index, element) {
-						addressParts.push(angular.element(element).text());
-					});
-
-					self.address = addressParts.join(' ');
-
-					console.log(addressParts.join(' '));*/
+				var autocompleteService = new google.maps.places.AutocompleteService();
+console.log('self.address', self.address);
+				autocompleteService.getQueryPredictions({input: self.address}, function(stuff) {
+console.log(stuff);
 				});
+
 			}
 		}
 

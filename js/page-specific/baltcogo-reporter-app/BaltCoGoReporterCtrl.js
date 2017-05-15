@@ -52,23 +52,15 @@
 		document.getElementById('address').addEventListener('keyup', addressKeyupHandler);
 
 		function addressKeyupHandler(event) {
-			if (event.which === 13) {
-				$timeout(function() {
+			if (event.which === 13 || event.keyCode === 13) {
+				event.preventDefault();
 
-					/*angular.element('#address').trigger({
-						type: 'keypress',
-						which: 40
-					});*/
-
-					/*var addressParts = [];
-					angular.element('.pac-item').first().find('span').each(function(index, element) {
-						addressParts.push(angular.element(element).text());
-					});
-
-					self.address = addressParts.join(' ');
-
-					console.log(addressParts.join(' '));*/
+				var autocompleteService = new google.maps.places.AutocompleteService();
+console.log('self.address', self.address);
+				autocompleteService.getQueryPredictions({input: self.address}, function(stuff) {
+console.log(stuff);
 				});
+
 			}
 		}
 
