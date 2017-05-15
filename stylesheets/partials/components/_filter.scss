@@ -5,6 +5,13 @@
     }	
 }
 
-table.bc-filter-content, #BACO_table.bc-filter-content {
+table.bc-filter-content, 
+#BACO_table.bc-filter-content {
 	display: table;
+}
+@media screen and (max-width: 600px) {
+    table.bc-filter-content, 
+    #BACO_table.bc-filter-content {
+        display: block;
+    }
 }
