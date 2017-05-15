@@ -7,7 +7,8 @@ baltimoreCounty.internalCarousel = (function($) {
 
 			$links.each(function(index, selink) {
 				var $selink = $(selink),
-					$newLink = $('<a>').attr('href', $selink.attr('externallink')).attr('title', $selink.attr('title')).text($selink.text());
+					href = $selink.attr('externallink') ? $selink.attr('externallink') : $selink.attr('href'),
+					$newLink = $('<a>').attr('href', href).attr('title', $selink.attr('title')).text($selink.text());
 
 				if ($selink.attr('newwindow') && $selink.attr('newwindow') != 'false')
 					$newLink.attr('target', '_blank');
@@ -38,4 +39,6 @@ baltimoreCounty.internalCarousel = (function($) {
 	};
 })(jQuery);
 
-$(function() { baltimoreCounty.internalCarousel.init(); });
+$(function() { 
+	baltimoreCounty.internalCarousel.init(); 
+});
