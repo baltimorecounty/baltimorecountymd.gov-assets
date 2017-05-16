@@ -1,0 +1,434 @@
+<script>
+function _CF_checkeveryfieldtyperequired(_CF_this) {
+//reset on submit
+_CF_error_messages = new Array();
+_CF_error_fields = new Object();
+_CF_FirstErrorField = null;
+
+    if( _CF_hasValue(_CF_this["plain"], "TEXT", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "plain", _CF_this["plain"].value, "Plain text error");
+    }
+
+    if( _CF_hasValue(_CF_this["email"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checkEmail(_CF_this["email"].value, false))
+    {
+    _CF_onError(_CF_this, "email",  _CF_this["email"].value,"Email error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "email", _CF_this["email"].value, "Email error");
+    }
+
+    if( _CF_hasValue(_CF_this["date"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checkdate(_CF_this["date"].value, false))
+    {
+    _CF_onError(_CF_this, "date",  _CF_this["date"].value,"Date error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "date", _CF_this["date"].value, "Date error");
+    }
+
+    if( _CF_hasValue(_CF_this["time"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checktime(_CF_this["time"].value, false))
+    {
+    _CF_onError(_CF_this, "time",  _CF_this["time"].value,"Time error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "time", _CF_this["time"].value, "Time error");
+    }
+
+    if( _CF_hasValue(_CF_this["phone"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checkphone(_CF_this["phone"].value, false))
+    {
+    _CF_onError(_CF_this, "phone",  _CF_this["phone"].value,"Phone error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "phone", _CF_this["phone"].value, "Phone error");
+    }
+
+    if( _CF_hasValue(_CF_this["numeric"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checknumber(_CF_this["numeric"].value, false))
+    {
+    _CF_onError(_CF_this, "numeric",  _CF_this["numeric"].value,"Numeric error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "numeric", _CF_this["numeric"].value, "Numeric error");
+    }
+
+    if( _CF_hasValue(_CF_this["zipcode"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checkzip(_CF_this["zipcode"].value, false))
+    {
+    _CF_onError(_CF_this, "zipcode",  _CF_this["zipcode"].value,"ZIP error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "zipcode", _CF_this["zipcode"].value, "ZIP error");
+    }
+
+    if( _CF_hasValue(_CF_this["dropdown"], "SELECT", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "dropdown", _CF_this["dropdown"].value, "dropdown error");
+    }
+
+    if( _CF_hasValue(_CF_this["dropdownmulti"], "SELECT", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "dropdownmulti", _CF_this["dropdownmulti"].value, "dropdownmulti error");
+    }
+
+    if( _CF_hasValue(_CF_this["checkboxsingle"], "CHECKBOX", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "checkboxsingle", _CF_this["checkboxsingle"].value, "checkboxsingle error");
+    }
+
+    if( _CF_hasValue(_CF_this["checkboxset"], "CHECKBOX", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "checkboxset", _CF_this["checkboxset"].value, "checkboxset error");
+    }
+
+    if( _CF_hasValue(_CF_this["checkboxset"], "CHECKBOX", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "checkboxset", _CF_this["checkboxset"].value, "checkboxset error");
+    }
+
+    if( _CF_hasValue(_CF_this["checkboxset"], "CHECKBOX", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "checkboxset", _CF_this["checkboxset"].value, "checkboxset error");
+    }
+
+    if( _CF_hasValue(_CF_this["checkboxset"], "CHECKBOX", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "checkboxset", _CF_this["checkboxset"].value, "checkboxset error");
+    }
+
+    if( _CF_hasValue(_CF_this["radio"], "RADIO", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "radio", _CF_this["radio"].value, "radio error");
+    }
+
+    if( _CF_hasValue(_CF_this["radio"], "RADIO", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "radio", _CF_this["radio"].value, "radio error");
+    }
+
+    if( _CF_hasValue(_CF_this["radio"], "RADIO", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "radio", _CF_this["radio"].value, "radio error");
+    }
+
+    if( _CF_hasValue(_CF_this["radio"], "RADIO", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "radio", _CF_this["radio"].value, "radio error");
+    }
+
+    if( _CF_hasValue(_CF_this["textarea"], "TEXTAREA", true ) )
+    {	
+
+    }else {
+    _CF_onError(_CF_this, "textarea", _CF_this["textarea"].value, "textarea error");
+    }
+
+    if( _CF_hasValue(_CF_this["datepicker"], "TEXT", true ) )
+    {	
+
+    if (!_CF_checkdate(_CF_this["datepicker"].value, false))
+    {
+    _CF_onError(_CF_this, "datepicker",  _CF_this["datepicker"].value,"datepicker error");
+    }
+
+    }else {
+    _CF_onError(_CF_this, "datepicker", _CF_this["datepicker"].value, "datepicker error");
+    }
+    _SE_checkeveryfieldtyperequired(_CF_this);	
+    //display error messages and return success
+    if( _CF_error_messages.length > 0 )
+    {
+    // show alert() message
+    _CF_onErrorAlert(_CF_error_messages);
+    // set focus to first form error, if the field supports js focus().
+    if( _CF_this[_CF_FirstErrorField].type == "text" )
+    { _CF_this[_CF_FirstErrorField].focus(); }
+
+    return false;
+    }else {
+    var submitTime = new Date();
+    var jsFieldId = "_SEAFM_submitTime_"+_CF_this.id;
+    var jsField = document.getElementById(jsFieldId)
+    if(!jsField)
+    {
+    jsField = document.createElement("input");
+    jsField.setAttribute("type","hidden");
+    jsField.setAttribute("id",jsFieldId);
+    jsField.setAttribute("name",jsFieldId);
+    _CF_this.appendChild(jsField);
+    }
+    jsField.value = (submitTime - AFMStart)/1000; 
+
+    return true;
+    }
+}
+</script>
+
+<form id="everyfieldtyperequired" action="/_test/Form Test" method="post" onsubmit="return _CF_checkeveryfieldtyperequired(this);" enctype="application/x-www-form-urlencoded" name="everyfieldtyperequired">
+<div class="SEAFGroupVertical vertical">
+    <div class="SEAFGroupVertical vertical">
+        <div class="SEAFGroupVertical vertical">
+            <div class="seHeaderTitle">Text Box Fields</div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="plain" class="error-label">Plain text<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="plain" name="plain" class="seInput seRequiredElement error-field" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="email" class="error-label">Email<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="email" name="email" class="seInput seRequiredElement required-email error-field" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="date" class="error-label">Date<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="date" name="date" class="seInput seRequiredElement required-date error-field" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="time" class="error-label">Time<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="time" name="time" class="seInput seRequiredElement required-time error-field" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="phone">Phone<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="phone" name="phone" class="seInput seRequiredElement required-phone" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="numeric">Numeric<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="numeric" name="numeric" class="seInput seRequiredElement required-numeric" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="zipcode">ZIP code<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <input id="zipcode" name="zipcode" class="seInput seRequiredElement required-zip" value="" type="text">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="SEAFGroupVertical vertical">
+            <div class="seHeaderTitle">Choosey fields</div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="dropdown">Dropdown (single)<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <select id="dropdown" name="dropdown" class="seSelect seRequiredElement" size="1">
+<option value="1">text1</option>
+<option value="2">text2</option>
+<option value="3">text3</option>
+</select>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="dropdownmulti">Dropdown (Multiple)<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <select id="dropdownmulti" name="dropdownmulti" class="seSelect seRequiredElement" multiple="multiple" size="3">
+<option value="1">text1</option>
+<option value="2">text2</option>
+<option value="3">text3</option>
+</select>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="checkboxsingle">Checkbox (single)<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <div class="seCheckboxLabel checked" tabindex="0" aria-checked="false" role="checkbox"><input type="checkbox" id="checkboxsingle" name="checkboxsingle" class="seCheckbox seRequiredElement required-checkbox-single"
+                                value="1" tabindex="0" aria-checked="false"></div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="seLabelCell SEAFLabelHorizontal">Checkbox Set<span class="seRequiredMarker">*</span></div>
+                <div class="seFieldCell seFieldCellHorizontal">
+                    <div class="SEAFGroupVertical vertical">
+                        <div>
+                            <input type="checkbox" id="checkboxset1" name="checkboxset" class="seCheckbox seRequiredElement required-list" value="1">
+                            <label for="checkboxset1" class="seCheckboxLabel seRequiredLabel" tabindex="0" aria-checked="false" role="checkbox">Label1</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="checkboxset2" name="checkboxset" class="seCheckbox seRequiredElement required-list" value="2">
+                            <label for="checkboxset2" class="seCheckboxLabel seRequiredLabel" tabindex="0" aria-checked="false" role="checkbox">Label2</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="checkboxset3" name="checkboxset" class="seCheckbox seRequiredElement required-list" value="3">
+                            <label for="checkboxset3" class="seCheckboxLabel seRequiredLabel" tabindex="0" aria-checked="false" role="checkbox">Label3</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="checkboxset4" name="checkboxset" class="seCheckbox seRequiredElement required-list" value="4">
+                            <label for="checkboxset4" class="seCheckboxLabel seRequiredLabel" tabindex="0" aria-checked="false" role="checkbox">Label4</label>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="SEAFWrapper">
+                <div class="seLabelCell SEAFLabelHorizontal">Radio<span class="seRequiredMarker">*</span></div>
+                <div class="seFieldCell seFieldCellHorizontal">
+                    <div class="SEAFGroupHorizontal horizontal">
+                        <div class="seFieldCell seFieldCellHorizontal">
+                            <input type="radio" id="radio1" name="radio" class="seRadio seRequiredElement required-list" value="1">
+                            <label for="radio1" class="seRadioLabel seRequiredLabel" tabindex="0" aria-checked="false" role="radio">Label1</label>
+                            <input type="radio" id="radio2" name="radio" class="seRadio seRequiredElement required-list" value="2">
+                            <label for="radio2" class="seRadioLabel seRequiredLabel" tabindex="0" aria-checked="false" role="radio">Label2</label>
+                            <input type="radio" id="radio3" name="radio" class="seRadio seRequiredElement required-list" value="3">
+                            <label for="radio3" class="seRadioLabel seRequiredLabel" tabindex="0" aria-checked="false" role="radio">Label3</label>
+                            <input type="radio" id="radio4" name="radio" class="seRadio seRequiredElement required-list" value="4">
+                            <label for="radio4" class="seRadioLabel seRequiredLabel" tabindex="0" aria-checked="false" role="radio">Label4</label>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="SEAFGroupVertical vertical">
+            <div class="seHeaderTitle">Textarea</div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="textarea">Textarea<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <textarea id="textarea" name="textarea" cols="20" rows="3" class="seTextarea seRequiredElement"> </textarea>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="SEAFGroupVertical vertical">
+            <div class="seHeaderTitle">Complex fields</div>
+            <div class="SEAFWrapper">
+                <div class="SEAFGroupHorizontal horizontal">
+                    <div class="seLabelCell seLabelCellHorizontal">
+                        <div class="seText"><label for="datepicker">Date Picker<span class="seRequiredMarker">*</span></label></div>
+                    </div>
+                    <div class="seFieldCell seFieldCellHorizontal">
+                        <div class="SEAFGroupHorizontal horizontal">
+                            <div class="seFieldCell seFieldCellHorizontal">
+                                <input id="datepicker" name="datepicker" class="seInput seRequiredElement required-date" value="" type="text">
+                                
+                            </div>
+                            <div class="seFieldCell seFieldCellHorizontal">
+                                <div class="seText">
+                                    <img alt="Show Calendar" class="button dateSelector" id="datepicker_calendarIcon" onclick="if(window.autoShowCalendar) {autoShowCalendar(this,'mm/dd/yyyy',event);}" onmousedown="this.className = 'buttonPressed dateSelector';" onmouseout="this.className = 'button dateSelector';" onmouseover="this.className = 'buttonRaised dateSelector';" onmouseup="this.className = 'buttonRaised dateSelector';" src="/se/images/icons/14x14/calendar.gif" title="Show Calendar">
+<iframe src="/blank.html" name="dateselector_calendar"
+    id="dateselector_calendar" class="calendar" scrolling="no" frameborder="0"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="SEAFWrapper">
+    <input id="submit" name="submit" class="seButton " value="Submit" type="submit">
+</div>
+</div>
+</div>
+<div class="seSpecial">
+    <input type="text" name="_seAFM_email" value="">
+</div>
+<input type="hidden" name="_everyfieldtyperequired_seStepID" id="_everyfieldtyperequired_seStepID" value="1">
+<input type="hidden" name="_submissionID" id="_submissionID" value="C4B3DAEF4ACCA2C8E55634ADBCD943F1">
+<input type="hidden" name="_seResultMail" id="_seResultMail" value="">
+<input type="hidden" name="_seNotifyMail" id="_seNotifyMail" value="">
+<input type="hidden" name="_hidden__SEAFM_Now" id="_hidden__SEAFM_Now" value="">
+</form>

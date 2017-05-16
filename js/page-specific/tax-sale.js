@@ -14,10 +14,9 @@ var CssEnableNext = function (step) {
     if (step === true) {
         $('#next').removeAttr('disabled');
         return true;
-    } else {
-        $('#next').attr('disabled', 'disabled');
-        return false;
     }
+    $('#next').attr('disabled', 'disabled');
+    return false;
 };
 
 function enableNextButton() {
@@ -33,11 +32,9 @@ function enableNextButton() {
     proceed.step3 = $(BcValidation.settings.step3.form.selector).valid();
     proceed.step4 = $(BcValidation.settings.step4.form.selector).valid();
 
-    $('#next').attr('disabled', 'disabled');
-    $('#submit').attr('disabled', 'disabled');
+    $('#next, #submit').attr('disabled', 'disabled');
 
     var s = BcValidation.settings;
-
 
     //swtich to a case stament once i figure this out
     if ($(s.step1.form.selector).is(':visible')) {
@@ -61,20 +58,16 @@ function enableNextButton() {
 //type = prev or next
 
 function hideButton(text, type) {
-    var selector;
-    if (type == 'prev') {
-        selector = 'first';
-    } else {
-        selector = 'last';
-    }
+    var selector = type === 'prev' ? 'first' : 'last';
     var pb_item_text = $('ul.progress-menu li:' + selector + ' p').text();
-    if (text == pb_item_text) {
-        $('#' + type + '').hide();
-        if (type == 'next') {
+    var $elm =  $('#' + type + '');
+    if (text === pb_item_text) {
+        $elm.hide();
+        if (type === 'next') {
             $('#submit').show().attr('disabled', 'disabled');
         }
     } else {
-        $('#' + type + '').show();
+        $elm.show();
     }
 }
 
@@ -100,12 +93,14 @@ function updateToken(jsonpResult) {
 
 //Puts in values of unfilled radio buttons for form serialization
 function fillEmptyRadios() {
-    if ($('input[name=MarylandEntity]:checked').length == 0) {
-			$('input[name=MarylandEntity][value=No]').attr('checked', 'checked');
-		}
-		if ($('input[name=InGoodStanding]:checked').length == 0) {
-			$('input[name=InGoodStanding][value=No]').attr('checked', 'checked');
-		}
+    if ($('input[name=MarylandEntity]:checked').length === 0) {
+        $('input[name=MarylandEntity][value=No]')
+            .attr('checked', 'checked');
+    }
+    if ($('input[name=InGoodStanding]:checked').length === 0) {
+        $('input[name=InGoodStanding][value=No]')
+            .attr('checked', 'checked');
+    }
 }
 
 
@@ -113,12 +108,11 @@ function fillEmptyRadios() {
 function bindSubmit() {
     var formData;
     $(document).on('click', '#submit',function () {
-
         //Makes sure mdentity and ingoodstanding show up in the querystring
         fillEmptyRadios();
 
         //Add token to query string
-        formData = "token=" + $('p.tax-sale').text() + "&";
+        formData = ["token=", $('p.tax-sale').text(), "&"].join("");
 		
 		$('input[name=BusinessType]').attr('disabled','');
 		
@@ -127,12 +121,11 @@ function bindSubmit() {
             formData += $('input[type!=hidden]', this).serialize() + "&";
         });
 		
-		
 		$('input[name=BusinessType]').attr('disabled','disabled');
 		
         //Make sure selects are serialized
         formData += $('div.taxStep select').serialize();
-        var moreinfo = '';
+
         //Include things that are not checked
         $('input[type=checkbox]').each(function () {
             if (!this.checked) {
@@ -164,7 +157,7 @@ function SumbitFormResult(jsonpResult) {
     //If status == 1, error is actually the registration id.
     var error = jsonpResult.ResponseError;
     var resultLink = resultsPage + "?status=" + status;
-    if (status == 1) {
+    if (status === 1) {
         resultLink += "&regId=" + error;
     }
     window.location = resultLink;
@@ -178,10 +171,8 @@ $(document).ready(function () {
     //Hide the last hr because it looks funky
     $('hr:last').hide();
 
-
     //Enable our custom validation
     BcValidation.init();
-
 
     //Get Token
     getToken();
@@ -213,7 +204,10 @@ $(document).ready(function () {
 
     //Determine what happens when progress bar is clikced
     $(document).on('click', 'ul.progress-menu li',function () {
-        if ($('p', this).hasClass('active') || $('p', this).hasClass('completed') || $('div.taxStep:visible form').valid()) {
+        var $p = $('p', this);
+        var pText = $p.text();
+
+        if ($p.hasClass('active') || $p.hasClass('completed') || $('div.taxStep:visible form').valid()) {
             $('#submit').hide();
 
             //Hide all the different forms
@@ -223,9 +217,9 @@ $(document).ready(function () {
             
             $('div.taxStep').find('legend:contains(' + $(this).text() + ')').closest('.taxStep').show();
             $('ul.progress-menu li p').removeClass('active');
-            $('p', this).addClass('active');
-            next_text = $('p', this).text();
-            prev_text = $('p', this).text();
+            $p.addClass('active');
+            next_text = pText;
+            prev_text = pText;
             hideButton(next_text, 'next');
             hideButton(prev_text, 'prev');
             enableNextButton();
@@ -255,8 +249,8 @@ $(document).ready(function () {
 				$(form_element_container).hide();
 
 				//Show the right piece of the form
-				$('div.taxStep').find('legend:contains(' + next_text + ')').closest('.taxStep').fadeIn(function () {});
-
+				$('div.taxStep').find('legend:contains(' + next_text + ')')
+                    .closest('.taxStep').fadeIn(function () {});
 			}
 			
 			$('#next').attr('disabled', 'disabled');
@@ -289,71 +283,43 @@ $(document).ready(function () {
 
     //When business type is clicked at the begining of the registration.
     $(document).on('click', 'input[name="BusinessType"]', function () {
-			$('input[name="BusinessType"]').attr('disabled','disabled');
+        $('input[name="BusinessType"]')
+            .attr('disabled','disabled');
 		
 		$('hr:last').show();
 
         //Reset the validation for the form
         $('.ignore').removeClass('ignore');
 
-        if ($(this).val().indexOf("Individual") > -1) {
+        var $step1Form = $(this).closest('form');
+        var businessType = $(this).val();
+        var isIndividual = businessType && businessType.toLowerCase().indexOf("individual") > -1;
+        var $fieldSet = isIndividual ? $step1Form.find('fieldset:eq(2)') : $step1Form.find('fieldset:eq(1)');
+        var $hiddenSet = isIndividual ? $step1Form.find('fieldset:eq(1)') : $step1Form.find('fieldset:eq(2)');
 
-            //Hide everything but the radio check list
-            $('div.taxStep.first div.seform fieldset table:not(:lt(2))').hide();
+        //Don't require the hidden fields required
+        $hiddenSet
+            .find('input')
+            .addClass('ignore');
 
-            //Don't require the hidden fields required
-            //$('div.taxStep.first div.seform fieldset hr:first').prevAll().find('input').addClass('ignore').removeClass('required');
-            $('div.taxStep.first div.seform fieldset hr:first').prevAll().find('input').addClass('ignore');
-
-            $('div.taxStep.first div.seform fieldset hr:first').nextAll().fadeIn('1000', function () {});
-        } else {
-            $('hr:first').hide();
-            //Hide everything but the radio check list
-            $('div.taxStep.first div.seform fieldset table:not(:lt(2))').hide();
-
-            //Don't require the hidden fields required
-            $('div.taxStep.first div.seform fieldset hr:first').nextAll().find('input').addClass('ignore');
-
-
-            //Hack
-            //Shows the proper form and then must show radio buttons that are nested deep in form
-			if (isIE8orBelow) {
-				$('div.taxStep.first div.seform fieldset hr:first').prevAll().show();
-				$('div.taxStep.first div.seform fieldset table:visible table').show();
-			}
-			else {
-				$('div.taxStep.first div.seform fieldset hr:first').prevAll().fadeIn('1000', function () {
-					$('div.taxStep.first div.seform fieldset table:visible table').show();
-				});
-			}
-            
-        }
+        $fieldSet.show();
 
         //Always show the email input field
-        $('div.taxStep.first div.seform fieldset table:last').show();
-		
+        $step1Form.find('fieldset').last().show();
     });
 
     //Show submit button when the last progress item is checked.
-    $(document).on('click','ul.progress-menu li:last',function () {
+    $(document).on('click','ul.progress-menu li:last', function () {
         //Show the submit button
         $('#fieldName1').show();
     });
 
-	
-	
-    $(document).on('click', 'div.taxStep:visible input.seRequiredElement[type="radio"], div.taxStep:visible input.seRequiredElement[type="checkbox"]',function () {
-        enableNextButton();
-    });
+    $(document).on('click', 'div.taxStep:visible input.seRequiredElement[type="radio"], div.taxStep:visible input.seRequiredElement[type="checkbox"]', enableNextButton);
     if (!isIE8orBelow) {
-        $(document).on('keyup', 'div.taxStep:visible input', function () {
-            enableNextButton();
-        });
+        $(document).on('keyup', 'div.taxStep:visible input', enableNextButton);
     }
 	else {
-		$(document).on('focusout','div.taxStep:visible input', function () {
-            enableNextButton();
-        });
+		$(document).on('focusout','div.taxStep:visible input', enableNextButton);
 		
 		$(document).on('focus', 'input[name=EmailAddress], input[name=TaxpayerID], input[name=ElectronicSignature]' ,function() {
 			$('#next').attr('disabled', '');
