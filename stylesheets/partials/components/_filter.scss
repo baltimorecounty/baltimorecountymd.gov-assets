@@ -36,6 +36,14 @@
     }	
 }
 
+#filter {
+    padding: 12.5px !important;
+}
+
+#filter-form i {
+    padding: 10px 5px;
+}
+
 table.bc-filter-content, 
 #BACO_table.bc-filter-content {
 	display: table;
