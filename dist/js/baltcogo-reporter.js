@@ -377,11 +377,6 @@ console.log(latitude, longitude);
 					value: self.description
 				},
 				{
-					name: 'Description Of Location',
-					id: angular.element('#locationDescription').attr('data-cs-id') * 1,
-					value: self.locationDescription
-				},
-				{
 					name: 'Latitude',
 					value: self.latitude
 				},
@@ -408,6 +403,12 @@ console.log(latitude, longitude);
 			];
 
 			/*** Conditional fields **********/
+
+			if (self.locationDescription) data.push({
+				name: 'Description Of Location',
+				id: angular.element('#locationDescription').attr('data-cs-id') * 1,
+				value: self.locationDescription
+			});
 
 			if (self.petType) data.push({
 				name: 'Pet Type',
