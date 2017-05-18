@@ -363,6 +363,8 @@
 				if (value.$$element.is(':visible')) {
 					if (value.$pristine)
 						value.$setDirty();
+					if (value.$untouched)
+						value.$setTouched();
 				}			
 			});
 
