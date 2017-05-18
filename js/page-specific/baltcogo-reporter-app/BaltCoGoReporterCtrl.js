@@ -49,22 +49,25 @@
 		google.maps.event.addListener(self.map, 'click', mapClicked);
 		autocomplete.addListener('place_changed', autocompletePlaceChanged);
 		document.getElementById('addressSearch').addEventListener('click', addressLookup);
-		document.getElementById('address').addEventListener('keyup', addressKeyupHandler);
+		document.getElementById('address').addEventListener('keypress', addressKeypressHandler);
 
-		function addressKeyupHandler(event) {
+		function addressKeypressHandler(event) {
 			if (event.which === 13 || event.keyCode === 13) {
-				event.preventDefault();
 
-				var autocompleteService = new google.maps.places.AutocompleteService();
-console.log('self.address', self.address);
-				autocompleteService.getQueryPredictions({input: self.address}, function(stuff) {
-console.log(stuff);
-				});
+				var place = autocomplete.getPlace();
 
+				if (!place || !place.geometry) {
+					var pacItem = angular.element('.pac-item').first(),
+						firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text()
+
+					$scope.$apply(function() {
+						self.address = mapService.removeCountry(firstSuggestion);					
+					});
+				}
 			}
 		}
 
-		function autocompletePlaceChanged() {
+		function autocompletePlaceChanged() {			
 			self.address = mapService.removeCountry(self.address);
 			
 			var place = autocomplete.getPlace();
@@ -149,9 +152,11 @@ console.log(stuff);
 			if (validatePanel()) {
 				self.page++; 
 
-				setTimeout(function() {
-					google.maps.event.trigger(self.map, "resize");
-				}, 500);
+				if (self.page === 2) {
+					setTimeout(function() {
+						google.maps.event.trigger(self.map, "resize");
+					}, 500);
+				}
 			}
 			else
 				$scope.citySourcedReporterForm.$setSubmitted();				
@@ -159,9 +164,11 @@ console.log(stuff);
 
 		self.prevClick = function () {
 			self.page--; 
-			setTimeout(function() {
-				google.maps.event.trigger(self.map, "resize");
-			}, 500);
+			if (self.page === 2) {
+				setTimeout(function() {
+					google.maps.event.trigger(self.map, "resize");
+				}, 500);
+			}
 		};
 
 		self.fileReportClick = function () {

@@ -61,7 +61,7 @@
 			</ol>
 
 			<form novalidate id="citysourced-reporter-form" name="citySourcedReporterForm">
-				<fieldset class="panel" ng-show="reporter.page === 2">
+				<fieldset class="panel" ng-show="reporter.page === 1">
 					<legend>How Can We Help?</legend>
 					<div id="category-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.categories.$dirty &&  citySourcedReporterForm.categories.$invalid }">
 						<label id="categories-label">Request Category<span class="required">*</span></label>
@@ -157,7 +157,7 @@
 
 				</fieldset>
 
-				<fieldset class="panel" ng-show="reporter.page === 1">
+				<fieldset class="panel" ng-show="reporter.page === 2">
 					<legend>Add a Location</legend>
 					<p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
 					<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.address.$dirty &&  citySourcedReporterForm.address.$invalid }">
@@ -178,7 +178,6 @@
 					</ng-map>-->
 
 					<div id="map" class="google-map"></div>
-<div>{{ reporter.address }}</div>
 					<div class="cs-form-control">
 						<label for="description">Location Description</label>
 						<textarea id="locationDescription" name="locationDescription" data-cs-id="1023525" ng-model="reporter.locationDescription"></textarea>
@@ -201,8 +200,6 @@
 						<input type="text" id="lastName" name="lastName" ng-model="reporter.lastName" value="" aria-required="true" required />
 						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.lastName.$dirty" ng-show="citySourcedReporterForm.lastName.$error.required">Please enter your last name.</p>
 					</div>
-
-
 					<div ng-if="reporter.states.length">
 						<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.streetAddress.$dirty &&  citySourcedReporterForm.streetAddress.$invalid }">
 							<label for="streetAddress">Street Address*</label>
@@ -219,22 +216,23 @@
 							<select id="state" name="state" 
 								ng-model="reporter.state" 
 								ng-options="state.id as state.name for state in reporter.states track by state.id" 
+								ng-init="reporter.state = reporter.states[0]"
+								readonly
 								required>
-								<option value="">-- Please select a state --</option>
 							</select>
-							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.zipCode.$dirty" ng-show="citySourcedReporterForm.zipCode.$error.required">Please select your state.</p>
+							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.state.$dirty" ng-show="citySourcedReporterForm.state.$touched && citySourcedReporterForm.state.$invalid">Please select your state.</p>
 						</div>
-						<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.zipCode.$dirty &&  citySourcedReporterForm.zipCode.$invalid }">
+						<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.zipCode.$touched &&  citySourcedReporterForm.zipCode.$invalid }">
 							<label for="zipCode">ZIP Code<span class="required">*</span></label>
-							<input type="text" id="zipCode" name="zipCode" ng-model="reporter.zipCode" value="" aria-required="true" required />
-							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.zipCode.$dirty" ng-show="citySourcedReporterForm.zipCode.$error.required">Please enter your ZIP code.</p>
+							<input type="text" id="zipCode" name="zipCode" ng-model="reporter.zipCode" value="" aria-required="true" ng-pattern="/^\d{5}$/" required />
+							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.zipCode.$dirty" ng-show="citySourcedReporterForm.zipCode.$touched && citySourcedReporterForm.zipCode.$invalid">Please enter your ZIP code.</p>
 						</div>
 					</div>
 
-					<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.email.$dirty &&  citySourcedReporterForm.email.$invalid }">
+					<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.email.$touched &&  citySourcedReporterForm.email.$invalid }">
 						<label for="text">Email Address<span class="required">*</span></label>
-						<input type="text" id="email" name="email" ng-model="reporter.email" value="" placeholder="name@domain.com" aria-required="true" required />
-						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.email.$dirty" ng-show="citySourcedReporterForm.email.$error.required">Please enter your email address.</p>
+						<input type="email" id="email" name="email" ng-model="reporter.email" value="" placeholder="name@domain.com" aria-required="true" required />
+						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.email.$dirty" ng-show="citySourcedReporterForm.email.$touched && citySourcedReporterForm.email.$error.email">Please enter a valid email address.</p>
 					</div>
 
 					<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.deviceNumber.$dirty &&  citySourcedReporterForm.deviceNumber.$invalid }">
@@ -253,7 +251,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
 		<script>
 			$('#deviceNumber').inputmask('999-999-9999', { 'clearIncomplete': true, jitMasking: true });
-			$('#email').inputmask('email', { 'clearIncomplete': true, jitMasking: true });
+			//$('#email').inputmask('email', { 'clearIncomplete': true, jitMasking: true });
 		</script>
 	</div>
 
