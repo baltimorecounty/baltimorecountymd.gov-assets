@@ -1,13 +1,13 @@
-(function (app) {
+(function (app, querystringer, jsonTools) {
 	'use strict';
 
 	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'createReportService', reporterController]);
 
 	function reporterController($http, $scope, $timeout, mapService, createReportService) {
 
-		var self = this;
-
-		var targetCounty = 'Baltimore County';
+		var self = this,
+			targetCounty = 'Baltimore County',
+			categoryId = querystringer.getAsDictionary().categoryid * 1;
 
 		/*$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
@@ -115,6 +115,35 @@
 			});
 		};
 
+		function clearCategoryData() {
+			self.subCategory = '';
+			self.petType = '';
+			self.otherPetType = '';
+			self.petSex = '';
+			self.primaryColor = '';
+			self.primaryBreed = '';
+			self.animalDescription = '';
+		}
+
+		function autoSelectCategories(categoryId) {
+			angular.forEach(self.categoryData, function(categoryItem) {
+				if (categoryItem.id === categoryId) {
+					self.category = categoryItem;
+					self.loadSubCategories(categoryItem.id)
+				} else {
+					if (categoryItem.types) {
+						angular.forEach(categoryItem.types, function(typeItem) {
+							if (typeItem.id === categoryId) {
+								self.category = categoryItem;
+								self.loadSubCategories(categoryItem.id)
+								self.subCategory = typeItem;
+							}
+						});						
+					}
+				}
+			});
+		}
+
 		self.trackBreed = function () {
 			angular.element.each(self.animalBreedData, function (index, breed) {
 				if (breed.id === self.petType.id) {
@@ -132,11 +161,13 @@
 			}
 
 			angular.forEach(self.categoryData, function (element) {
+				clearCategoryData();
+
 				if (element.id == categoryId) {
 					self.subCategories = element.types;
 					if (element.states) {
 						self.states = element.states;
-						self.state = element.states[23]; // Maryland
+						self.state = element.states[0]; // Maryland
 					}
 					if (element.fields) {
 						self.streetAddressId = element.fields.streetAddress;
@@ -340,6 +371,9 @@
 
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
+
+			if (categoryId)
+				autoSelectCategories(categoryId);
 		}
 
 		function breedSuccessHandler(response) {
@@ -364,4 +398,4 @@
 
 	}
 
-})(angular.module('baltcogoApp'));
+})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.jsonTools);

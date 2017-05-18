@@ -244,7 +244,7 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
                 } else {
                     match = getSubtree(item[subtreePropertyName], searchValue);
                 }
-            }
+			} 
         });
         return match;
     },
@@ -313,6 +313,11 @@ namespacer('baltimoreCounty.utility');
 baltimoreCounty.utility.querystringer = (function(undefined) {
     'use strict';
 
+	/**
+	 * Turns the querystring key/value pairs into a dictionary.
+	 * 
+	 * Important: All of the returned dictionary's keys will be lower-cased.
+	 */
     var getAsDictionary = function() {
 
         if (window.location.search) {
@@ -326,7 +331,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
                     keyValueArr = qsArray[i].split('='),
                     entry = {};
 
-                qsDict[keyValueArr[KEY]] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
+                qsDict[keyValueArr[KEY].toLowerCase()] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
             }
 
             return qsDict;
