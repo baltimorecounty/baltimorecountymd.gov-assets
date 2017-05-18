@@ -122,8 +122,8 @@
 						</select>
 					</div>
 									
-					<div id="breeds-and-colors" ng-if="reporter.petType.name.toLowerCase() === 'dog' || reporter.petType.name.toLowerCase() === 'cat'" ng-class="{ 'error': citySourcedReporterForm.primaryColor.$dirty &&  citySourcedReporterForm.primaryColor.$invalid }">
-						<div id="primary-color-selection" class="category-selection">
+					<div id="breeds-and-colors" ng-if="reporter.petType.name.toLowerCase() === 'dog' || reporter.petType.name.toLowerCase() === 'cat'">
+						<div id="primary-color-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.primaryColor.$dirty &&  citySourcedReporterForm.primaryColor.$invalid }">
 							<label id="primary-color-label">Primary Animal Color</label>
 							<select id="primary-color" name="primaryColor" 
 								ng-model="reporter.primaryColor" 
@@ -134,7 +134,7 @@
 							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.primaryColor.$dirty" ng-show="citySourcedReporterForm.primaryColor.$error.required">Please select an animal color.</p>
 						</div>
 
-						<div id="primary-breed-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.categories.$dirty &&  citySourcedReporterForm.categories.$invalid }">
+						<div id="primary-breed-selection" class="category-selection">
 							<label id="primary-breed-label">Primary Animal Breed (optional)</label>
 							<select id="primary-breed" name="primaryBreed" 
 								ng-model="reporter.primaryBreed" 
