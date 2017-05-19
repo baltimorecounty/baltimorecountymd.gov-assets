@@ -26,7 +26,7 @@
 				if (marker) {
 					marker.setMap(null);
 				}
-console.log(latitude, longitude);
+
 				marker = new google.maps.Marker({
 					position: { lat: latitude, lng: longitude},
 					map: map,

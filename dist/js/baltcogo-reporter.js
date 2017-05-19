@@ -62,7 +62,7 @@
 				if (marker) {
 					marker.setMap(null);
 				}
-console.log(latitude, longitude);
+
 				marker = new google.maps.Marker({
 					position: { lat: latitude, lng: longitude},
 					map: map,
@@ -166,6 +166,7 @@ console.log(latitude, longitude);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
 		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		
 		/*$http.get('categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('animal-colors.json').then(colorSuccessHandler, errorHandler);
@@ -200,33 +201,27 @@ console.log(latitude, longitude);
 
 		google.maps.event.addListener(self.map, 'click', mapClicked);
 		autocomplete.addListener('place_changed', autocompletePlaceChanged);
-		document.getElementById('addressSearch').addEventListener('click', addressLookup);
-		document.getElementById('address').addEventListener('keypress', addressKeypressHandler);
+		document.getElementById('addressSearch').addEventListener('click', addressSearchClicked);
 
-		function addressKeypressHandler(event) {
-			if (event.which === 13 || event.keyCode === 13) {
-
-				var place = autocomplete.getPlace();
-
-				if (!place || !place.geometry) {
-					var pacItem = angular.element('.pac-item').first(),
-						firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text()
-
-					$scope.$apply(function() {
-						self.address = mapService.removeCountry(firstSuggestion);					
-					});
-				}
-			}
+		function getFirstSuggestion() {
+			var pacItem = angular.element('.pac-item').first(),
+				firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text();
+			
+			return firstSuggestion;
 		}
 
-		function autocompletePlaceChanged() {			
-			self.address = mapService.removeCountry(self.address);
-			
+		function autocompletePlaceChanged() {	
+			$scope.$apply(function() {
+				self.address = mapService.removeCountry(self.address);
+			});
 			var place = autocomplete.getPlace();
 
 			if (place.geometry) {
 				var latitude = place.geometry.location.lat(),
 					longitude = place.geometry.location.lng();
+
+				self.latitude = latitude;
+				self.longitude = longitude;
 
 				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
 					self.address = checkAddress(foundAddress, latitude, longitude);
@@ -235,7 +230,9 @@ console.log(latitude, longitude);
 		}
 
 		function checkAddress(foundAddress, latitude, longitude) {
+
 			if (foundAddress) {
+console.log('checkAddress');
 				mapService.createMarker(self.map, latitude, longitude);
 				self.map.panTo({
 					lat: latitude,
@@ -259,10 +256,13 @@ console.log(latitude, longitude);
 			});
 		}
 
-		function addressLookup() {
-			mapService.addressLookup(self.address, function (address, latitude, longitude) {
+		function addressSearchClicked() {
+			var firstSuggestion = getFirstSuggestion();
+			mapService.addressLookup(firstSuggestion, function (address, latitude, longitude) {
 				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
 					self.address = checkAddress(foundAddress, latitude, longitude);
+					self.latitude = latitude;
+					self.longitude = longitude;
 				});
 			});
 		};
@@ -511,7 +511,7 @@ console.log(latitude, longitude);
 				requiredElementsCount = requiredElements.length,
 				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length,
 				controls = $scope.citySourcedReporterForm.$$controls;
-			
+
 			angular.forEach(controls, function (value, key, obj) {
 				if (value.$$element.is(':visible')) {
 					if (value.$pristine)

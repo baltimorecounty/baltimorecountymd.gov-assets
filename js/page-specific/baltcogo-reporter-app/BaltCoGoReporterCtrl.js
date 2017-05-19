@@ -14,6 +14,7 @@
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
 		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		
 		/*$http.get('categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('animal-colors.json').then(colorSuccessHandler, errorHandler);
@@ -48,101 +49,7 @@
 
 		google.maps.event.addListener(self.map, 'click', mapClicked);
 		autocomplete.addListener('place_changed', autocompletePlaceChanged);
-		document.getElementById('addressSearch').addEventListener('click', addressLookup);
-		document.getElementById('address').addEventListener('keypress', addressKeypressHandler);
-
-		function addressKeypressHandler(event) {
-			if (event.which === 13 || event.keyCode === 13) {
-
-				var place = autocomplete.getPlace();
-
-				if (!place || !place.geometry) {
-					var pacItem = angular.element('.pac-item').first(),
-						firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text()
-
-					$scope.$apply(function() {
-						self.address = mapService.removeCountry(firstSuggestion);					
-					});
-				}
-			}
-		}
-
-		function autocompletePlaceChanged() {			
-			self.address = mapService.removeCountry(self.address);
-			
-			var place = autocomplete.getPlace();
-
-			if (place.geometry) {
-				var latitude = place.geometry.location.lat(),
-					longitude = place.geometry.location.lng();
-
-				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
-					self.address = checkAddress(foundAddress, latitude, longitude);
-				});
-			}
-		}
-
-		function checkAddress(foundAddress, latitude, longitude) {
-			if (foundAddress) {
-				mapService.createMarker(self.map, latitude, longitude);
-				self.map.panTo({
-					lat: latitude,
-					lng: longitude
-				});
-				return foundAddress;
-			} else {
-				return '';
-			}
-		}
-
-		function mapClicked(event) {
-			self.latitude = event.latLng.lat();
-			self.longitude = event.latLng.lng();
-
-			mapService.reverseGeocode(self.latitude, self.longitude, function (address) {
-				if (address) {
-					self.address = address;
-					mapService.createMarker(self.map, self.latitude, self.longitude);
-				}
-			});
-		}
-
-		function addressLookup() {
-			mapService.addressLookup(self.address, function (address, latitude, longitude) {
-				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
-					self.address = checkAddress(foundAddress, latitude, longitude);
-				});
-			});
-		};
-
-		function clearCategoryData() {
-			self.subCategory = '';
-			self.petType = '';
-			self.otherPetType = '';
-			self.petSex = '';
-			self.primaryColor = '';
-			self.primaryBreed = '';
-			self.animalDescription = '';
-		}
-
-		function autoSelectCategories(categoryId) {
-			angular.forEach(self.categoryData, function(categoryItem) {
-				if (categoryItem.id === categoryId) {
-					self.category = categoryItem;
-					self.loadSubCategories(categoryItem.id)
-				} else {
-					if (categoryItem.types) {
-						angular.forEach(categoryItem.types, function(typeItem) {
-							if (typeItem.id === categoryId) {
-								self.category = categoryItem;
-								self.loadSubCategories(categoryItem.id)
-								self.subCategory = typeItem;
-							}
-						});						
-					}
-				}
-			});
-		}
+		document.getElementById('addressSearch').addEventListener('click', addressSearchClicked);
 
 		self.trackBreed = function () {
 			angular.element.each(self.animalBreedData, function (index, breed) {
@@ -339,7 +246,96 @@
 				});
 		};
 
-		/*** Private functions *********/
+		function getFirstSuggestion() {
+			var pacItem = angular.element('.pac-item').first(),
+				firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text();
+			
+			return firstSuggestion;
+		}
+
+		function autocompletePlaceChanged() {	
+			$scope.$apply(function() {
+				self.address = mapService.removeCountry(self.address);
+			});
+			var place = autocomplete.getPlace();
+
+			if (place.geometry) {
+				var latitude = place.geometry.location.lat(),
+					longitude = place.geometry.location.lng();
+
+				self.latitude = latitude;
+				self.longitude = longitude;
+
+				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
+					self.address = checkAddress(foundAddress, latitude, longitude);
+				});
+			}
+		}
+
+		function checkAddress(foundAddress, latitude, longitude) {
+			if (foundAddress) {
+				mapService.createMarker(self.map, latitude, longitude);
+				self.map.panTo({
+					lat: latitude,
+					lng: longitude
+				});
+				return foundAddress;
+			} else {
+				return '';
+			}
+		}
+
+		function mapClicked(event) {
+			self.latitude = event.latLng.lat();
+			self.longitude = event.latLng.lng();
+
+			mapService.reverseGeocode(self.latitude, self.longitude, function (address) {
+				if (address) {
+					self.address = address;
+					mapService.createMarker(self.map, self.latitude, self.longitude);
+				}
+			});
+		}
+
+		function addressSearchClicked() {
+			var firstSuggestion = getFirstSuggestion();
+			mapService.addressLookup(firstSuggestion, function (address, latitude, longitude) {
+				mapService.reverseGeocode(latitude, longitude, function(foundAddress) {
+					self.address = checkAddress(foundAddress, latitude, longitude);
+					self.latitude = latitude;
+					self.longitude = longitude;
+				});
+			});
+		};
+
+		function clearCategoryData() {
+			self.subCategory = '';
+			self.petType = '';
+			self.otherPetType = '';
+			self.petSex = '';
+			self.primaryColor = '';
+			self.primaryBreed = '';
+			self.animalDescription = '';
+		}
+
+		function autoSelectCategories(categoryId) {
+			angular.forEach(self.categoryData, function(categoryItem) {
+				if (categoryItem.id === categoryId) {
+					self.category = categoryItem;
+					self.loadSubCategories(categoryItem.id)
+				} else {
+					if (categoryItem.types) {
+						angular.forEach(categoryItem.types, function(typeItem) {
+							if (typeItem.id === categoryId) {
+								self.category = categoryItem;
+								self.loadSubCategories(categoryItem.id)
+								self.subCategory = typeItem;
+							}
+						});						
+					}
+				}
+			});
+		}
 
 		function getValueForId(nameIdData, id) {
 			var name = '';
@@ -359,7 +355,7 @@
 				requiredElementsCount = requiredElements.length,
 				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length,
 				controls = $scope.citySourcedReporterForm.$$controls;
-			
+
 			angular.forEach(controls, function (value, key, obj) {
 				if (value.$$element.is(':visible')) {
 					if (value.$pristine)
