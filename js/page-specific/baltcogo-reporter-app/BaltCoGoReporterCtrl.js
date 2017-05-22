@@ -1,4 +1,4 @@
-(function (app, querystringer, jsonTools) {
+(function (app, querystringer) {
 	'use strict';
 
 	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'createReportService', reporterController]);
@@ -24,8 +24,8 @@
 
 		var mapSettings = {
 				center: {
-					lat: 39.4003288,
-					lng: -76.60652470000002
+					lat: 39.4001857,
+					lng: -76.6063945
 				},
 				scrollwheel: false,
 				zoom: 14,
@@ -86,7 +86,9 @@
 
 				if (self.page === 2) {
 					setTimeout(function() {
+						var currentCenter = self.map.getCenter();
 						google.maps.event.trigger(self.map, "resize");
+						self.map.setCenter(currentCenter);
 					}, 500);
 				}
 			}
@@ -98,7 +100,9 @@
 			self.page--; 
 			if (self.page === 2) {
 				setTimeout(function() {
+					var currentCenter = self.map.getCenter();
 					google.maps.event.trigger(self.map, "resize");
+					self.map.setCenter(currentCenter);
 				}, 500);
 			}
 		};
@@ -391,4 +395,4 @@
 
 	}
 
-})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.jsonTools);
+})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer);
