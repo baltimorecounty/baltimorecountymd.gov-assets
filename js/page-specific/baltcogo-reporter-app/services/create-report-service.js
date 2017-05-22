@@ -12,7 +12,7 @@
 				}
 			};
 
-			$http.post("http://ba224964:1000/api/baltcogo/createreport", data, postOptions)
+			$http.post("https://testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);

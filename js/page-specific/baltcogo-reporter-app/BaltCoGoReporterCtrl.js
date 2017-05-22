@@ -9,18 +9,12 @@
 			targetCounty = 'Baltimore County',
 			categoryId = querystringer.getAsDictionary().categoryid * 1;
 
-		$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
 		
-		/*$http.get('categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('animal-colors.json').then(colorSuccessHandler, errorHandler);
-		$http.get('animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('pet-types.json').then(petTypeSuccessHandler, errorHandler);*/
-
 		self.isAnimal = false;
 		self.page = 1;		
 		self.isDone = false;
