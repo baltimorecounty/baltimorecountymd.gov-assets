@@ -30,6 +30,7 @@
 				marker = new google.maps.Marker({
 					position: { lat: latitude, lng: longitude},
 					map: map,
+					icon: '/sebin/n/f/icon-marker-my-report.png', 
 					draggable: false,
 					animation: google.maps.Animation.DROP
 				});
