@@ -44,7 +44,7 @@
 		angular.element('#citysourced-reporter-form').on('keyup keypress', preventSubmitOnEnterPressHandler);
 		google.maps.event.addListener(self.map, 'click', mapClickHandler);
 		autocomplete.addListener('place_changed', autocompletePlaceChangedHandler);
-		angular.element('#addressSearch').on('click', addressSearchClickHandler);
+		//angular.element('#addressSearch').on('click', addressSearchClickHandler);
 		angular.element('#address').on('keyup', addressEnterPressHandler)
 
 		self.fileReportClick = function () {
@@ -300,19 +300,26 @@
 		function validatePanel() {
 			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]'),
 				requiredElementsCount = requiredElements.length,
-				visibleRequiredElementsCount = requiredElements.filter('.ng-valid').length,
+				validRequiredElementsCount = requiredElements.filter('.ng-valid').length,
 				controls = $scope.citySourcedReporterForm.$$controls;
 
-			angular.forEach(controls, function (value, key, obj) {
-				if (value.$$element.is(':visible')) {
-					if (value.$pristine)
-						value.$setDirty();
-					if (value.$untouched)
-						value.$setTouched();
+			angular.forEach(controls, function (formControl, key, obj) {
+				if (formControl.$$element.closest('.panel').is(':visible')) {
+					if (formControl.$pristine)
+						formControl.$setDirty();
+					if (formControl.$untouched)
+						formControl.$setTouched();
+
+					if (formControl.$$element.is('#address')) {
+						if (angular.element('#map-latitude').is('.ng-invalid') || angular.element('#map-longitude').is('.ng-invalid')) {
+							formControl.$setValidity('required', false);
+						}
+
+					}
 				}			
 			});
 
-			return requiredElementsCount === visibleRequiredElementsCount;
+			return requiredElementsCount === validRequiredElementsCount;
 		}
 
 		/***** Private - Handlers *****/		
@@ -323,7 +330,7 @@
 			if (keyCode === 13) {	
 				$timeout(function() {
 					if (!autocomplete.getPlace() || !autocomplete.getPlace().formatted_address) {
-						angular.element('#addressSearch').trigger('click');
+						addressSearchClickHandler();
 					}
 				}, 250);
 			}
@@ -338,18 +345,22 @@
 				$wrapper = angular.element('#map').closest('cs-form-control');
 
 			mapService.addressLookup(firstSuggestion, function (address, latitude, longitude) {
-				mapService.reverseGeocode(latitude, longitude, function(isBaltimoreCounty) {
-					if (isBaltimoreCounty) {
-						$wrapper.removeClass('error');
-						self.address = mapService.removeCountry(firstSuggestion);
-						mapService.createMarker(self.map, latitude, longitude);
-						mapService.pan(self.map, latitude, longitude);
-					} else {
-						$wrapper.addClass('error');
-						addressField.$setDirty();
-						self.address = '';
-					}
-				});
+				if (latitude && longitude) {
+					mapService.reverseGeocode(latitude, longitude, function(isBaltimoreCounty) {
+						if (isBaltimoreCounty) {
+							$wrapper.removeClass('error');
+							$scope.$apply(function() {
+								self.address = mapService.removeCountry(firstSuggestion);
+							});
+							mapService.createMarker(self.map, latitude, longitude);
+							mapService.pan(self.map, latitude, longitude);
+						} else {
+							displayAddressError();
+						}
+					});
+				} else {
+					displayAddressError();
+				}
 			});
 		};
 
@@ -378,6 +389,8 @@
 					if (isBaltimoreCounty) {
 						mapService.createMarker(self.map, latitude, longitude);
 						mapService.pan(self.map, latitude, longitude);
+					} else {
+						displayAddressError();
 					}
 				});
 			}
@@ -396,6 +409,12 @@
 
 		function colorSuccessHandler(response) {
 			self.animalColorData = response.data;
+		}
+
+		function displayAddressError() {
+			angular.element('#map').closest('cs-form-control').addClass('error');
+			$scope.citySourcedReporterForm.address.$setDirty();
+			self.address = '';
 		}
 
 		function errorHandler(err) {

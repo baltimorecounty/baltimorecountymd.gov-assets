@@ -146,16 +146,19 @@
 
                 #address {
                     display: inline-block;
-                    width: 90%;
-                    width: calc(90% - 5px);
+					padding-left: 30px;
                 }
 
-                #addressSearch {
-                    width: 10%;
-                    margin: 1em 0 0;
-                    display: inline-block;
-                }
+				.address-search-icon {
+					position: absolute;
+					top: 27px;
+					left: 8px;
+					color: #999;
+				}
 
+				&.address-search {
+					position: relative;
+				}
             }
 
             input, select, textarea {
