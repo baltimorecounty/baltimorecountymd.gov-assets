@@ -36,17 +36,14 @@
 			},
 
 			reverseGeocode = function(latitude, longitude, callback) {
-				var $target = angular.element('#address');
-
 				$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey).then(function (response) {
 
-					var address = getAddress(response.data.results);
+					var address = response.data.results[0].formatted_address,
+						isBaltimoreCounty = checkCounty(response.data.results);
 
-					if (address) {
-						$target.parent().removeClass('error');
-						callback(removeCountry(address));
+					if (isBaltimoreCounty) {
+						callback(address);
 					} else {
-						$target.parent().addClass('error');
 						clearMarker();
 						callback('');
 					}
@@ -68,21 +65,26 @@
 						console.log('error!', error);
 					});		
 			
+			},
+
+			pan = function(map, latitude, longitude) {
+				map.panTo({
+					lat: latitude,
+					lng: longitude
+				});
 			};
 
 
 		/*** Private Functions **********/
 
-		function getAddress(reverseGeocodeData) {
-			var countyArr = $.grep(reverseGeocodeData, filterCountyResults);
-			return isBaltimoreCounty(countyArr) ? reverseGeocodeData[0].formatted_address : false;
-		}
+		function checkCounty(reverseGeocodeData) {
+			var countyArr = $.grep(reverseGeocodeData, filterCountyResults),
+				county = '';
 
-		 function isBaltimoreCounty(countyArr) {
-			var county = '';
 			if (countyArr && countyArr.length)
 				county = countyArr[0].formatted_address;
-			return county.indexOf(targetCounty) !== -1;
+
+			return county.indexOf(targetCounty) !== -1 ? county : false;
 		}
 
 		function filterCountyResults(item, index) {
@@ -109,7 +111,8 @@
 			addressLookup: addressLookup,
 			createMap: createMap,
 			createAutoComplete: createAutoComplete,
-			removeCountry: removeCountry
+			removeCountry: removeCountry,
+			pan: pan
 		};
 	};
 
