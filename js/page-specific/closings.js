@@ -112,6 +112,7 @@ var getTodaysDate = function () {
             $closingsTable.DataTable({
                 info: false,
                 paging: false,
+                "bFilter": false,
                 processing: true,
                 responsive: {
                     details: {

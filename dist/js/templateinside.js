@@ -3523,6 +3523,7 @@ function isIE(userAgent) {
 ReView.js 0.65b. The Responsive Viewport. responsiveviewport.com.
 Developed by Edward Cant. @opticswerve.
 */
+try {
 if(!isIE()) {
 	function Viewport(){this.viewport=function(a){var b=document,d=b.documentElement;b.head=b.head||b.getElementsByTagName("head")[0];var e=screen,c=this,f=window;c.bScaled=!1;c.bSupported=!0;b.addEventListener===a?c.bSupported=!1:b.querySelector===a?c.bSupported=!1:f!==parent?c.bSupported=!1:f.orientation===a&&(c.bSupported=!1);c.updateOrientation();c.updateScreen();c.dpr=1;var g=f.devicePixelRatio;g===a?c.bSupported=!1:c.dpr=g;c.fromHead();this.meta!==a&&(c.iHeight=c.height,c.iMaxScale=c.maxScale,c.iMinScale=
 c.minScale,c.iUserScalable=c.bUserScalable,c.iWidth=c.width);c.defaultWidth=1200;e.width>c.defaultWidth&&(c.defaultWidth=e.width);e.height>c.defaultWidth&&(c.defaultWidth=e.height);c.ready(function(){if(c.bSupported){if(f.screenX!==0)c.bSupported=false;else if(c.width!==a){var e;if(d.offsetHeight<=d.clientHeight){e=d.style.height;d.style.height=d.clientHeight+128+"px"}if(c.width==="device-width"){if(d.clientWidth!==c.screenWidth)c.bSupported=false}else if(c.width!==d.clientWidth)c.bSupported=false;
@@ -3540,6 +3541,7 @@ function ReView(){this.mode="default";this.v=new Viewport;this.v.viewport();this
 "core";reView.success()},reView.failure)}else this.failure()};this.setDefault=function(){if(this.mode==="default")this.success();else if(this.v.bSupported){try{sessionStorage.setItem("reViewMode","default")}catch(a){}this.v.setDefault(function(){reView.mode="default";reView.success()},reView.failure)}else this.failure()};this.success=function(){var a=reView;a.v.bSupported&&a.updateAnchors();a.successPolicy!==void 0&&a.successPolicy()};this.updateAnchors=function(){var a=document.getElementsByClassName("reView"),
 b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-coreText")?a[b].getAttribute("data-coreText"):"Default View";else for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-defaultText")?a[b].getAttribute("data-defaultText"):"Core View"};return!0};
 }
+} catch (e) {}
 (function ($) {
     window.addEventListener("message",
 
@@ -3730,6 +3732,135 @@ $(document).ready(function () {
 });
 namespacer('baltimoreCounty');
 
+/*
+ * Adds nifty checkboxes and radio buttons to a Site Executive form.
+ */
+baltimoreCounty.niftyForms = (function() {
+
+    var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
+        checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
+        checkboxesSelector = '.seCheckbox',
+        radiosSelector = '.seRadio',
+
+        focusChanged = function(e) {
+            var $input = $(e.currentTarget),
+                inputId = $input.attr('id'),
+                $label = $('label[for="' + inputId + '"]');
+            
+            removeFocus();
+            $label.addClass('is-focused');
+        },
+
+        inputChanged = function(e) {
+            var $input = $(e.currentTarget),
+                inputId = $input.attr('id'),
+                isChecked = $input.is(':checked'),
+                $label = $('label[for="' + inputId + '"]');
+                
+                if ($input.is('[type=radio]')) {
+                    var radioName = $input.attr('name')
+                    var $radioInputs = $('input[name="' + radioName + '"]');
+
+                    $radioInputs.each(function() {
+                        var $radioLabel = $('label[for="' + $(this).attr('id') + '"]');
+
+                        $radioLabel.removeClass('checked');
+                    });
+                }
+
+            if (isChecked) {
+                $label.addClass('checked'); 
+            }
+            else {
+                $label.removeClass('checked'); 
+            }
+        },
+
+        /*
+         * Toggle the click label's checkbox/radion button. This is necessary because
+         * the niftyness is the ::before pseudo-element of the label tag, and not the 
+         * input itself.
+         */
+        toggleChecked = function($label) {
+            var labelFor = $label.attr('for'),
+                $input = $label.siblings('#' + labelFor);
+
+            if (!$input.length)
+                $input = $label.find('input').first();
+
+            $input.focus().trigger('change');
+        },
+
+        /*
+         * Toggles the checkedness of the underlying input when the user clicks the label. 
+         */
+        makeItemCheckedOnClickHandler = function(e) {
+            var $label = $(e.target);
+            
+            toggleChecked($label);
+        },
+
+        /*
+         * Toggles the checkedness of the underlying input when the user hits the space bar.
+         */
+        makeItemCheckedOnKeyupHandler = function(e) {
+            var $label = $(e.target),
+                KEYCODE_SPACEBAR = 32;
+
+                if (e.which === KEYCODE_SPACEBAR) {
+                    e.preventDefault();
+                    toggleChecked($label);
+                }
+        },
+
+        removeFocus = function() {
+            $('.is-focused').removeClass('is-focused');
+        }
+
+        /*
+         * Filter that finds checkboxes and radios that aren't in a list.
+         */ 
+        singleCheckboxAndRadioFilter = function(index, item) {
+            return $(item).siblings('label').length === 0;
+        };
+
+    /*
+     * Attach events and add aria roles to labels. 
+     */
+    $(function() {
+
+        var $forms = $('form'),
+            $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
+            $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
+            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
+            $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
+            $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
+
+
+        $(document)
+            .on('click', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnClickHandler)
+            .on('keyup', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnKeyupHandler)
+            // .attr('tabindex', '-1')
+            .attr('aria-checked', false);
+
+        $(document)
+            .on('change', checkboxesAndRadiosSelector, inputChanged)
+            .on('focus', checkboxesAndRadiosSelector, focusChanged)
+            .on('blur', checkboxesAndRadiosSelector, removeFocus);
+        
+        $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
+        $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
+    });
+
+    /* test code */
+    return {
+        toggleChecked: toggleChecked
+    };
+    /* end test code */
+
+})();
+namespacer('baltimoreCounty');
+
 baltimoreCounty.contentFilter = (function($) {
 
     var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
@@ -3752,21 +3883,26 @@ baltimoreCounty.contentFilter = (function($) {
                 contentType = options.contentType || DEFAULT_CONTENT_TYPE,
                 $wrapper = safeLoad(wrapperSelector),
                 $searchBox = safeLoad(searchBoxSelector),
-                $clearButton = safeLoad(clearButtonSelector),
-                $errorMessage = safeLoad(errorMessageSelector);
+                $errorMessage = safeLoad(errorMessageSelector),
+				$clearIcon = $('.icon-clear');
 
             $errorMessage.hide();
 
-            /*if (contentType === 'table')
-                $wrapper.find('th').each(setColumnWidthToInitialWidth);*/
-
             $searchBox.on('keyup', function(eventObject) {
+				var criteria = $(eventObject.currentTarget).val();
+
+				if (criteria.length) {
+					showIcon('clear');
+				} else {
+					showIcon('search');
+				}
+
                 switch (contentType) {
                     case 'table':
-                        filterTable($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
+                        filterTable($wrapper, criteria, $errorMessage);
                         break;
                     case 'list':
-                        filterList($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
+                        filterList($wrapper, criteria, $errorMessage);
                         break;
                 }            
             });
@@ -3775,10 +3911,47 @@ baltimoreCounty.contentFilter = (function($) {
                 return false;
             });
 
-            $clearButton.on('click', function() {
-                clearFilter($wrapper, $searchBox, $errorMessage);
+             $clearIcon.on('click', function() {
+                clearFilter($wrapper, $searchBox, $errorMessage, function() {
+					showIcon('search');
+				});
             });
         },  
+
+		showIcon = function(iconType, callback) {
+			setTimeout(function() {
+				var $iconSearch = $('.icon-search'),
+					$iconClear = $('.icon-clear'),
+					animationDuration = 150,
+					animationPropertiesOut = { 
+						top: 0,
+						opacity: 0
+					},
+					animationPropertiesIn = { 
+						top: '25px',
+						opacity: 1
+					};
+					
+				
+				if (iconType === 'search' && $iconClear.is(':visible')) {
+					$iconClear.animate(animationPropertiesOut, animationDuration, function() {
+						$iconSearch.animate(animationPropertiesIn, animationDuration, function() {
+							if (typeof(callback) === 'function')
+								callback();
+						});
+					});
+				}
+				
+				if (iconType === 'clear' && $iconSearch.is(':visible')) {
+					$iconSearch.animate(animationPropertiesOut, animationDuration, function() {
+						$iconClear.animate(animationPropertiesIn, animationDuration, function() {
+							if (typeof(callback) === 'function')
+								callback();
+						});
+					});				
+				}
+			}, 0);
+		},
 
         setColumnWidthToInitialWidth = function(index, item) {
             var $columnHeader = $(item);
@@ -3862,13 +4035,15 @@ baltimoreCounty.contentFilter = (function($) {
         /*
          * Clears the filter and displays all nodes in the list.
          */
-        clearFilter = function($wrapper, $searchbox, $errorMessage) {
+        clearFilter = function($wrapper, $searchbox, $errorMessage, callback) {
             var $everythingWeFilter = $wrapper.find('li, div, tr');
 			$everythingWeFilter.show();
             resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
             resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
+			if (typeof(callback) === 'function')
+				callback();
         };
 
     /* Reveal! */
