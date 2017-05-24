@@ -5171,7 +5171,7 @@ var ShowNews = (function($) {
             var Months = {
                 "0": "January",
                 "1": "February",
-                "2": "March",
+                "2": "March", 
                 "3": "April",
                 "4": "May",
                 "5": "June",
@@ -5185,7 +5185,7 @@ var ShowNews = (function($) {
             var isGMT = date.indexOf("GMT") > -1
             var dateObj = new Date(date);
             if (isGMT) {
-                dateObj.setHours(dateObj.getHours() - 4);
+                dateObj.setHours(dateObj.getHours() - dateObj.getTimezoneOffset() / 60);
             }
             var month = Months[dateObj.getMonth()];
             var day = dateObj.getDate();
