@@ -1,6 +1,57 @@
+.bc-filter-form {
+	position: relative;
+
+	.bc-filter-form-filter {
+		width: 100% !important;
+		padding-right: 30px;
+
+		&::-ms-clear {
+			display: none;
+		}
+
+	}
+
+	.icon-search, .icon-clear {
+		position: absolute;
+		right: 30px;
+	}
+
+	.icon-clear {
+		top: 0;
+		cursor: pointer;
+	}
+
+	.icon-search {
+		top: 25px;
+	}
+
+}
+
 .bc-filter-content {
-    ul {
+    position: relative;
+	
+	ul {
         padding: 0;
         list-style: none;
+    }	
+}
+
+#filter {
+    padding: 12.5px !important;
+}
+
+#filter-form i {
+    padding: 10px 5px;
+}
+
+table.bc-filter-content, 
+#BACO_table.bc-filter-content {
+	display: table;
+}
+@media screen and (max-width: 600px) {
+    table.bc-filter-content, 
+    #BACO_table.bc-filter-content {
+        display: block;
     }
+
 }

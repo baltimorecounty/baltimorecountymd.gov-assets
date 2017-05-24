@@ -54,3 +54,8 @@ input[type="submit"] {
      -webkit-border-radius: 0;
      border-radius: 0;
 }
+
+//HACK: Ensure Tables Fit their containers
+#BACO_table {
+	width: 100% !important;
+}
