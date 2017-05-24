@@ -103,4 +103,10 @@ var ShowNews = (function($) {
         showNewsSummaries();
     });
 
+    /* test-code */
+    return {
+        getDisplayDate: getDisplayDate
+    };
+    /* end-test-code */
+
 })(jQuery);
