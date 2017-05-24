@@ -349,9 +349,7 @@
 					mapService.reverseGeocode(latitude, longitude, function(isBaltimoreCounty) {
 						if (isBaltimoreCounty) {
 							$wrapper.removeClass('error');
-							$scope.$apply(function() {
-								self.address = mapService.removeCountry(firstSuggestion);
-							});
+							self.address = mapService.removeCountry(firstSuggestion);
 							mapService.createMarker(self.map, latitude, longitude);
 							mapService.pan(self.map, latitude, longitude);
 						} else {
