@@ -29,9 +29,8 @@ baltimoreCounty.contentFilter = (function($, utilities) {
             $errorMessage.hide();
 
             $searchBox.on('keyup', function(eventObject) {
-                var criteria = $(eventObject.currentTarget).val();
                 utilities.debounce(function() {
-                
+                    var criteria = $(eventObject.currentTarget).val();
                     if (criteria.length) {
                         showIcon('clear');
                     } else {
