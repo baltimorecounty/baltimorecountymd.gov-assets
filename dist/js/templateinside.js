@@ -151,6 +151,19 @@ baltimoreCounty.utility.cdnFallback = (function() {
 })();
 namespacer('baltimoreCounty.utility');
 
+baltimoreCounty.utility.debounce = (function() {
+    var debounce = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    return debounce;
+});
+namespacer('baltimoreCounty.utility');
+
 baltimoreCounty.utility.formValidator = (function($) {
 
     /*
@@ -3861,7 +3874,8 @@ baltimoreCounty.niftyForms = (function() {
 })();
 namespacer('baltimoreCounty');
 
-baltimoreCounty.contentFilter = (function($) {
+baltimoreCounty.contentFilter = (function($, utilities) {
+    
 
     var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
         DEFAULT_SEARCH_BOX_SELECTOR = '.bc-filter-form .bc-filter-form-filter',
@@ -3889,22 +3903,24 @@ baltimoreCounty.contentFilter = (function($) {
             $errorMessage.hide();
 
             $searchBox.on('keyup', function(eventObject) {
-				var criteria = $(eventObject.currentTarget).val();
+                var criteria = $(eventObject.currentTarget).val();
+                utilities.debounce(function() {
+                
+                    if (criteria.length) {
+                        showIcon('clear');
+                    } else {
+                        showIcon('search');
+                    }
 
-				if (criteria.length) {
-					showIcon('clear');
-				} else {
-					showIcon('search');
-				}
-
-                switch (contentType) {
-                    case 'table':
-                        filterTable($wrapper, criteria, $errorMessage);
-                        break;
-                    case 'list':
-                        filterList($wrapper, criteria, $errorMessage);
-                        break;
-                }            
+                    switch (contentType) {
+                        case 'table':
+                            filterTable($wrapper, criteria, $errorMessage);
+                            break;
+                        case 'list':
+                            filterList($wrapper, criteria, $errorMessage);
+                            break;
+                    }
+                }, 100);   
             });
             
             $searchBox.closest('form').on('submit', function(e) {
@@ -4052,8 +4068,7 @@ baltimoreCounty.contentFilter = (function($) {
         init: init
     };
 
-})(jQuery);
-
+})(jQuery, baltimoreCounty.utility);
 // Collapse the other items
 (function($) {
 
