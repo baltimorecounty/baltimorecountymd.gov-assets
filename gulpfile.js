@@ -98,7 +98,8 @@ gulp.task('sassAndCompressCss', function () {
 	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss'])
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cssnano({
-			autoprefixer: false
+			autoprefixer: false,
+			reduceInitial: false
 		}))
 		.pipe(rename({
 			suffix: '.min'
