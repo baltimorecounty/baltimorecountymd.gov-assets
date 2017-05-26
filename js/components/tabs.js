@@ -25,16 +25,17 @@
         tablist = document.querySelectorAll('[role="tablist"]')[0];
         tabs;
         panels;
-        delay = determineDelay();
 
-        generateArrays();
+        if (tablist) {
+            delay = determineDelay();
+            
+            generateArrays();
 
-        // Bind listeners
-        for (i = 0; i < tabs.length; ++i) {
-            addListeners(i);
-        };
-
-
+            // Bind listeners
+            for (i = 0; i < tabs.length; ++i) {
+                addListeners(i);
+            };
+        }
     });
 
     function generateArrays() {
