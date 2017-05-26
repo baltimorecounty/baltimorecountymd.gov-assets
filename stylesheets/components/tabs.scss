@@ -1,0 +1,50 @@
+.tabs {}
+
+[role="tab"] {
+    margin: 0 0 -2px;
+    border: 2px solid #444;
+    border-radius: 0.4em 0.4em 0 0;
+    display: inline-block;
+    font-family: inherit;
+    font-size: inherit;
+    background: #fff;
+
+    /*HACK: Override Red-Inside*/
+    width: initial !important;
+
+    &[aria-selected="true"] {
+        border-color: hsl(218, 96%, 38%);
+        color: #fff;
+        background: hsl(212, 96%, 38%);
+        outline: 0;
+    }
+
+    &[role="tab"]:hover,
+    &[role="tab"]:focus {
+        border-color: hsl(20, 96%, 38%);
+        color: $black;
+        background: hsl(20, 96%, 70%);
+        outline: 0;
+    }
+}
+
+[role="tabpanel"] {
+    position: relative;
+    z-index: 2;
+    padding: 0.5em;
+    border: 2px solid #444;
+    border-radius: 0 0.4em 0.4em 0.4em;
+
+    &:focus {
+        border-color: hsl(20, 96%, 38%);
+        outline: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    * + p {
+        margin-top: 1em;
+    }
+}
