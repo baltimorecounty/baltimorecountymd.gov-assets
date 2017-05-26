@@ -1,42 +1,44 @@
-.tabs {}
-
 [role="tab"] {
-    margin: 0 0 -2px;
-    border: 2px solid #444;
-    border-radius: 0.4em 0.4em 0 0;
-    display: inline-block;
     font-family: inherit;
     font-size: inherit;
-    background: #fff;
 
+    display: inline-block;
     /*HACK: Override Red-Inside*/
+
     width: initial !important;
 
+    margin: 0 0 -2px;
+
+    border: 1px solid lightgray;
+    background: $white;
+
     &[aria-selected="true"] {
-        border-color: hsl(218, 96%, 38%);
-        color: #fff;
-        background: hsl(212, 96%, 38%);
+        color: $white;
+
+        border-color: $red-hover;
         outline: 0;
+        background: $red-hover;
     }
 
     &[role="tab"]:hover,
     &[role="tab"]:focus {
-        border-color: hsl(20, 96%, 38%);
-        color: $black;
-        background: hsl(20, 96%, 70%);
+        color: $white;
+        
         outline: 0;
+        background: $red;
     }
 }
 
 [role="tabpanel"] {
     position: relative;
     z-index: 2;
+
     padding: 0.5em;
-    border: 2px solid #444;
-    border-radius: 0 0.4em 0.4em 0.4em;
+
+    border: 1px solid lightgray;
 
     &:focus {
-        border-color: hsl(20, 96%, 38%);
+        border-color: $red;
         outline: 0;
     }
 
