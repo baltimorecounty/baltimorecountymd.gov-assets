@@ -3760,12 +3760,18 @@ baltimoreCounty.niftyForms = (function() {
             $label.addClass('is-focused');
         },
 
-        inputChanged = function(e) {
-            var $input = $(e.currentTarget),
-                inputId = $input.attr('id'),
+        inputChanged = function(event) {			
+            var $input = $(event.currentTarget),
+				inputId = $input.attr('id'),
                 isChecked = $input.is(':checked'),
-                $label = $('label[for="' + inputId + '"]');
+                $label;
                 
+				if ($input.siblings('label').length) {
+					$label = $('label[for="' + inputId + '"]');
+				} else {
+					$label = $input.closest(checkboxesAndRadiosLabelSelector);
+				}
+
                 if ($input.is('[type=radio]')) {
                     var radioName = $input.attr('name')
                     var $radioInputs = $('input[name="' + radioName + '"]');
@@ -3792,12 +3798,18 @@ baltimoreCounty.niftyForms = (function() {
          */
         toggleChecked = function($label) {
             var labelFor = $label.attr('for'),
-                $input = $label.siblings('#' + labelFor);
+                $input;
 
-            if (!$input.length)
+			if (labelFor)
+            	$input = $label.siblings('#' + labelFor);
+
+            if (!$input || !$input.length)
                 $input = $label.find('input').first();
 
-            $input.focus().trigger('change');
+			if ($label.is('div.seCheckboxLabel')) {
+				$input.prop('checked', !$input.prop('checked'));
+				$input.trigger('change');
+			}
         },
 
         /*
