@@ -3750,31 +3750,61 @@ baltimoreCounty.niftyForms = (function() {
 		checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
 		checkboxesSelector = '.seCheckbox',
 		radiosSelector = '.seRadio',
+		$focusedElement,
 
 		focusChanged = function(e) {
-			var $input = $(e.currentTarget),
-				inputId = $input.attr('id'),
+			var $target = $(e.target),
+				inputId = $target.attr('id'),
 				$label = $('label[for="' + inputId + '"]');
 			
+			$focusedElement = undefined;
+
+			if ($target.parent().is(checkboxesAndRadiosLabelSelector)) {
+				$focusedElement = $target.parent();
+			} else {
+				if ($target.is(checkboxesAndRadiosLabelSelector)) { 
+					$focusedElement = $target;
+				} else {
+					$focusedElement = $label;
+				}
+			}
+
 			removeFocus();
-			$label.addClass('is-focused');
+
+			if ($focusedElement && $focusedElement.length)
+				$focusedElement.addClass('is-focused');
+		},
+
+		makeItemCheckedOnClickHandler = function(e) {
+			var $target = $(e.currentTarget);
+			$target.find('input').trigger('click');
 		},
 
 		/*
 		 * Toggles the checkedness of the underlying input when the user hits the space bar.
 		 */
 		makeItemCheckedOnKeyupHandler = function(e) {
-			var $target = $(e.target);
+			var $target = $(e.currentTarget);
+			var $input = $target.find('input');
 			var keyCode = e.which || e.keyCode;
 			var KEYCODE_SPACEBAR = 32;
 
 			if (keyCode === KEYCODE_SPACEBAR) {	
-				$target.find('input').trigger('click');
-			}
+				$input.prop('checked', !$input.prop('checked'));
+/*
+				if ($target.is(checkboxesAndRadiosLabelSelector)) {
+					if ($input.prop('checked')) {						
+						$target.addClass('checked');
+					} else	{
+						$target.removeClass('checked');
+					}
+				}
+*/			}
 		},
 
 		removeFocus = function() {
-			$('.is-focused').removeClass('is-focused');
+			if ($focusedElement)
+				$focusedElement.removeClass('is-focused');
 		}
 
 		/*
@@ -3785,10 +3815,19 @@ baltimoreCounty.niftyForms = (function() {
 		},	
 
 		toggleLabelChecked = function(e) {
-			var $target = $(e.currentTarget);
+			var $target = $(e.target);
 			var $label =  $target.siblings('label');
 			var targetName = $target.attr('name');
 			var targetId = $target.attr('id');
+
+			if ($label.length === 0 && $target.is(checkboxesAndRadiosLabelSelector)) {
+				$label = $target;
+				$target = $(e.target);
+			}
+
+			if ($label.length === 0 && $target.parent().is(checkboxesAndRadiosLabelSelector)) {
+				$label = $target.parent();
+			}
 
 			if ($target.is('input[type=radio]')) {
 				var $radioButtonSet = $('input[name=' + targetName + ']');
@@ -3813,15 +3852,15 @@ baltimoreCounty.niftyForms = (function() {
 			$singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
 			$checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
 
-
-		$(document).on('keyup', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnKeyupHandler);
+		$(checkboxesAndRadiosLabelSelector).on('keyup', makeItemCheckedOnKeyupHandler);
+		$(checkboxesAndRadiosLabelSelector).on('click', makeItemCheckedOnClickHandler);
 
 		$(document)
 			.on('change', checkboxesAndRadiosSelector, toggleLabelChecked)
 			.on('focus', checkboxesAndRadiosSelector, focusChanged)
 			.on('blur', checkboxesAndRadiosSelector, removeFocus);
 		
-		$singleCheckboxWrappers.parent().on('keyup', makeItemCheckedOnKeyupHandler).attr('tabindex', -1);
+		//$singleCheckboxWrappers.parent().on('keyup', makeItemCheckedOnKeyupHandler).attr('tabindex', 0);
 
 		$checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
 		$checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
