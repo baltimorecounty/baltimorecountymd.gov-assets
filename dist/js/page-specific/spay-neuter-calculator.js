@@ -12,15 +12,15 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 		facilityList = {
 			baldwin: {
 				address: 'Baldwin, 13800 Manor Road',
-				link: 'https://clinichq.org/online/564cf872-6f61-476f-8ecd-61d574a8a06f'
+				link: 'https://clinichq.com/online/564cf872-6f61-476f-8ecd-61d574a8a06f'
 			},
 			dundalk: {
 				address: 'Dundalk, 7702 Dunmanway',
-				link: 'https://clinichq.org/online/144afb8f-6c15-4f15-8e16-9417a4f85823'
+				link: 'https://clinichq.com/online/144afb8f-6c15-4f15-8e16-9417a4f85823'
 			},
 			swap: {
 				address: 'Southwest Area Park, 3941 Klunk Drive',
-				link: 'https://clinichq.org/online/3edba5a4-9922-4e2a-87a5-c138c8e8f4a8'
+				link: 'https://clinichq.com/online/3edba5a4-9922-4e2a-87a5-c138c8e8f4a8'
 			}
 		},
 		$spayNeuterForm = $('#spayNeuterForm'),
