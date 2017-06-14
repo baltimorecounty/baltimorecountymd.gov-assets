@@ -3843,8 +3843,8 @@ baltimoreCounty.niftyForms = (function() {
 	/*
 	 * Attach events and add aria roles to labels. 
 	 */
+	/*
 	$(function() {
-
 		var $forms = $('form'),
 			$singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
 			$singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
@@ -3864,7 +3864,7 @@ baltimoreCounty.niftyForms = (function() {
 
 		$checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
 		$checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
-	});
+	});*/
 
 })();
 namespacer('baltimoreCounty');
