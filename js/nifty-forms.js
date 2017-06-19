@@ -99,30 +99,4 @@ baltimoreCounty.niftyForms = (function() {
 				$label.removeClass('checked');
 		};
 
-	/*
-	 * Attach events and add aria roles to labels. 
-	 */
-	/*
-	$(function() {
-		var $forms = $('form'),
-			$singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
-			$singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
-			$singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
-			$singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
-			$checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
-
-		$(checkboxesAndRadiosLabelSelector).on('keyup', makeItemCheckedOnKeyupHandler);
-		$(checkboxesAndRadiosLabelSelector).on('click', makeItemCheckedOnClickHandler);
-
-		$(document)
-			.on('change', checkboxesAndRadiosSelector, toggleLabelChecked)
-			.on('focus', checkboxesAndRadiosSelector, focusChanged)
-			.on('blur', checkboxesAndRadiosSelector, removeFocus);
-		
-		//$singleCheckboxWrappers.parent().on('keyup', makeItemCheckedOnKeyupHandler).attr('tabindex', 0);
-
-		$checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
-		$checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
-	});*/
-
 })();
