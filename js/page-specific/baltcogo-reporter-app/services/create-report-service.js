@@ -25,7 +25,7 @@
 
 		return {
 			post: post
-		}
+		};
 	}
 
 })(angular.module('baltcogoApp'));

@@ -7,7 +7,9 @@
 
 		var self = this,
 			targetCounty = 'Baltimore County',
-			categoryId = querystringer.getAsDictionary().categoryid * 1;
+			categoryId = querystringer.getAsDictionary().categoryid * 1,
+			autocompletePromise,
+			mapView;
 
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
@@ -22,30 +24,35 @@
 		self.issueId = '';
 		self.isLoading = false;
 
-		var mapSettings = {
-				center: {
-					lat: 39.4001857,
-					lng: -76.6063945
-				},
-				scrollwheel: false,
-				zoom: 14,
-				mapTypeId: 'roadmap',
-				mapTypeControl: false,
-				streetViewControl: false
-			},
-			autocompleteSettings = {
-				types: ['geocode']
-			};
+		self.map = mapService.createMap('map', function(view, Point, Graphic, pictureMarkerSymbol) {
+			mapView = view;
 
-		self.map = mapService.createMap('map', mapSettings);
+			var viewClickHandler = function(e) {
+				var longitude = e.mapPoint.longitude;
+				var latitude = e.mapPoint.latitude;
+				var point = new Point(longitude, latitude);
+				var marker = new Graphic(point, pictureMarkerSymbol);
 
-		var autocomplete = mapService.createAutoComplete('address', autocompleteSettings);
+				self.longitude = longitude;
+				self.latitude = latitude;
+
+				view.graphics.removeAll();
+				view.graphics.add(marker);
+
+				mapService.reverseGeocode(longitude, latitude, function(foundAddress) {
+					self.address = foundAddress.address.Street + ', ' + foundAddress.address.City + ', ' + foundAddress.address.State;
+					$scope.$apply();
+				}, function(err) {
+					view.graphics.removeAll();
+					displayAddressError();
+				});
+			};			
+
+			view.on('click', viewClickHandler);
+		});
 
 		angular.element('#citysourced-reporter-form').on('keyup keypress', preventSubmitOnEnterPressHandler);
-		google.maps.event.addListener(self.map, 'click', mapClickHandler);
-		autocomplete.addListener('place_changed', autocompletePlaceChangedHandler);
-		//angular.element('#addressSearch').on('click', addressSearchClickHandler);
-		angular.element('#address').on('keyup', addressEnterPressHandler)
+		angular.element('#address').on('keyup', autocompleteHandler);
 
 		self.fileReportClick = function () {
 
@@ -152,7 +159,7 @@
 			});
 
 			if (self.state) {
-				var stateId = self.state.id ? self.state.id : self.state
+				var stateId = self.state.id ? self.state.id : self.state;
 
 				data.push({
 					name: 'Complainant State',
@@ -211,29 +218,14 @@
 
 		self.nextClick = function () {
 			if (validatePanel()) {
-				self.page++; 
-
-				if (self.page === 2) {
-					setTimeout(function() {
-						var currentCenter = self.map.getCenter();
-						google.maps.event.trigger(self.map, "resize");
-						self.map.setCenter(currentCenter);
-					}, 500);
-				}
+				self.page++; 				
 			}
 			else
 				$scope.citySourcedReporterForm.$setSubmitted();				
 		};
 
 		self.prevClick = function () {
-			self.page--; 
-			if (self.page === 2) {
-				setTimeout(function() {
-					var currentCenter = self.map.getCenter();
-					google.maps.event.trigger(self.map, "resize");
-					self.map.setCenter(currentCenter);
-				}, 500);
-			}
+			self.page--; 		
 		};
 
 		self.trackBreed = function () {
@@ -246,19 +238,29 @@
 			});
 		};
 
+		self.lookupAddress = function(address) {
+			self.address = address;
+			self.autocompleteResults = [];
+			mapService.lookupAddress(address, function(addy) {
+				self.longitude = addy.location.x;
+				self.latitude = addy.location.y;
+				mapService.dropMarker(mapView, self.longitude, self.latitude);
+			});
+		};
+
 		/***** Private - Helpers *****/
 
 		function autoSelectCategories(categoryId) {
 			angular.forEach(self.categoryData, function(categoryItem) {
 				if (categoryItem.id === categoryId) {
 					self.category = categoryItem;
-					self.loadSubCategories(categoryItem.id)
+					self.loadSubCategories(categoryItem.id);
 				} else {
 					if (categoryItem.types) {
 						angular.forEach(categoryItem.types, function(typeItem) {
 							if (typeItem.id === categoryId) {
 								self.category = categoryItem;
-								self.loadSubCategories(categoryItem.id)
+								self.loadSubCategories(categoryItem.id);
 								self.subCategory = typeItem;
 							}
 						});						
@@ -324,74 +326,16 @@
 
 		/***** Private - Handlers *****/		
 
-		function addressEnterPressHandler(event) {
-			var keyCode = event.which || event.keyCode;
-
-			if (keyCode === 13) {	
-				$timeout(function() {
-					if (!autocomplete.getPlace() || !autocomplete.getPlace().formatted_address) {
-						addressSearchClickHandler();
-					}
-				}, 250);
-			}
-		}
-
-		function addressSearchClickHandler() {
-			if (!self.address)
-				return;
-
-			var firstSuggestion = getFirstSuggestion(),
-				addressField = $scope.citySourcedReporterForm.address,
-				$wrapper = angular.element('#map').closest('cs-form-control');
-
-			mapService.addressLookup(firstSuggestion, function (address, latitude, longitude) {
-				if (latitude && longitude) {
-					mapService.reverseGeocode(latitude, longitude, function(isBaltimoreCounty) {
-						if (isBaltimoreCounty) {
-							$wrapper.removeClass('error');
-							self.address = mapService.removeCountry(firstSuggestion);
-							mapService.createMarker(self.map, latitude, longitude);
-							mapService.pan(self.map, latitude, longitude);
-						} else {
-							displayAddressError();
-						}
-					});
-				} else {
-					displayAddressError();
-				}
-			});
-		};
-
-		function animalTypeSuccessHandler(response) {
-			self.animalTypeData = response.data;
-		}
-
-		function animalTypeSuccessHandler(response) {
-			self.animalTypeData = response.data;
-		}
-
-		function autocompletePlaceChangedHandler() {	
-			$scope.$apply(function() {
-				self.address = mapService.removeCountry(self.address);
-			});
-			var place = autocomplete.getPlace();
-
-			if (place.geometry) {
-				var latitude = place.geometry.location.lat(),
-					longitude = place.geometry.location.lng();
-
-				self.latitude = latitude;
-				self.longitude = longitude;
-
-				mapService.reverseGeocode(latitude, longitude, function(isBaltimoreCounty) {
-					if (isBaltimoreCounty) {
-						mapService.createMarker(self.map, latitude, longitude);
-						mapService.pan(self.map, latitude, longitude);
-					} else {
-						displayAddressError();
-					}
+		function autocompleteHandler(event) {			
+			if (self.address && self.address.trim().length > 3) {
+				mapService.suggestAddresses(self.address, function(autoCompleteResults) {
+					self.autocompleteResults = autoCompleteResults;
 				});
 			}
+		}
+
+		function animalTypeSuccessHandler(response) {
+			self.animalTypeData = response.data;
 		}
 
 		function breedSuccessHandler(response) {
@@ -413,30 +357,11 @@
 			angular.element('#map').closest('cs-form-control').addClass('error');
 			$scope.citySourcedReporterForm.address.$setDirty();
 			self.address = '';
+			$scope.$apply();
 		}
 
 		function errorHandler(err) {
 			console.log(err);
-		}
-
-		function mapClickHandler(event) {
-			var $wrapper = angular.element('#map').closest('cs-form-control'),
-				addressField = $scope.citySourcedReporterForm.address;
-
-			self.latitude = event.latLng.lat();
-			self.longitude = event.latLng.lng();
-
-			mapService.reverseGeocode(self.latitude, self.longitude, function (baltimoreCountyAddress) {
-				if (baltimoreCountyAddress) {
-					$wrapper.removeClass('error');
-					mapService.createMarker(self.map, self.latitude, self.longitude);
-					self.address = mapService.removeCountry(baltimoreCountyAddress);
-				} else {
-					$wrapper.addClass('error');
-					addressField.$setDirty();
-					self.address = '';
-				}
-			});
 		}
 
 		function petTypeSuccessHandler(response) {

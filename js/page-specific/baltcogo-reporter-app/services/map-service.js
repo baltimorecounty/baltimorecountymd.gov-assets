@@ -4,117 +4,191 @@
 	app.factory('mapService', ['$http', mapService]);
 
 	function mapService($http) {
+		var pictureMarkerSymbol;
+		var spatialReferenceId = 4269;
+		var originLongitude = -76.6063945;
+		var originLatitude = 39.4001857;
+		var geocodeServerUrlArcGIS = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer';
+		var geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer';
 
-		var apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
-			targetCounty = 'Baltimore County',
-			marker,
+		var createMap = function(mapElementId, creationCallback) {
 
-			clearMarker = function () {
-				if (marker)
-					marker.setMap(null);
-			},
+			require([
+				'esri/Map',
+				'esri/views/MapView',
+				'esri/symbols/PictureMarkerSymbol',
+				'esri/Graphic',
+				'esri/geometry/Point',
+				'dojo/domReady!'
+			], function (Map, MapView, PictureMarkerSymbol, Graphic, Point) {
 
-			createAutoComplete = function (autocompleteElementId, settings) {
-				return new google.maps.places.Autocomplete(document.getElementById(autocompleteElementId), settings);
-			},
+				pictureMarkerSymbol = new PictureMarkerSymbol({
+					url: 'http://dev.baltimorecountymd.gov/sebin/n/f/icon-marker-my-report.png', 
+					height: 60, 
+					width: 35
+				});
 
-			createMap = function(mapElementId, settings) {
-				return new google.maps.Map(document.getElementById(mapElementId), settings);
-			},
+				var mapSettings = {
+					basemap: "topo-vector"
+				};
+				var map = new Map(mapSettings);
 
-			createMarker = function(map, latitude, longitude) {
-				if (marker) {
-					marker.setMap(null);
-				}
-
-				marker = new google.maps.Marker({
-					position: { lat: latitude, lng: longitude},
+				var mapViewSettings = {
+					container: mapElementId,
 					map: map,
-					icon: '/sebin/n/f/icon-marker-my-report.png', 
-					draggable: false,
-					animation: google.maps.Animation.DROP
-				});
-			},
+					zoom: 13,
+					center: [originLongitude, originLatitude]
+				};
+				var view = new MapView(mapViewSettings);
 
-			reverseGeocode = function(latitude, longitude, callback) {
-				$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey).then(function (response) {
+				/*var viewClickHandler = function(e) {
+					var longitude = e.mapPoint.longitude;
+					var latitude = e.mapPoint.latitude;
+					var point = new Point(longitude, latitude);
+					var marker = new Graphic(point, pictureMarkerSymbol);
 
-					var address = response.data.results[0].formatted_address,
-						isBaltimoreCounty = checkCounty(response.data.results);
+					view.graphics.removeAll();
+					view.graphics.add(marker);
 
-					if (isBaltimoreCounty) {
-						callback(address);
-					} else {
-						clearMarker();
-						callback('');
-					}
-				});
-			},
+					angular.element('#map-longitude').val(longitude);
+					angular.element('#map-latitude').val(latitude);
 
-			addressLookup = function(addressQuery, callback) {
-				$http.get('https://maps.googleapis.com/maps/api/geocode/json?region=US&address=' + addressQuery + '&key=' + apiKey)
-					.then(function (response) {
-						if (response.data.results.length) {
-							var latitude = response.data.results[0].geometry.location.lat;
-							var longitude = response.data.results[0].geometry.location.lng;
-														
-							callback(response.data.results[0].formatted_address, latitude, longitude);
-						} else {
-							callback('');
+					reverseGeocode(longitude, latitude);
+				};*/
+				
+				//view.on('click', viewClickHandler);
+
+				creationCallback(view, Point, Graphic, pictureMarkerSymbol);
+			});
+		};
+
+		var suggestAddresses = function(address, callback) {
+
+			require(["esri/tasks/Locator", 'esri/geometry/Point'], 
+				function(Locator, Point) { 
+
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
+
+				var suggestParams = {
+					location: new Point(originLongitude, originLatitude),
+					text: address
+				};
+
+				var requestOptions = {
+					responseType: 'json'
+				};
+
+				var locator = new Locator(locatorSettings);
+
+				locator.suggestLocations(suggestParams, requestOptions).then(
+					function(suggestedAddresses) {
+						var results = [];
+						angular.forEach(suggestedAddresses, function(suggestedAddress) {
+							results.push(suggestedAddress.text);
+						});
+						callback(results);
+					}, 
+					function(err) { console.log('err', err); }
+				);
+			});
+
+		};
+
+		var lookupAddress = function(address, callback) {
+			require(["esri/tasks/Locator"], 
+				function(Locator) { 
+
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
+
+				var addressToLocationsParams = {
+					address: { 'Single Line Input': address },
+					f: 'json'
+				};
+
+				var requestOptions = {
+					responseType: 'json'
+				};
+
+				var locator = new Locator(locatorSettings);
+
+				locator.addressToLocations(addressToLocationsParams, requestOptions).then(
+					function(foundAddresses) {
+						if (foundAddresses.length) {
+							var sortedFoundAddresses = foundAddresses.sort(addressScoreComparer);						
+							callback(sortedFoundAddresses[0]);
 						}
-					}, function (error) {
-						console.log('error!', error);
-					});		
+					}, 
+					function(err) { console.log('err', err); }
+				);
+			});
+		};
+
+		var reverseGeocode = function(longitude, latitude, successCallback, errorCallback) {
+			require([
+				"esri/tasks/Locator",
+				'esri/geometry/Point'				
+			], function(Locator, Point) { 
+
+				var point = new Point(longitude, latitude);
+
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
+
+				var locator = new Locator(locatorSettings);
+
+				var requestOptions = {
+					responseType: 'json'
+				};
+
+				locator.locationToAddress(point).then(successCallback, errorCallback);
+			});
+		};
+
+		var dropMarker = function(view, longitude, latitude) {
+			require([
+				'esri/Graphic',
+				'esri/geometry/Point',
+				'dojo/domReady!'
+			], function (Graphic, Point) {
+				var point = new Point(longitude, latitude);
+				var marker = new Graphic(point, pictureMarkerSymbol);
+				
+				view.goTo(point, { animate: true, duration: 250 });
+				view.graphics.removeAll();
+				view.graphics.add(marker);
+			});
+		}
+
+		var addressScoreComparer = function(a, b) {
+			if (a.score < b.score)
+				return 1;
+
+			if (a.score > b.score)
+				return -1;
 			
-			},
-
-			pan = function(map, latitude, longitude) {
-				map.panTo({
-					lat: latitude,
-					lng: longitude
-				});
-			};
-
+			return 0;
+		}
 
 		/*** Private Functions **********/
 
-		function checkCounty(reverseGeocodeData) {
-			var countyArr = $.grep(reverseGeocodeData, filterCountyResults),
-				county = '';
-
-			if (countyArr && countyArr.length)
-				county = countyArr[0].formatted_address;
-
-			return county.indexOf(targetCounty) !== -1 ? county : false;
-		}
-
-		function filterCountyResults(item, index) {
-			return filterResults(item, index, 'administrative_area_level_2');
-		}
-
-		function filterResults(item, index, query) {
-			var matchArr;
-			if (item.types) {
-				matchArr = $.grep(item.types, function (item, index) {
-					return item === query;
-				});
-			}
-			return matchArr.length ? matchArr : false;
-		}
-
-		function removeCountry(addressString) {
-			return addressString.replace(', USA', '');
-		}
-
 		return {
-			createMarker: createMarker,
-			reverseGeocode: reverseGeocode,
-			addressLookup: addressLookup,
 			createMap: createMap,
-			createAutoComplete: createAutoComplete,
-			removeCountry: removeCountry,
-			pan: pan
+			dropMarker: dropMarker,
+			lookupAddress: lookupAddress,
+			reverseGeocode: reverseGeocode,
+			suggestAddresses: suggestAddresses
 		};
-	};
+	}
 
 })(angular.module('baltcogoApp'));
