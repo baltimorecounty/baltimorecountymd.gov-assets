@@ -10,6 +10,7 @@
 
 	function mapService($http) {
 		var pictureMarkerSymbol;
+		var nearbyPictureMarkerSymbol;
 		var spatialReferenceId = 4269;
 		var originLongitude = -76.6063945;
 		var originLatitude = 39.4001857;
@@ -33,6 +34,12 @@
 					width: 35
 				});
 
+				nearbyPictureMarkerSymbol = new PictureMarkerSymbol({
+					url: 'http://dev.baltimorecountymd.gov/sebin/n/p/icon-marker-other.png', 
+					height: 55, 
+					width: 35
+				});
+
 				var mapSettings = {
 					basemap: "topo-vector"
 				};
@@ -46,7 +53,7 @@
 				};
 				var view = new MapView(mapViewSettings);
 
-				creationCallback(view, Point, Graphic, pictureMarkerSymbol);
+				creationCallback(view, Point, Graphic);
 			});
 		};
 
@@ -143,17 +150,20 @@
 			});
 		};
 
-		var dropMarker = function(view, longitude, latitude) {
+		var dropMarker = function(view, longitude, latitude, clearMarkers, isNearbyReport) {
 			require([
 				'esri/Graphic',
 				'esri/geometry/Point',
 				'dojo/domReady!'
 			], function (Graphic, Point) {
 				var point = new Point(longitude, latitude);
-				var marker = new Graphic(point, pictureMarkerSymbol);
+				var marker = new Graphic(point, isNearbyReport ? nearbyPictureMarkerSymbol : pictureMarkerSymbol);
 				
 				view.goTo(point, { animate: true, duration: 250 });
-				view.graphics.removeAll();
+				
+				if (clearMarkers)
+					view.graphics.removeAll();
+				
 				view.graphics.add(marker);
 			});
 		}
@@ -222,9 +232,10 @@
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			};
+			};		
 
-			$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			//$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			$http.post("//ba224964:1000/api/citysourced/getreportsbylatlng", settings, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
@@ -490,7 +501,7 @@
 			mapService.lookupAddress(address, function(addy) {
 				self.longitude = addy.location.x;
 				self.latitude = addy.location.y;
-				mapService.dropMarker(mapView, self.longitude, self.latitude);
+				mapService.dropMarker(mapView, self.longitude, self.latitude, true);
 			});
 		};
 
@@ -634,31 +645,71 @@
 
 		var self = this;
 		var reportId = querystringer.getAsDictionary().reportId;
+		var longitude;
+		var latitude;
+		var mapView;
 
 		self.isError = false;
-
+		self.isLoading = true;
+		self.isMapLoading = true;
+	
 		if (!reportId) {
 			return;
 		}
 
-		getReport(reportId, getReportSuccess, getReportError);
+		getReport(reportId, getReportSuccess, getReportError);		
 
 		function getReportSuccess(data) {
 			self.status = data.Status;
+			self.isOpen = data.IsOpen === 'On Hold' ? 'on-hold' : data.IsOpen ? 'open' : 'closed';
 			self.id = data.Id;
 			self.issueType = data.IssueType;
 			self.dateCreated = data.DateCreated;
 			self.dateUpdated = data.DateUpdated;
 			self.description = data.Description;
 			self.comments = data.comments;		
+			longitude = data.Longitude;
+			latitude = data.Latitude;
 
-			mapService.reverseGeocode(data.Longitude, data.Latitude, reverseGeocodeSuccess, function(err) {
+			mapService.reverseGeocode(longitude, latitude, reverseGeocodeSuccess, function(err) {
 				console.log(err);
 			});	
+
+			mapService.createMap('map', mapCreationSuccess);
+		}
+
+		function mapCreationSuccess(view, Point, Graphic, pictureMarkerSymbol) {
+			mapView = view;			
+			self.isMapLoading = false;
+			$scope.$apply();
+
+			$timeout(function() {
+				var startDate = new Date();
+				startDate.setDate(-90);
+
+				var nearbyDataSettings = {
+					Latitude: latitude,
+					Longitude: longitude,
+					StartDate: startDate.toLocaleDateString('en-US')
+				};
+
+				reportService.getNearby(nearbyDataSettings, getNearbySuccess, function(err) {
+					console.log(err);
+				});
+			}, 500);
+		}
+
+		function getNearbySuccess(nearbyReportData) {
+			angular.forEach(nearbyReportData, function(nearbyReport) {
+				mapService.dropMarker(mapView, nearbyReport.Longitude, nearbyReport.Latitude, false, true);
+			});
+
+			mapService.dropMarker(mapView, longitude, latitude, false, false);
 		}
 
 		function reverseGeocodeSuccess(responseData) {
 			self.address = responseData.address.Street + ', ' + responseData.address.City + ', ' + responseData.address.State;
+			self.isLoading = false;
 			$scope.$apply();
 		}
 

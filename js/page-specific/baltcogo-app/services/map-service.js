@@ -5,6 +5,7 @@
 
 	function mapService($http) {
 		var pictureMarkerSymbol;
+		var nearbyPictureMarkerSymbol;
 		var spatialReferenceId = 4269;
 		var originLongitude = -76.6063945;
 		var originLatitude = 39.4001857;
@@ -28,6 +29,12 @@
 					width: 35
 				});
 
+				nearbyPictureMarkerSymbol = new PictureMarkerSymbol({
+					url: 'http://dev.baltimorecountymd.gov/sebin/n/p/icon-marker-other.png', 
+					height: 55, 
+					width: 35
+				});
+
 				var mapSettings = {
 					basemap: "topo-vector"
 				};
@@ -41,7 +48,7 @@
 				};
 				var view = new MapView(mapViewSettings);
 
-				creationCallback(view, Point, Graphic, pictureMarkerSymbol);
+				creationCallback(view, Point, Graphic);
 			});
 		};
 
@@ -138,17 +145,20 @@
 			});
 		};
 
-		var dropMarker = function(view, longitude, latitude) {
+		var dropMarker = function(view, longitude, latitude, clearMarkers, isNearbyReport) {
 			require([
 				'esri/Graphic',
 				'esri/geometry/Point',
 				'dojo/domReady!'
 			], function (Graphic, Point) {
 				var point = new Point(longitude, latitude);
-				var marker = new Graphic(point, pictureMarkerSymbol);
+				var marker = new Graphic(point, isNearbyReport ? nearbyPictureMarkerSymbol : pictureMarkerSymbol);
 				
 				view.goTo(point, { animate: true, duration: 250 });
-				view.graphics.removeAll();
+				
+				if (clearMarkers)
+					view.graphics.removeAll();
+				
 				view.graphics.add(marker);
 			});
 		}

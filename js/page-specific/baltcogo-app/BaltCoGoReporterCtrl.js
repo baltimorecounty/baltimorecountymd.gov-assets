@@ -244,7 +244,7 @@
 			mapService.lookupAddress(address, function(addy) {
 				self.longitude = addy.location.x;
 				self.latitude = addy.location.y;
-				mapService.dropMarker(mapView, self.longitude, self.latitude);
+				mapService.dropMarker(mapView, self.longitude, self.latitude, true);
 			});
 		};
 

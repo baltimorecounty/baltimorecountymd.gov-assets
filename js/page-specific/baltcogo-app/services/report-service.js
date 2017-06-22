@@ -40,9 +40,10 @@
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			};
+			};		
 
-			$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			//$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			$http.post("//ba224964:1000/api/citysourced/getreportsbylatlng", settings, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
