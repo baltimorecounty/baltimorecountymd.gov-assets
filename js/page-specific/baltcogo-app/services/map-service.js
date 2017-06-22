@@ -41,23 +41,6 @@
 				};
 				var view = new MapView(mapViewSettings);
 
-				/*var viewClickHandler = function(e) {
-					var longitude = e.mapPoint.longitude;
-					var latitude = e.mapPoint.latitude;
-					var point = new Point(longitude, latitude);
-					var marker = new Graphic(point, pictureMarkerSymbol);
-
-					view.graphics.removeAll();
-					view.graphics.add(marker);
-
-					angular.element('#map-longitude').val(longitude);
-					angular.element('#map-latitude').val(latitude);
-
-					reverseGeocode(longitude, latitude);
-				};*/
-				
-				//view.on('click', viewClickHandler);
-
 				creationCallback(view, Point, Graphic, pictureMarkerSymbol);
 			});
 		};

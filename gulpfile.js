@@ -24,9 +24,9 @@ gulp.task('clean-dist', function() {
 });
 
 gulp.task('concatBaltCoGoAppJs', function() {
-	var files = ['js/page-specific/baltcogo-reporter-app/app.js',
-				'js/page-specific/baltcogo-reporter-app/services/**/*.js',
-				'js/page-specific/baltcogo-reporter-app/BaltCoGoReporterCtrl.js'];
+	var files = ['js/page-specific/baltcogo-app/app.js',
+				'js/page-specific/baltcogo-app/services/**/*.js',
+				'js/page-specific/baltcogo-app/*Ctrl.js'];
 	return concatFiles(files, 'baltcogo-reporter.js');
 });
 

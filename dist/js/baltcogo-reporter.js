@@ -6,37 +6,6 @@
 (function(app) {
 	'use strict';
 
-	app.factory('createReportService', ['$http', createReportService]);
-
-	function createReportService($http) {
-
-		function post(data, successCallback, errorCallback) {
-			var postOptions = {
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			};
-
-			$http.post("https://testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
-				.then(
-					function (response) {
-						successCallback(response.data);
-					},
-					function (error) {
-						errorCallback(error);
-					}
-				);
-		}
-
-		return {
-			post: post
-		};
-	}
-
-})(angular.module('baltcogoApp'));
-(function(app) {
-	'use strict';
-
 	app.factory('mapService', ['$http', mapService]);
 
 	function mapService($http) {
@@ -76,23 +45,6 @@
 					center: [originLongitude, originLatitude]
 				};
 				var view = new MapView(mapViewSettings);
-
-				/*var viewClickHandler = function(e) {
-					var longitude = e.mapPoint.longitude;
-					var latitude = e.mapPoint.latitude;
-					var point = new Point(longitude, latitude);
-					var marker = new Graphic(point, pictureMarkerSymbol);
-
-					view.graphics.removeAll();
-					view.graphics.add(marker);
-
-					angular.element('#map-longitude').val(longitude);
-					angular.element('#map-latitude').val(latitude);
-
-					reverseGeocode(longitude, latitude);
-				};*/
-				
-				//view.on('click', viewClickHandler);
 
 				creationCallback(view, Point, Graphic, pictureMarkerSymbol);
 			});
@@ -228,12 +180,76 @@
 	}
 
 })(angular.module('baltcogoApp'));
+(function(app) {
+	'use strict';
+
+	app.factory('reportService', ['$http', reportService]);
+
+	function reportService($http) {
+
+		function post(data, successCallback, errorCallback) {
+			var postOptions = {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			};
+
+			$http.post("https://testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
+				.then(
+					function (response) {
+						successCallback(response.data);
+					},
+					function (error) {
+						errorCallback(error);
+					}
+				);
+		}
+
+		function getById(reportId, successCallback, errorCallback) {
+			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+				.then(
+					function(response) {
+						successCallback(response.data);					
+					}, 
+					function (error) {
+						errorCallback(error);
+					}
+				);
+		};
+
+		function getNearby(settings, successCallback, errorCallback) {
+			var postOptions = {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			};
+
+			$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+				.then(
+					function (response) {
+						successCallback(response.data);
+					},
+					function (error) {
+						errorCallback(error);
+					}
+				);
+		}
+
+
+		return {
+			post: post,
+			getById: getById,
+			getNearby: getNearby
+		};
+	}
+
+})(angular.module('baltcogoApp'));
 (function (app, querystringer) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'createReportService', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'reportService', reporterController]);
 
-	function reporterController($http, $scope, $timeout, mapService, createReportService) {
+	function reporterController($http, $scope, $timeout, mapService, reportService) {
 
 		var self = this,
 			targetCounty = 'Baltimore County',
@@ -409,7 +425,7 @@
 			self.isLoading = true;
 			self.isDone = true;
 
-			createReportService.post(data, 
+			reportService.post(data, 
 				function(responseData) {
 					self.isLoading = false;
 					self.isSuccess = true;
@@ -604,6 +620,62 @@
 			if (keyCode === 13) {
 				event.preventDefault();
 			}		
+		}
+
+	}
+
+})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer);
+(function(app, querystringer) {
+	'use strict';
+
+	app.controller('BaltCoGoViewerCtrl', ['$http', '$scope', '$timeout', 'mapService', 'reportService', viewerController]);
+
+	function viewerController($http, $scope, $timeout, mapService, reportService) {
+
+		var self = this;
+		var reportId = querystringer.getAsDictionary().reportId;
+
+		self.isError = false;
+
+		if (!reportId) {
+			return;
+		}
+
+		getReport(reportId, getReportSuccess, getReportError);
+
+		function getReportSuccess(data) {
+			self.status = data.Status;
+			self.id = data.Id;
+			self.issueType = data.IssueType;
+			self.dateCreated = data.DateCreated;
+			self.dateUpdated = data.DateUpdated;
+			self.description = data.Description;
+			self.comments = data.comments;		
+
+			mapService.reverseGeocode(data.Longitude, data.Latitude, reverseGeocodeSuccess, function(err) {
+				console.log(err);
+			});	
+		}
+
+		function reverseGeocodeSuccess(responseData) {
+			self.address = responseData.address.Street + ', ' + responseData.address.City + ', ' + responseData.address.State;
+			$scope.$apply();
+		}
+
+		function getReportError(err) {
+			self.isError = true;
+			$scope.$apply();
+			console.log(err);
+		}
+
+		function getReport(reportId, successCallback) {
+			reportService.getById(reportId, successCallback, function(err) {
+				console.log(err);
+			});
+		}
+
+		function getNearbyReports(settings, successCallback, errorCallback) {
+			reportService.getNearby(settings, successCallback, errorCallback);
 		}
 
 	}

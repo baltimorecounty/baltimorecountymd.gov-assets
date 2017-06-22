@@ -1,9 +1,9 @@
 (function (app, querystringer) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'createReportService', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapService', 'reportService', reporterController]);
 
-	function reporterController($http, $scope, $timeout, mapService, createReportService) {
+	function reporterController($http, $scope, $timeout, mapService, reportService) {
 
 		var self = this,
 			targetCounty = 'Baltimore County',
@@ -179,7 +179,7 @@
 			self.isLoading = true;
 			self.isDone = true;
 
-			createReportService.post(data, 
+			reportService.post(data, 
 				function(responseData) {
 					self.isLoading = false;
 					self.isSuccess = true;
