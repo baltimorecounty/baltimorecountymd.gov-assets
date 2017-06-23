@@ -37,7 +37,9 @@
 				console.log(err);
 			});	
 
-			mapService.createMap('map', mapCreationSuccess);
+			//mapService.createMap('map', mapCreationSuccess);
+
+			window.map = new google.maps.Map(document.getElementById('map'), settings)
 		}
 
 		function mapCreationSuccess(view, Point, Graphic, pictureMarkerSymbol) {

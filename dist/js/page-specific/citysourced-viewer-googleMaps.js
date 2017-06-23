@@ -6,6 +6,8 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		autocomplete,
 		apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
 		targetCounty = 'Baltimore County',
+		spatialReferenceId = 4269,
+		geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
 
 		/**
 		 * Creates the map, and renders it in the mapElementId element.
@@ -85,12 +87,37 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		/**
 		 * Looks up the street address from the latitude and longitude.
 		 */
-		reverseGeocode = function (latitude, longitude, callback) {
-			$.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey)
+		reverseGeocode = function (latitude, longitude, successCallback) {
+			/*$.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey)
 				.done(function (data) {
 					var address = getAddress(data.results).replace(', USA', '');
 					callback(address);
+				});*/
+
+			require([
+				"esri/tasks/Locator",
+				'esri/geometry/Point'				
+			], function(Locator, Point) { 
+
+				var point = new Point(longitude, latitude);
+
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
+
+				var locator = new Locator(locatorSettings);
+
+				var requestOptions = {
+					responseType: 'json'
+				};
+
+				locator.locationToAddress(point).then(successCallback, function(err) {
+					console.log(err);
 				});
+			});
+
 		},
 
 		/**
@@ -183,8 +210,9 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 			};
 
 			createMarker(homeMarkerSettings);
-			reverseGeocode(mapSettings.center.lat, mapSettings.center.lng, function(address) {
-				$('#address').text(address);
+			
+			reverseGeocode(mapSettings.center.lat, mapSettings.center.lng, function(response) {
+				$('#address').text(response.address.Street + ', ' + response.address.City + ', ' + response.address.State);
 			});			
 
 			if (nearbyData) {

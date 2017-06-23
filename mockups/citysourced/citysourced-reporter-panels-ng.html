@@ -30,6 +30,8 @@
 
 <body id="mainContent">
 
+	<!-- START -->
+
 	<div ng-app="baltcogoApp" ng-controller="BaltCoGoReporterCtrl as reporter" ng-cloak>
 
 		<p class="bc-citysourced-reporter-instructions">BaltCoGo allows you to quickly report problems or request service online. Complete the form below to create your service request.</p>
@@ -163,13 +165,15 @@
 					<p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
 					
 					<div class="cs-form-control address-search" ng-class="{ 'error': citySourcedReporterForm.address.$dirty &&  citySourcedReporterForm.address.$invalid }">
-						<label for="address">Enter the closest address to your service request<span class="required">*</span></label>
-						<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" autocomplete="off" required />
-						<i class="fa fa-search address-search-icon" aria-hidden="true"></i>
-						<ul ng-if="reporter.autocompleteResults.length > 0" class="autocomplete-results">
-							<li ng-repeat="autocompleteResult in reporter.autocompleteResults"><button ng-click="reporter.lookupAddress(autocompleteResult)">{{ autocompleteResult }}</button></li>
-						</ul>
-						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.address.$dirty" ng-show="citySourcedReporterForm.address.$error.required">You must select a location inside Baltimore County.</p>
+						<div class="address-search-wrapper">
+							<label for="address">Enter the closest address to your service request<span class="required">*</span></label>
+							<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" autocomplete="off" required />
+							<i class="fa fa-search address-search-icon" aria-hidden="true"></i>
+							<ul ng-if="reporter.autocompleteResults.length > 0" class="autocomplete-results">
+								<li ng-repeat="autocompleteResult in reporter.autocompleteResults"><button ng-click="reporter.lookupAddress(autocompleteResult)">{{ autocompleteResult }}</button></li>
+							</ul>
+							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.address.$dirty" ng-show="citySourcedReporterForm.address.$error.required">You must select a location inside Baltimore County.</p>
+						</div>
 					</div>
 
 					<div id="map" class="google-map"></div>
@@ -244,6 +248,8 @@
 			</form>
 		</div>
 	</div>
+
+	<!-- END -->
 
 </body>
 

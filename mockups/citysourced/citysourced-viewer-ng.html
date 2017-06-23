@@ -61,7 +61,7 @@
 						<dd>{{viewer.address}}</dd>
 					</dl>
 				</div>
-				
+
 				<div ng-if="viewer.isMapLoading">
 					Loading map... <i class="fa fa-spinner fa-pulse fa-fw"></i>
 					<span class="sr-only">Loading map...</span>
@@ -85,6 +85,8 @@
 			</div>
 		</div>
 	</div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.reporterGoogleMaps.initGoogle"
+        async defer></script>
 
 <!-- END -->
 
