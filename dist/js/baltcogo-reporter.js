@@ -498,6 +498,8 @@
 
 		angular.element('#citysourced-reporter-form').on('keyup keypress', preventSubmitOnEnterPressHandler);
 		angular.element('#address').on('keyup', autocompleteHandler);
+		angular.element(window).on('keydown', documentKeyupHandler);
+
 
 		self.fileReportClick = function () {
 
@@ -781,6 +783,12 @@
 		function autocompleteHandler(event) {	
 			var keycode = event.which || event.keyCode;
 
+			if (keycode === 40) {
+				event.preventDefault(); // Don't scroll down!
+				angular.element('.autocomplete-results button').first().focus();
+				return;
+			}
+
 			if (keycode === 13) {
 				if (self.autocompleteResults.length > 0) {
 					var topAutocompleteResult = self.autocompleteResults[0];
@@ -803,6 +811,29 @@
 			var place = autocomplete.getPlace();
 			if (place.formatted_address)
 				geocodeAndMarkAddress(place.formatted_address);			
+		}
+
+		function documentKeyupHandler(event) {
+			var keycode = event.which || event.keyCode;
+			var $target = angular.element(event.target);
+
+			if (!$target.is('.autocomplete-results button')) {
+				return;
+			}
+			
+			event.preventDefault();			
+
+			if (keycode === 13 || keycode === 32) {
+				$target.trigger('click');
+			}
+
+			if (keycode === 40) {
+				$target.parent().next().find('button').focus();
+			}
+
+			if (keycode === 38) {
+				$target.parent().prev().find('button').focus();
+			}
 		}
 
 		function animalTypeSuccessHandler(response) {
