@@ -366,6 +366,11 @@
 				return;
 			}
 			
+			if (keycode === 27 && angular.element('.autocomplete-results').is(':visible')) {
+				self.autocompleteResults = [];
+				$scope.$apply();
+			}
+
 			event.preventDefault();			
 
 			if (keycode === 13 || keycode === 32) {

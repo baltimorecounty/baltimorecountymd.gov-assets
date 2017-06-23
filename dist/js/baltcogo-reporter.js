@@ -498,7 +498,7 @@
 
 		angular.element('#citysourced-reporter-form').on('keyup keypress', preventSubmitOnEnterPressHandler);
 		angular.element('#address').on('keyup', autocompleteHandler);
-		angular.element(window).on('keydown', documentKeyupHandler);
+		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 
 
 		self.fileReportClick = function () {
@@ -813,7 +813,7 @@
 				geocodeAndMarkAddress(place.formatted_address);			
 		}
 
-		function documentKeyupHandler(event) {
+		function autocompleteResultButtonKeyboardNavigationHandler(event) {
 			var keycode = event.which || event.keyCode;
 			var $target = angular.element(event.target);
 
@@ -821,6 +821,11 @@
 				return;
 			}
 			
+			if (keycode === 27 && angular.element('.autocomplete-results').is(':visible')) {
+				self.autocompleteResults = [];
+				$scope.$apply();
+			}
+
 			event.preventDefault();			
 
 			if (keycode === 13 || keycode === 32) {

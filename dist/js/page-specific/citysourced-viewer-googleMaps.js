@@ -158,7 +158,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		 * Remove "USA", since this is only for USA addresses.
 		 */
 		removeCountry = function(addressString) {
-			return addressString.replace(', USA', '');
+			return addressString.replace(', USA', '').replace(', United States', '');
 		},
 
 		/**
@@ -212,7 +212,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 			createMarker(homeMarkerSettings);
 			
 			reverseGeocode(mapSettings.center.lat, mapSettings.center.lng, function(response) {
-				$('#address').text(response.address.Street + ', ' + response.address.City + ', ' + response.address.State);
+				$('#address').text(response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toLowerCase());
 			});			
 
 			if (nearbyData) {

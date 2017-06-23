@@ -71,6 +71,9 @@
 				width: 60%;
 			}
 		}
+		#address {
+			text-transform: capitalize;
+		}
 		.google-map {
 			border: 1px solid #ccc;
 			border-radius: 10px;
