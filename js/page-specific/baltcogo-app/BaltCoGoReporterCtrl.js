@@ -13,7 +13,7 @@
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/l/categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
 		
 		self.isAnimal = false;
@@ -47,7 +47,6 @@
 
 
 		self.fileReportClick = function () {
-
 			if (!validatePanel()) 
 				return;
 
@@ -65,7 +64,7 @@
 				},
 				{
 					name: 'Description',
-					id: angular.element('#description').attr('data-cs-id') * 1,
+					id: self.descriptionId,
 					value: self.description
 				},
 				{
@@ -98,8 +97,14 @@
 
 			if (self.locationDescription) data.push({
 				name: 'Description Of Location',
-				id: angular.element('#locationDescription').attr('data-cs-id') * 1,
+				id: self.descriptionOfLocationId,
 				value: self.locationDescription
+			});
+
+			if (self.otherDescription) data.push({
+				name: 'Other Description',
+				id: self.otherDescriptionId,
+				value: self.otherDescription
 			});
 
 			if (self.petType) data.push({
@@ -183,8 +188,8 @@
 				});
 		};
 
-		self.loadSubCategories = function (categoryId) {
-			if (!categoryId) {
+		self.loadSubCategories = function () {
+			if (!self.category) {
 				self.subCategories = [];
 				return;
 			}
@@ -192,32 +197,67 @@
 			angular.forEach(self.categoryData, function (element) {
 				clearCategoryData();
 
-				if (element.id == categoryId) {
+				if (element.id == self.category) {
+
 					self.subCategories = element.types;
+					
 					if (element.states) {
 						self.states = element.states;
 						self.state = element.states[0]; // Maryland
 					}
+					
 					if (element.fields) {
 						self.streetAddressId = element.fields.streetAddress;
 						self.cityId = element.fields.city;
 						self.zipCodeId = element.fields.zipCode;
 					}
-					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
+
+					self.isAnimal = element.name.toLowerCase() === 'pets and animals';					
+
+					$timeout(function() {
+						if (element.descriptionOfAnimal)
+							self.descriptionOfAnimalId = element.descriptionOfAnimal;
+
+						if (element.descriptionOfLocation)
+							self.descriptionOfLocationId = element.descriptionOfLocation;
+
+						if (element.otherDescription)
+							self.otherDescriptionId = element.otherDescription;
+					}, 0);
+
+
+					self.descriptionId = element.description;
+
+					
 				}
 			});
 		};
 
 		self.nextClick = function () {
 			if (validatePanel()) {
-				self.page++; 				
+				self.page++; 
+
+				if (self.page === 2) {
+					setTimeout(function() {
+						var currentCenter = map.getCenter();
+						google.maps.event.trigger(map, "resize");
+						map.setCenter(currentCenter);
+					}, 500);
+				}
 			}
 			else
 				$scope.citySourcedReporterForm.$setSubmitted();				
 		};
 
 		self.prevClick = function () {
-			self.page--; 		
+			self.page--; 
+			if (self.page === 2) {
+				setTimeout(function() {
+					var currentCenter = map.getCenter();
+					google.maps.event.trigger(map, "resize");
+					map.setCenter(currentCenter);
+				}, 500);
+			}
 		};
 
 		self.trackBreed = function () {
@@ -265,6 +305,13 @@
 			self.primaryColor = '';
 			self.primaryBreed = '';
 			self.animalDescription = '';
+			self.streetAddress = '';
+			self.city = '';
+			self.zipCode = '';	
+			self.descriptionOfAnimalId = 0;
+			self.descriptionOfLocationId = 0;
+			self.otherDescriptionId = 0;
+		
 		}
 
 		function geocodeAndMarkAddress(singleLineAddress) {
@@ -396,7 +443,6 @@
 
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
-
 			if (categoryId)
 				autoSelectCategories(categoryId);
 		}

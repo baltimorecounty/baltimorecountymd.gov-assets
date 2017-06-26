@@ -1,7 +1,7 @@
 [{
 	"animal": "dog",
 	"id": 1023514,
-	"breeds": [
+	"breeds": [		
 		{ "name": "Affenpinscher", "id": 1023946 },
 		{ "name": "Afghan Hound", "id": 1023947 },
 		{ "name": "Airedale Terrier", "id": 1023948 },
@@ -200,6 +200,7 @@
 		{ "name": "Miniature American Shepherd", "id": 1024108 },
 		{ "name": "Miniature Bull Terrier", "id": 1024109 },
 		{ "name": "Miniature Schnauzer", "id": 1024110 },
+		{ "name": "Mixed Breed Cat", "id": 1023858 },
 		{ "name": "Mixed Breed Dog", "id": 1024111 },
 		{ "name": "Mudi", "id": 1024112 },
 		{ "name": "Munchkin", "id": 1023859 },
@@ -220,7 +221,6 @@
 		{ "name": "Oriental Longhair", "id": 1023863 },
 		{ "name": "Oriental Shorthair", "id": 1023864 },
 		{ "name": "Other", "id": 1023885 },
-		{ "name": "Other", "id": 1024214 },
 		{ "name": "Otterhound", "id": 1024124 },
 		{ "name": "Papillon", "id": 1024125 },
 		{ "name": "Parson Russell Terri", "id": 1024126 },

@@ -12,7 +12,8 @@
 				}
 			};
 
-			$http.post("https://testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
+			$http.post("//ba224964:1000/api/baltcogo/createreport", data, postOptions)
+			//$http.post("//testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
@@ -24,7 +25,8 @@
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$http.get('//ba224964:1000/api/citysourced/getreport/' + reportId)
+			//$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
 				.then(
 					function(response) {
 						successCallback(response.data);					
@@ -42,8 +44,8 @@
 				}
 			};		
 
-			//$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
 			$http.post("//ba224964:1000/api/citysourced/getreportsbylatlng", settings, postOptions)
+			//$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
