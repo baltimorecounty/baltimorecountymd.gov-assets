@@ -159,6 +159,10 @@
 								padding: .25em;
 								text-align: left;
 								text-transform: capitalize;
+
+								&:focus {
+									border: 2px solid #99f;
+								}
 							}
 						}
 					}
