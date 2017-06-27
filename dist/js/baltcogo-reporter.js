@@ -661,6 +661,8 @@
 					if (element.states) {
 						self.states = element.states;
 						self.state = element.states[0]; // Maryland
+					} else {
+						self.states = [];
 					}
 					
 					if (element.fields) {

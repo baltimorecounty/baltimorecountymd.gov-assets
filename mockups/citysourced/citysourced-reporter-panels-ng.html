@@ -151,11 +151,6 @@
 						<textarea id="animalDescription" name="animalDescription" data-cs-id="{{ reporter.descriptionOfAnimalId }}" ng-model="reporter.animalDescription"></textarea>
 					</div>
 
-					<div class="cs-form-control" ng-if="reporter.descriptionOfLocationId">
-						<label for="locationDescription">Location Description (optional)</label>
-						<textarea id="locationDescription" name="locationDescription" data-cs-id="{{ reporter.descriptionOfLocationId }}" ng-model="reporter.locationDescription"></textarea>
-					</div>
-
 					<div class="cs-form-control" ng-if="reporter.otherDescriptionId">
 						<label for="otherDescription">Other Description (optional)</label>
 						<textarea id="otherDescription" name="otherDescription" data-cs-id="{{ reporter.otherDescriptionId }}" ng-model="reporter.otherDescription"></textarea>
@@ -187,10 +182,10 @@
 					</div>
 
 					<div id="map" class="google-map"></div>
-					
-					<div class="cs-form-control" ng-if="reporter.isAnimal">
-						<label for="description">Location Description (optional)</label>
-						<textarea id="locationDescription" name="locationDescription" data-cs-id="1023525" ng-model="reporter.locationDescription"></textarea>
+
+					<div class="cs-form-control" ng-if="reporter.descriptionOfLocationId">
+						<label for="locationDescription">Location Description (optional)</label>
+						<textarea id="locationDescription" name="locationDescription" data-cs-id="{{ reporter.descriptionOfLocationId }}" ng-model="reporter.locationDescription"></textarea>
 					</div>
 
 					<input type="hidden" id="map-latitude" name="mapLatitude" ng-model="reporter.latitude" required />
