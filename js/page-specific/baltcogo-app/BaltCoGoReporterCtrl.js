@@ -22,6 +22,8 @@
 		self.isSuccess = false;
 		self.issueId = '';
 		self.isLoading = false;
+		self.latitude = 0;
+		self.longitude = 0;
 
 		var mapSettings = {
 				center: {
@@ -361,7 +363,7 @@
 						formControl.$setTouched();
 
 					if (formControl.$$element.is('#address')) {
-						if (angular.element('#map-latitude').is('.ng-invalid') || angular.element('#map-longitude').is('.ng-invalid')) {
+						if (self.latitude === 0 || self.longitude === 0) {
 							formControl.$setValidity('required', false);
 						}
 
