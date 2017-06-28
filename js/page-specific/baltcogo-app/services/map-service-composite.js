@@ -5,8 +5,7 @@
 
 	function mapServiceComposite($http) {
 
-		var apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
-			targetCounty = 'Baltimore County',
+		var targetCounty = 'Baltimore County',
 			marker,
 			spatialReferenceId = 4269,
 			geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
