@@ -15,7 +15,7 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
                 } else {
                     match = getSubtree(item[subtreePropertyName], searchValue);
                 }
-            }
+			} 
         });
         return match;
     },
