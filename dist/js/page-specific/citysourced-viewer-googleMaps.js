@@ -4,8 +4,9 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 
 	var marker,
 		autocomplete,
-		apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
 		targetCounty = 'Baltimore County',
+		spatialReferenceId = 4269,
+		geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
 
 		/**
 		 * Creates the map, and renders it in the mapElementId element.
@@ -24,15 +25,30 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		/**
 		 * Adds a marker to the map.
 		 */
-		createMarker = function (latitude, longitude) {
-			marker = new google.maps.Marker({
-				map: window.map,
-				position: {
-					lat: latitude,
-					lng: longitude
-				},
-				animation: google.maps.Animation.DROP
-			});
+		createMarker = function (settings) { 
+			var markerSettings = {
+					map: window.map,
+					position: {
+						lat: settings.Latitude * 1,
+						lng: settings.Longitude * 1
+					},
+					animation: google.maps.Animation.DROP
+				};
+
+			if (settings.ImageUrl) 
+				markerSettings.icon = settings.ImageUrl;
+			
+			if (settings.ZIndex) {
+				markerSettings.zIndex = settings.ZIndex;
+				markerSettings.optimized = false;
+			}
+			
+			marker = new google.maps.Marker(markerSettings);
+
+			if(settings.InfoWindowHtml)
+				marker.html = settings.InfoWindowHtml;
+			
+			return marker;
 		},
 
 		/**
@@ -59,7 +75,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 					var center = new google.maps.LatLng(latitude, longitude);
 
 					window.map.panTo(center);
-					window.map.setZoom(16);
+					window.map.setZoom(14);
 
 					google.maps.event.trigger(window.map, 'resize');
 					map.setCenter(center);
@@ -70,12 +86,31 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		/**
 		 * Looks up the street address from the latitude and longitude.
 		 */
-		reverseGeocode = function (latitude, longitude, callback) {
-			$.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey)
-				.done(function (data) {
-					var address = getAddress(data.results);
-					callback(address);
+		reverseGeocode = function (latitude, longitude, successCallback) {
+			require([
+				"esri/tasks/Locator",
+				'esri/geometry/Point'				
+			], function(Locator, Point) { 
+
+				var point = new Point(longitude, latitude);
+
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
+
+				var locator = new Locator(locatorSettings);
+
+				var requestOptions = {
+					responseType: 'json'
+				};
+
+				locator.locationToAddress(point).then(successCallback, function(err) {
+					console.log(err);
 				});
+			});
+
 		},
 
 		/**
@@ -116,34 +151,82 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		 * Remove "USA", since this is only for USA addresses.
 		 */
 		removeCountry = function(addressString) {
-			return addressString.replace(', USA', '');
+			return addressString.replace(', USA', '').replace(', United States', '');
+		},
+
+		/**
+		 * Created the info window for when you click on a map marker.
+		 */
+		getInfoWindowHtml = function(dataItem) {
+			var html = '<div class="maps-info-window">'
+					+ '<h4><a href="/CitySourced/preview/viewer?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></h4>'
+					+ '<ul>'
+					+ '<li>Status: ' + dataItem.StatusType + '</li>'
+					+ '<li>Reported on ' + dataItem.DateCreated + '</li>'
+					+ '</ul>'
+					+ '</div>';
+			return html;
 		},
 
 		/**
 		 * Create the map and autocomplete, and attach up the click and place_changed handler.
 		 */
 		initGoogle = function () {
-			var data = window.citySourcedData;
-			var mapSettings = {
+			var data = baltimoreCounty.pageSpecific.citySourcedData,
+				nearbyData = baltimoreCounty.pageSpecific.nearbyData,
+				markers = [],
+				mapSettings = {
 					center: {
-						lat: data && data.Latitude ? data.Latitude : 39.4003288,
-						lng: data && data.Longitude ? data.Longitude : -76.60652470000002
+						lat: data.Latitude,
+						lng: data.Longitude
 					},
 					scrollwheel: false,
-					zoom: 17,
+					zoom: 14,
 					mapTypeId: 'roadmap',
 					mapTypeControl: false,
 					streetViewControl: false
 				},
 				autocompleteSettings = {
 					types: ['geocode']
-				};
+				},
+				infoWindow = new google.maps.InfoWindow({
+					content: "holding..."
+				});
 
 			createMap('map', mapSettings);
-			createMarker(mapSettings.center.lat, mapSettings.center.lng);
-			reverseGeocode(mapSettings.center.lat, mapSettings.center.lng, function(address) {
-				$('#address').text(address);
-			});
+
+			var homeMarkerSettings = {
+				Latitude: mapSettings.center.lat, 
+				Longitude: mapSettings.center.lng, 
+				ImageUrl: '/sebin/n/f/icon-marker-my-report.png', 
+				ZIndex: 7999
+			};
+
+			createMarker(homeMarkerSettings);
+			
+			reverseGeocode(mapSettings.center.lat, mapSettings.center.lng, function(response) {
+				$('#address').text(response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toLowerCase());
+			});			
+
+			if (nearbyData) {
+				for (var i = 0; i < nearbyData.length; i++) {
+					if (nearbyData[i].Latitude != data.Latitude && nearbyData[i].Longitude != data.Longitude) {
+						var markerSettings = {
+							Latitude: nearbyData[i].Latitude, 
+							Longitude: nearbyData[i].Longitude, 
+							ImageUrl: '/sebin/n/p/icon-marker-other.png', 
+							InfoWindowHtml: getInfoWindowHtml(nearbyData[i])
+						};
+
+						markers[i] = createMarker(markerSettings);					
+
+						google.maps.event.addListener(markers[i], 'click', function() {
+							infoWindow.setContent(this.html);
+							infoWindow.open(map, this);
+						});
+					}
+				}
+			}
 		};
 
 	return {
