@@ -4,7 +4,6 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 
 	var marker,
 		autocomplete,
-		apiKey = 'AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8',
 		targetCounty = 'Baltimore County',
 		spatialReferenceId = 4269,
 		geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
