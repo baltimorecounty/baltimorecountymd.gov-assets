@@ -7,7 +7,6 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 		
 
 			$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng', {
-			//$.ajax('//ba224964:1000/api/citysourced/getreportsbylatlng', {
 				method: 'POST',
 				data: settings
 			})
@@ -93,7 +92,6 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 
 			if (reportId) {
 				$.ajax("//testservices.baltimorecountymd.gov/api/citysourced/getreport/" + reportId)
-				//$.ajax("//ba224964:1000/api/citysourced/getreport/" + reportId)
 					.done(function (data, textStatus, jqXHR) {
 						var startDate = new Date();
 						startDate.setDate(-90);

@@ -26,7 +26,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		/**
 		 * Adds a marker to the map.
 		 */
-		createMarker = function (settings) { //(latitude, longitude, imageUrl, zIndex, infoWindowHtml) {
+		createMarker = function (settings) { 
 			var markerSettings = {
 					map: window.map,
 					position: {
@@ -88,12 +88,6 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		 * Looks up the street address from the latitude and longitude.
 		 */
 		reverseGeocode = function (latitude, longitude, successCallback) {
-			/*$.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + apiKey)
-				.done(function (data) {
-					var address = getAddress(data.results).replace(', USA', '');
-					callback(address);
-				});*/
-
 			require([
 				"esri/tasks/Locator",
 				'esri/geometry/Point'				

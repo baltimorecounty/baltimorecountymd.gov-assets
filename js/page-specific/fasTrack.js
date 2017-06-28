@@ -27,9 +27,6 @@ baltimoreCounty.pageSpecific.fasTrack = (function ($, undefined) {
 	 * Submits form data to FasTrack.
 	 */
 	var submitToFasTrack = function ($form) {
-		//var _appServer = 'http://localhost:50851/ECMS/',
-		//var _appServer = 'http://dprmmstr-dev.co.ba.md.us/ECMS/',
-		//var _appServer = 'http://dprmmaster.co.ba.md.us/ECMS/',
 		var _appServer = 'http://egov.baltimorecountymd.gov/ECMS/',
 			dataString = $form.serialize();
 
@@ -44,7 +41,7 @@ baltimoreCounty.pageSpecific.fasTrack = (function ($, undefined) {
 				formatJsonpResult(data);
 			})
 			.fail(function (error) {
-				console.log(error);
+				console.error(error);
 			});
 	};
 
