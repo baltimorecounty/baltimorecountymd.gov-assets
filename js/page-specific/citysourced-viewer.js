@@ -59,10 +59,11 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 			if (data.DateUpdated)
 				data.DateUpdated = removeSeconds(data.DateUpdated);
 
-			if (data.Comments)
+			if (data.Comments) {
 				for (var n = 0; n < data.Comments.length; n++) {
 					data.Comments[n].Created = removeSeconds(data.Comments[n].Created);
 				}
+			}
 
 			return data;
 		},
