@@ -65,7 +65,9 @@ gulp.task('concatTemplateJs', function () {
 					'js/bc-content-filter.js', 
 					'js/accordion-menu.js',
 					'js/youtube-playlist-gallery.js',
-					'js/photo-gallery.js'];
+					'js/photo-gallery.js',
+					'js/severe-weather-warning.js'];
+
   	return concatFiles(files, 'templateinside.js');
 });
 
