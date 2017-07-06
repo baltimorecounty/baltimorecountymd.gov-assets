@@ -4,11 +4,12 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 	var $searchResultsTarget;
 	var templateSelector = '#swiftype-search-results-template';
+	var errorMessageHtml = '<p>There were no results found for this search.</p>';
 
 	function getSearchResults(searchTerm, pageNumber) {
 		pageNumber = pageNumber || 1;
 		searchTerm = searchTerm.replace(/\+/g, '%20');
-		console.log(searchTerm);
+
 		$.ajax('//ba224964:1000/api/search/' + searchTerm + '/' + pageNumber).then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
 	}
 
@@ -69,6 +70,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 		if (queryStringDictionary.q) {
 			getSearchResults(queryStringDictionary.q, queryStringDictionary.page);
+		} else {
+			$searchResultsTarget.html(errorMessageHtml);
 		}
 	}
 
