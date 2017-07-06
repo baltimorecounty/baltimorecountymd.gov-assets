@@ -19,7 +19,7 @@ baltimoreCounty.swifTypeConfig = (function($, undefined) {
 
 
 $(function() { 
-	$('#search-input').swiftype({ 
+	$('#q').swiftype({ 
 		renderFunction: baltimoreCounty.swifTypeConfig.customRenderFunction,
 		engineKey: '4nioYNESzQAAvy7fKxeY'
 	});

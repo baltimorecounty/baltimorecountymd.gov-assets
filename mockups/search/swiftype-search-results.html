@@ -5,6 +5,7 @@
 	</div>
 
 	<div class="search-results-display" style="display: none">
+		{{#if searchResult}}
 		<p>Displaying results {{info.index.first}} to {{info.index.last}} of {{info.total_result_count}}.</p>
 		<ul>
 			{{#each searchResult}}
@@ -25,5 +26,9 @@
 				{{/if}}
 			{{/each}}
 		</div>
+		{{else}}
+		<p>We couldn't find any pages matching your search.</p>
+		{{/if}}
+
 	</div>
 </script>	

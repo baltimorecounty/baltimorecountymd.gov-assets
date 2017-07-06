@@ -7,6 +7,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 	function getSearchResults(searchTerm, pageNumber) {
 		pageNumber = pageNumber || 1;
+		searchTerm = searchTerm.replace(/\+/g, '%20');
+		console.log(searchTerm);
 		$.ajax('//ba224964:1000/api/search/' + searchTerm + '/' + pageNumber).then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
 	}
 
@@ -20,46 +22,44 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 		info.base_url = window.location.pathname + '?q=' + info.query + '&page=';
 
-		if (hits.length) {
-			var searchResults = [];
-			var pageLinks = [];
+		var searchResults = [];
+		var pageLinks = [];
 
-			info.index = {
-				first: ((info.current_page - 1) * info.per_page) + 1,
-				last: info.current_page * info.per_page < info.total_result_count ? info.current_page * info.per_page : info.total_result_count
-			};
+		info.index = {
+			first: ((info.current_page - 1) * info.per_page) + 1,
+			last: info.current_page * info.per_page < info.total_result_count ? info.current_page * info.per_page : info.total_result_count
+		};
 
-			$.each(hits, function(index, hit) {
-				var highlight = hit.highlight.title || hit.highlight.sections || hit.highlight.body;
-				var title = hit.title;
-				var url = hit.url;
+		$.each(hits, function(index, hit) {
+			var highlight = hit.highlight.title || hit.highlight.sections || hit.highlight.body;
+			var title = hit.title;
+			var url = hit.url;
 
-				searchResults.push({
-					highlight: highlight,
-					title: title,
-					url: url
-				});
+			searchResults.push({
+				highlight: highlight,
+				title: title,
+				url: url
 			});
+		});
 
-			for (var i = 1; i <= info.num_pages; i++) {
-				pageLinks.push({
-					page: i,
-					current: i === info.current_page
-				});
-			}
-
-			var source = $(templateSelector).html();
-            var template = Handlebars.compile(source);
-            var searchResultsHtml = template({ 
-				searchResult: searchResults, 
-				info: info,
-				pageLinks: pageLinks
+		for (var i = 1; i <= info.num_pages; i++) {
+			pageLinks.push({
+				page: i,
+				current: i === info.current_page
 			});
-
-			$searchResultsTarget.html(searchResultsHtml);
-			$searchResultsTarget.find('.loading').hide();
-			$searchResultsTarget.find('.search-results-display').fadeIn(250);
 		}
+
+		var source = $(templateSelector).html();
+		var template = Handlebars.compile(source);
+		var searchResultsHtml = template({ 
+			searchResult: searchResults, 
+			info: info,
+			pageLinks: pageLinks
+		});
+
+		$searchResultsTarget.html(searchResultsHtml);
+		$searchResultsTarget.find('.loading').hide();
+		$searchResultsTarget.find('.search-results-display').fadeIn(250);
 	}
 
 	function init() {
