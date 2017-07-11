@@ -2,34 +2,36 @@
   'use strict';
 
   angular.module('baltcogoApp', [])
-    .config(["dataProvider", function (dataProvider) {
+    .config(["urlProvider", function (urlProvider) {
       var urls = [
         { "animal.breeds": '/mockups/citysourced/animal-breeds.json' },
         { "animal.colors": '/mockups/citysourced/animal-colors.json' },
         { "animal.types": '/mockups/citysourced/animal-types.json' },
         { "categories": '/mockups/citysourced/categories.json' },
-        { "pet.types": '/mockups/citysourced/pet-types.json' }
+        { "pet.types": '/mockups/citysourced/pet-types.json' },
+        { "report.create": "//testservices.baltimorecountymd.gov/api/baltcogo/createreport" },
+        { "report.get": "//testservices.baltimorecountymd.gov/api/citysourced/getreport/" },
+        { "reports.getByLatLng": "//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng"}
       ];
-      dataProvider.setUrls(urls);
+      urlProvider.setUrls(urls);
     }]);
 })();
 // http://www.learn-angular.org/#!/lessons/the-provider-recipe
-(function (app, querystringer) {
+(function (app) {
   'use strict';
 
-  function Data(arr) {
+  function Url(arr) {
     this.endpoints = {};
 
     for (var i = 0; i < arr.length; i++) {
       var obj = arr[i];
-      console.log(obj);
       var key = Object.keys(obj)[0];
 
       this.endpoints[key] = obj[key];
     }
   }
 
-  app.provider('data', function () {
+  app.provider('url', function () {
     var urlArr = null;
 
     this.setUrls = function (keyValArr) {
@@ -37,11 +39,11 @@
     };
 
     this.$get = [function () {
-      return new Data(urlArr);
+      return new Url(urlArr);
     }];
   });
 
-})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer);
+})(angular.module('baltcogoApp'));
 (function(app) {
 	'use strict';
 
@@ -242,9 +244,9 @@
 (function(app) {
 	'use strict';
 
-	app.factory('reportService', ['$http', reportService]);
+	app.factory('reportService', ['$http', 'url', reportService]);
 
-	function reportService($http) {
+	function reportService($http, urlProvider) {
 
 		function post(data, successCallback, errorCallback) {
 			var postOptions = {
@@ -253,7 +255,7 @@
 				}
 			};
 
-			$http.post("//testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
+			$http.post(urlProvider.endpoints["report.create"], data, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
@@ -265,7 +267,7 @@
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$http.get(urlProvider.endpoints["report.get"] + reportId)
 				.then(
 					function(response) {
 						successCallback(response.data);					
@@ -283,7 +285,7 @@
 				}
 			};		
 
-			$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			$http.post(urlProvider.endpoints["reports.getByLatLng"], settings, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
@@ -307,45 +309,20 @@
 (function (app, querystringer) {
   'use strict';
 
-  function Data(arr) {
-    this.endpoints = {};
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', "url", reporterController]);
 
-    for (var i = 0; i < arr.length; i++) {
-      var obj = arr[i];
-      console.log(obj);
-      var key = Object.keys(obj)[0];
-
-      this.endpoints[key] = obj[key];
-    }
-  }
-
-  app.provider('data', function () {
-    var urlArr = null;
-
-    this.setUrls = function (keyValArr) {
-      urlArr = keyValArr;
-    };
-
-    this.$get = [function () {
-      return new Data(urlArr);
-    }];
-  });
-
-
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', "data", reporterController]);
-
-  function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, dataProvider) {
+  function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, urlProvider) {
 
     var self = this,
       targetCounty = 'Baltimore County',
       categoryId = querystringer.getAsDictionary().categoryid * 1,
       map;
 
-    $http.get(dataProvider.endpoints["animal.breeds"]).then(breedSuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["animal.colors"]).then(colorSuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["animal.types"]).then(animalTypeSuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["categories"]).then(categorySuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["pet.types"]).then(petTypeSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["animal.breeds"]).then(breedSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["animal.colors"]).then(colorSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["animal.types"]).then(animalTypeSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["categories"]).then(categorySuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["pet.types"]).then(petTypeSuccessHandler, errorHandler);
 
     self.isAnimal = false;
     self.page = 1;

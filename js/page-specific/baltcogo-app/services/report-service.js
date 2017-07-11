@@ -1,9 +1,9 @@
 (function(app) {
 	'use strict';
 
-	app.factory('reportService', ['$http', reportService]);
+	app.factory('reportService', ['$http', 'url', reportService]);
 
-	function reportService($http) {
+	function reportService($http, urlProvider) {
 
 		function post(data, successCallback, errorCallback) {
 			var postOptions = {
@@ -12,7 +12,7 @@
 				}
 			};
 
-			$http.post("//testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
+			$http.post(urlProvider.endpoints["report.create"], data, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);
@@ -24,7 +24,7 @@
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$http.get(urlProvider.endpoints["report.get"] + reportId)
 				.then(
 					function(response) {
 						successCallback(response.data);					
@@ -42,7 +42,7 @@
 				}
 			};		
 
-			$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			$http.post(urlProvider.endpoints["reports.getByLatLng"], settings, postOptions)
 				.then(
 					function (response) {
 						successCallback(response.data);

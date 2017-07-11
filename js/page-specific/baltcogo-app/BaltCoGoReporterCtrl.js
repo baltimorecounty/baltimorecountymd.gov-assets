@@ -2,45 +2,20 @@
 (function (app, querystringer) {
   'use strict';
 
-  function Data(arr) {
-    this.endpoints = {};
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', "url", reporterController]);
 
-    for (var i = 0; i < arr.length; i++) {
-      var obj = arr[i];
-      console.log(obj);
-      var key = Object.keys(obj)[0];
-
-      this.endpoints[key] = obj[key];
-    }
-  }
-
-  app.provider('data', function () {
-    var urlArr = null;
-
-    this.setUrls = function (keyValArr) {
-      urlArr = keyValArr;
-    };
-
-    this.$get = [function () {
-      return new Data(urlArr);
-    }];
-  });
-
-
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', "data", reporterController]);
-
-  function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, dataProvider) {
+  function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, urlProvider) {
 
     var self = this,
       targetCounty = 'Baltimore County',
       categoryId = querystringer.getAsDictionary().categoryid * 1,
       map;
 
-    $http.get(dataProvider.endpoints["animal.breeds"]).then(breedSuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["animal.colors"]).then(colorSuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["animal.types"]).then(animalTypeSuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["categories"]).then(categorySuccessHandler, errorHandler);
-    $http.get(dataProvider.endpoints["pet.types"]).then(petTypeSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["animal.breeds"]).then(breedSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["animal.colors"]).then(colorSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["animal.types"]).then(animalTypeSuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["categories"]).then(categorySuccessHandler, errorHandler);
+    $http.get(urlProvider.endpoints["pet.types"]).then(petTypeSuccessHandler, errorHandler);
 
     self.isAnimal = false;
     self.page = 1;
