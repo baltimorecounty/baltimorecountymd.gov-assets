@@ -2,19 +2,22 @@
 (function (app) {
   'use strict';
 
-  function Url(arr) {
-    this.endpoints = {};
+  app
+    .provider('app.urls', UrlsProvider);
 
-    for (var i = 0; i < arr.length; i++) {
-      var obj = arr[i];
-      var key = Object.keys(obj)[0];
-
-      this.endpoints[key] = obj[key];
-    }
-  }
-
-  app.provider('app.urls', function () {
+  function UrlsProvider() {
     var urlArr = null;
+
+    var Url = function (arr) {
+      this.endpoints = {};
+
+      for (var i = 0; i < arr.length; i++) {
+        var obj = arr[i];
+        var key = Object.keys(obj)[0];
+
+        this.endpoints[key] = obj[key];
+      }
+    }
 
     this.setUrls = function (keyValArr) {
       urlArr = keyValArr;
@@ -23,6 +26,6 @@
     this.$get = [function () {
       return new Url(urlArr);
     }];
-  });
+  };
 
 })(angular.module('baltcogoApp'));
