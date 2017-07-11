@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('baltcogoApp', [])
-    .config(['urlsProvider', function (urlProvider) {
+    .config(['app.urlsProvider', function (urlProvider) {
       var urls = [
         { "animal.breeds": '/mockups/citysourced/animal-breeds.json' },
         { "animal.colors": '/mockups/citysourced/animal-colors.json' },
@@ -31,7 +31,7 @@
     }
   }
 
-  app.provider('urls', function () {
+  app.provider('app.urls', function () {
     var urlArr = null;
 
     this.setUrls = function (keyValArr) {
@@ -244,7 +244,7 @@
 (function(app) {
 	'use strict';
 
-	app.factory('reportService', ['$http', 'urls', reportService]);
+	app.factory('reportService', ['$http', 'app.urls', reportService]);
 
 	function reportService($http, urlProvider) {
 
@@ -309,7 +309,7 @@
 (function (app, querystringer) {
   'use strict';
 
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'urls', reporterController]);
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'app.urls', reporterController]);
 
   function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, urlsProvider) {
 

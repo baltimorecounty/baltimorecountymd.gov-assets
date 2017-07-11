@@ -1,7 +1,7 @@
 (function(app) {
 	'use strict';
 
-	app.factory('reportService', ['$http', 'urls', reportService]);
+	app.factory('reportService', ['$http', 'app.urls', reportService]);
 
 	function reportService($http, urlProvider) {
 

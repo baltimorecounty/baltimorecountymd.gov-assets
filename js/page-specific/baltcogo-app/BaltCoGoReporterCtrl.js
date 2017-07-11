@@ -2,7 +2,7 @@
 (function (app, querystringer) {
   'use strict';
 
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'urls', reporterController]);
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'app.urls', reporterController]);
 
   function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, urlsProvider) {
 
