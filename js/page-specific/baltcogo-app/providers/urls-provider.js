@@ -13,7 +13,7 @@
     }
   }
 
-  app.provider('url', function () {
+  app.provider('urls', function () {
     var urlArr = null;
 
     this.setUrls = function (keyValArr) {

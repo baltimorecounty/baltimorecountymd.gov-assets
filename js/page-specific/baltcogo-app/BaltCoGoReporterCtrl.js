@@ -2,20 +2,20 @@
 (function (app, querystringer) {
   'use strict';
 
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', "url", reporterController]);
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'urls', reporterController]);
 
-  function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, urlProvider) {
+  function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, urlsProvider) {
 
     var self = this,
       targetCounty = 'Baltimore County',
       categoryId = querystringer.getAsDictionary().categoryid * 1,
       map;
 
-    $http.get(urlProvider.endpoints["animal.breeds"]).then(breedSuccessHandler, errorHandler);
-    $http.get(urlProvider.endpoints["animal.colors"]).then(colorSuccessHandler, errorHandler);
-    $http.get(urlProvider.endpoints["animal.types"]).then(animalTypeSuccessHandler, errorHandler);
-    $http.get(urlProvider.endpoints["categories"]).then(categorySuccessHandler, errorHandler);
-    $http.get(urlProvider.endpoints["pet.types"]).then(petTypeSuccessHandler, errorHandler);
+    $http.get(urlsProvider.endpoints["animal.breeds"]).then(breedSuccessHandler, errorHandler);
+    $http.get(urlsProvider.endpoints["animal.colors"]).then(colorSuccessHandler, errorHandler);
+    $http.get(urlsProvider.endpoints["animal.types"]).then(animalTypeSuccessHandler, errorHandler);
+    $http.get(urlsProvider.endpoints["categories"]).then(categorySuccessHandler, errorHandler);
+    $http.get(urlsProvider.endpoints["pet.types"]).then(petTypeSuccessHandler, errorHandler);
 
     self.isAnimal = false;
     self.page = 1;

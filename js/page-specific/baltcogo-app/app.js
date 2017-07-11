@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('baltcogoApp', [])
-    .config(["urlProvider", function (urlProvider) {
+    .config(['urlsProvider', function (urlProvider) {
       var urls = [
         { "animal.breeds": '/mockups/citysourced/animal-breeds.json' },
         { "animal.colors": '/mockups/citysourced/animal-colors.json' },
