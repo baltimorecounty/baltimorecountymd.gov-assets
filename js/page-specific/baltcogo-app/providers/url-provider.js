@@ -1,8 +1,8 @@
 // http://www.learn-angular.org/#!/lessons/the-provider-recipe
-(function (app, querystringer) {
+(function (app) {
   'use strict';
 
-  function Data(arr) {
+  function Url(arr) {
     this.endpoints = {};
 
     for (var i = 0; i < arr.length; i++) {
@@ -13,7 +13,7 @@
     }
   }
 
-  app.provider('data', function () {
+  app.provider('url', function () {
     var urlArr = null;
 
     this.setUrls = function (keyValArr) {
@@ -21,8 +21,8 @@
     };
 
     this.$get = [function () {
-      return new Data(urlArr);
+      return new Url(urlArr);
     }];
   });
 
-})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer);
+})(angular.module('baltcogoApp'));
