@@ -7,7 +7,6 @@
 
     for (var i = 0; i < arr.length; i++) {
       var obj = arr[i];
-      console.log(obj);
       var key = Object.keys(obj)[0];
 
       this.endpoints[key] = obj[key];
