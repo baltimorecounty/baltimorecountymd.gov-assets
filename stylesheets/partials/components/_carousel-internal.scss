@@ -1,0 +1,12 @@
+.carousel {
+	visibility: hidden;
+
+	&.slick-initialized {
+		visibility: visible;
+	}
+
+	.slick-next, .slick-prev {
+		z-index: 100;
+		top: 25%;
+	}
+}
