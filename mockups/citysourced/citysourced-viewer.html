@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<title>CitySourced Mockup</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+	    crossorigin="anonymous"></script>
+	<script src="/dist/js/templateinside.min.js"></script>
+	<script src="/js/page-specific/citysourced-reporter.js"></script>
+	<script src="/js/page-specific/citysourced-googleMaps.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+
+	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
+	<link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
+	<!--[if lte IE 9]>
+        <link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
+    <![endif]-->
+
+	<style>
+		#map {
+			height: 350px;
+		}
+	</style>
+</head>
+
+<body>
+
+<!-- START -->
+
+	<div role="alert" class="bc-citysourced-viewer-alert alert-warning" style="display: none" aria-hidden="true">
+		<h2>Report Not Found</h2>
+		<p>Sorry, we couldn’t find anything matching the record number <strong id="reportId"></strong>. Please check your number and
+			<a href="/iwant/followup.html">enter it again</a>.</p>
+		<p>If you’re looking up a report you just submitted, please wait a few minutes and try again. It can take up to five minutes
+			for new reports to show up in our system.</p>
+	</div>
+
+	<div class="bc-citysourced-reporter">
+		<div class="callout_gray" id="citysourced-viewer">
+
+			Loading... <i class="fa fa-spinner fa-pulse fa-fw"></i>
+			<span class="sr-only">Loading...</span>
+
+			<script id="citysourced-viewer-template" type="text/x-handlebars-template">
+				<h2>Report Status <span class="{{IsOpen}}">{{Status}}</span></h2>
+				<dl id="meta">
+					<dt>Request ID</dt>
+					<dd>{{Id}}</dd>
+					<dt>Issue Type</dt>
+					<dd>{{IssueType}}</dd>
+					<dt>Date Created</dt>
+					<dd>{{DateCreated}}</dd>
+					<dt>Last Updated</dt>
+					<dd>{{DateUpdated}}</dd>					
+					<dt>Description</dt>
+					<dd>{{Description}}</dd>
+					<dt>Location</dt>
+					<dd id="address"></dd>
+				</dl>
+
+				<div id="map" class="google-map"></div>
+				{{#if Comments}}
+				<h3>Comments</h3>
+
+				<ul id="comments">
+					{{#each Comments}}
+					<li>
+						<p>{{Text}}</p>
+						<div class="attribution">
+							<span class="author-name">{{Author}}</span>, <span class="author-date">{{Created}}</span>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
+				{{/if}}
+			</script>
+
+		</div>
+	</div>
+
+<!-- END -->
+
+
+</body>
+
+</html>

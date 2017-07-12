@@ -23,6 +23,13 @@ gulp.task('clean-dist', function() {
 		.pipe(clean());
 });
 
+gulp.task('concatBaltCoGoAppJs', function() {
+	var files = ['js/page-specific/baltcogo-app/app.js',
+				'js/page-specific/baltcogo-app/services/**/*.js',
+				'js/page-specific/baltcogo-app/*Ctrl.js'];
+	return concatFiles(files, 'baltcogo-reporter.js');
+});
+
 gulp.task('concatHomepageJs', function() {
 	var files = ['js/polyfills/*.js',
 					'js/utility/namespacer.js', 
@@ -49,7 +56,9 @@ gulp.task('concatTemplateJs', function () {
 					'js/text-resizer.js', 
 					'js/bc-google-analytics.js', 
 					'js/bc-google-analytics-custom-events.js', 
+					'js/lib/slick.min.js', 
 					'js/lib/review.js', 
+					'js/internal-carousel.js',
 					'js/mobile-search.js',
 					'js/template-events.js', 
 					'js/inside-template.js',
@@ -58,7 +67,9 @@ gulp.task('concatTemplateJs', function () {
 					'js/bc-content-filter.js', 
 					'js/accordion-menu.js',
 					'js/youtube-playlist-gallery.js',
-					'js/photo-gallery.js'];
+					'js/photo-gallery.js',
+					'js/severe-weather-warning.js'];
+
   	return concatFiles(files, 'templateinside.js');
 });
 
@@ -67,7 +78,7 @@ gulp.task('movePageSpecificJs', function() {
 		.pipe(gulp.dest('dist/js/page-specific'));
 });
 
-gulp.task('compressFiles', ['concatHomepageJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
+gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTemplateJs', 'movePageSpecificJs'], function() {
 	return gulp.src(['!dist/js/**/*.min.js', 'dist/js/**/*.js'])
 		.pipe(stripCode({
 			start_comment: 'test-code',
@@ -94,7 +105,7 @@ gulp.task('compressPageSpecificFiles', function () {
 });
 
 gulp.task('sassAndCompressCss', function () {
-	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss'])
+	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss', 'stylesheets/partials/layouts/*.scss'])
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cssnano({
 			autoprefixer: false
