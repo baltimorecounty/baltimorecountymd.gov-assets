@@ -105,7 +105,7 @@ gulp.task('compressPageSpecificFiles', function () {
 });
 
 gulp.task('sassAndCompressCss', function () {
-	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss'])
+	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss', 'stylesheets/partials/layouts/*.scss'])
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cssnano({
 			autoprefixer: false
