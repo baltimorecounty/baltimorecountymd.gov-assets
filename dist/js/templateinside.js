@@ -151,6 +151,23 @@ baltimoreCounty.utility.cdnFallback = (function() {
 })();
 namespacer('baltimoreCounty.utility');
 
+/* from https://davidwalsh.name/javascript-debounce-function */
+baltimoreCounty.utility.debounce = (function(func, wait, immediate) {
+    var timeout;
+    return function(func, wait, immediate) {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+})();
+namespacer('baltimoreCounty.utility');
+
 baltimoreCounty.utility.formValidator = (function($) {
 
     /*
@@ -244,7 +261,7 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
                 } else {
                     match = getSubtree(item[subtreePropertyName], searchValue);
                 }
-            }
+			} 
         });
         return match;
     },
@@ -313,6 +330,11 @@ namespacer('baltimoreCounty.utility');
 baltimoreCounty.utility.querystringer = (function(undefined) {
     'use strict';
 
+	/**
+	 * Turns the querystring key/value pairs into a dictionary.
+	 * 
+	 * Important: All of the returned dictionary's keys will be lower-cased.
+	 */
     var getAsDictionary = function() {
 
         if (window.location.search) {
@@ -326,7 +348,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
                     keyValueArr = qsArray[i].split('='),
                     entry = {};
 
-                qsDict[keyValueArr[KEY]] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
+                qsDict[keyValueArr[KEY].toLowerCase()] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
             }
 
             return qsDict;
@@ -5669,6 +5691,7 @@ function isIE(userAgent) {
 ReView.js 0.65b. The Responsive Viewport. responsiveviewport.com.
 Developed by Edward Cant. @opticswerve.
 */
+try {
 if(!isIE()) {
 	function Viewport(){this.viewport=function(a){var b=document,d=b.documentElement;b.head=b.head||b.getElementsByTagName("head")[0];var e=screen,c=this,f=window;c.bScaled=!1;c.bSupported=!0;b.addEventListener===a?c.bSupported=!1:b.querySelector===a?c.bSupported=!1:f!==parent?c.bSupported=!1:f.orientation===a&&(c.bSupported=!1);c.updateOrientation();c.updateScreen();c.dpr=1;var g=f.devicePixelRatio;g===a?c.bSupported=!1:c.dpr=g;c.fromHead();this.meta!==a&&(c.iHeight=c.height,c.iMaxScale=c.maxScale,c.iMinScale=
 c.minScale,c.iUserScalable=c.bUserScalable,c.iWidth=c.width);c.defaultWidth=1200;e.width>c.defaultWidth&&(c.defaultWidth=e.width);e.height>c.defaultWidth&&(c.defaultWidth=e.height);c.ready(function(){if(c.bSupported){if(f.screenX!==0)c.bSupported=false;else if(c.width!==a){var e;if(d.offsetHeight<=d.clientHeight){e=d.style.height;d.style.height=d.clientHeight+128+"px"}if(c.width==="device-width"){if(d.clientWidth!==c.screenWidth)c.bSupported=false}else if(c.width!==d.clientWidth)c.bSupported=false;
@@ -5686,6 +5709,7 @@ function ReView(){this.mode="default";this.v=new Viewport;this.v.viewport();this
 "core";reView.success()},reView.failure)}else this.failure()};this.setDefault=function(){if(this.mode==="default")this.success();else if(this.v.bSupported){try{sessionStorage.setItem("reViewMode","default")}catch(a){}this.v.setDefault(function(){reView.mode="default";reView.success()},reView.failure)}else this.failure()};this.success=function(){var a=reView;a.v.bSupported&&a.updateAnchors();a.successPolicy!==void 0&&a.successPolicy()};this.updateAnchors=function(){var a=document.getElementsByClassName("reView"),
 b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-coreText")?a[b].getAttribute("data-coreText"):"Default View";else for(;b--;)a[b].innerHTML=a[b].hasAttribute("data-defaultText")?a[b].getAttribute("data-defaultText"):"Core View"};return!0};
 }
+} catch (e) {}
 namespacer('baltimoreCounty');
 
 baltimoreCounty.internalCarousel = (function($) {
@@ -5925,131 +5949,105 @@ namespacer('baltimoreCounty');
  */
 baltimoreCounty.niftyForms = (function() {
 
-    var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
-        checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
-        checkboxesSelector = '.seCheckbox',
-        radiosSelector = '.seRadio',
+	var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
+		checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
+		checkboxesSelector = '.seCheckbox',
+		radiosSelector = '.seRadio',
+		$focusedElement,
 
-        focusChanged = function(e) {
-            var $input = $(e.currentTarget),
-                inputId = $input.attr('id'),
-                $label = $('label[for="' + inputId + '"]');
-            
-            removeFocus();
-            $label.addClass('is-focused');
-        },
+		focusChanged = function(e) {
+			var $target = $(e.target),
+				inputId = $target.attr('id'),
+				$label = $('label[for="' + inputId + '"]');
+			
+			$focusedElement = undefined;
 
-        inputChanged = function(e) {
-            var $input = $(e.currentTarget),
-                inputId = $input.attr('id'),
-                isChecked = $input.is(':checked'),
-                $label = $('label[for="' + inputId + '"]');
-                
-                if ($input.is('[type=radio]')) {
-                    var radioName = $input.attr('name')
-                    var $radioInputs = $('input[name="' + radioName + '"]');
+			if ($target.parent().is(checkboxesAndRadiosLabelSelector)) {
+				$focusedElement = $target.parent();
+			} else {
+				if ($target.is(checkboxesAndRadiosLabelSelector)) { 
+					$focusedElement = $target;
+				} else {
+					$focusedElement = $label;
+				}
+			}
 
-                    $radioInputs.each(function() {
-                        var $radioLabel = $('label[for="' + $(this).attr('id') + '"]');
+			removeFocus();
 
-                        $radioLabel.removeClass('checked');
-                    });
-                }
+			if ($focusedElement && $focusedElement.length)
+				$focusedElement.addClass('is-focused');
+		},
 
-            if (isChecked) {
-                $label.addClass('checked'); 
-            }
-            else {
-                $label.removeClass('checked'); 
-            }
-        },
+		makeItemCheckedOnClickHandler = function(e) {
+			var $target = $(e.currentTarget);
+			$target.find('input').trigger('click');
+		},
 
-        /*
-         * Toggle the click label's checkbox/radion button. This is necessary because
-         * the niftyness is the ::before pseudo-element of the label tag, and not the 
-         * input itself.
-         */
-        toggleChecked = function($label) {
-            var labelFor = $label.attr('for'),
-                $input = $label.siblings('#' + labelFor);
+		/*
+		 * Toggles the checkedness of the underlying input when the user hits the space bar.
+		 */
+		makeItemCheckedOnKeyupHandler = function(e) {
+			var $target = $(e.currentTarget);
+			var $input = $target.find('input');
+			var keyCode = e.which || e.keyCode;
+			var KEYCODE_SPACEBAR = 32;
 
-            if (!$input.length)
-                $input = $label.find('input').first();
+			if (keyCode === KEYCODE_SPACEBAR) {	
+				$input.prop('checked', !$input.prop('checked'));
+/*
+				if ($target.is(checkboxesAndRadiosLabelSelector)) {
+					if ($input.prop('checked')) {						
+						$target.addClass('checked');
+					} else	{
+						$target.removeClass('checked');
+					}
+				}
+*/			}
+		},
 
-            $input.focus().trigger('change');
-        },
+		removeFocus = function() {
+			if ($focusedElement)
+				$focusedElement.removeClass('is-focused');
+		}
 
-        /*
-         * Toggles the checkedness of the underlying input when the user clicks the label. 
-         */
-        makeItemCheckedOnClickHandler = function(e) {
-            var $label = $(e.target);
-            
-            toggleChecked($label);
-        },
+		/*
+		 * Filter that finds checkboxes and radios that aren't in a list.
+		 */ 
+		singleCheckboxAndRadioFilter = function(index, item) {
+			return $(item).siblings('label').length === 0;
+		},	
 
-        /*
-         * Toggles the checkedness of the underlying input when the user hits the space bar.
-         */
-        makeItemCheckedOnKeyupHandler = function(e) {
-            var $label = $(e.target),
-                KEYCODE_SPACEBAR = 32;
+		toggleLabelChecked = function(e) {
+			var $target = $(e.target);
+			var $label =  $target.siblings('label');
+			var targetName = $target.attr('name');
+			var targetId = $target.attr('id');
 
-                if (e.which === KEYCODE_SPACEBAR) {
-                    e.preventDefault();
-                    toggleChecked($label);
-                }
-        },
+			if ($label.length === 0 && $target.is(checkboxesAndRadiosLabelSelector)) {
+				$label = $target;
+				$target = $(e.target);
+			}
 
-        removeFocus = function() {
-            $('.is-focused').removeClass('is-focused');
-        }
+			if ($label.length === 0 && $target.parent().is(checkboxesAndRadiosLabelSelector)) {
+				$label = $target.parent();
+			}
 
-        /*
-         * Filter that finds checkboxes and radios that aren't in a list.
-         */ 
-        singleCheckboxAndRadioFilter = function(index, item) {
-            return $(item).siblings('label').length === 0;
-        };
+			if ($target.is('input[type=radio]')) {
+				var $radioButtonSet = $('input[name=' + targetName + ']');
+				$radioButtonSet.not($('#' + targetId)).prop('checked', false).siblings('label').removeClass('checked');
+			}
 
-    /*
-     * Attach events and add aria roles to labels. 
-     */
-    $(function() {
-
-        var $forms = $('form'),
-            $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
-            $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
-            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
-            $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
-            $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
-
-
-        $(document)
-            .on('click', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnClickHandler)
-            .on('keyup', checkboxesAndRadiosLabelSelector + "," + checkboxesAndRadiosSelector, makeItemCheckedOnKeyupHandler)
-            // .attr('tabindex', '-1')
-            .attr('aria-checked', false);
-
-        $(document)
-            .on('change', checkboxesAndRadiosSelector, inputChanged)
-            .on('focus', checkboxesAndRadiosSelector, focusChanged)
-            .on('blur', checkboxesAndRadiosSelector, removeFocus);
-        
-        $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
-        $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
-    });
-
-    /* test code */
-    return {
-        toggleChecked: toggleChecked
-    };
-    /* end test code */
+			if ($target.prop('checked')) {						
+				$label.addClass('checked');
+			} else	
+				$label.removeClass('checked');
+		};
 
 })();
 namespacer('baltimoreCounty');
 
-baltimoreCounty.contentFilter = (function($) {
+baltimoreCounty.contentFilter = (function($, utilities) {
+    
 
     var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
         DEFAULT_SEARCH_BOX_SELECTOR = '.bc-filter-form .bc-filter-form-filter',
@@ -6071,33 +6069,76 @@ baltimoreCounty.contentFilter = (function($) {
                 contentType = options.contentType || DEFAULT_CONTENT_TYPE,
                 $wrapper = safeLoad(wrapperSelector),
                 $searchBox = safeLoad(searchBoxSelector),
-                $clearButton = safeLoad(clearButtonSelector),
-                $errorMessage = safeLoad(errorMessageSelector);
+                $errorMessage = safeLoad(errorMessageSelector),
+				$clearIcon = $('.icon-clear');
 
             $errorMessage.hide();
 
-            /*if (contentType === 'table')
-                $wrapper.find('th').each(setColumnWidthToInitialWidth);*/
-
             $searchBox.on('keyup', function(eventObject) {
-                switch (contentType) {
-                    case 'table':
-                        filterTable($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
-                        break;
-                    case 'list':
-                        filterList($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
-                        break;
-                }            
+                utilities.debounce(function() {
+                    var criteria = $(eventObject.currentTarget).val();
+                    if (criteria.length) {
+                        showIcon('clear');
+                    } else {
+                        showIcon('search');
+                    }
+
+                    switch (contentType) {
+                        case 'table':
+                            filterTable($wrapper, criteria, $errorMessage);
+                            break;
+                        case 'list':
+                            filterList($wrapper, criteria, $errorMessage);
+                            break;
+                    }
+                }, 100);   
             });
             
             $searchBox.closest('form').on('submit', function(e) {
                 return false;
             });
 
-            $clearButton.on('click', function() {
-                clearFilter($wrapper, $searchBox, $errorMessage);
+             $clearIcon.on('click', function() {
+                clearFilter($wrapper, $searchBox, $errorMessage, function() {
+					showIcon('search');
+				});
             });
         },  
+
+		showIcon = function(iconType, callback) {
+			setTimeout(function() {
+				var $iconSearch = $('.icon-search'),
+					$iconClear = $('.icon-clear'),
+					animationDuration = 150,
+					animationPropertiesOut = { 
+						top: 0,
+						opacity: 0
+					},
+					animationPropertiesIn = { 
+						top: '25px',
+						opacity: 1
+					};
+					
+				
+				if (iconType === 'search' && $iconClear.is(':visible')) {
+					$iconClear.animate(animationPropertiesOut, animationDuration, function() {
+						$iconSearch.animate(animationPropertiesIn, animationDuration, function() {
+							if (typeof(callback) === 'function')
+								callback();
+						});
+					});
+				}
+				
+				if (iconType === 'clear' && $iconSearch.is(':visible')) {
+					$iconSearch.animate(animationPropertiesOut, animationDuration, function() {
+						$iconClear.animate(animationPropertiesIn, animationDuration, function() {
+							if (typeof(callback) === 'function')
+								callback();
+						});
+					});				
+				}
+			}, 0);
+		},
 
         setColumnWidthToInitialWidth = function(index, item) {
             var $columnHeader = $(item);
@@ -6181,13 +6222,15 @@ baltimoreCounty.contentFilter = (function($) {
         /*
          * Clears the filter and displays all nodes in the list.
          */
-        clearFilter = function($wrapper, $searchbox, $errorMessage) {
+        clearFilter = function($wrapper, $searchbox, $errorMessage, callback) {
             var $everythingWeFilter = $wrapper.find('li, div, tr');
 			$everythingWeFilter.show();
             resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
             resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
+			if (typeof(callback) === 'function')
+				callback();
         };
 
     /* Reveal! */
@@ -6196,8 +6239,7 @@ baltimoreCounty.contentFilter = (function($) {
         init: init
     };
 
-})(jQuery);
-
+})(jQuery, baltimoreCounty.utility);
 // Collapse the other items
 (function($) {
 
@@ -6430,3 +6472,29 @@ baltimoreCounty.photoGallery = (function(undefined) {
     };
 
 })();
+namespacer('baltimoreCounty');
+
+baltimoreCounty.severeWeatherWarning = (function($, undefined) {
+
+	var severeWeatherClosingElementSelector = '#severeweatherclosing';
+	var firstParagraphSelector = 'p:first-child';
+	var calloutBoxSelector = '.callout_box';
+	var defaultStatus = 'open';
+
+	function displayIfStatusIsNot(status) {
+		var $severeWeatherClosingElement = $(severeWeatherClosingElementSelector);
+
+		if ($severeWeatherClosingElement.find(firstParagraphSelector).text().toLowerCase() !== (status || defaultStatus)) { 
+			$severeWeatherClosingElement.closest(calloutBoxSelector).slideDown(250); 
+		}
+	}
+
+	return {
+		displayIfStatusIsNot: displayIfStatusIsNot
+	};
+
+})(jQuery);
+
+$(function() {
+	baltimoreCounty.severeWeatherWarning.displayIfStatusIsNot('open');
+});
