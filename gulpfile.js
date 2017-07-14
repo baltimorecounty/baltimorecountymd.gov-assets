@@ -41,7 +41,8 @@ gulp.task('concatHomepageJs', function() {
 					'js/lib/handlebars.js', 
 					'js/lib/picturefill.min.js', 
 					'js/flickr-feed.js', 
-					'js/county-news-snippet.js',
+          'js/county-news-snippet.js',
+          'js/template-events.js',
 					'js/homepage-template.js'];
 	return concatFiles(files, 'homepage.js');
 });
@@ -60,7 +61,8 @@ gulp.task('concatTemplateJs', function () {
 					'js/lib/review.js', 
 					'js/internal-carousel.js',
 					'js/mobile-search.js',
-					'js/template-events.js', 
+          'js/template-events.js',
+          'js/internal-template-events.js', 
 					'js/inside-template.js',
 					'js/nifty-tables.js',
 					'js/nifty-forms.js', 
