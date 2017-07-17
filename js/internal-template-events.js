@@ -7,5 +7,5 @@
     }
   }
   /*Submit url to rate form*/
-  $('#RateThisPageForm').on('submit', ratePage);
+  $(document).on('submit', '#RateThisPageForm', ratePage);
 })(jQuery);

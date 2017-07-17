@@ -27,10 +27,9 @@
   /**
    * Events
    */
-
   /*Toggle hamburger menu*/
-  $('.hamburger-btn').on('click', toggleMobileNavigation);
+  $(document).on('click', '.hamburger-btn', toggleMobileNavigation);
 
   /*Prevent a search with no text*/
-  $('.search-button').on('click', searchButtonClicked);
+  $(document).on('click', '.search-button', searchButtonClicked);
 })(jQuery, TextResizer);
