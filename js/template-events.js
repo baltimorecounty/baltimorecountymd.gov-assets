@@ -1,23 +1,36 @@
 (function ($, TextResizer) {
-  /*Prevent a search with no text*/
-  $(document).on('click', '.search-button', function (e) {
+
+  function onDocumentReady() {
+    var textResizer = new TextResizer({
+      listClass: "resizer-list"
+    });
+  }
+
+  function searchButtonClicked(e) {
     var val = $('.search-input').val();
 
     if (val.length === 0) {
       e.preventDefault();
     }
-  });
+  }
 
-  /*Toggle hamburger menu*/
-  $(document).on('click', '.hamburger-btn', function (e) {
+  function toggleMobileNavigation(e) {
     e.preventDefault();
     $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
-  });
+  }
 
-  /*Initialize the Text Resizer*/
-  $(document).ready(function () {
-    var textResizer = new TextResizer({
-      listClass: "resizer-list"
-    });
-  });
+  /**
+   * Stuff to kick off when the template is loaded
+   */
+  $(document).ready(onDocumentReady);
+
+  /**
+   * Events
+   */
+
+  /*Toggle hamburger menu*/
+  $('.hamburger-btn').on('click', toggleMobileNavigation);
+
+  /*Prevent a search with no text*/
+  $('.search-button').on('click', searchButtonClicked);
 })(jQuery, TextResizer);
