@@ -11,24 +11,24 @@ var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var util = require('gulp-util');
 
-var concatFiles = function (files, name, dest) {
-  dest = dest || 'dist/js';
+var concatFiles = function(files, name, dest) {
+	dest = dest || 'dist/js';
 
-  return gulp.src(files)
-    .pipe(concat(name))
-    .pipe(gulp.dest(dest));
+	return gulp.src(files)
+	    .pipe(concat(name))
+	    .pipe(gulp.dest(dest));
 };
 
-gulp.task('clean-dist', function () {
-  return gulp.src('dist')
-    .pipe(clean());
+gulp.task('clean-dist', function() {
+	return gulp.src('dist')
+		.pipe(clean());
 });
 
-gulp.task('concatBaltCoGoAppJs', function () {
-  var files = ['js/page-specific/baltcogo-app/app.js',
-    'js/page-specific/baltcogo-app/services/**/*.js',
-    'js/page-specific/baltcogo-app/*Ctrl.js'];
-  return concatFiles(files, 'baltcogo-reporter.js');
+gulp.task('concatBaltCoGoAppJs', function() {
+	var files = ['js/page-specific/baltcogo-app/app.js',
+				'js/page-specific/baltcogo-app/services/**/*.js',
+				'js/page-specific/baltcogo-app/*Ctrl.js'];
+	return concatFiles(files, 'baltcogo-reporter.js');
 });
 
 gulp.task('concatHomepageJs', function () {
@@ -43,6 +43,7 @@ gulp.task('concatHomepageJs', function () {
     'js/lib/picturefill.min.js',
     'js/flickr-feed.js',
     'js/county-news-snippet.js',
+    'js/template-events.js',
     'js/homepage-template.js'];
   return concatFiles(files, 'homepage.js');
 });
@@ -62,7 +63,7 @@ gulp.task('concatTemplateJs', function () {
     'js/internal-carousel.js',
     'js/mobile-search.js',
     'js/template-events.js',
-    'js/local-navigation.js',
+    'js/internal-template-events.js',
     'js/inside-template.js',
     'js/nifty-tables.js',
     'js/nifty-forms.js',
@@ -72,12 +73,12 @@ gulp.task('concatTemplateJs', function () {
     'js/photo-gallery.js',
     'js/severe-weather-warning.js'];
 
-  return concatFiles(files, 'templateinside.js');
+  	return concatFiles(files, 'templateinside.js');
 });
 
-gulp.task('movePageSpecificJs', function () {
-  return gulp.src('js/page-specific/*.js')
-    .pipe(gulp.dest('dist/js/page-specific'));
+gulp.task('movePageSpecificJs', function() {
+	return gulp.src('js/page-specific/*.js')
+		.pipe(gulp.dest('dist/js/page-specific'));
 });
 
 gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTemplateJs', 'movePageSpecificJs'], function () {
@@ -94,49 +95,49 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTe
 });
 
 gulp.task('compressPageSpecificFiles', function () {
-  return gulp.src(['!js/page-specific/*.spec.js', 'js/page-specific/*.js'])
-    .pipe(stripCode({
-      start_comment: 'test-code',
-      end_comment: 'end-test-code'
-    }))
-    .pipe(uglify())
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(gulp.dest('dist/js/page-specific'));
+	return gulp.src(['!js/page-specific/*.spec.js', 'js/page-specific/*.js'])
+		.pipe(stripCode({
+			start_comment: 'test-code',
+			end_comment: 'end-test-code'
+		}))
+		.pipe(uglify())
+		.pipe(rename({
+			suffix: '.min'
+		}))
+		.pipe(gulp.dest('dist/js/page-specific'));
 });
 
 gulp.task('sassAndCompressCss', function () {
-  return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss', 'stylesheets/partials/layouts/*.scss'])
-    .pipe(sass().on('error', sass.logError))
-    .pipe(cssnano({
-      autoprefixer: false
-    }))
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(gulp.dest('dist/css'));
+	return gulp.src(['stylesheets/*.scss', 'stylesheets/partials/page-specific/**/*.scss', 'stylesheets/partials/layouts/*.scss'])
+		.pipe(sass().on('error', sass.logError))
+		.pipe(cssnano({
+			autoprefixer: false
+		}))
+		.pipe(rename({
+			suffix: '.min'
+		}))
+		.pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('linter', function () {
-  return gulp.src(['js/**/*.js', '!js/lib/*'])
-    .pipe(jshint())
-    .pipe(jshint.reporter(stylish));
+gulp.task('linter', function() {
+	return gulp.src(['js/**/*.js', '!js/lib/*'])
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
 });
 
-gulp.task('watch', function () {
-  gulp.watch(['js/page-specific/*.js'], ['compressPageSpecificFiles']);
-  gulp.watch(['js/*.js', 'js/lib/*.js'], ['compressFiles']);
-  gulp.watch(['stylesheets/*.scss'], ['sassAndCompressCss']);
+gulp.task('watch', function() {
+	gulp.watch(['js/page-specific/*.js'], ['compressPageSpecificFiles']);
+	gulp.watch(['js/*.js', 'js/lib/*.js'], ['compressFiles']);
+	gulp.watch(['stylesheets/*.scss'], ['sassAndCompressCss']);
 
 });
 
-gulp.task('linter', function () {
-  return gulp.src(['!js/lib/**/*', 'js/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
+gulp.task('linter', function() {
+	return gulp.src(['!js/lib/**/*','js/**/*.js'])
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('default', ['clean-dist'], function (callback) {
-  return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss'], callback);
+gulp.task('default', ['clean-dist'], function(callback) {
+	return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss'], callback);
 });
