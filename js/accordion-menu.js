@@ -5,12 +5,12 @@
   /**
    * Add active class to any links inside the local navigation on the page
    */
-  function addCurrentClass($elm) {
+  function addCurrentClass($element) {
     const pathName = window.location.pathname;
-    const elmHref = $elm.attr('href');
+    const elmHref = $element.attr('href');
 
     if (elmHref.indexOf(pathName) > -1) {
-      $elm.closest('panel').addClass('current');
+      $element.closest('panel').addClass('current');
     }
   }
 
