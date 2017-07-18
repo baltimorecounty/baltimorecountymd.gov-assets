@@ -1,6 +1,6 @@
 // Collapse the other items
 (function accordionMenu($) {
-  let clickedAccordionLevel = 0;
+  var clickedAccordionLevel = 0;
 
   /**
    * Add active class to any links inside the local navigation on the page
@@ -10,7 +10,7 @@
     const elmHref = $element.attr('href');
 
     if (elmHref.indexOf(pathName) > -1) {
-      $element.closest('panel').addClass('current');
+      $element.closest('.panel').addClass('current');
     }
   }
 
@@ -87,7 +87,7 @@
   /**
    * When the page is ready
    */
-  $(() => {
+  $(function() {
 		/* Opens any items that match the current URL, so the user 
 		 * sees the current page as being active. 
 		 */
