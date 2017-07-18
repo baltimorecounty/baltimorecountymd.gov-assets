@@ -1,13 +1,13 @@
 // Collapse the other items
-(function ($) {
-  var clickedAccordionLevel = 0;
+(function accordionMenu($) {
+  let clickedAccordionLevel = 0;
 
   /**
    * Add active class to any links inside the local navigation on the page
    */
   function addCurrentClass($elm) {
-    var pathName = window.location.pathname;
-    var elmHref = $elm.attr('href');
+    const pathName = window.location.pathname;
+    const elmHref = $elm.attr('href');
 
     if (elmHref.indexOf(pathName) > -1) {
       $elm.addClass('current');
@@ -19,6 +19,13 @@
     return $element.parents('ul').length + 1;
   }
 
+  function textNodeFilter(idx, element) {
+    if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
+      return true;
+    }
+    return false;
+  }
+
   function hideTextOnlyNodes($elm) {
     $elm
       .contents()
@@ -27,20 +34,33 @@
   }
 
   function openActiveItem(idx, item) {
-    var itemHref = item.getAttribute('href');
-    var $item = $(item);
+    const itemHref = item.getAttribute('href');
+    const $item = $(item);
 
     if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
       $item.addClass('current');
-      var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+      const $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
       $collapsables.addClass('in');
-      var $siblings = $collapsables.siblings('.accordion-collapsed');
+      const $siblings = $collapsables.siblings('.accordion-collapsed');
 
-      if (!$siblings.hasClass('active'))
-        $siblings.addClass('active');
-    }
-    else {
+      if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
+    } else {
       addCurrentClass($item);
+    }
+  }
+
+  function toggleAccordion(e, action) {
+    const $collapsable = $(e.currentTarget);
+    const $siblings = $collapsable.siblings('.accordion-collapsed');
+    const accordionLevel = getAccordionLevel($collapsable);
+
+    if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
+      if (action === 'hide') {
+        $siblings.removeClass('active');
+      }
+      if (action === 'show') {
+        $siblings.addClass('active');
+      }
     }
   }
 
@@ -57,29 +77,8 @@
     return false;
   }
 
-  function textNodeFilter(idx, element) {
-    if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
-      return true;
-    }
-  }
-
-  function toggleAccordion(e, action) {
-    var $collapsable = $(e.currentTarget);
-    var $siblings = $collapsable.siblings('.accordion-collapsed');
-    var accordionLevel = getAccordionLevel($collapsable);
-
-    if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
-      if (action === 'hide') {
-        $siblings.removeClass('active');
-      }
-      if (action === 'show') {
-        $siblings.addClass('active');
-      }
-    }
-  }
-
   function trackAccordionLevel(e) {
-    var $currentTarget = $(e.currentTarget);
+    const $currentTarget = $(e.currentTarget);
 
     clickedAccordionLevel = getAccordionLevel($currentTarget);
     $currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
@@ -88,7 +87,7 @@
   /**
    * When the page is ready
    */
-  $(function () {
+  $(() => {
 		/* Opens any items that match the current URL, so the user 
 		 * sees the current page as being active. 
 		 */
@@ -108,10 +107,10 @@
     // Set up the DIVs to expand and collapse their siblings.
     $(document).on('click', '.bc-accordion-menu .accordion-collapsed', setUpCollapse);
 
-    /* Making sure only the active accordion level's "active" css class is cleared when the menu expands. */
+    /* Ensure he active accordion level's "active" css class is cleared when the menu expands. */
     $('.bc-accordion-menu .collapse').on('show.bs.collapse', onAccordionShow);
 
-    /* Making sure only the active accordion level's "active" css class is cleared when the menu collapses. */
+    /* Ensure the active accordion level's "active" css class is cleared when the menu collapses. */
     $('.bc-accordion-menu .collapse').on('hide.bs.collapse', onAccordionHide);
   });
-})(jQuery);
+}(jQuery));
