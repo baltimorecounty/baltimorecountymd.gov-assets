@@ -6264,8 +6264,8 @@ baltimoreCounty.contentFilter = (function($, utilities) {
    * Add active class to any links inside the local navigation on the page
    */
   function addCurrentClass($element) {
-    const pathName = window.location.pathname;
-    const elmHref = $element.attr('href');
+    var pathName = window.location.pathname;
+    var elmHref = $element.attr('href');
 
     if (elmHref.indexOf(pathName) > -1) {
       $element.closest('.panel').addClass('current');
@@ -6292,14 +6292,14 @@ baltimoreCounty.contentFilter = (function($, utilities) {
   }
 
   function openActiveItem(idx, item) {
-    const itemHref = item.getAttribute('href');
-    const $item = $(item);
+    var itemHref = item.getAttribute('href');
+    var $item = $(item);
 
     if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
       $item.addClass('current');
-      const $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+      var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
       $collapsables.addClass('in');
-      const $siblings = $collapsables.siblings('.accordion-collapsed');
+      var $siblings = $collapsables.siblings('.accordion-collapsed');
 
       if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
     } else {
@@ -6308,9 +6308,9 @@ baltimoreCounty.contentFilter = (function($, utilities) {
   }
 
   function toggleAccordion(e, action) {
-    const $collapsable = $(e.currentTarget);
-    const $siblings = $collapsable.siblings('.accordion-collapsed');
-    const accordionLevel = getAccordionLevel($collapsable);
+    var $collapsable = $(e.currentTarget);
+    var $siblings = $collapsable.siblings('.accordion-collapsed');
+    var accordionLevel = getAccordionLevel($collapsable);
 
     if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
       if (action === 'hide') {
@@ -6336,7 +6336,7 @@ baltimoreCounty.contentFilter = (function($, utilities) {
   }
 
   function trackAccordionLevel(e) {
-    const $currentTarget = $(e.currentTarget);
+    var $currentTarget = $(e.currentTarget);
 
     clickedAccordionLevel = getAccordionLevel($currentTarget);
     $currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
