@@ -1,10 +1,13 @@
 /*ADD TO ANIMAL SERVICES FOLDER*/
+
 #severeweatherclosing p:first-child,
 #severeweatherclosing a {
     display: none;
 }
 
+
 /*ADD BELOW TO INSIDE RESPONSIVE*/
+
 #mainContent .carousel h2,
 .carousel h2 {
     font-size: 1.5em;
@@ -16,7 +19,9 @@
     padding: 10px 40px 15px;
 }
 
+
 /*ADD BELOW TO RED INSIDE*/
+
 .econdev-callout-link a {
     height: 47px;
     padding: 7px 10px 10px;
@@ -82,6 +87,7 @@
 
 
 /*STYLES FOR EVENTS VIEWLET TO ALSO BE ADDED TO RED INSIDE*/
+
 .eventcalwrapper {
     margin-bottom: 20px;
 }
@@ -125,6 +131,10 @@
     }
     .eventcaldate {
         width: 20%;
+    }
+    #mainContent .carousel .carousel-message,
+    .carousel .carousel-message {
+        padding: 10px 0 15px;
     }
 }
 
