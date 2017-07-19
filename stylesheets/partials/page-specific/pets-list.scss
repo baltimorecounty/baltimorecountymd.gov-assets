@@ -1,0 +1,52 @@
+// TODO - MISSING COLOR in Variables
+$gray: #808080;
+$ccc: #ccc;
+$other-gray: #999;
+
+.list-container {
+  padding: 0 10px;
+}
+
+.pet {
+  border-bottom: 1px solid $gray;
+  margin-bottom: 10px;
+
+  &:last-child {
+    border: 0;
+  }
+
+  img {
+    border: 1px solid $ccc;
+    margin: 20px auto;
+    padding: 5px;
+    width: 100%;
+  }
+}
+
+.pet-info {
+  border-bottom: 1px dotted $other-gray;
+  margin: 0 0 10px;
+}
+
+.pet-info-label {
+  display: inline-block;
+  width: 180px;
+}
+
+.pet-bio {
+  display: block;
+  margin: 15px 0 20px;
+  width: 100%;
+}
+
+.pet-bio-label {
+  display: block;
+  width: 100%;
+}
+
+.no-image {
+  border: 1px solid $other-gray;
+  padding: 40px;
+  text-align: center;
+  width: 100%;
+}
