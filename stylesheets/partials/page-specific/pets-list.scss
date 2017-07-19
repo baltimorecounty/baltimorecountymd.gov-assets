@@ -1,7 +1,7 @@
+@import '../../modules/colors';
 // TODO - MISSING COLOR in Variables
 $gray: #808080;
-$ccc: #ccc;
-$other-gray: #999;
+$lighter-gray: #999;
 
 .list-container {
   padding: 0 10px;
@@ -16,7 +16,7 @@ $other-gray: #999;
   }
 
   img {
-    border: 1px solid $ccc;
+    border: 1px solid $img-border-gray;
     margin: 20px auto;
     padding: 5px;
     width: 100%;
@@ -24,7 +24,7 @@ $other-gray: #999;
 }
 
 .pet-info {
-  border-bottom: 1px dotted $other-gray;
+  border-bottom: 1px dotted $lighter-gray;
   margin: 0 0 10px;
 }
 
@@ -45,7 +45,7 @@ $other-gray: #999;
 }
 
 .no-image {
-  border: 1px solid $other-gray;
+  border: 1px solid $lighter-gray;
   padding: 40px;
   text-align: center;
   width: 100%;
