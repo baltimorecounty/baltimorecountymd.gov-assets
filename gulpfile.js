@@ -77,7 +77,7 @@ gulp.task('concatTemplateJs', function () {
 });
 
 gulp.task('movePageSpecificJs', function() {
-	return gulp.src('js/page-specific/*.js')
+	return gulp.src(['js/page-specific/*.js', 'js/page-specific/animal-services/*.js'])
 		.pipe(gulp.dest('dist/js/page-specific'));
 });
 
