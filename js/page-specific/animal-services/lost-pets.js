@@ -5,7 +5,7 @@
   var listClass = 'pet-list';
   var tabSelector = '.pet-tabs';
   var dataUrl = "//egov.baltimorecountymd.gov/LostAdoptPetService/GetLostPets";
-  var templateUrl = "/sebin/l/i/adoptable-pet.template.js";
+  var templateUrl = "/sebin/l/k/generic-pet.template.js";
 
   /**
    * !!!! DO NOT MODIFY BELOW THESE LINES !!!!
@@ -53,8 +53,13 @@
     //Make the link you selected the active tab
     $this.addClass('active');
 
+    //Hcak so the footer doesn't flash in the screen
+    $('.' + listClass).css('height', 900000000);
+
     //Show pets of the tab you selected
-    adoptedPets.Show(type);
+    adoptedPets.Show(type, function() {
+      $('.' + listClass).removeAttr('style');
+    });
   }
 
   $(document).ready(onReady);
