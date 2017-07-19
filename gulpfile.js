@@ -81,6 +81,11 @@ gulp.task('movePageSpecificJs', function() {
 		.pipe(gulp.dest('dist/js/page-specific'));
 });
 
+gulp.task('moveTemplates', function() {
+	return gulp.src(['templates/*.js', 'templates/**/*.js'])
+		.pipe(gulp.dest('dist/templates'));
+});
+
 gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTemplateJs', 'movePageSpecificJs'], function () {
   return gulp.src(['!dist/js/**/*.min.js', 'dist/js/**/*.js'])
     .pipe(stripCode({
@@ -139,5 +144,5 @@ gulp.task('linter', function() {
 });
 
 gulp.task('default', ['clean-dist'], function(callback) {
-	return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss'], callback);
+	return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss', 'moveTemplates'], callback);
 });
