@@ -2,7 +2,7 @@
     <div id="{{AnimalId}}" class="row pet">
         <div class="col-md-7 col-sm-8">
           {{#if Name}}<h2>{{Name}}</h2>{{/if}}
-          <p class="pet-info"><strong class="pet-info-label">Animal ID</strong> <span className="pet-info-value">{{AnimalId}}<</span>/p>
+          <p class="pet-info"><strong class="pet-info-label">Animal ID</strong> <span className="pet-info-value">{{AnimalId}}</span>/p>
           <p class="pet-info"><strong class="pet-info-label">Species</strong> <span className="pet-info-value">{{toProperCase Species}}</span></p>
           <p class="pet-info"><strong class="pet-info-label">Breed</strong> <span className="pet-info-value">{{toProperCase Breed}}</span></p>
           <p class="pet-info"><strong class="pet-info-label">Color</strong> <span className="pet-info-value">{{toProperCase Color}}</span></p>
