@@ -50,3 +50,10 @@ $lighter-gray: #999;
   text-align: center;
   width: 100%;
 }
+
+@media screen and (max-width: 400px) {
+  .pet-info-label,
+  .pet-info-value {
+    display: block;
+  }
+}
