@@ -9,8 +9,12 @@
     <p class="pet-info"><strong class="pet-info-label">Animal ID</strong> <span className="pet-info-value">{{AnimalId}}</span></p>
     <p class="pet-info"><strong class="pet-info-label">Species</strong> <span className="pet-info-value">{{toProperCase Species}}</span></p>
     <p class="pet-info"><strong class="pet-info-label">Breed</strong> <span className="pet-info-value">{{toProperCase Breed}}</span></p>
+    {{#if SecondaryBreed}}
+    <p class="pet-info"><strong class="pet-info-label">Secondary Breed</strong> <span className="pet-info-value">{{toProperCase SecondaryBreed}}</span></p>{{/if}}
     <p class="pet-info"><strong class="pet-info-label">Color</strong> <span className="pet-info-value">{{toProperCase Color}}</span></p>
     <p class="pet-info"><strong class="pet-info-label">Sex</strong> <span className="pet-info-value">{{Sex}}</span></p>
+    {{#if Age}}
+    <p class="pet-info"><strong class="pet-info-label">Age</strong> <span className="pet-info-value">{{Age}}  {{AgeUnit}}</span></p>{{/if}}
     <p class="pet-info"><strong class="pet-info-label">Spayed/Neutered</strong> <span className="pet-info-value">{{#if Altered}}{{Altered}}{{else}}Unknown{{/if}}</span></p>
     <p class="pet-info"><strong class="pet-info-label">Shelter Arrival</strong> <span className="pet-info-value">{{formatShelterArrival ShelterArrival}}</span></p>
     {{#if AboutMe}}
