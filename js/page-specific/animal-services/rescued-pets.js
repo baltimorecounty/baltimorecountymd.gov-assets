@@ -5,7 +5,7 @@
   var listClass = 'pet-list';
   var tabSelector = '.pet-tabs';
   var dataUrl = "//dprmmstr-dev/LostAdoptPetService/GetRescued";
-  var templateUrl = "/sebin/l/l/generic-pet.template.js";
+  var templateUrl = "/sebin/l/k/generic-pet.template.js";
 
   /**
    * !!!! DO NOT MODIFY BELOW THESE LINES !!!!
