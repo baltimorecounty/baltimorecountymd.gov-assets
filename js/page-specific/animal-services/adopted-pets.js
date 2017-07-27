@@ -4,8 +4,8 @@
    */
   var listClass = 'adoptable-pet-list';
   var tabSelector = '.adoptable-pet-tabs';
-  var dataUrl = "//dprmmstr-dev/LostAdoptPetService/GetAdoptablePets";
-  var templateUrl = "/sebin/l/k/generic-pet.template.js";
+  var dataUrl = "//egov.baltimorecountymd.gov/LostAdoptPetService/GetAdoptablePets";
+  var templateUrl = "/sebin/l/l/generic-pet.template.js";
 
   /**
    * !!!! DO NOT MODIFY BELOW THESE LINES !!!!
