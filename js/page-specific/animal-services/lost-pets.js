@@ -5,7 +5,7 @@
   var listClass = 'pet-list';
   var tabSelector = '.pet-tabs';
   var dataUrl = "//egov.baltimorecountymd.gov/LostAdoptPetService/GetLostPets";
-  var templateUrl = "/sebin/x/m/lost-pet.template.js";
+  var templateUrl = "/sebin/x/m/lost-pet.template.js?version=20170728";
 
   /**
    * !!!! DO NOT MODIFY BELOW THESE LINES !!!!
