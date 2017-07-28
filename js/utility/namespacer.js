@@ -1,21 +1,22 @@
 /*
  * Creates namespaces safely and conveniently, reusing 
  * existing objects instead of overwriting them.
- */ 
+ */
 function namespacer(ns) {
-	var nsArr = ns.split('.'),
-		parent = window;
-	
-	if (!nsArr.length)
-		return;
+  var nsArr = ns.split('.');
+  var parent = window;
 
-	for (var i = 0; i < nsArr.length; i++) {
-		var nsPart = nsArr[i];
+  if (!nsArr.length) {
+    return;
+  }
 
-		if (typeof parent[nsPart] === 'undefined') {
-			parent[nsPart] = {};
-		}
+  for (var i = 0; i < nsArr.length; i++) {
+    var nsPart = nsArr[i];
 
-		parent = parent[nsPart];
-	}
+    if (typeof parent[nsPart] === 'undefined') {
+      parent[nsPart] = {};
+    }
+
+    parent = parent[nsPart];
+  }
 }
