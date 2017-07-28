@@ -10,7 +10,7 @@ function namespacer(ns) {
     return;
   }
 
-  for (var i = 0; i < nsArr.length; i++) {
+  for (var i = 0, len = nsArr.length; i < len; i++) {
     var nsPart = nsArr[i];
 
     if (typeof parent[nsPart] === 'undefined') {
