@@ -7,8 +7,8 @@ namespacer('baltimoreCounty.pageSpecific');
 baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	'use strict';
 
-	var zipsDundalk = ['21219', '21220', '21221', '21222', '21224', '21237'],
-		zipsSwap = ['21207', '21227', '21244'],
+	var zipsDundalk = [],
+		zipsSwap = ['21207', '21227', '21228', '21244'],
 		facilityList = {
 			baldwin: {
 				address: 'Baldwin, 13800 Manor Road',
