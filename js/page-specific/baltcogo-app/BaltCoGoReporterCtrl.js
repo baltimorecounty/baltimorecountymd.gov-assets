@@ -3,7 +3,7 @@
 
   app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'smartSearch', 'dataService', reporterController]);
 
-  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, smartSearch, dataService) {
+  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, smartSearcher, dataService) {
 
     var self = this,
     var targetCounty = 'Baltimore County';
@@ -454,13 +454,59 @@
 
     }
 
-    function setupCategoryAutocomplete(data) {
+    function setupCategoryAutocomplete(categories) {
       dataService.getSynonyms().then(function (synonyms) {
-
+        self.synonyms = synonyms;
+        categories.forEach(formatCategoriesForCategoryAutocomplete);
       });
     }
 
-    function getTags(description) {
+    function formatCategoriesForCategoryAutocomplete(category) {
+      var formattedData = [];
+      category.types.forEach(function (type) {
+        var type = getformattedCategoryType(type);
+        formattedData.push(type);
+      });
+
+      self.helpFormattedData = formattedData;
+
+      setupSmartSearcher(formattedData);
+    }
+
+    function setupSmartSearcher(data) {
+      var keys = [
+        {
+          name: 'subcategory.name',
+          weight: .3
+        }, {
+          name: 'subcategory.tags',
+          weight: .7
+        }
+      ];
+
+
+
+    }
+
+    function getformattedCategoryType(type) {
+      var tags = getTags(type.name);
+
+      tags = type.tags ? type.tags.concat(tags) : tags;
+
+      return {
+        category: {
+          id: item.id,
+          name: item.name
+        },
+        subcategory: {
+          id: type.id,
+          name: type.name,
+          tags: tags
+        }
+      };
+    }
+
+    function getTags(synonyms, description) {
       var keys = [];
       Object.keys(synonyms).forEach(function (synonym, index) {
         if (description.toLowerCase().indexOf(synonym) > -1) {
