@@ -1,14 +1,14 @@
 (function (app, querystringer) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'smartSearch', reporterController]);
 
-	function reporterController($http, $scope, $timeout, mapServiceComposite, reportService) {
+	function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, smartSearch) {
 
 		var self = this,
-			targetCounty = 'Baltimore County',
-			categoryId = querystringer.getAsDictionary().categoryid * 1,
-			map;
+		var targetCounty = 'Baltimore County';
+		var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
+		var map;
 
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
@@ -447,9 +447,16 @@
 
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
-			if (categoryId)
-				autoSelectCategories(categoryId);
-		}
+			if (categoryId) {
+        autoSelectCategories(categoryId);
+      }
+      setupCategoryAutocomplete(response.data);
+      
+    }
+    
+    function setupCategoryAutocomplete(data) {
+      console.log(data);
+    }
 
 		function colorSuccessHandler(response) {
 			self.animalColorData = response.data;
