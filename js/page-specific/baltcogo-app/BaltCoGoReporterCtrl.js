@@ -5,7 +5,7 @@
 
   function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, smartSearcher, dataService) {
 
-    var self = this,
+    var self = this;
     var targetCounty = 'Baltimore County';
     var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
     var map;
@@ -290,12 +290,12 @@
         if (animalType) {
           $scope.$apply(function () {
             $('#pet-type').find('option[selected]')
-              .removeAttr('selected').end()
+              .removeAttr('selected').end();
             $('#pet-type option[label*=\'' + animalType.animal + '\' i]')
               .prop('selected', true);
 
             setPetType(animalType);
-          })
+          });
         }
       }, 250);
     }
@@ -494,8 +494,8 @@
     function formatCategoriesForCategoryAutocomplete(category) {
       var formattedData = [];
       category.types.forEach(function (type) {
-        var type = getformattedCategoryType(self.synonyms, type);
-        formattedData.push(type);
+        var formattedType = getformattedCategoryType(self.synonyms, type);
+        formattedData.push(formattedType);
       });
 
       self.helpFormattedData = formattedData;
@@ -506,10 +506,10 @@
       var keys = [
         {
           name: 'subcategory.name',
-          weight: .3
+          weight: 0.3
         }, {
           name: 'subcategory.tags',
-          weight: .7
+          weight: 0.7
         }
       ];
 
@@ -537,14 +537,14 @@
 
         function onCursorChange(event, selection) {
           $('#smart-search').typeahead('val', self.helpQuery);
-        };
+        }
 
         function onSelected(event, selection, query) {
           var animalType = getAnimalType(self.helpQuery);
 
           autoSelectCategories(selection.item.subcategory.id, animalType);
           clearQuery();
-        };
+        }
 
         self.smartSearcher = new smartSearch(smartSearchData, options);
 
@@ -558,7 +558,7 @@
           },
           {
             source: function (query, syncResults) {
-              syncResults(self.smartSearcher.search(query))
+              syncResults(self.smartSearcher.search(query));
             },
             templates: {
               suggestion: function (data) {
@@ -566,7 +566,7 @@
                 return '<div><p class="text-muted" data-category="' + data.category.id + '" data-id="' + data.subcategory.id + '">' + data.subcategory.name + '</p></div>';
               },
               empty: function () {
-                return '<p class="text-muted">No results found.</p>'
+                return '<p class="text-muted">No results found.</p>';
               }
             }
           })
