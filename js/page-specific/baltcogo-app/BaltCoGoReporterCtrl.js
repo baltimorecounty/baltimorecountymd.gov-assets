@@ -285,7 +285,32 @@
 
     /***** Private - Helpers *****/
 
-    function autoSelectCategories(categoryId) {
+    function setCategoriesAndPetTypeManually(animalType) {
+      $timeout(function () {
+        $('#categories').val(self.category);
+        $('#subCategories').val(self.subCategory);
+
+        if (animalType) {
+          $scope.$apply(function () {
+            $('#pet-type').find('option[selected]')
+              .removeAttr('selected').end()
+            $('#pet-type option[label*=\'' + animalType.animal + '\' i]')
+              .prop('selected', true);
+
+            setPetType(animalType);
+          })
+        }
+      }, 250);
+    }
+
+    function setPetType(animalType) {
+      self.petType = {
+        id: animalType.id,
+        name: animalType.animal
+      };
+    }
+
+    function autoSelectCategories(categoryId, animalType) {
       angular.forEach(self.categoryData, function (categoryItem) {
         if (categoryItem.id === categoryId) {
           self.category = categoryItem;
@@ -294,9 +319,14 @@
           if (categoryItem.types) {
             angular.forEach(categoryItem.types, function (typeItem) {
               if (typeItem.id === categoryId) {
-                self.category = categoryItem;
-                self.loadSubCategories(categoryItem.id);
-                self.subCategory = typeItem;
+                self.category = categoryItem.id;
+                self.loadSubCategories();
+
+                //Hack we need to set it again because it's cleared by loadSubCategories
+                self.category = categoryItem.id;
+                self.subCategory = typeItem.id;
+
+                setCategoriesAndPetTypeManually(animalType);
               }
             });
           }
