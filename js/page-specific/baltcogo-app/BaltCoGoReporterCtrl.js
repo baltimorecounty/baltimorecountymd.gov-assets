@@ -232,10 +232,7 @@
               self.otherDescriptionId = element.otherDescription;
           }, 0);
 
-
           self.descriptionId = element.description;
-
-
         }
       });
     };
@@ -348,7 +345,6 @@
       self.descriptionOfAnimalId = 0;
       self.descriptionOfLocationId = 0;
       self.otherDescriptionId = 0;
-
     }
 
     function geocodeAndMarkAddress(singleLineAddress) {
@@ -376,30 +372,32 @@
     }
 
     function getFirstSuggestion() {
-      var pacItem = angular.element('.pac-item').first(),
-        firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text();
+      var pacItem = angular.element('.pac-item').first();
+      var firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text();
 
       return firstSuggestion;
     }
 
     function validatePanel() {
-      var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]'),
-        requiredElementsCount = requiredElements.length,
-        validRequiredElementsCount = requiredElements.filter('.ng-valid').length,
-        controls = $scope.citySourcedReporterForm.$$controls;
+      var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]');
+      var requiredElementsCount = requiredElements.length;
+      var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
+      var controls = $scope.citySourcedReporterForm.$$controls;
 
       angular.forEach(controls, function (formControl, key, obj) {
         if (formControl.$$element.closest('.panel').is(':visible')) {
-          if (formControl.$pristine)
+          if (formControl.$pristine) {
             formControl.$setDirty();
-          if (formControl.$untouched)
+          }
+            
+          if (formControl.$untouched) {
             formControl.$setTouched();
-
+          }
+            
           if (formControl.$$element.is('#address')) {
             if (self.latitude === 0 || self.longitude === 0) {
               formControl.$setValidity('required', false);
             }
-
           }
         }
       });
@@ -484,7 +482,6 @@
         autoSelectCategories(categoryId);
       }
       setupCategoryAutocomplete(response.data);
-
     }
 
     function setupCategoryAutocomplete(categories) {
@@ -502,7 +499,6 @@
       });
 
       self.helpFormattedData = formattedData;
-
       setupSmartSearcher(formattedData);
     }
 
@@ -581,7 +577,6 @@
 
     function getformattedCategoryType(synonyms, type) {
       var tags = getTags(synonyms, type.name);
-
       tags = type.tags ? type.tags.concat(tags) : tags;
 
       return {
@@ -624,8 +619,8 @@
     }
 
     function mapClickHandler(event) {
-      var $wrapper = angular.element('#map').closest('cs-form-control'),
-        addressField = $scope.citySourcedReporterForm.address;
+      var $wrapper = angular.element('#map').closest('cs-form-control');
+      var addressField = $scope.citySourcedReporterForm.address;
 
       self.autocompleteResults = [];
       self.latitude = event.latLng.lat();
