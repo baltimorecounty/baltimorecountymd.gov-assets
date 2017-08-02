@@ -476,7 +476,7 @@
       setupSmartSearcher(formattedData);
     }
 
-    function setupSmartSearcher(data) {
+    function setupSmartSearcher(smartSearchData) {
       var keys = [
         {
           name: 'subcategory.name',
@@ -509,9 +509,43 @@
           localStorage.setItem(key, JSON.stringify(val));
         }
 
+        function onCursorChange(event, selection) {
+          $('#smart-search').typeahead('val', self.helpQuery);
+        };
 
+        function onSelected(event, selection, query) {
+          var animalType = getAnimalType(self.helpQuery);
 
+          autoSelectCategories(selection.item.subcategory.id, animalType);
+          clearQuery();
+        };
 
+        self.smartSearcher = new smartSearch(smartSearchData, options);
+
+        self.typeAhead = $('#smart-search').typeahead({
+          highlight: true
+        });
+
+        var typeAhead = $('#smart-search')
+          .typeahead({
+            highlight: true
+          },
+          {
+            source: function (query, syncResults) {
+              syncResults(self.smartSearcher.search(query))
+            },
+            templates: {
+              suggestion: function (data) {
+                data = data.item;
+                return '<div><p class="text-muted" data-category="' + data.category.id + '" data-id="' + data.subcategory.id + '">' + data.subcategory.name + '</p></div>';
+              },
+              empty: function () {
+                return '<p class="text-muted">No results found.</p>'
+              }
+            }
+          })
+          .on('typeahead:cursorchange', onCursorChange)
+          .on('typeahead:selected', onSelected);
       }
     }
 
