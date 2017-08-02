@@ -10,7 +10,10 @@
     var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
     var map;
 
-    $http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
+    animalService.getBreeds()
+      .then(breedSuccessHandler)
+      .catch(errorHandler);
+
     $http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler);
     $http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
     $http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
@@ -484,8 +487,32 @@
         }
       ];
 
+      if (!self.smartSearcher) {
+        var options = {
+          shouldSort: true,
+          includeScore: true,
+          threshold: 0.6,
+          distance: 100,
+          keys: keys
+        };
+
+        function clearQuery() {
+          self.helpQuery = "";
+        }
+
+        function getSearchResult(key) {
+          var data = localStorage.getItem(key);
+          return data ? JSON.parse(data) : null;
+        }
+
+        function saveSearchResult(key, val) {
+          localStorage.setItem(key, JSON.stringify(val));
+        }
 
 
+
+
+      }
     }
 
     function getformattedCategoryType(type) {
