@@ -467,7 +467,7 @@
     function formatCategoriesForCategoryAutocomplete(category) {
       var formattedData = [];
       category.types.forEach(function (type) {
-        var type = getformattedCategoryType(type);
+        var type = getformattedCategoryType(self.synonyms, type);
         formattedData.push(type);
       });
 
@@ -549,8 +549,8 @@
       }
     }
 
-    function getformattedCategoryType(type) {
-      var tags = getTags(type.name);
+    function getformattedCategoryType(synonyms, type) {
+      var tags = getTags(synonyms, type.name);
 
       tags = type.tags ? type.tags.concat(tags) : tags;
 
