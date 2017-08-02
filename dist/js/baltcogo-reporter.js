@@ -276,11 +276,11 @@
 			categoryId = querystringer.getAsDictionary().categoryid * 1,
 			map;
 
-		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
-		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
+		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler); 
+		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
 		
 		self.isAnimal = false;
 		self.page = 1;		
