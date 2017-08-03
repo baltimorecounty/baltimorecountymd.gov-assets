@@ -28,7 +28,7 @@
     }
 
     function getBreeds() {
-      return $http.get('/sebin/u/t/animal-colors.json', {
+      return $http.get('/sebin/y/a/animal-breeds.json', {
         cache: true
       }).then(animalSuccessResponse)
         .catch(handleError);
