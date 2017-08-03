@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('baltcogoApp', []);
+	angular.module('baltcogoApp', ['ngRoute']);
 })();
 (function (app) {
 
@@ -45,11 +45,11 @@
     }
 
     function handleError(errorMsg) {
-      $log.error('Error: ' + errorMsg);
+      $log.error('Error: ', errorMsg);
     }
   }
 
-})(angular.module('baltcoGoApp'));
+})(angular.module('baltcogoApp'));
 (function (app) {
 
   app.factory('dataService', ['$http', '$q', '$log', dataService]);
@@ -75,7 +75,7 @@
     }
   }
 
-})(angular.module('baltcoGoApp'));
+})(angular.module('baltcogoApp'));
 (function(app) {
 	'use strict';
 
@@ -357,9 +357,9 @@
 (function (app, querystringer) {
   'use strict';
 
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'smartSearch', 'dataService', reporterController]);
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'animalService', 'smartSearch', 'dataService', reporterController]);
 
-  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, smartSearcher, dataService) {
+  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearcher, dataService) {
 
     var self = this;
     var targetCounty = 'Baltimore County';
