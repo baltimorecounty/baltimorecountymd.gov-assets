@@ -60,7 +60,7 @@
     };
 
     function getSynonyms() {
-      return $http.get('data/synonyms.json', {
+      return $http.get('/sebin/c/y/synonyms.json', {
         cache: true
       }).then(synonymsSuccessResponse)
         .catch(handleError);
@@ -71,7 +71,7 @@
     }
 
     function handleError(errorMsg) {
-      $log.error("Error: " + errorMsg);
+      $log.error("Error: ", errorMsg);
     }
   }
 
