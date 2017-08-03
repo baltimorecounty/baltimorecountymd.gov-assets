@@ -8,7 +8,7 @@
 		var targetCounty = 'Baltimore County',
 			marker,
 			spatialReferenceId = 4269,
-			geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
+			geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
 			originLongitude = -76.60652470000002, 
 			originLatitude = 39.4003288,
 
@@ -111,7 +111,7 @@
 					};
 
 					var addressToLocationsParams = {
-						address: { 'Single Line Input': addressQuery },
+						address: { 'SingleLine': addressQuery },
 						f: 'json'
 					};
 
