@@ -3,7 +3,7 @@
 
   app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'animalService', 'smartSearch', 'dataService', reporterController]);
 
-  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearcher, dataService) {
+  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearch, dataService) {
 
     var self = this;
     var targetCounty = 'Baltimore County';
