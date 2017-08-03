@@ -857,7 +857,7 @@
         formattedData.push(formattedType);
       });
 
-      self.helpFormattedData = self.formattedData.concat(formattedData);
+      self.helpFormattedData = self.helpFormattedData.concat(formattedData);
       setupSmartSearcher(formattedData);
     }
 
