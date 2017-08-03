@@ -748,11 +748,11 @@
           if (formControl.$pristine) {
             formControl.$setDirty();
           }
-            
+
           if (formControl.$untouched) {
             formControl.$setTouched();
           }
-            
+
           if (formControl.$$element.is('#address')) {
             if (self.latitude === 0 || self.longitude === 0) {
               formControl.$setValidity('required', false);
@@ -885,6 +885,10 @@
           self.helpQuery = "";
         }
 
+        function setAutoCompleteValue(val) {
+          $('#smart-search').typeahead('val', val);
+        }
+
         function getSearchResult(key) {
           var data = localStorage.getItem(key);
           return data ? JSON.parse(data) : null;
@@ -895,14 +899,21 @@
         }
 
         function onCursorChange(event, selection) {
-          $('#smart-search').typeahead('val', self.helpQuery);
+          setAutoCompleteValue(self.helpQuery);
         }
 
         function onSelected(event, selection, query) {
-          var animalType = animalService.getAnimalType(self.helpQuery);
+          self.petType = null;
 
-          autoSelectCategories(selection.item.subcategory.id, animalType);
-          clearQuery();
+          if (selection.item && selection.item.category.name.toLowerCase().indexOf('animals') > -1) {
+            animalService.getAnimalType(self.helpQuery).then(function (animalType) {
+              autoSelectCategories(selection.item.subcategory.id, animalType);
+            });
+          }
+          else {
+            autoSelectCategories(selection.item.subcategory.id);
+          }
+          //clearQuery();
         }
 
         self.smartSearcher = new smartSearch(self.helpFormattedData, options);
