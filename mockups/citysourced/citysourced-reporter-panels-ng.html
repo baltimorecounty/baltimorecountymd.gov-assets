@@ -44,8 +44,8 @@
 
 		<div role="alert" class="bc-citysourced-reporter-alert alert-success" ng-if="!reporter.isLoading && reporter.isDone && reporter.isSuccess">
 			<h2>Your Submission Has Been Received</h2>
-			<p>Thank you for submitting your report. Your tracking number is: <span id="issueId">{{ reporter.issueId }}</span>.</p>
-			<p>You will receive an email in a few minutes with information about what happens next. You can also track your status online by entering your tracking number at <a href="/followup" title="Track your issue status online.">http://www.baltimorecountymd.gov/followup</a>.</p>
+			<p>Thank you for submitting your report. You will receive an email in a few minutes with your tracking number and additional information.</p>
+			<p>You can track your status online at any time by entering your tracking number at  <a href="/followup" title="Track your issue status online.">http://www.baltimorecountymd.gov/followup</a>.</p>
 		</div>
 
 		<div role="alert" class="bc-citysourced-reporter-alert alert-warning" ng-show="!reporter.isLoading && reporter.isDone && !reporter.isSuccess">
