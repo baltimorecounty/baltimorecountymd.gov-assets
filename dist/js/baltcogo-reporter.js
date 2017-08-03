@@ -33,7 +33,7 @@
     }
 
     function getBreeds() {
-      return $http.get('/sebin/u/t/animal-colors.json', {
+      return $http.get('/sebin/y/a/animal-breeds.json', {
         cache: true
       }).then(animalSuccessResponse)
         .catch(handleError);
@@ -828,9 +828,9 @@
       self.animalTypeData = response.data;
     }
 
-    function breedSuccessHandler(response) {
-      self.animalBreedData = response.data;
-    }
+    function breedSuccessHandler(breedData) {
+      self.animalBreedData = breedData;
+    }s
 
     function categorySuccessHandler(response) {
       self.categoryData = response.data;
