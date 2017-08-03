@@ -298,6 +298,7 @@
               .prop('selected', true);
 
             setPetType(animalType);
+            self.trackBreed();
           });
         }
       }, 250);
@@ -529,8 +530,13 @@
           self.helpQuery = "";
         }
 
-        function setAutoCompleteValue(val) {
-          $('#smart-search').typeahead('val', val);
+        function setAutoCompleteValue(val, shouldBlur) {
+          var $smartSearch = $('#smart-search');
+          $smartSearch.typeahead('val', val);
+          
+          if (shouldBlur) {
+            $smartSearch.blur();
+          }
         }
 
         function getSearchResult(key) {
@@ -547,16 +553,19 @@
         }
 
         function onSelected(event, selection, query) {
-          self.petType = null;
-
           if (selection.item && selection.item.category.name.toLowerCase().indexOf('animals') > -1) {
             animalService.getAnimalType(self.helpQuery).then(function (animalType) {
               autoSelectCategories(selection.item.subcategory.id, animalType);
             });
           }
           else {
+            self.petType = '';
             autoSelectCategories(selection.item.subcategory.id);
           }
+          $timeout(function () {
+            setAutoCompleteValue(selection.item.subcategory.name, true);
+          }, 0)
+
           //clearQuery();
         }
 
