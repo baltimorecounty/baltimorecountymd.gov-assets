@@ -850,7 +850,7 @@
     function formatCategoriesForCategoryAutocomplete(category) {
       var formattedData = [];
       category.types.forEach(function (type) {
-        var formattedType = getformattedCategoryType(self.synonyms, type);
+        var formattedType = getformattedCategoryType(self.synonyms, category, type);
         formattedData.push(formattedType);
       });
 
@@ -931,14 +931,14 @@
       }
     }
 
-    function getformattedCategoryType(synonyms, type) {
+    function getformattedCategoryType(synonyms, category, type) {
       var tags = getTags(synonyms, type.name);
       tags = type.tags ? type.tags.concat(tags) : tags;
 
       return {
         category: {
-          id: item.id,
-          name: item.name
+          id: category.id,
+          name: category.name
         },
         subcategory: {
           id: type.id,
