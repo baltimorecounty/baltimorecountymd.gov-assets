@@ -40,8 +40,8 @@
     }
 
     function handleError(errorMsg) {
-      $log.error('Error: ' + errorMsg);
+      $log.error('Error: ', errorMsg);
     }
   }
 
-})(angular.module('baltcoGoApp'));
+})(angular.module('baltcogoApp'));
