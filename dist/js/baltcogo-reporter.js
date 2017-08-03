@@ -366,6 +366,7 @@
     var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
     var map;
 
+    self.helpFormattedData = [];
     self.showCategoryAutocomplete = $location.hash() !== 'original-form';
 
     animalService.getBreeds()
@@ -856,7 +857,7 @@
         formattedData.push(formattedType);
       });
 
-      self.helpFormattedData = formattedData;
+      self.helpFormattedData = self.formattedData.concat(formattedData);
       setupSmartSearcher(formattedData);
     }
 
