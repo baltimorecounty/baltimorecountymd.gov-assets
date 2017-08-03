@@ -472,9 +472,9 @@
       self.animalTypeData = response.data;
     }
 
-    function breedSuccessHandler(response) {
-      self.animalBreedData = response.data;
-    }
+    function breedSuccessHandler(breedData) {
+      self.animalBreedData = breedData;
+    }s
 
     function categorySuccessHandler(response) {
       self.categoryData = response.data;
