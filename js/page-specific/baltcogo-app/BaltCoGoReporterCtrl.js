@@ -1,9 +1,9 @@
 (function (app, querystringer) {
   'use strict';
 
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'smartSearch', 'dataService', reporterController]);
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'animalService', 'smartSearch', 'dataService', reporterController]);
 
-  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, smartSearcher, dataService) {
+  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearcher, dataService) {
 
     var self = this;
     var targetCounty = 'Baltimore County';
