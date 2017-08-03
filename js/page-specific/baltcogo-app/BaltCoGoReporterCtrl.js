@@ -1,14 +1,16 @@
 (function (app, querystringer) {
   'use strict';
 
-  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'animalService', 'smartSearch', 'dataService', reporterController]);
+  app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$location', '$timeout', '$routeParams', 'mapServiceComposite', 'reportService', 'animalService', 'smartSearch', 'dataService', reporterController]);
 
-  function reporterController($http, $scope, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearch, dataService) {
+  function reporterController($http, $scope, $location, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearch, dataService) {
 
     var self = this;
     var targetCounty = 'Baltimore County';
     var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
     var map;
+
+    self.showCategoryAutocomplete = $location.hash() !== 'original-form';
 
     animalService.getBreeds()
       .then(breedSuccessHandler)
@@ -540,7 +542,7 @@
         }
 
         function onSelected(event, selection, query) {
-          var animalType = getAnimalType(self.helpQuery);
+          var animalType = animalService.getAnimalType(self.helpQuery);
 
           autoSelectCategories(selection.item.subcategory.id, animalType);
           clearQuery();
