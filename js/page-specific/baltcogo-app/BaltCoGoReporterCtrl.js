@@ -474,7 +474,7 @@
 
     function breedSuccessHandler(breedData) {
       self.animalBreedData = breedData;
-    }s
+    }
 
     function categorySuccessHandler(response) {
       self.categoryData = response.data;
