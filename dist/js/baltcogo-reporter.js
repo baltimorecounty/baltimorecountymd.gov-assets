@@ -847,6 +847,7 @@
       dataService.getSynonyms().then(function (synonyms) {
         self.synonyms = synonyms;
         categories.forEach(formatCategoriesForCategoryAutocomplete);
+        setupSmartSearcher();
       });
     }
 
@@ -858,10 +859,9 @@
       });
 
       self.helpFormattedData = self.helpFormattedData.concat(formattedData);
-      setupSmartSearcher(formattedData);
     }
 
-    function setupSmartSearcher(smartSearchData) {
+    function setupSmartSearcher() {
       var keys = [
         {
           name: 'subcategory.name',
@@ -905,7 +905,7 @@
           clearQuery();
         }
 
-        self.smartSearcher = new smartSearch(smartSearchData, options);
+        self.smartSearcher = new smartSearch(self.helpFormattedData, options);
 
         self.typeAhead = $('#smart-search').typeahead({
           highlight: true
