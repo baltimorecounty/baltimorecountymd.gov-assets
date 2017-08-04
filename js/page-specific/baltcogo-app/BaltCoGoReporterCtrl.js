@@ -199,7 +199,7 @@
 			angular.forEach(self.categoryData, function (element) {
 				clearCategoryData();
 
-				if (element.id == self.category) {
+				if (element.id === self.category.id) {
 
 					self.subCategories = element.types;
 					
