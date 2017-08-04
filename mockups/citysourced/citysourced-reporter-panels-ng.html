@@ -91,7 +91,8 @@
             <p role="alert" class="error-message" ng-if="citySourcedReporterForm.subCategories.$dirty" ng-show="citySourcedReporterForm.subCategories.$error.required">Please select a category for your report.</p>
           </div>
 
-          <div ng-show="reporter.showCategoryAutocomplete" class="autocomplete-container">
+          <div ng-show="reporter.showCategoryAutocomplete" class="category-selection autocomplete-container">
+            <label for="smart-search">Report Type</label>
             <input type="text" id="smart-search" placeholder="Search for a problem or request" ng-keyup="reporter.helpAutocomplete(this)"
               ng-model="reporter.helpQuery" />
           </div>
