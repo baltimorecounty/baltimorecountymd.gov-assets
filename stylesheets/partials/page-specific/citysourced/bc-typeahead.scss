@@ -92,6 +92,10 @@ span.twitter-typeahead {
   top: 46px !important;
 }
 
-.twitter-typeahead input {
-  top: 12px !important;
+.twitter-typeahead input:first-child{
+  margin-top: 4px !important;
+}
+
+#smart-search {
+  top: 0 !important;
 }

@@ -409,6 +409,9 @@
     angular.element('#address').on('keyup', autocompleteHandler);
     angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 
+    self.toggleForm = function() {
+      self.showCategoryAutocomplete = !self.showCategoryAutocomplete;
+    }
 
     self.fileReportClick = function () {
       if (!validatePanel())
