@@ -70,7 +70,7 @@
         <fieldset class="panel" ng-show="reporter.page === 1">
           <legend>How Can We Help?</legend>
 
-          <a ng-show="reporter.showCategoryAutocomplete" href="#original-form">Show Orginal Form</a>
+          <button ng-show="reporter.showCategoryAutocomplete" ng-click="reporter.toggleForm()" type="button">Show Orginal Form</button>
 
           <div ng-show="!reporter.showCategoryAutocomplete" id="category-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.categories.$dirty &&  citySourcedReporterForm.categories.$invalid }">
             <label id="categories-label">Request Category</label>
