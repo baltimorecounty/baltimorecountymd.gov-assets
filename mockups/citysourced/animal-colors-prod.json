@@ -1,0 +1,337 @@
+[{
+		"name": "Albino",
+		"id": 1010886
+	},
+	{
+		"name": "Amber",
+		"id": 1010887
+	},
+	{
+		"name": "Apricot",
+		"id": 1010888
+	},
+	{
+		"name": "Bay",
+		"id": 1010889
+	},
+	{
+		"name": "Beige",
+		"id": 1010890
+	},
+	{
+		"name": "Black",
+		"id": 1010891
+	},
+	{
+		"name": "Blanketed Appaloosa",
+		"id": 1010892
+	},
+	{
+		"name": "Blonde",
+		"id": 1010893
+	},
+	{
+		"name": "Blue",
+		"id": 1010894
+	},
+	{
+		"name": "Blue Merle",
+		"id": 1010895
+	},
+	{
+		"name": "Blue Point",
+		"id": 1010896
+	},
+	{
+		"name": "Blue Roan",
+		"id": 1010897
+	},
+	{
+		"name": "Blue Tick",
+		"id": 1010898
+	},
+	{
+		"name": "Bone",
+		"id": 1010899
+	},
+	{
+		"name": "Brindle",
+		"id": 1010900
+	},
+	{
+		"name": "Bronze",
+		"id": 1010901
+	},
+	{
+		"name": "Brown",
+		"id": 1010902
+	},
+	{
+		"name": "Brown Tabby",
+		"id": 1010903
+	},
+	{
+		"name": "Buckskin",
+		"id": 1010904
+	},
+	{
+		"name": "Buff",
+		"id": 1010905
+	},
+	{
+		"name": "Calico",
+		"id": 1010906
+	},
+	{
+		"name": "Caramel",
+		"id": 1010907
+	},
+	{
+		"name": "Champagne",
+		"id": 1010908
+	},
+	{
+		"name": "Chestnut",
+		"id": 1010909
+	},
+	{
+		"name": "Chocolate Brown",
+		"id": 1010910
+	},
+	{
+		"name": "Cinnamon",
+		"id": 1010911
+	},
+	{
+		"name": "Copper",
+		"id": 1010912
+	},
+	{
+		"name": "Cream",
+		"id": 1010913
+	},
+	{
+		"name": "Dapple",
+		"id": 1010914
+	},
+	{
+		"name": "Dappled",
+		"id": 1010915
+	},
+	{
+		"name": "Dead Grass",
+		"id": 1010916
+	},
+	{
+		"name": "Dun",
+		"id": 1010917
+	},
+	{
+		"name": "Fawn",
+		"id": 1010918
+	},
+	{
+		"name": "Flame Point",
+		"id": 1010919
+	},
+	{
+		"name": "Ginger",
+		"id": 1010920
+	},
+	{
+		"name": "Gold",
+		"id": 1010921
+	},
+	{
+		"name": "Gray",
+		"id": 1010922
+	},
+	{
+		"name": "Green",
+		"id": 1010923
+	},
+	{
+		"name": "Grey",
+		"id": 1010924
+	},
+	{
+		"name": "Grey Tabby",
+		"id": 1010925
+	},
+	{
+		"name": "Grey White",
+		"id": 1010926
+	},
+	{
+		"name": "Gruel",
+		"id": 1010927
+	},
+	{
+		"name": "Harlequin",
+		"id": 1010928
+	},
+	{
+		"name": "Honey",
+		"id": 1010929
+	},
+	{
+		"name": "Ivory",
+		"id": 1010930
+	},
+	{
+		"name": "Lemon",
+		"id": 1010931
+	},
+	{
+		"name": "Leopard Appaloosa",
+		"id": 1010932
+	},
+	{
+		"name": "Lilac Point",
+		"id": 1010933
+	},
+	{
+		"name": "Liver",
+		"id": 1010934
+	},
+	{
+		"name": "Lynx Point",
+		"id": 1010935
+	},
+	{
+		"name": "Mahogany",
+		"id": 1010936
+	},
+	{
+		"name": "Multi",
+		"id": 1010937
+	},
+	{
+		"name": "Orange",
+		"id": 1010938
+	},
+	{
+		"name": "Orange Tabby",
+		"id": 1010939
+	},
+	{
+		"name": "Other",
+		"id": 1010940
+	},
+	{
+		"name": "Paint",
+		"id": 1010941
+	},
+	{
+		"name": "Palamino",
+		"id": 1010942
+	},
+	{
+		"name": "Peach",
+		"id": 1010943
+	},
+	{
+		"name": "Piebald",
+		"id": 1010944
+	},
+	{
+		"name": "Pink",
+		"id": 1010945
+	},
+	{
+		"name": "Purple",
+		"id": 1010946
+	},
+	{
+		"name": "Red",
+		"id": 1010947
+	},
+	{
+		"name": "Reddish Brown",
+		"id": 1010948
+	},
+	{
+		"name": "Roan",
+		"id": 1010949
+	},
+	{
+		"name": "Rust",
+		"id": 1010950
+	},
+	{
+		"name": "Sable",
+		"id": 1010951
+	},
+	{
+		"name": "Sage",
+		"id": 1010952
+	},
+	{
+		"name": "Salt And Pepper",
+		"id": 1010953
+	},
+	{
+		"name": "Sand",
+		"id": 1010954
+	},
+	{
+		"name": "Seal Point  ",
+		"id": 1010955
+	},
+	{
+		"name": "Silver",
+		"id": 1010956
+	},
+	{
+		"name": "Smoke",
+		"id": 1010957
+	},
+	{
+		"name": "Tabby",
+		"id": 1010958
+	},
+	{
+		"name": "Tan",
+		"id": 1010959
+	},
+	{
+		"name": "Tan Black",
+		"id": 1010960
+	},
+	{
+		"name": "Taupe",
+		"id": 1010961
+	},
+	{
+		"name": "Tiger Stripped",
+		"id": 1010962
+	},
+	{
+		"name": "Tortoise",
+		"id": 1010963
+	},
+	{
+		"name": "Tri",
+		"id": 1010964
+	},
+	{
+		"name": "Unknown",
+		"id": 1010965
+	},
+	{
+		"name": "Vanilla  ",
+		"id": 1010966
+	},
+	{
+		"name": "Wheat  ",
+		"id": 1010967
+	},
+	{
+		"name": "White",
+		"id": 1010968
+	},
+	{
+		"name": "Yellow",
+		"id": 1010969
+	}
+]
