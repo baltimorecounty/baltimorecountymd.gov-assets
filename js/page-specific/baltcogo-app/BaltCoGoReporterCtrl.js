@@ -57,13 +57,13 @@
 			
 			var data = [{
 					name: 'Category',
-					id: self.category,
-					value: getValueForId(self.categoryData, self.category)
+					id: self.category.id,
+					value: self.category.name
 				},
 				{
 					name: 'SubCategory',
-					id: self.subCategory,
-					value: getValueForId(self.subCategories, self.subCategory)
+					id: self.subCategory.id,
+					value: self.subCategory.name
 				},
 				{
 					name: 'Description',
