@@ -276,12 +276,6 @@
 			categoryId = querystringer.getAsDictionary().categoryid * 1,
 			map;
 
-		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler); 
-		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
-		
 		self.isAnimal = false;
 		self.page = 1;		
 		self.isDone = false;
@@ -290,7 +284,14 @@
 		self.isLoading = false;
 		self.latitude = 0;
 		self.longitude = 0;
+		self.category = 0;
 
+		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
+		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler); 
+		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		
 		var mapSettings = {
 				center: {
 					lat: 39.4003288,
@@ -461,10 +462,10 @@
 				self.subCategories = [];
 				return;
 			}
+console.log(self.category);
 
 			angular.forEach(self.categoryData, function (element) {
 				clearCategoryData();
-
 				if (element.id === self.category.id) {
 
 					self.subCategories = element.types;
@@ -496,9 +497,7 @@
 					}, 0);
 
 
-					self.descriptionId = element.description;
-
-					
+					self.descriptionId = element.description;					
 				}
 			});
 		};
@@ -548,17 +547,17 @@
 
 		/***** Private - Helpers *****/
 
-		function autoSelectCategories(categoryId) {
+		function autoSelectCategories(categoryId) {		
 			angular.forEach(self.categoryData, function(categoryItem) {
 				if (categoryItem.id === categoryId) {
-					self.category = categoryItem;
-					self.loadSubCategories(categoryItem.id);
+					self.category = categoryItem;						
+					self.loadSubCategories();
 				} else {
 					if (categoryItem.types) {
 						angular.forEach(categoryItem.types, function(typeItem) {
 							if (typeItem.id === categoryId) {
 								self.category = categoryItem;
-								self.loadSubCategories(categoryItem.id);
+								self.loadSubCategories();
 								self.subCategory = typeItem;
 							}
 						});						
@@ -581,7 +580,6 @@
 			self.descriptionOfAnimalId = 0;
 			self.descriptionOfLocationId = 0;
 			self.otherDescriptionId = 0;
-		
 		}
 
 		function geocodeAndMarkAddress(singleLineAddress) {
@@ -713,8 +711,9 @@
 
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
-			if (categoryId)
+			if (categoryId) {
 				autoSelectCategories(categoryId);
+			}
 		}
 
 		function colorSuccessHandler(response) {
