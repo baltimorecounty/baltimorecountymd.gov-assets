@@ -37,7 +37,8 @@
   <div ng-app="baltcogoApp" ng-controller="BaltCoGoReporterCtrl as reporter" ng-cloak>
 
     <p class="bc-citysourced-reporter-instructions">BaltCoGo allows you to quickly report problems or request service online. Complete the form below to create your service
-      request.</p>
+      request.
+    </p>
 
     <p><strong>If this is an emergency, dial 911.</strong></p>
 
@@ -70,7 +71,6 @@
         <fieldset class="panel" ng-show="reporter.page === 1">
           <legend>How Can We Help?</legend>
 
-          <button ng-show="reporter.showCategoryAutocomplete" ng-click="reporter.toggleForm()" type="button">Show Orginal Form</button>
 
           <div ng-show="!reporter.showCategoryAutocomplete" id="category-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.categories.$dirty &&  citySourcedReporterForm.categories.$invalid }">
             <label id="categories-label">Request Category</label>
@@ -92,9 +92,14 @@
           </div>
 
           <div ng-show="reporter.showCategoryAutocomplete" class="category-selection autocomplete-container">
-            <label for="smart-search">Report Type</label>
+            <label for="smart-search">Request Type</label>
             <input type="text" id="smart-search" placeholder="Search for a problem or request" ng-keyup="reporter.helpAutocomplete(this)"
               ng-model="reporter.helpQuery" />
+          </div>
+
+          <div class="category-selection toggle-links">
+            <a ng-show="reporter.showCategoryAutocomplete" ng-click="reporter.toggleForm()" href="#">Or, choose from a list of issues.</a>
+            <a ng-show="!reporter.showCategoryAutocomplete" ng-click="reporter.toggleForm()" href="#">Or, choose from a few keywords.</a>
           </div>
 
           <div id="pet-type" ng-if="reporter.isAnimal && reporter.subCategory" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.petType.$dirty &&  citySourcedReporterForm.petType.$invalid }">
