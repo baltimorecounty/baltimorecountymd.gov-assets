@@ -1,16 +1,16 @@
 // Collapse the other items
 (function accordionMenu($) {
-  let clickedAccordionLevel = 0;
+  var clickedAccordionLevel = 0;
 
   /**
    * Add active class to any links inside the local navigation on the page
    */
-  function addCurrentClass($elm) {
-    const pathName = window.location.pathname;
-    const elmHref = $elm.attr('href');
+  function addCurrentClass($element) {
+    var pathName = window.location.pathname;
+    var elmHref = $element.attr('href');
 
     if (elmHref.indexOf(pathName) > -1) {
-      $elm.addClass('current');
+      $element.closest('.panel').addClass('current');
     }
   }
 
@@ -34,14 +34,14 @@
   }
 
   function openActiveItem(idx, item) {
-    const itemHref = item.getAttribute('href');
-    const $item = $(item);
+    var itemHref = item.getAttribute('href');
+    var $item = $(item);
 
     if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
       $item.addClass('current');
-      const $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+      var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
       $collapsables.addClass('in');
-      const $siblings = $collapsables.siblings('.accordion-collapsed');
+      var $siblings = $collapsables.siblings('.accordion-collapsed');
 
       if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
     } else {
@@ -50,9 +50,9 @@
   }
 
   function toggleAccordion(e, action) {
-    const $collapsable = $(e.currentTarget);
-    const $siblings = $collapsable.siblings('.accordion-collapsed');
-    const accordionLevel = getAccordionLevel($collapsable);
+    var $collapsable = $(e.currentTarget);
+    var $siblings = $collapsable.siblings('.accordion-collapsed');
+    var accordionLevel = getAccordionLevel($collapsable);
 
     if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
       if (action === 'hide') {
@@ -78,7 +78,7 @@
   }
 
   function trackAccordionLevel(e) {
-    const $currentTarget = $(e.currentTarget);
+    var $currentTarget = $(e.currentTarget);
 
     clickedAccordionLevel = getAccordionLevel($currentTarget);
     $currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
@@ -87,11 +87,11 @@
   /**
    * When the page is ready
    */
-  $(() => {
+  $(function() {
 		/* Opens any items that match the current URL, so the user 
 		 * sees the current page as being active. 
 		 */
-    $('.bc-accordion-menu ul li a').each(openActiveItem);
+    $('.bc-accordion-menu a').each(openActiveItem);
 
     // Hide all text-only nodes.
     hideTextOnlyNodes($('.bc-accordion-menu .panel ul li'));

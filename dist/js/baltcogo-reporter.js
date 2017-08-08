@@ -13,7 +13,7 @@
 		var targetCounty = 'Baltimore County',
 			marker,
 			spatialReferenceId = 4269,
-			geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
+			geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
 			originLongitude = -76.60652470000002, 
 			originLatitude = 39.4003288,
 
@@ -116,7 +116,7 @@
 					};
 
 					var addressToLocationsParams = {
-						address: { 'Single Line Input': addressQuery },
+						address: { 'SingleLine': addressQuery },
 						f: 'json'
 					};
 
@@ -276,11 +276,11 @@
 			categoryId = querystringer.getAsDictionary().categoryid * 1,
 			map;
 
-		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
-		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
+		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler); 
+		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
 		
 		self.isAnimal = false;
 		self.page = 1;		
