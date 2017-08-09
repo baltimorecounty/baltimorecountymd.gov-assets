@@ -1,0 +1,1390 @@
+[{
+	"animal": "dog",
+	"id": 1010189,
+	"breeds": [{
+			"name": "Affenpinscher",
+			"id": 1010317
+		},
+		{
+			"name": "Afghan Hound",
+			"id": 1010318
+		},
+		{
+			"name": "Airedale Terrier",
+			"id": 1010319
+		},
+		{
+			"name": "Akita",
+			"id": 1010320
+		},
+		{
+			"name": "Alaskan Malamute",
+			"id": 1010321
+		},
+		{
+			"name": "Amer. Hairless Terri",
+			"id": 1010322
+		},
+		{
+			"name": "Amer. Water Spaniel",
+			"id": 1010323
+		},
+		{
+			"name": "American English Coonhound",
+			"id": 1010324
+		},
+		{
+			"name": "American Eskimo",
+			"id": 1010325
+		},
+		{
+			"name": "American Foxhound",
+			"id": 1010326
+		},
+		{
+			"name": "American Leopard Hound",
+			"id": 1010327
+		},
+		{
+			"name": "American Staffordshire Terrier",
+			"id": 1010328
+		},
+		{
+			"name": "Anatolian Shepherd",
+			"id": 1010329
+		},
+		{
+			"name": "Appenzeller Sennenhunde",
+			"id": 1010330
+		},
+		{
+			"name": "Argentino",
+			"id": 1010331
+		},
+		{
+			"name": "Australian Blue Heel",
+			"id": 1010332
+		},
+		{
+			"name": "Australian Cattle",
+			"id": 1010333
+		},
+		{
+			"name": "Australian Kelpie",
+			"id": 1010334
+		},
+		{
+			"name": "Australian Shephard",
+			"id": 1010335
+		},
+		{
+			"name": "Australian Terrier",
+			"id": 1010336
+		},
+		{
+			"name": "Azawakh",
+			"id": 1010337
+		},
+		{
+			"name": "Barbet",
+			"id": 1010338
+		},
+		{
+			"name": "Basenji",
+			"id": 1010339
+		},
+		{
+			"name": "Basset Hound",
+			"id": 1010340
+		},
+		{
+			"name": "Beagle",
+			"id": 1010341
+		},
+		{
+			"name": "Bearded Collie",
+			"id": 1010342
+		},
+		{
+			"name": "Beauceron",
+			"id": 1010343
+		},
+		{
+			"name": "Bedlington Terrier",
+			"id": 1010344
+		},
+		{
+			"name": "Belgian Laekenois",
+			"id": 1010345
+		},
+		{
+			"name": "Belgian Malinois",
+			"id": 1010346
+		},
+		{
+			"name": "Belgian Sheepdog",
+			"id": 1010347
+		},
+		{
+			"name": "Belgian Tervuren",
+			"id": 1010348
+		},
+		{
+			"name": "Bergamasco",
+			"id": 1010349
+		},
+		{
+			"name": "Berger Picard",
+			"id": 1010350
+		},
+		{
+			"name": "Bernese Mountain",
+			"id": 1010351
+		},
+		{
+			"name": "Bichon Frise",
+			"id": 1010353
+		},
+		{
+			"name": "Biewer Terrier",
+			"id": 1010352
+		},
+		{
+			"name": "Black And Tan Coonhound",
+			"id": 1010354
+		},
+		{
+			"name": "Black Russian Terrier",
+			"id": 1010355
+		},
+		{
+			"name": "Bloodhound",
+			"id": 1010356
+		},
+		{
+			"name": "Bluetick Coonhound",
+			"id": 1010357
+		},
+		{
+			"name": "Boerboel",
+			"id": 1010358
+		},
+		{
+			"name": "Bolognese",
+			"id": 1010359
+		},
+		{
+			"name": "Border Collie",
+			"id": 1010360
+		},
+		{
+			"name": "Border Terrier",
+			"id": 1010361
+		},
+		{
+			"name": "Borzoi",
+			"id": 1010362
+		},
+		{
+			"name": "Boston Terrier",
+			"id": 1010363
+		},
+		{
+			"name": "Bouvier Des Flandres",
+			"id": 1010364
+		},
+		{
+			"name": "Boxer",
+			"id": 1010365
+		},
+		{
+			"name": "Boykin Spaniel",
+			"id": 1010366
+		},
+		{
+			"name": "Bracco Italiano",
+			"id": 1010367
+		},
+		{
+			"name": "Braque Du Bourbonnais",
+			"id": 1010368
+		},
+		{
+			"name": "Briard",
+			"id": 1010369
+		},
+		{
+			"name": "Brittany",
+			"id": 1010370
+		},
+		{
+			"name": "Broholmer",
+			"id": 1010371
+		},
+		{
+			"name": "Brussels Griffon",
+			"id": 1010372
+		},
+		{
+			"name": "Bull Dog",
+			"id": 1010373
+		},
+		{
+			"name": "Bull Terrier",
+			"id": 1010374
+		},
+		{
+			"name": "Bullmastiff",
+			"id": 1010375
+		},
+		{
+			"name": "Cairn Terrier",
+			"id": 1010376
+		},
+		{
+			"name": "Canaan",
+			"id": 1010377
+		},
+		{
+			"name": "Cane Corso",
+			"id": 1010378
+		},
+		{
+			"name": "Cardigan Welsh Corgi",
+			"id": 1010379
+		},
+		{
+			"name": "Catahoula Leopard",
+			"id": 1010380
+		},
+		{
+			"name": "Caucasian Ovcharka",
+			"id": 1010381
+		},
+		{
+			"name": "Cavalier King Charles Spaniel",
+			"id": 1010382
+		},
+		{
+			"name": "Central Asian Shepherd",
+			"id": 1010383
+		},
+		{
+			"name": "Cesky Terrier",
+			"id": 1010384
+		},
+		{
+			"name": "Chesapeake Bay Retriever",
+			"id": 1010385
+		},
+		{
+			"name": "Chihuahua",
+			"id": 1010386
+		},
+		{
+			"name": "Chinese Crested",
+			"id": 1010387
+		},
+		{
+			"name": "Chinese Shar-Pei",
+			"id": 1010388
+		},
+		{
+			"name": "Chinook",
+			"id": 1010389
+		},
+		{
+			"name": "Chow Chow",
+			"id": 1010390
+		},
+		{
+			"name": "Cirneco Dell Etna",
+			"id": 1010391
+		},
+		{
+			"name": "Clumber Spaniel",
+			"id": 1010392
+		},
+		{
+			"name": "Cockapoo",
+			"id": 1010393
+		},
+		{
+			"name": "Cocker Spaniel",
+			"id": 1010394
+		},
+		{
+			"name": "Collie",
+			"id": 1010395
+		},
+		{
+			"name": "Coton De Tulear",
+			"id": 1010396
+		},
+		{
+			"name": "Coyote",
+			"id": 1010397
+		},
+		{
+			"name": "Curly-Coated Retriever",
+			"id": 1010398
+		},
+		{
+			"name": "Czechoslovakian Vlcak",
+			"id": 1010399
+		},
+		{
+			"name": "Dachshund",
+			"id": 1010400
+		},
+		{
+			"name": "Dalmation",
+			"id": 1010401
+		},
+		{
+			"name": "Dandie Dinmont Terr",
+			"id": 1010402
+		},
+		{
+			"name": "Danish-Swedish Farm",
+			"id": 1010403
+		},
+		{
+			"name": "Deutscher Wachtelhund",
+			"id": 1010404
+		},
+		{
+			"name": "Doberman Pinscher",
+			"id": 1010405
+		},
+		{
+			"name": "Dogue De Bordeaux",
+			"id": 1010406
+		},
+		{
+			"name": "Drentsche Patrijshond",
+			"id": 1010407
+		},
+		{
+			"name": "Dutch Shepherd",
+			"id": 1010408
+		},
+		{
+			"name": "Egyptian Mau",
+			"id": 1010409
+		},
+		{
+			"name": "English Cocker Spaniel",
+			"id": 1010410
+		},
+		{
+			"name": "English Foxhound",
+			"id": 1010411
+		},
+		{
+			"name": "English Setter",
+			"id": 1010412
+		},
+		{
+			"name": "English Springer Spaniel",
+			"id": 1010413
+		},
+		{
+			"name": "English Toy Spaniel",
+			"id": 1010414
+		},
+		{
+			"name": "Entlebucher Mountain",
+			"id": 1010415
+		},
+		{
+			"name": "Eskimo Dog",
+			"id": 1010416
+		},
+		{
+			"name": "Estrela Mountain",
+			"id": 1010417
+		},
+		{
+			"name": "Eurasier",
+			"id": 1010418
+		},
+		{
+			"name": "Field Spaniel",
+			"id": 1010419
+		},
+		{
+			"name": "Finnish Lapphund",
+			"id": 1010420
+		},
+		{
+			"name": "Finnish Spitz",
+			"id": 1010421
+		},
+		{
+			"name": "Flat-Coated Retrievr",
+			"id": 1010422
+		},
+		{
+			"name": "French Bulldog",
+			"id": 1010423
+		},
+		{
+			"name": "French Spaniel",
+			"id": 1010424
+		},
+		{
+			"name": "German Longhaired Pointer",
+			"id": 1010425
+		},
+		{
+			"name": "German Pinscher",
+			"id": 1010426
+		},
+		{
+			"name": "German Shepherd",
+			"id": 1010427
+		},
+		{
+			"name": "German Shorthaired Pointer",
+			"id": 1010428
+		},
+		{
+			"name": "German Spitz",
+			"id": 1010429
+		},
+		{
+			"name": "German Wirehaired Pointer",
+			"id": 1010430
+		},
+		{
+			"name": "Giant Schnauzer",
+			"id": 1010431
+		},
+		{
+			"name": "Glen Of Imaal Terrier",
+			"id": 1010432
+		},
+		{
+			"name": "Golden Retriever",
+			"id": 1010433
+		},
+		{
+			"name": "Goldendoodle",
+			"id": 1010434
+		},
+		{
+			"name": "Gorden Setter",
+			"id": 1010435
+		},
+		{
+			"name": "Grand Basset Griffon Vendeen",
+			"id": 1010436
+		},
+		{
+			"name": "Great Dane",
+			"id": 1010437
+		},
+		{
+			"name": "Great Pyrenees",
+			"id": 1010438
+		},
+		{
+			"name": "Greater Swiss Mountain Dog",
+			"id": 1010439
+		},
+		{
+			"name": "Greyhound",
+			"id": 1010440
+		},
+		{
+			"name": "Hamiltonstovare",
+			"id": 1010441
+		},
+		{
+			"name": "Harrier",
+			"id": 1010442
+		},
+		{
+			"name": "Havanese",
+			"id": 1010443
+		},
+		{
+			"name": "Hound",
+			"id": 1010444
+		},
+		{
+			"name": "Hovawart",
+			"id": 1010445
+		},
+		{
+			"name": "Ibizan Hound",
+			"id": 1010446
+		},
+		{
+			"name": "Icelandic Sheepdog",
+			"id": 1010447
+		},
+		{
+			"name": "Irish Red And White Setter",
+			"id": 1010448
+		},
+		{
+			"name": "Irish Setter",
+			"id": 1010449
+		},
+		{
+			"name": "Irish Terrier",
+			"id": 1010450
+		},
+		{
+			"name": "Irish Water Spaniel",
+			"id": 1010451
+		},
+		{
+			"name": "Irish Wolfhound",
+			"id": 1010452
+		},
+		{
+			"name": "Italian Greyhound",
+			"id": 1010453
+		},
+		{
+			"name": "Jagdterrier",
+			"id": 1010454
+		},
+		{
+			"name": "Japanese Chin",
+			"id": 1010455
+		},
+		{
+			"name": "Jin Do",
+			"id": 1010456
+		},
+		{
+			"name": "Kai Ken",
+			"id": 1010457
+		},
+		{
+			"name": "Karelian Bear",
+			"id": 1010458
+		},
+		{
+			"name": "Keeshond",
+			"id": 1010459
+		},
+		{
+			"name": "Kerry Blue Terrier",
+			"id": 1010460
+		},
+		{
+			"name": "Kishu Ken",
+			"id": 1010461
+		},
+		{
+			"name": "Komondor",
+			"id": 1010462
+		},
+		{
+			"name": "Kooikerhondje",
+			"id": 1010463
+		},
+		{
+			"name": "Kromfohrlander",
+			"id": 1010464
+		},
+		{
+			"name": "Kuvaszkuv",
+			"id": 1010465
+		},
+		{
+			"name": "Labradoodle",
+			"id": 1010466
+		},
+		{
+			"name": "Labrador Retriever",
+			"id": 1010467
+		},
+		{
+			"name": "Lagotto Romagnolo",
+			"id": 1010468
+		},
+		{
+			"name": "Lakeland Terrier",
+			"id": 1010469
+		},
+		{
+			"name": "Lancashire Heeler",
+			"id": 1010470
+		},
+		{
+			"name": "Leonberger",
+			"id": 1010471
+		},
+		{
+			"name": "Lhasa Apso",
+			"id": 1010472
+		},
+		{
+			"name": "Lowchen",
+			"id": 1010473
+		},
+		{
+			"name": "Maltese",
+			"id": 1010474
+		},
+		{
+			"name": "Manchester Terrier",
+			"id": 1010475
+		},
+		{
+			"name": "Maremma",
+			"id": 1010476
+		},
+		{
+			"name": "Mastiff",
+			"id": 1010477
+		},
+		{
+			"name": "Minature Pinscher",
+			"id": 1010478
+		},
+		{
+			"name": "Miniature American Shepherd",
+			"id": 1010479
+		},
+		{
+			"name": "Miniature Bull Terrier",
+			"id": 1010480
+		},
+		{
+			"name": "Miniature Schnauzer",
+			"id": 1010481
+		},
+		{
+			"name": "Mixed Breed Dog",
+			"id": 1010482
+		},
+		{
+			"name": "Mudi",
+			"id": 1010483
+		},
+		{
+			"name": "Neopolitan Mastiff",
+			"id": 1010484
+		},
+		{
+			"name": "Newfoundland",
+			"id": 1010485
+		},
+		{
+			"name": "Norfolk Terrier",
+			"id": 1010486
+		},
+		{
+			"name": "Norrbottenspets",
+			"id": 1010487
+		},
+		{
+			"name": "Norwegian Buhund",
+			"id": 1010488
+		},
+		{
+			"name": "Norwegian Elkhound",
+			"id": 1010489
+		},
+		{
+			"name": "Norwegian Forest Cat",
+			"id": 1010490
+		},
+		{
+			"name": "Norwegian Lundehund",
+			"id": 1010491
+		},
+		{
+			"name": "Norwich Terrier",
+			"id": 1010492
+		},
+		{
+			"name": "Nova Scotia Duck Tolling Retriever",
+			"id": 1010493
+		},
+		{
+			"name": "Old English Sheepdog",
+			"id": 1010494
+		},
+		{
+			"name": "Otterhound",
+			"id": 1010495
+		},
+		{
+			"name": "Papillon",
+			"id": 1010496
+		},
+		{
+			"name": "Parson Russell Terri",
+			"id": 1010497
+		},
+		{
+			"name": "Pekingese",
+			"id": 1010498
+		},
+		{
+			"name": "Pembroke Welsh Corgi",
+			"id": 1010499
+		},
+		{
+			"name": "Perro De Presa Canario",
+			"id": 1010500
+		},
+		{
+			"name": "Peruvian Inca Orchid",
+			"id": 1010501
+		},
+		{
+			"name": "Petit Basset Griffon Vendeen",
+			"id": 1010502
+		},
+		{
+			"name": "Pharaoh Hound",
+			"id": 1010503
+		},
+		{
+			"name": "Pit Bull Terrier",
+			"id": 1010504
+		},
+		{
+			"name": "Plott Hound",
+			"id": 1010505
+		},
+		{
+			"name": "Pointer",
+			"id": 1010506
+		},
+		{
+			"name": "Polish Lowland Sheep",
+			"id": 1010507
+		},
+		{
+			"name": "Pomeranian",
+			"id": 1010508
+		},
+		{
+			"name": "Poodle",
+			"id": 1010509
+		},
+		{
+			"name": "Portugese Water",
+			"id": 1010510
+		},
+		{
+			"name": "Portuguese Podengo",
+			"id": 1010511
+		},
+		{
+			"name": "Portuguese Podengo Pequeno",
+			"id": 1010512
+		},
+		{
+			"name": "Portuguese Pointer",
+			"id": 1010513
+		},
+		{
+			"name": "Portuguese Sheep",
+			"id": 1010514
+		},
+		{
+			"name": "Pug",
+			"id": 1010515
+		},
+		{
+			"name": "Puggle",
+			"id": 1010516
+		},
+		{
+			"name": "Puli",
+			"id": 1010517
+		},
+		{
+			"name": "Pumi",
+			"id": 1010518
+		},
+		{
+			"name": "Pyrenean Mastiff",
+			"id": 1010519
+		},
+		{
+			"name": "Pyrenean Shepherd",
+			"id": 1010520
+		},
+		{
+			"name": "Rafeiro Do Alentejo",
+			"id": 1010521
+		},
+		{
+			"name": "Rat Terrier",
+			"id": 1010522
+		},
+		{
+			"name": "Redbone Coonhound",
+			"id": 1010523
+		},
+		{
+			"name": "Retriever",
+			"id": 1010524
+		},
+		{
+			"name": "Rhodesian Ridgeback",
+			"id": 1010525
+		},
+		{
+			"name": "Rottweiler",
+			"id": 1010526
+		},
+		{
+			"name": "Russell Terrier",
+			"id": 1010527
+		},
+		{
+			"name": "Russian Toy",
+			"id": 1010528
+		},
+		{
+			"name": "Saluki",
+			"id": 1010529
+		},
+		{
+			"name": "Samoyed",
+			"id": 1010530
+		},
+		{
+			"name": "Schapendoes",
+			"id": 1010531
+		},
+		{
+			"name": "Schipperke",
+			"id": 1010532
+		},
+		{
+			"name": "Scottish Deerhound",
+			"id": 1010533
+		},
+		{
+			"name": "Scottish Fold",
+			"id": 1010534
+		},
+		{
+			"name": "Scottish Terrier",
+			"id": 1010535
+		},
+		{
+			"name": "Sealyham Terrier",
+			"id": 1010536
+		},
+		{
+			"name": "Setter",
+			"id": 1010537
+		},
+		{
+			"name": "Sheltie",
+			"id": 1010538
+		},
+		{
+			"name": "Shepherd",
+			"id": 1010539
+		},
+		{
+			"name": "Shetland Sheepdog",
+			"id": 1010540
+		},
+		{
+			"name": "Shiba Inu",
+			"id": 1010541
+		},
+		{
+			"name": "Shih Tzu",
+			"id": 1010542
+		},
+		{
+			"name": "Siberian Husky",
+			"id": 1010543
+		},
+		{
+			"name": "Silky Terrier",
+			"id": 1010544
+		},
+		{
+			"name": "Skye Terrier",
+			"id": 1010545
+		},
+		{
+			"name": "Sloughi",
+			"id": 1010546
+		},
+		{
+			"name": "Slovensky Cuvac",
+			"id": 1010547
+		},
+		{
+			"name": "Small Munsterlander Pointer",
+			"id": 1010548
+		},
+		{
+			"name": "Smooth Fox Terrier",
+			"id": 1010549
+		},
+		{
+			"name": "Soft Coated Wheaton Terrier",
+			"id": 1010550
+		},
+		{
+			"name": "Spaniel",
+			"id": 1010551
+		},
+		{
+			"name": "Spanish Mastiff",
+			"id": 1010552
+		},
+		{
+			"name": "Spanish Water Dog",
+			"id": 1010553
+		},
+		{
+			"name": "Spinone Italiano",
+			"id": 1010554
+		},
+		{
+			"name": "St. Bernard",
+			"id": 1010555
+		},
+		{
+			"name": "Stabyhoun",
+			"id": 1010556
+		},
+		{
+			"name": "Staffordshire Bull Terrier",
+			"id": 1010557
+		},
+		{
+			"name": "Standard Schnauzers",
+			"id": 1010558
+		},
+		{
+			"name": "Sussex Spaniel",
+			"id": 1010559
+		},
+		{
+			"name": "Swedish Lapphund",
+			"id": 1010560
+		},
+		{
+			"name": "Swedish Vallhund",
+			"id": 1010561
+		},
+		{
+			"name": "Swiss Mountain Dog",
+			"id": 1010562
+		},
+		{
+			"name": "Terrier",
+			"id": 1010563
+		},
+		{
+			"name": "Thai Ridgeback",
+			"id": 1010564
+		},
+		{
+			"name": "Tibetan Mastiff",
+			"id": 1010565
+		},
+		{
+			"name": "Tibetan Spaniel",
+			"id": 1010566
+		},
+		{
+			"name": "Tibetan Terrier",
+			"id": 1010567
+		},
+		{
+			"name": "Tornjak",
+			"id": 1010568
+		},
+		{
+			"name": "Tosa",
+			"id": 1010569
+		},
+		{
+			"name": "Toy Fox Terrier",
+			"id": 1010570
+		},
+		{
+			"name": "Treeing Tennessee Brindle",
+			"id": 1010571
+		},
+		{
+			"name": "Treeing Walker Coonhound",
+			"id": 1010572
+		},
+		{
+			"name": "Vizsla",
+			"id": 1010573
+		},
+		{
+			"name": "Weimaraner",
+			"id": 1010574
+		},
+		{
+			"name": "Welsh Springer Spaniel",
+			"id": 1010575
+		},
+		{
+			"name": "Welsh Terrier",
+			"id": 1010576
+		},
+		{
+			"name": "West Highland White Terrier",
+			"id": 1010577
+		},
+		{
+			"name": "Whippet",
+			"id": 1010578
+		},
+		{
+			"name": "Wire Fox Terrier",
+			"id": 1010579
+		},
+		{
+			"name": "Wirehaired Pointing Griffon",
+			"id": 1010580
+		},
+		{
+			"name": "Wirehaired Vizsla",
+			"id": 1010581
+		},
+		{
+			"name": "Wlfhnd,Russn,Borzoi",
+			"id": 1010582
+		},
+		{
+			"name": "Xoloitzcuintli",
+			"id": 1010583
+		},
+		{
+			"name": "Yorkshire Terrier",
+			"id": 1010584
+		}
+	],
+	"sex": [{
+			"name": "Male",
+			"id": 1011057
+		},
+		{
+			"name": "Female",
+			"id": 1011056
+		},
+		{
+			"name": "Unknown",
+			"id": 1011058
+		}
+	]
+}, {
+	"animal": "cat",
+	"id": 1010188,
+	"breeds": [{
+			"name": "Abyssinian",
+			"id": 1010193
+		},
+		{
+			"name": "American Bobtail",
+			"id": 1010194
+		},
+		{
+			"name": "American Curl",
+			"id": 1010195
+		},
+		{
+			"name": "American Shorthair",
+			"id": 1010196
+		},
+		{
+			"name": "American Wirehair",
+			"id": 1010197
+		},
+		{
+			"name": "Australian Mist",
+			"id": 1010198
+		},
+		{
+			"name": "Balinese",
+			"id": 1010199
+		},
+		{
+			"name": "Bengal",
+			"id": 1010200
+		},
+		{
+			"name": "Birman",
+			"id": 1010201
+		},
+		{
+			"name": "Bombay",
+			"id": 1010202
+		},
+		{
+			"name": "British Longhair",
+			"id": 1010203
+		},
+		{
+			"name": "British Shorthair",
+			"id": 1010204
+		},
+		{
+			"name": "Burmese",
+			"id": 1010205
+		},
+		{
+			"name": "Burmilla",
+			"id": 1010206
+		},
+		{
+			"name": "Chartreux",
+			"id": 1010207
+		},
+		{
+			"name": "Chausie",
+			"id": 1010208
+		},
+		{
+			"name": "Cornish Rex",
+			"id": 1010209
+		},
+		{
+			"name": "Cymric",
+			"id": 1010210
+		},
+		{
+			"name": "Devon Rex",
+			"id": 1010211
+		},
+		{
+			"name": "Domestic Long Hair",
+			"id": 1010212
+		},
+		{
+			"name": "Domestic Medium Hair",
+			"id": 1010213
+		},
+		{
+			"name": "Domestic Short Hair",
+			"id": 1010214
+		},
+		{
+			"name": "Egyptian Mau",
+			"id": 1010215
+		},
+		{
+			"name": "Exotic Shorthair",
+			"id": 1010216
+		},
+		{
+			"name": "Havanna Brown",
+			"id": 1010217
+		},
+		{
+			"name": "Himalayan",
+			"id": 1010218
+		},
+		{
+			"name": "Japanese Bobtail",
+			"id": 1010219
+		},
+		{
+			"name": "Khaomanee",
+			"id": 1010220
+		},
+		{
+			"name": "Korat",
+			"id": 1010221
+		},
+		{
+			"name": "Laperm",
+			"id": 1010222
+		},
+		{
+			"name": "Lurilian Bobtail",
+			"id": 1010223
+		},
+		{
+			"name": "Lykoi",
+			"id": 1010224
+		},
+		{
+			"name": "Maine Coon",
+			"id": 1010225
+		},
+		{
+			"name": "Manx",
+			"id": 1010226
+		},
+		{
+			"name": "Mixed Breed Cat",
+			"id": 1010227
+		},
+		{
+			"name": "Munchkin",
+			"id": 1010228
+		},
+		{
+			"name": "Nebelung",
+			"id": 1010229
+		},
+		{
+			"name": "Norwegian Forest Cat",
+			"id": 1010230
+		},
+		{
+			"name": "Ocicat",
+			"id": 1010231
+		},
+		{
+			"name": "Oriental Longhair",
+			"id": 1010232
+		},
+		{
+			"name": "Oriental Shorthair",
+			"id": 1010233
+		},
+		{
+			"name": "Other",
+			"id": 1010254
+		},
+		{
+			"name": "Persian",
+			"id": 1010234
+		},
+		{
+			"name": "Peterbald",
+			"id": 1010235
+		},
+		{
+			"name": "Pixiebob",
+			"id": 1010236
+		},
+		{
+			"name": "Ragdoll",
+			"id": 1010237
+		},
+		{
+			"name": "Russian Blue",
+			"id": 1010238
+		},
+		{
+			"name": "Savannah",
+			"id": 1010239
+		},
+		{
+			"name": "Scottish Fold",
+			"id": 1010240
+		},
+		{
+			"name": "Scottish Straight",
+			"id": 1010241
+		},
+		{
+			"name": "Selkirk Rex",
+			"id": 1010242
+		},
+		{
+			"name": "Siamese",
+			"id": 1010243
+		},
+		{
+			"name": "Siberian",
+			"id": 1010244
+		},
+		{
+			"name": "Singapura",
+			"id": 1010245
+		},
+		{
+			"name": "Snowshoe",
+			"id": 1010246
+		},
+		{
+			"name": "Somali",
+			"id": 1010247
+		},
+		{
+			"name": "Sphynx",
+			"id": 1010248
+		},
+		{
+			"name": "Thai",
+			"id": 1010249
+		},
+		{
+			"name": "Tonkinese",
+			"id": 1010250
+		},
+		{
+			"name": "Toyger",
+			"id": 1010251
+		},
+		{
+			"name": "Turkish Angora",
+			"id": 1010252
+		},
+		{
+			"name": "Turkish Van",
+			"id": 1010253
+		}
+	],
+	"sex": [{
+			"name": "Male",
+			"id": 1011057
+		},
+		{
+			"name": "Female",
+			"id": 1011056
+		},
+		{
+			"name": "Unknown",
+			"id": 1011058
+		}
+	]
+
+}, {
+	"animal": "horse",
+	"id": 1010190,
+	"sex": [{
+			"name": "Male",
+			"id": 1011057
+		},
+		{
+			"name": "Female",
+			"id": 1011056
+		},
+		{
+			"name": "Unknown",
+			"id": 1011058
+		}
+	]
+
+}, {
+	"animal": "other",
+	"id": 1010191,
+	"sex": [{
+			"name": "Male",
+			"id": 1011057
+		},
+		{
+			"name": "Female",
+			"id": 1011056
+		},
+		{
+			"name": "Unknown",
+			"id": 1011058
+		}
+	]
+
+}]

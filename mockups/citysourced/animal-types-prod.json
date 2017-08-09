@@ -1,0 +1,77 @@
+[{
+		"name": "Bat",
+		"id": 1010859
+	},
+	{
+		"name": "Bird",
+		"id": 1010860
+	},
+	{
+		"name": "Chicken",
+		"id": 1010861
+	},
+	{
+		"name": "Coyote",
+		"id": 1010862
+	},
+	{
+		"name": "Deer",
+		"id": 1010863
+	},
+	{
+		"name": "Ferret",
+		"id": 1010864
+	},
+	{
+		"name": "Fox",
+		"id": 1010865
+	},
+	{
+		"name": "Goat",
+		"id": 1010866
+	},
+	{
+		"name": "Groundhog",
+		"id": 1010867
+	},
+	{
+		"name": "Guinea Pig",
+		"id": 1010868
+	},
+	{
+		"name": "Lizard",
+		"id": 1010869
+	},
+	{
+		"name": "Monkey",
+		"id": 1010870
+	},
+	{
+		"name": "Other",
+		"id": 1010877
+	},
+	{
+		"name": "Pig",
+		"id": 1010871
+	},
+	{
+		"name": "Rabbit",
+		"id": 1010872
+	},
+	{
+		"name": "Raccoon",
+		"id": 1010873
+	},
+	{
+		"name": "Rat",
+		"id": 1010874
+	},
+	{
+		"name": "Snake",
+		"id": 1010875
+	},
+	{
+		"name": "Squirrel",
+		"id": 1010876
+	}
+]
