@@ -71,7 +71,7 @@
 						<select id="categories" name="categories" 
 							ng-model="reporter.category" 
 							ng-change="reporter.loadSubCategories()" 
-							ng-options="cat.id as cat.name for cat in reporter.categoryData track by cat.id" 
+							ng-options="cat as cat.name for cat in reporter.categoryData track by cat.id" 
 							required>
 							<option value="">-- Please select a category --</option>
 						</select>
@@ -83,7 +83,7 @@
 						<select id="subCategories" name="subCategories" 
 							ng-model="reporter.subCategory"
 							ng-if="reporter.subCategories.length"	
-							ng-options="cat.id as cat.name for cat in reporter.subCategories track by cat.id"
+							ng-options="cat as cat.name for cat in reporter.subCategories track by cat.id"
 							required>
 							<option value="">-- Please select a sub-category --</option>
 						</select>
