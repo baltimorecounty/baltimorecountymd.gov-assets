@@ -48,10 +48,9 @@
 
 
 		self.fileReportClick = function () {
-			if (!validatePanel())
-				{return;}
+			if (!validatePanel()) { return; }
 
-			/** * Static fields **********/
+			/** * Static fields ********* */
 
 			var data = [{
 					name: 'Category',
@@ -94,67 +93,87 @@
 				}
 			];
 
-			/** * Conditional fields **********/
+			/** * Conditional fields ********* */
 
-			if (self.locationDescription) {data.push({
+			if (self.locationDescription) { 
+data.push({
 				name: 'Description Of Location',
 				id: self.descriptionOfLocationId,
 				value: self.locationDescription
-			});}
+			}); 
+}
 
-			if (self.otherDescription) {data.push({
+			if (self.otherDescription) {
+ data.push({
 				name: 'Other Description',
 				id: self.otherDescriptionId,
 				value: self.otherDescription
-			});}
+			});
+ }
 
-			if (self.petType) {data.push({
+			if (self.petType) { 
+data.push({
 				name: 'Pet Type',
 				id: self.petType.id,
 				value: getValueForId(self.petTypeData, self.petType.id)
-			});}
+			});
+ }
 
-			if (self.petSex) {data.push({
+			if (self.petSex) { 
+data.push({
 				name: 'Sex',
 				id: self.petSex.id,
 				value: getValueForId(self.sex, self.petSex.id)
-			});}
+			});
+ }
 
-			if (self.otherPetType) {data.push({
+			if (self.otherPetType) {
+ data.push({
 				name: 'Other Pet Type',
 				id: self.otherPetType,
 				value: getValueForId(self.animalTypeData, self.otherPetType)
-			});}
+			}); 
+}
 
-			if (self.primaryBreed) {data.push({
+			if (self.primaryBreed) { 
+data.push({
 				name: 'Primary Breed',
 				id: self.primaryBreed,
 				value: getValueForId(self.breeds, self.primaryBreed)
-			});}
+			});
+ }
 
-			if (self.primaryColor) {data.push({
+			if (self.primaryColor) { 
+data.push({
 				name: 'Primary Color',
 				id: self.primaryColor,
 				value: getValueForId(self.animalColorData, self.primaryColor)
-			});}
+			}); 
+}
 
-			if (self.animalDescription) {data.push({
+			if (self.animalDescription) { 
+data.push({
 				name: 'Description Of Animal',
 				id: angular.element('#animalDescription').attr('data-cs-id') * 1,
 				value: self.animalDescription
-			});}
+			});
+ }
 
-			if (self.streetAddress) {data.push({
+			if (self.streetAddress) {
+ data.push({
 				name: 'Complainant Address',
 				id: self.streetAddressId,
 				value: self.streetAddress
-			});}
+			});
+ }
 
-			if (self.city) {data.push({
+			if (self.city) {
+ data.push({
 				name: 'Complainant City',
 				id: self.cityId,
 				value: self.city
-			});}
+			}); 
+}
 
 			if (self.state) {
 				var stateId = self.state.id ? self.state.id : self.state;
@@ -166,13 +185,15 @@
 				});
 			}
 
-			if (self.zipCode) {data.push({
+			if (self.zipCode) { 
+data.push({
 				name: 'Complainant Zip Code',
 				id: self.zipCodeId,
 				value: self.zipCode
-			});}
+			}); 
+}
 
-			/*** POST ********* */
+			/** * POST ********* */
 
 			self.isLoading = true;
 			self.isDone = true;
@@ -217,14 +238,11 @@
 					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
 
 					$timeout(function () {
-						if (element.descriptionOfAnimal)
-							{self.descriptionOfAnimalId = element.descriptionOfAnimal;}
+						if (element.descriptionOfAnimal) { self.descriptionOfAnimalId = element.descriptionOfAnimal; }
 
-						if (element.descriptionOfLocation)
-							{self.descriptionOfLocationId = element.descriptionOfLocation;}
+						if (element.descriptionOfLocation) { self.descriptionOfLocationId = element.descriptionOfLocation; }
 
-						if (element.otherDescription)
-							{self.otherDescriptionId = element.otherDescription;}
+						if (element.otherDescription) { self.otherDescriptionId = element.otherDescription; }
 					}, 0);
 
 
@@ -244,8 +262,7 @@
 						map.setCenter(currentCenter);
 					}, 500);
 				}
-			} else
-				{$scope.citySourcedReporterForm.$setSubmitted();}
+			} else { $scope.citySourcedReporterForm.$setSubmitted(); }
 		};
 
 		self.prevClick = function () {
@@ -275,7 +292,7 @@
 			geocodeAndMarkAddress(address);
 		};
 
-		/** *** Private - Helpers *****/
+		/** *** Private - Helpers **** */
 
 		function autoSelectCategories(categoryId) {
 			angular.forEach(self.categoryData, function (categoryItem) {
@@ -283,13 +300,13 @@
 					self.category = categoryItem;
 					self.loadSubCategories(categoryItem.id);
 				} else if (categoryItem.types) {
-						angular.forEach(categoryItem.types, function(typeItem) {
+						angular.forEach(categoryItem.types, function (typeItem) {
 							if (typeItem.id === categoryId) {
 								self.category = categoryItem;
 								self.loadSubCategories(categoryItem.id);
 								self.subCategory = typeItem;
 							}
-						});						
+						});
 					}
 			});
 		}
@@ -349,10 +366,8 @@
 
 			angular.forEach(controls, function (formControl, key, obj) {
 				if (formControl.$$element.closest('.panel').is(':visible')) {
-					if (formControl.$pristine)
-						{formControl.$setDirty();}
-					if (formControl.$untouched)
-						{formControl.$setTouched();}
+					if (formControl.$pristine) { formControl.$setDirty(); }
+					if (formControl.$untouched) { formControl.$setTouched(); }
 
 					if (formControl.$$element.is('#address')) {
 						if (self.latitude === 0 || self.longitude === 0) {
@@ -365,7 +380,7 @@
 			return requiredElementsCount === validRequiredElementsCount;
 		}
 
-		/***** Private - Handlers **** */		
+		/** *** Private - Handlers **** */		
 
 		function autocompleteHandler(event) {
 			var keycode = event.which || event.keyCode;
@@ -385,7 +400,7 @@
 					geocodeAndMarkAddress(topAutocompleteResult);
 				}
 			} else if (self.address && self.address.trim().length > 3) {
-					mapServiceComposite.suggestAddresses(self.address, function(autoCompleteResults) {
+					mapServiceComposite.suggestAddresses(self.address, function (autoCompleteResults) {
 						self.autocompleteResults = autoCompleteResults;
 						$scope.$apply();
 					});
@@ -394,8 +409,7 @@
 
 		function autocompletePlaceChangedHandler() {
 			var place = autocomplete.getPlace();
-			if (place.formatted_address)
-				{geocodeAndMarkAddress(place.formatted_address);}
+			if (place.formatted_address) { geocodeAndMarkAddress(place.formatted_address); }
 		}
 
 		function autocompleteResultButtonKeyboardNavigationHandler(event) {
@@ -436,8 +450,7 @@
 
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
-			if (categoryId)
-				{autoSelectCategories(categoryId);}
+			if (categoryId) { autoSelectCategories(categoryId); }
 		}
 
 		function colorSuccessHandler(response) {
