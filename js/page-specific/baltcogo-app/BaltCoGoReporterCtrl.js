@@ -10,7 +10,10 @@
         var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
         var map;
 
-		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
+		animalService.getBreeds()
+            .then(breedSuccessHandler)
+            .catch(errorHandler);
+            
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
 		$http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
