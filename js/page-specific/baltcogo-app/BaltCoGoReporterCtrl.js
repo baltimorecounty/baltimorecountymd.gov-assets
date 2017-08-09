@@ -4,20 +4,19 @@
 	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', reporterController]);
 
 	function reporterController($http, $scope, $timeout, mapServiceComposite, reportService) {
-
 		var self = this,
 			targetCounty = 'Baltimore County',
 			categoryId = querystringer.getAsDictionary().categoryid * 1,
 			map;
 
 		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler); 
+		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler);
 		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
 		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
-		
+
 		self.isAnimal = false;
-		self.page = 1;		
+		self.page = 1;
 		self.isDone = false;
 		self.isSuccess = false;
 		self.issueId = '';
@@ -49,11 +48,11 @@
 
 
 		self.fileReportClick = function () {
-			if (!validatePanel()) 
-				return;
+			if (!validatePanel())
+				{return;}
 
-			/*** Static fields **********/
-			
+			/** * Static fields **********/
+
 			var data = [{
 					name: 'Category',
 					id: self.category,
@@ -95,67 +94,67 @@
 				}
 			];
 
-			/*** Conditional fields **********/
+			/** * Conditional fields **********/
 
-			if (self.locationDescription) data.push({
+			if (self.locationDescription) {data.push({
 				name: 'Description Of Location',
 				id: self.descriptionOfLocationId,
 				value: self.locationDescription
-			});
+			});}
 
-			if (self.otherDescription) data.push({
+			if (self.otherDescription) {data.push({
 				name: 'Other Description',
 				id: self.otherDescriptionId,
 				value: self.otherDescription
-			});
+			});}
 
-			if (self.petType) data.push({
+			if (self.petType) {data.push({
 				name: 'Pet Type',
 				id: self.petType.id,
 				value: getValueForId(self.petTypeData, self.petType.id)
-			});
+			});}
 
-			if (self.petSex) data.push({
+			if (self.petSex) {data.push({
 				name: 'Sex',
 				id: self.petSex.id,
 				value: getValueForId(self.sex, self.petSex.id)
-			});
+			});}
 
-			if (self.otherPetType) data.push({
+			if (self.otherPetType) {data.push({
 				name: 'Other Pet Type',
 				id: self.otherPetType,
 				value: getValueForId(self.animalTypeData, self.otherPetType)
-			});
+			});}
 
-			if (self.primaryBreed) data.push({
+			if (self.primaryBreed) {data.push({
 				name: 'Primary Breed',
 				id: self.primaryBreed,
 				value: getValueForId(self.breeds, self.primaryBreed)
-			});
+			});}
 
-			if (self.primaryColor) data.push({
+			if (self.primaryColor) {data.push({
 				name: 'Primary Color',
 				id: self.primaryColor,
 				value: getValueForId(self.animalColorData, self.primaryColor)
-			});
+			});}
 
-			if (self.animalDescription) data.push({
+			if (self.animalDescription) {data.push({
 				name: 'Description Of Animal',
 				id: angular.element('#animalDescription').attr('data-cs-id') * 1,
 				value: self.animalDescription
-			});
+			});}
 
-			if (self.streetAddress) data.push({
+			if (self.streetAddress) {data.push({
 				name: 'Complainant Address',
 				id: self.streetAddressId,
 				value: self.streetAddress
-			});
+			});}
 
-			if (self.city) data.push({
+			if (self.city) {data.push({
 				name: 'Complainant City',
 				id: self.cityId,
 				value: self.city
-			});
+			});}
 
 			if (self.state) {
 				var stateId = self.state.id ? self.state.id : self.state;
@@ -167,24 +166,24 @@
 				});
 			}
 
-			if (self.zipCode) data.push({
+			if (self.zipCode) {data.push({
 				name: 'Complainant Zip Code',
 				id: self.zipCodeId,
 				value: self.zipCode
-			});
+			});}
 
-			/*** POST **********/
+			/*** POST ********* */
 
 			self.isLoading = true;
 			self.isDone = true;
 
-			reportService.post(data, 
-				function(responseData) {
+			reportService.post(data,
+				function (responseData) {
 					self.isLoading = false;
 					self.isSuccess = true;
 					self.issueId = JSON.parse(responseData).CsResponse.ReportId;
-				}, 
-				function(errorData) {
+				},
+				function (errorData) {
 					self.isLoading = false;
 					console.log(errorData);
 				});
@@ -200,65 +199,61 @@
 				clearCategoryData();
 
 				if (element.id == self.category) {
-
 					self.subCategories = element.types;
-					
+
 					if (element.states) {
 						self.states = element.states;
 						self.state = element.states[0]; // Maryland
 					} else {
 						self.states = [];
 					}
-					
+
 					if (element.fields) {
 						self.streetAddressId = element.fields.streetAddress;
 						self.cityId = element.fields.city;
 						self.zipCodeId = element.fields.zipCode;
 					}
 
-					self.isAnimal = element.name.toLowerCase() === 'pets and animals';					
+					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
 
-					$timeout(function() {
+					$timeout(function () {
 						if (element.descriptionOfAnimal)
-							self.descriptionOfAnimalId = element.descriptionOfAnimal;
+							{self.descriptionOfAnimalId = element.descriptionOfAnimal;}
 
 						if (element.descriptionOfLocation)
-							self.descriptionOfLocationId = element.descriptionOfLocation;
+							{self.descriptionOfLocationId = element.descriptionOfLocation;}
 
 						if (element.otherDescription)
-							self.otherDescriptionId = element.otherDescription;
+							{self.otherDescriptionId = element.otherDescription;}
 					}, 0);
 
 
 					self.descriptionId = element.description;
-
-					
 				}
 			});
 		};
 
 		self.nextClick = function () {
 			if (validatePanel()) {
-				self.page++; 
+				self.page++;
 
 				if (self.page === 2) {
-					setTimeout(function() {
+					setTimeout(function () {
 						var currentCenter = map.getCenter();
-						google.maps.event.trigger(map, "resize");
+						google.maps.event.trigger(map, 'resize');
 						map.setCenter(currentCenter);
 					}, 500);
 				}
-			}
-			else
-				$scope.citySourcedReporterForm.$setSubmitted();				
+			} else
+				{$scope.citySourcedReporterForm.$setSubmitted();}
 		};
 
 		self.prevClick = function () {
-			self.page--; 
+			self.page--;
 			if (self.page === 2) {
-				setTimeout(function() {
+				setTimeout(function () {
 					var currentCenter = map.getCenter();
-					google.maps.event.trigger(map, "resize");
+					google.maps.event.trigger(map, 'resize');
 					map.setCenter(currentCenter);
 				}, 500);
 			}
@@ -274,21 +269,20 @@
 			});
 		};
 
-		self.lookupAddress = function(address) {
+		self.lookupAddress = function (address) {
 			self.autocompleteResults = [];
 			self.address = address;
 			geocodeAndMarkAddress(address);
 		};
 
-		/***** Private - Helpers *****/
+		/** *** Private - Helpers *****/
 
 		function autoSelectCategories(categoryId) {
-			angular.forEach(self.categoryData, function(categoryItem) {
+			angular.forEach(self.categoryData, function (categoryItem) {
 				if (categoryItem.id === categoryId) {
 					self.category = categoryItem;
 					self.loadSubCategories(categoryItem.id);
-				} else {
-					if (categoryItem.types) {
+				} else if (categoryItem.types) {
 						angular.forEach(categoryItem.types, function(typeItem) {
 							if (typeItem.id === categoryId) {
 								self.category = categoryItem;
@@ -297,7 +291,6 @@
 							}
 						});						
 					}
-				}
 			});
 		}
 
@@ -311,20 +304,19 @@
 			self.animalDescription = '';
 			self.streetAddress = '';
 			self.city = '';
-			self.zipCode = '';	
+			self.zipCode = '';
 			self.descriptionOfAnimalId = 0;
 			self.descriptionOfLocationId = 0;
 			self.otherDescriptionId = 0;
-		
 		}
 
 		function geocodeAndMarkAddress(singleLineAddress) {
-			mapServiceComposite.addressLookup(singleLineAddress, function(foundAddress) {
+			mapServiceComposite.addressLookup(singleLineAddress, function (foundAddress) {
 				self.latitude = foundAddress.location.y;
 				self.longitude = foundAddress.location.x;
 				mapServiceComposite.pan(map, self.latitude, self.longitude);
 				mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-			}, function(err) {
+			}, function (err) {
 				displayAddressError();
 			});
 		}
@@ -345,7 +337,7 @@
 		function getFirstSuggestion() {
 			var pacItem = angular.element('.pac-item').first(),
 				firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text();
-			
+
 			return firstSuggestion;
 		}
 
@@ -358,25 +350,24 @@
 			angular.forEach(controls, function (formControl, key, obj) {
 				if (formControl.$$element.closest('.panel').is(':visible')) {
 					if (formControl.$pristine)
-						formControl.$setDirty();
+						{formControl.$setDirty();}
 					if (formControl.$untouched)
-						formControl.$setTouched();
+						{formControl.$setTouched();}
 
 					if (formControl.$$element.is('#address')) {
 						if (self.latitude === 0 || self.longitude === 0) {
 							formControl.$setValidity('required', false);
 						}
-
 					}
-				}			
+				}
 			});
 
 			return requiredElementsCount === validRequiredElementsCount;
 		}
 
-		/***** Private - Handlers *****/		
+		/***** Private - Handlers **** */		
 
-		function autocompleteHandler(event) {	
+		function autocompleteHandler(event) {
 			var keycode = event.which || event.keyCode;
 
 			if (keycode === 40) {
@@ -393,20 +384,18 @@
 					$scope.$apply();
 					geocodeAndMarkAddress(topAutocompleteResult);
 				}
-			} else {
-				if (self.address && self.address.trim().length > 3) {
+			} else if (self.address && self.address.trim().length > 3) {
 					mapServiceComposite.suggestAddresses(self.address, function(autoCompleteResults) {
 						self.autocompleteResults = autoCompleteResults;
 						$scope.$apply();
 					});
 				}
-			}
 		}
 
-		function autocompletePlaceChangedHandler() {	
+		function autocompletePlaceChangedHandler() {
 			var place = autocomplete.getPlace();
 			if (place.formatted_address)
-				geocodeAndMarkAddress(place.formatted_address);			
+				{geocodeAndMarkAddress(place.formatted_address);}
 		}
 
 		function autocompleteResultButtonKeyboardNavigationHandler(event) {
@@ -416,13 +405,13 @@
 			if (!$target.is('.autocomplete-results button')) {
 				return;
 			}
-			
+
 			if (keycode === 27 && angular.element('.autocomplete-results').is(':visible')) {
 				self.autocompleteResults = [];
 				$scope.$apply();
 			}
 
-			event.preventDefault();			
+			event.preventDefault();
 
 			if (keycode === 13 || keycode === 32) {
 				$target.trigger('click');
@@ -448,7 +437,7 @@
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
 			if (categoryId)
-				autoSelectCategories(categoryId);
+				{autoSelectCategories(categoryId);}
 		}
 
 		function colorSuccessHandler(response) {
@@ -466,10 +455,10 @@
 			console.log(err);
 		}
 
-		function mapClickHandler(event) {			
+		function mapClickHandler(event) {
 			var $wrapper = angular.element('#map').closest('cs-form-control'),
 				addressField = $scope.citySourcedReporterForm.address;
-			
+
 			self.autocompleteResults = [];
 			self.latitude = event.latLng.lat();
 			self.longitude = event.latLng.lng();
@@ -479,10 +468,10 @@
 				mapServiceComposite.createMarker(map, self.latitude, self.longitude);
 				self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
 				$scope.$apply();
-			}, function(err) {
+			}, function (err) {
 				$wrapper.addClass('error');
 				addressField.$setDirty();
-				self.address = '';				
+				self.address = '';
 				$scope.$apply();
 			});
 		}
@@ -496,9 +485,7 @@
 
 			if (keyCode === 13) {
 				event.preventDefault();
-			}		
+			}
 		}
-
 	}
-
-})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer);
+}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer));
