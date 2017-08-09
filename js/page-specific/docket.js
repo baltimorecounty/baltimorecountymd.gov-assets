@@ -1,78 +1,76 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.docket = (function($, undefined) {
-	'use strict';
+// eslint-disable-next-line no-unused-vars
+baltimoreCounty.pageSpecific.docket = (function docket($, undefined) {
+'use strict';
 
-	var loadDocketInfo = function(callback) {
-		$.ajax('//services.baltimorecountymd.gov/api/docket')
-			.done(function(data) {
-				callback(data);
-			})
-			.error(function(error) {
-				console.log(error);
-				callback(false);
-			});
-	},
+  function loadDocketInfo(callback) {
+    $.ajax('//services.baltimorecountymd.gov/api/docket')
+      .done(function done(data) {
+        callback(data);
+      })
+      .error(function onError(error) {
+        console.log(error); // eslint-disable-line no-console
+        callback(false);
+      });
+  }
 
-	reformatDocket = function(data) {
-		return data.split(/\r\n/);
-	},
+  function reformatDocket(data) {
+    return data.split(/\r\n/);
+  }
 
-	fillTable = function($target) {
-		var docketInfo = loadDocketInfo(function(docketData) {
-			var isError = false;
+  function fillTable($target) {
+    loadDocketInfo(function docketInfo(docketData) {
+      var isError = false;
 
-			if (docketData) {
+      if (docketData) {
+        var reformattedArr = reformatDocket(docketData);
+        var $tbody = $target.detach('tbody');
+        var $docketDate = $('#docketDate');
+        var NAME_WIDTH = 32;
+        var CASE_WIDTH = 13;
+        var TIME_WIDTH = 9;
+        var JUDGE_WIDTH = 19;
+        var infoLine = reformattedArr.shift();
+        var dateString = infoLine.split(' ')[1];
 
-				var reformattedArr = reformatDocket(docketData),
-					$tbody = $target.detach('tbody'),
-					$docketDate = $('#docketDate'),
-					NAME_WIDTH = 32,
-					CASE_WIDTH = 13,
-					TIME_WIDTH = 9,
-					JUDGE_WIDTH = 19, 
-					ROOM_WIDTH = 25,
-					infoLine = reformattedArr.shift(),
-					dateString = infoLine.split(' ')[1];
+        if (reformattedArr.length) {
+          var rowString;
+          $docketDate.text(new Date(dateString).toLocaleDateString());
 
-				if (reformattedArr.length) {
+          $.each(reformattedArr, function formatArr(index, item) {
+            if (item.trim().length > 0) {
+              rowString = '<tr>'
+                + '<td>' + item.slice(0, NAME_WIDTH - 1).trim() + '</td>'
+                + '<td>' + item.slice(NAME_WIDTH, ((NAME_WIDTH + CASE_WIDTH) - 1)).trim() + '</td>'
+                + '<td>' + item.slice(NAME_WIDTH + CASE_WIDTH, ((NAME_WIDTH + CASE_WIDTH + TIME_WIDTH) - 1)).trim() + '</td>'
+                + '<td>' + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH, ((NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH) - 1)).trim() + '</td>'
+                + '<td>' + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH).trim() + '</td>'
+                + '</tr>';
+              $tbody.append(rowString);
+            }
+          });
 
-					$docketDate.text(new Date(dateString).toLocaleDateString());
+          $target.append($tbody);
+        } else {
+          isError = false;
+        }
+      } else {
+        isError = true;
+      }
 
-					$.each(reformattedArr, function(index, item) {	
-						if (item.trim().length > 0) {
-							var rowString = "<tr>"
-								+ "<td>" + item.slice(0, NAME_WIDTH - 1).trim() + "</td>"
-								+ "<td>" + item.slice(NAME_WIDTH, NAME_WIDTH + CASE_WIDTH - 1).trim() + "</td>"
-								+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH, NAME_WIDTH + CASE_WIDTH + TIME_WIDTH - 1).trim() + "</td>"
-								+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH, NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH - 1).trim() + "</td>"
-								+ "<td>" + item.slice(NAME_WIDTH + CASE_WIDTH + TIME_WIDTH + JUDGE_WIDTH).trim() + "</td>"
-								+ "</tr>";
-							$tbody.append(rowString);
-						}
-					});
+      if (isError) {
+        $target.parent().children().hide();
+        $target.parent().find('.docket-error-message').show();
+      }
+    });
+  }
 
-					$target.append($tbody);
-				} else {
-					isError = false;
-				}
-			} else {
-				isError = true;
-			}
+  return {
+    fillTable: fillTable
+  };
+}(jQuery));
 
-			if (isError) {
-				$target.parent().children().hide();
-				$target.parent().find('.docket-error-message').show(); 
-			}
-		});
-	};
-
-	return {
-		fillTable: fillTable
-	};
-
-})(jQuery);
-
-$(function() {
-	baltimoreCounty.pageSpecific.docket.fillTable($('.docket'));
+$(function init() {
+  baltimoreCounty.pageSpecific.docket.fillTable($('.docket'));
 });
