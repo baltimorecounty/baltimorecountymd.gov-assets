@@ -5,10 +5,10 @@
 
     function reporterController($http, $scope, $location, $timeout, $routeParams, mapServiceComposite, reportService, animalService, smartSearch, dataService) {
 
-		var self = this,
-			targetCounty = 'Baltimore County',
-			categoryId = querystringer.getAsDictionary().categoryid * 1,
-			map;
+		var self = this;
+        var targetCounty = 'Baltimore County';
+        var categoryId = $routeParams && $routeParams.categoryId ? $routeParams.categoryid * 1 : null;
+        var map;
 
 		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
 		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
