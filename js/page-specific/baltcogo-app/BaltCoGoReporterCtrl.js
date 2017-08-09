@@ -15,7 +15,9 @@
 		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
 		$http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
 		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
-		
+        
+        self.helpFormattedData = [];
+        self.showCategoryAutocomplete = $location.hash() !== 'original-form';
 		self.isAnimal = false;
 		self.page = 1;
 		self.isDone = false;
