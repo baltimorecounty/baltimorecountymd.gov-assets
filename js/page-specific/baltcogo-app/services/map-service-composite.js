@@ -1,197 +1,148 @@
-(function(app) {
-	'use strict';
+require(['esri/tasks/Locator', 'esri/geometry/Point'], function esri(EsriLocator, EsriPoint) {
+	(function mapServiceCompositeWrapper(app) {
+		function mapServiceComposite($http) {
+			var marker;
+			var spatialReferenceId = 4269;
+			var geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer';
+			var originLongitude = -76.60652470000002;
+			var originLatitude = 39.4003288;
 
-	app.factory('mapServiceComposite', ['$http', mapServiceComposite]);
-
-	function mapServiceComposite($http) {
-
-		var targetCounty = 'Baltimore County',
-			marker,
-			spatialReferenceId = 4269,
-			geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
-			originLongitude = -76.60652470000002, 
-			originLatitude = 39.4003288,
-
-			clearMarker = function () {
-				if (marker)
+			var clearMarker = function clearMarker() {
+				if (marker) {
 					marker.setMap(null);
-			},
+				}
+			};
 
-			createAutoComplete = function (autocompleteElementId, settings) {
+			var createAutoComplete = function createAutoComplete(autocompleteElementId, settings) {
 				return new google.maps.places.Autocomplete(document.getElementById(autocompleteElementId), settings);
-			},
+			};
 
-			createMap = function(mapElementId, settings) {
+			var createMap = function createMap(mapElementId, settings) {
 				return new google.maps.Map(document.getElementById(mapElementId), settings);
-			},
+			};
 
-			createMarker = function(map, latitude, longitude) {
+			var createMarker = function createMarker(map, latitude, longitude) {
 				if (marker) {
 					marker.setMap(null);
 				}
 
 				marker = new google.maps.Marker({
-					position: { lat: latitude, lng: longitude},
+					position: { lat: latitude, lng: longitude },
 					map: map,
-					icon: '/sebin/n/f/icon-marker-my-report.png', 
+					icon: '/sebin/n/f/icon-marker-my-report.png',
 					draggable: false,
 					animation: google.maps.Animation.DROP
 				});
-			},
+			};
 
-			reverseGeocode = function(latitude, longitude, successCallback, errorCallback) {				
-				require([
-					"esri/tasks/Locator",
-					'esri/geometry/Point'				
-				], function(Locator, Point) { 
+			var reverseGeocode = function reverseGeocode(latitude, longitude, successCallback, errorCallback) {
+				var point = new EsriPoint(longitude, latitude);
 
-					var point = new Point(longitude, latitude);
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
 
-					var locatorSettings = {
-						countryCode: 'US',
-						outSpatialReference: spatialReferenceId,
-						url: geocodeServerUrlBCGIS
-					};
+				var esriLocator = new EsriLocator(locatorSettings);
 
-					var locator = new Locator(locatorSettings);
+				esriLocator.locationToAddress(point).then(successCallback, errorCallback);
+			};
 
-					var requestOptions = {
-						responseType: 'json'
-					};
+			var suggestAddresses = function suggestAddresses(address, callback) {
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
 
-					locator.locationToAddress(point).then(successCallback, errorCallback);
-				});				
-			},
+				var suggestParams = {
+					location: new EsriPoint(originLongitude, originLatitude),
+					text: address
+				};
 
-			suggestAddresses = function(address, callback) {
-				require(["esri/tasks/Locator", 'esri/geometry/Point'], 
-					function(Locator, Point) { 
+				var requestOptions = {
+					responseType: 'json'
+				};
 
-					var locatorSettings = {
-						countryCode: 'US',
-						outSpatialReference: spatialReferenceId,
-						url: geocodeServerUrlBCGIS
-					};
+				var esriLocator = new EsriLocator(locatorSettings);
 
-					var suggestParams = {
-						location: new Point(originLongitude, originLatitude),
-						text: address
-					};
+				esriLocator.suggestLocations(suggestParams, requestOptions).then(
+					function processSuggestedAddresses(suggestedAddresses) {
+						var results = [];
+						angular.forEach(suggestedAddresses, function foreachSuggestedAddresses(suggestedAddress) {
+							results.push(suggestedAddress.text.toLowerCase());
+						});
+						callback(results);
+					},
+					function error(err) {
+						console.log('err', err);
+					}
+				);
+			};
 
-					var requestOptions = {
-						responseType: 'json'
-					};
+			var addressScoreComparer = function addressScoreComparer(a, b) {
+				if (a.score < b.score) { return 1; }
 
-					var locator = new Locator(locatorSettings);
+				if (a.score > b.score) { return -1; }
 
-					locator.suggestLocations(suggestParams, requestOptions).then(
-						function(suggestedAddresses) {
-							var results = [];
-							angular.forEach(suggestedAddresses, function(suggestedAddress) {
-								results.push(suggestedAddress.text.toLowerCase());
-							});
-							callback(results);
-						}, 
-						function(err) { console.log('err', err); }
-					);
-				});
+				return 0;
+			};
 
-			},
+			var addressLookup = function addressLookup(addressQuery, successCallback, errorCallback) {
+				var locatorSettings = {
+					countryCode: 'US',
+					outSpatialReference: spatialReferenceId,
+					url: geocodeServerUrlBCGIS
+				};
 
+				var addressToLocationsParams = {
+					address: { SingleLine: addressQuery },
+					f: 'json'
+				};
 
-			addressLookup = function(addressQuery, successCallback, errorCallback) {			
-			
-				require(["esri/tasks/Locator"], 
-					function(Locator) { 
+				var requestOptions = {
+					responseType: 'json'
+				};
 
-					var locatorSettings = {
-						countryCode: 'US',
-						outSpatialReference: spatialReferenceId,
-						url: geocodeServerUrlBCGIS
-					};
+				var esriLocator = new EsriLocator(locatorSettings);
 
-					var addressToLocationsParams = {
-						address: { 'SingleLine': addressQuery },
-						f: 'json'
-					};
+				esriLocator.addressToLocations(addressToLocationsParams, requestOptions).then(
+					function processFoundAddresses(foundAddresses) {
+						if (foundAddresses.length) {
+							var sortedFoundAddresses = foundAddresses.sort(addressScoreComparer);
+							successCallback(sortedFoundAddresses[0]);
+						} else {
+							errorCallback('No location was found for this address.');
+						}
+					}, errorCallback);
+			};
 
-					var requestOptions = {
-						responseType: 'json'
-					};
-
-					var locator = new Locator(locatorSettings);
-
-					locator.addressToLocations(addressToLocationsParams, requestOptions).then(
-						function(foundAddresses) {
-							if (foundAddresses.length) {
-								var sortedFoundAddresses = foundAddresses.sort(addressScoreComparer);						
-								successCallback(sortedFoundAddresses[0]);
-							} else {
-								errorCallback('No location was found for this address.');
-							}
-						}, errorCallback);
-				});
-			},
-
-			pan = function(map, latitude, longitude) {
+			var pan = function pan(map, latitude, longitude) {
 				map.panTo({
 					lat: latitude,
 					lng: longitude
 				});
-			},
-
-			addressScoreComparer = function(a, b) {
-				if (a.score < b.score)
-					return 1;
-
-				if (a.score > b.score)
-					return -1;
-				
-				return 0;
 			};
 
+			/** Private Functions ********* */
 
-
-		/*** Private Functions **********/
-
-		function checkCounty(reverseGeocodeData) {
-			var countyArr = $.grep(reverseGeocodeData, filterCountyResults),
-				county = '';
-
-			if (countyArr && countyArr.length)
-				county = countyArr[0].formatted_address;
-
-			return county.indexOf(targetCounty) !== -1 ? county : false;
-		}
-
-		function filterCountyResults(item, index) {
-			return filterResults(item, index, 'administrative_area_level_2');
-		}
-
-		function filterResults(item, index, query) {
-			var matchArr;
-			if (item.types) {
-				matchArr = $.grep(item.types, function (item, index) {
-					return item === query;
-				});
+			function removeCountry(addressString) {
+				return addressString.replace(', USA', '');
 			}
-			return matchArr.length ? matchArr : false;
+
+			return {
+				addressLookup: addressLookup,
+				createAutoComplete: createAutoComplete,
+				createMap: createMap,
+				createMarker: createMarker,
+				pan: pan,
+				removeCountry: removeCountry,
+				reverseGeocode: reverseGeocode,
+				suggestAddresses: suggestAddresses
+			};
 		}
 
-		function removeCountry(addressString) {
-			return addressString.replace(', USA', '');
-		}
-
-		return {
-			addressLookup: addressLookup,
-			createAutoComplete: createAutoComplete,
-			createMap: createMap,
-			createMarker: createMarker,
-			pan: pan,
-			removeCountry: removeCountry,
-			reverseGeocode: reverseGeocode,
-			suggestAddresses: suggestAddresses
-		};
-	};
-
-})(angular.module('baltcogoApp'));
+		app.factory('mapServiceComposite', ['$http', mapServiceComposite]);
+	}(angular.module('baltcogoApp')));
+});
