@@ -89,24 +89,6 @@
 			map.setCenter(currentCenter);
 		}
 
-		function displayAddressError() {
-			angular.element('#map').closest('cs-form-control').addClass('error');
-			$scope.citySourcedReporterForm.address.$setDirty();
-			self.address = '';
-			$scope.$apply();
-		}
-
-		function geocodeAndMarkAddress(singleLineAddress) {
-			mapServiceComposite.addressLookup(singleLineAddress, function lookupSingleLineAddress(foundAddress) {
-				self.latitude = foundAddress.location.y;
-				self.longitude = foundAddress.location.x;
-				mapServiceComposite.pan(map, self.latitude, self.longitude);
-				mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-			}, function error() {
-				displayAddressError();
-			});
-		}
-
 		self.fileReportClick = function fileReportClick() {
 			if (!validatePanel()) { return; }
 
@@ -235,16 +217,6 @@
 				});
 			}
 
-			if (self.state) {
-				var stateId = self.state.id ? self.state.id : self.state;
-
-				data.push({
-					name: 'Complainant State',
-					id: stateId,
-					value: getValueForId(self.states, stateId)
-				});
-			}
-
 			if (self.zipCode) {
 				data.push({
 					name: 'Complainant Zip Code',
@@ -297,11 +269,17 @@
 					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
 
 					$timeout(function descriptionSettingWrapper() {
-						if (element.descriptionOfAnimal) { self.descriptionOfAnimalId = element.descriptionOfAnimal; }
+						if (element.descriptionOfAnimal) {
+							self.descriptionOfAnimalId = element.descriptionOfAnimal;
+						}
 
-						if (element.descriptionOfLocation) { self.descriptionOfLocationId = element.descriptionOfLocation; }
+						if (element.descriptionOfLocation) {
+							self.descriptionOfLocationId = element.descriptionOfLocation;
+						}
 
-						if (element.otherDescription) { self.otherDescriptionId = element.otherDescription; }
+						if (element.otherDescription) {
+							self.otherDescriptionId = element.otherDescription;
+						}
 					}, 0);
 
 
@@ -327,6 +305,16 @@
 			}
 		};
 
+		self.setLocation = function setLocation(sender, longitude, latitude) {
+			self.address = sender.autocompleteResult.address;
+			self.longitude = longitude;
+			self.latitude = latitude;
+			self.autocompleteResults = [];
+
+			mapServiceComposite.pan(map, latitude, longitude);
+			mapServiceComposite.createMarker(map, latitude, longitude);
+		};
+
 		self.trackBreed = function trackBreed() {
 			angular.element.each(self.animalBreedData, function eachAnimalBreedData(index, breed) {
 				if (breed.id === self.petType.id) {
@@ -337,12 +325,6 @@
 
 				return false;
 			});
-		};
-
-		self.lookupAddress = function lookupAddress(address) {
-			self.autocompleteResults = [];
-			self.address = address;
-			geocodeAndMarkAddress(address);
 		};
 
 		/** *** Private - Helpers **** */
@@ -377,17 +359,20 @@
 
 			if (keycode === 13) {
 				if (self.autocompleteResults.length > 0) {
-					var topAutocompleteResult = self.autocompleteResults[0];
-					self.address = topAutocompleteResult;
-					self.autocompleteResults = [];
+					var $topAutocompleteResult = angular.element('.autocomplete-results button').first();
+					$topAutocompleteResult.trigger('click');
 					$scope.$apply();
-					geocodeAndMarkAddress(topAutocompleteResult);
 				}
-			} else if (self.address && self.address.trim().length > 3) {
-				mapServiceComposite.suggestAddresses(self.address, function displayAutoCompleteResults(autoCompleteResults) {
-					self.autocompleteResults = autoCompleteResults;
-					$scope.$apply();
-				});
+				return;
+			}
+
+			if (self.address && self.address.trim().length > 3) {
+				mapServiceComposite
+					.suggestAddresses(self.address, function displayAutoCompleteResults(autoCompleteResults) {
+						self.autocompleteResults = autoCompleteResults;
+					});
+			} else {
+				self.autocompleteResults = [];
 			}
 		}
 
@@ -450,17 +435,18 @@
 			self.latitude = event.latLng.lat();
 			self.longitude = event.latLng.lng();
 
-			mapServiceComposite.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
-				$wrapper.removeClass('error');
-				mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-				self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
-				$scope.$apply();
-			}, function error() {
-				$wrapper.addClass('error');
-				addressField.$setDirty();
-				self.address = '';
-				$scope.$apply();
-			});
+			mapServiceComposite
+				.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
+					$wrapper.removeClass('error');
+					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
+					self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
+					$scope.$apply();
+				}, function error() {
+					$wrapper.addClass('error');
+					addressField.$setDirty();
+					self.address = '';
+					$scope.$apply();
+				});
 		}
 
 		function petTypeSuccessHandler(response) {
@@ -482,8 +468,8 @@
 		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
 
 		google.maps.event.addListener(map, 'click', mapClickHandler);
-		angular.element('#citysourced-reporter-form').on('keyup keypress', preventSubmitOnEnterPressHandler);
-		angular.element('#address').on('keyup', autocompleteHandler);
+		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
+		angular.element(document).on('keyup', '#address', autocompleteHandler);
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 	}
 
