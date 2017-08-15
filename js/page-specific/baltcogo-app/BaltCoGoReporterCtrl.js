@@ -1,6 +1,8 @@
 (function BaltCoGoReporterCtrl(app, querystringer) {
 	'use strict';
 
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', reporterController]);
+
 	function reporterController($http, $scope, $timeout, mapServiceComposite, reportService) {
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
@@ -30,64 +32,16 @@
 
 		map = mapServiceComposite.createMap('map', mapSettings);
 
-		function getValueForId(nameIdData, id) {
-			var name = '';
+		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
+		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler);
+		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
+		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
+		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
 
-			angular.forEach(nameIdData, function forEachNameId(element) {
-				if (element.id === id) {
-					name = element.name;
-					return true;
-				}
-
-				return false;
-			});
-
-			return name;
-		}
-
-		function validatePanel() {
-			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]');
-			var requiredElementsCount = requiredElements.length;
-			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
-			var controls = $scope.citySourcedReporterForm.$$controls;
-
-			angular.forEach(controls, function forEachControl(formControl) {
-				if (formControl.$$element.closest('.panel').is(':visible')) {
-					if (formControl.$pristine) { formControl.$setDirty(); }
-					if (formControl.$untouched) { formControl.$setTouched(); }
-
-					if (formControl.$$element.is('#address')) {
-						if (self.latitude === 0 || self.longitude === 0) {
-							formControl.$setValidity('required', false);
-						}
-					}
-				}
-			});
-
-			return requiredElementsCount === validRequiredElementsCount;
-		}
-
-		function clearCategoryData() {
-			self.subCategory = '';
-			self.petType = '';
-			self.otherPetType = '';
-			self.petSex = '';
-			self.primaryColor = '';
-			self.primaryBreed = '';
-			self.animalDescription = '';
-			self.streetAddress = '';
-			self.city = '';
-			self.zipCode = '';
-			self.descriptionOfAnimalId = 0;
-			self.descriptionOfLocationId = 0;
-			self.otherDescriptionId = 0;
-		}
-
-		function mapResize() {
-			var currentCenter = map.getCenter();
-			google.maps.event.trigger(map, 'resize');
-			map.setCenter(currentCenter);
-		}
+		google.maps.event.addListener(map, 'click', mapClickHandler);
+		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
+		angular.element(document).on('keyup', '#address', autocompleteHandler);
+		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 
 		self.fileReportClick = function fileReportClick() {
 			if (!validatePanel()) { return; }
@@ -346,6 +300,65 @@
 			});
 		}
 
+		function clearCategoryData() {
+			self.subCategory = '';
+			self.petType = '';
+			self.otherPetType = '';
+			self.petSex = '';
+			self.primaryColor = '';
+			self.primaryBreed = '';
+			self.animalDescription = '';
+			self.streetAddress = '';
+			self.city = '';
+			self.zipCode = '';
+			self.descriptionOfAnimalId = 0;
+			self.descriptionOfLocationId = 0;
+			self.otherDescriptionId = 0;
+		}
+
+		function getValueForId(nameIdData, id) {
+			var name = '';
+
+			angular.forEach(nameIdData, function forEachNameId(element) {
+				if (element.id === id) {
+					name = element.name;
+					return true;
+				}
+
+				return false;
+			});
+
+			return name;
+		}
+
+		function mapResize() {
+			var currentCenter = map.getCenter();
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(currentCenter);
+		}
+
+		function validatePanel() {
+			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]');
+			var requiredElementsCount = requiredElements.length;
+			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
+			var controls = $scope.citySourcedReporterForm.$$controls;
+
+			angular.forEach(controls, function forEachControl(formControl) {
+				if (formControl.$$element.closest('.panel').is(':visible')) {
+					if (formControl.$pristine) { formControl.$setDirty(); }
+					if (formControl.$untouched) { formControl.$setTouched(); }
+
+					if (formControl.$$element.is('#address')) {
+						if (self.latitude === 0 || self.longitude === 0) {
+							formControl.$setValidity('required', false);
+						}
+					}
+				}
+			});
+
+			return requiredElementsCount === validRequiredElementsCount;
+		}
+
 		/** *** Private - Handlers **** */
 
 		function autocompleteHandler(event) {
@@ -460,18 +473,5 @@
 				event.preventDefault();
 			}
 		}
-
-		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler);
-		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
-
-		google.maps.event.addListener(map, 'click', mapClickHandler);
-		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
-		angular.element(document).on('keyup', '#address', autocompleteHandler);
-		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 	}
-
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', reporterController]);
 }(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer));
