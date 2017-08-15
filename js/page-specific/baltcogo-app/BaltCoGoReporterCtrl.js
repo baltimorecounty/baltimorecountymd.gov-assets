@@ -274,6 +274,10 @@
 						$timeout(function toFn() {
 							if (element.descriptionOfAnimal) {
 								self.descriptionOfAnimalId = element.descriptionOfAnimal;
+								animalService.getAnimalType(element.descriptionOfAnimal)
+									.then(function animalTypeResponse(animalType) {
+										setPetType(animalType);
+									});
 							}
 
 							if (element.descriptionOfLocation) {
