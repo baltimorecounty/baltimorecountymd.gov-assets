@@ -1,7 +1,9 @@
 (function reportServiceWrapper(app) {
 	'use strict';
 
-	function reportService($http) {
+	app.factory('reportService', ['$http', 'CONSTANTS', reportService]);
+
+	function reportService($http, CONSTANTS) {
 		function post(data, successCallback, errorCallback) {
 			var postOptions = {
 				headers: {
@@ -9,7 +11,7 @@
 				}
 			};
 
-			$http.post('//testservices.baltimorecountymd.gov/api/baltcogo/createreport', data, postOptions)
+			$http.post(CONSTANTS.urls.createReport, data, postOptions)
 				.then(
 					function success(response) {
 						successCallback(response.data);
@@ -21,7 +23,7 @@
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$http.get(CONSTANTS.urls.getReport + reportId)
 				.then(
 					function success(response) {
 						successCallback(response.data);
@@ -39,7 +41,7 @@
 				}
 			};
 
-			$http.post('//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng', settings, postOptions)
+			$http.post(CONSTANTS.urls.getReportLatLng, settings, postOptions)
 				.then(
 					function success(response) {
 						successCallback(response.data);
@@ -56,7 +58,4 @@
 			getNearby: getNearby
 		};
 	}
-
-	app.factory('reportService', ['$http', reportService]);
-
 }(angular.module('baltcogoApp')));

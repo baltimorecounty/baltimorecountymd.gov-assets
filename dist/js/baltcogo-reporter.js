@@ -3,13 +3,33 @@
 
 	angular.module('baltcogoApp', []);
 })();
+(function constantsWrapper(app) {
+	'use strict';
+
+	app.factory('CONSTANTS', constants);
+
+	function constants() {
+		return {
+			urls: {
+				geocodeServer: 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				suggestions: 'http://ba224964:1000/api/gis/addressLookup/',
+				createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
+				getReport: '//testservices.baltimorecountymd.gov/api/citysourced/getreport/',
+				getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng'
+			}
+		};
+	}
+}(angular.module('baltcogoApp')));
+
 /* eslint global-require: 0 */
 
 (function mapServiceCompositeWrapper(app) {
-	function mapServiceComposite($http) {
+	app.factory('mapServiceComposite', ['$http', 'CONSTANTS', mapServiceComposite]);
+
+	function mapServiceComposite($http, CONSTANTS) {
 		var marker;
 		var spatialReferenceId = 4269;
-		var geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer';
+		var geocodeServerUrlBCGIS = CONSTANTS.urls.geocodeServer;
 
 		var createMap = function createMap(mapElementId, settings) {
 			return new google.maps.Map(document.getElementById(mapElementId), settings);
@@ -48,7 +68,7 @@
 		var suggestAddresses = function suggestAddresses(enteredAddress, callback) {
 			var encodedAddress = encodeURIComponent(enteredAddress);
 
-			$http.get('http://ba224964:1000/api/gis/addressLookup/' + encodedAddress).then(
+			$http.get(CONSTANTS.urls.suggestions + encodedAddress).then(
 				function success(addressData) {
 					var results = [];
 
@@ -90,15 +110,15 @@
 			suggestAddresses: suggestAddresses
 		};
 	}
-
-	app.factory('mapServiceComposite', ['$http', mapServiceComposite]);
 }(angular.module('baltcogoApp')));
 
 
 (function reportServiceWrapper(app) {
 	'use strict';
 
-	function reportService($http) {
+	app.factory('reportService', ['$http', 'CONSTANTS', reportService]);
+
+	function reportService($http, CONSTANTS) {
 		function post(data, successCallback, errorCallback) {
 			var postOptions = {
 				headers: {
@@ -106,7 +126,7 @@
 				}
 			};
 
-			$http.post('//testservices.baltimorecountymd.gov/api/baltcogo/createreport', data, postOptions)
+			$http.post(CONSTANTS.urls.createReport, data, postOptions)
 				.then(
 					function success(response) {
 						successCallback(response.data);
@@ -118,7 +138,7 @@
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$http.get(CONSTANTS.urls.getReport + reportId)
 				.then(
 					function success(response) {
 						successCallback(response.data);
@@ -136,7 +156,7 @@
 				}
 			};
 
-			$http.post('//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng', settings, postOptions)
+			$http.post(CONSTANTS.urls.getReportLatLng, settings, postOptions)
 				.then(
 					function success(response) {
 						successCallback(response.data);
@@ -153,9 +173,6 @@
 			getNearby: getNearby
 		};
 	}
-
-	app.factory('reportService', ['$http', reportService]);
-
 }(angular.module('baltcogoApp')));
 
 (function BaltCoGoReporterCtrl(app, querystringer) {

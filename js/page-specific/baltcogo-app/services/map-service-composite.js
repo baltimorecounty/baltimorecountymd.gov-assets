@@ -1,10 +1,12 @@
 /* eslint global-require: 0 */
 
 (function mapServiceCompositeWrapper(app) {
-	function mapServiceComposite($http) {
+	app.factory('mapServiceComposite', ['$http', 'CONSTANTS', mapServiceComposite]);
+
+	function mapServiceComposite($http, CONSTANTS) {
 		var marker;
 		var spatialReferenceId = 4269;
-		var geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer';
+		var geocodeServerUrlBCGIS = CONSTANTS.urls.geocodeServer;
 
 		var createMap = function createMap(mapElementId, settings) {
 			return new google.maps.Map(document.getElementById(mapElementId), settings);
@@ -43,7 +45,7 @@
 		var suggestAddresses = function suggestAddresses(enteredAddress, callback) {
 			var encodedAddress = encodeURIComponent(enteredAddress);
 
-			$http.get('http://ba224964:1000/api/gis/addressLookup/' + encodedAddress).then(
+			$http.get(CONSTANTS.urls.suggestions + encodedAddress).then(
 				function success(addressData) {
 					var results = [];
 
@@ -85,7 +87,5 @@
 			suggestAddresses: suggestAddresses
 		};
 	}
-
-	app.factory('mapServiceComposite', ['$http', mapServiceComposite]);
 }(angular.module('baltcogoApp')));
 
