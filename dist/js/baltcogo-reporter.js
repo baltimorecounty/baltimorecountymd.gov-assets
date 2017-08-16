@@ -15,7 +15,14 @@
 				suggestions: '//testservices.baltimorecountymd.gov/api/gis/addressLookup/',
 				createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
 				getReport: '//testservices.baltimorecountymd.gov/api/citysourced/getreport/',
-				getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng'
+				getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng',
+				json: {
+					animalBreeds: '/sebin/y/a/animal-breeds.json',
+					animalColors: '/sebin/u/u/animal-colors.json',
+					animalTypes: '/sebin/a/e/animal-types.json',
+					categories: '/sebin/q/m/categories.json',
+					petTypes: '/sebin/m/a/pet-types.json'
+				}
 			}
 		};
 	}
@@ -178,9 +185,14 @@
 (function BaltCoGoReporterCtrl(app, querystringer) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
 
-	function reporterController($http, $scope, $timeout, mapServiceComposite, reportService) {
+	function reporterController($http,
+		$scope,
+		$timeout,
+		mapServiceComposite,
+		reportService,
+		CONSTANTS) {
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
@@ -209,11 +221,11 @@
 
 		map = mapServiceComposite.createMap('map', mapSettings);
 
-		$http.get('/sebin/y/a/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/u/animal-colors.json').then(colorSuccessHandler, errorHandler);
-		$http.get('/sebin/a/e/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/m/categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('/sebin/m/a/pet-types.json').then(petTypeSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.animalBreeds).then(breedSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.animalColors).then(colorSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.animalTypes).then(animalTypeSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.categories).then(categorySuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.petTypes).then(petTypeSuccessHandler, errorHandler);
 
 		google.maps.event.addListener(map, 'click', mapClickHandler);
 		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
@@ -423,6 +435,12 @@
 			if (validatePanel()) {
 				self.page += 1;
 
+				if (self.page === 2 && self.category.name === 'Website') {
+					self.longitude = 0;
+					self.latitude = 0;
+					self.page = 3;
+				}
+
 				if (self.page === 2) {
 					setTimeout(mapResize, 500);
 				}
@@ -431,6 +449,13 @@
 
 		self.prevClick = function prevClick() {
 			self.page -= 1;
+
+			if (self.page === 2 && self.category.name === 'Website') {
+				self.longitude = 0;
+				self.latitude = 0;
+				self.page = 1;
+			}
+
 			if (self.page === 2) {
 				setTimeout(mapResize, 500);
 			}
