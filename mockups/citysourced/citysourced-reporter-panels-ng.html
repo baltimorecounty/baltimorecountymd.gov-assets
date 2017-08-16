@@ -63,7 +63,7 @@
 			</ol>
 
 			<form novalidate id="citysourced-reporter-form" name="citySourcedReporterForm" ng-submit="reporter.fileReportClick()">
-				<fieldset class="panel" ng-show="reporter.page === 2">
+				<fieldset class="panel" ng-show="reporter.page === 1">
 					<legend>How Can We Help?</legend>
 					<div id="category-selection" class="category-selection" ng-class="{ 'error': citySourcedReporterForm.categories.$dirty &&  citySourcedReporterForm.categories.$invalid }">
 						<label id="categories-label">Request Category</label>
@@ -164,7 +164,7 @@
 
 				</fieldset>
 
-				<fieldset class="panel" ng-show="reporter.page === 1">
+				<fieldset class="panel" ng-show="reporter.page === 2">
 					<legend>Add a Location</legend>
 					
 					<p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
