@@ -1,10 +1,9 @@
-(function(app) {
+(function reportServiceWrapper(app) {
 	'use strict';
 
-	app.factory('reportService', ['$http', reportService]);
+	app.factory('reportService', ['$http', 'CONSTANTS', reportService]);
 
-	function reportService($http) {
-
+	function reportService($http, CONSTANTS) {
 		function post(data, successCallback, errorCallback) {
 			var postOptions = {
 				headers: {
@@ -12,47 +11,46 @@
 				}
 			};
 
-			$http.post("//testservices.baltimorecountymd.gov/api/baltcogo/createreport", data, postOptions)
+			$http.post(CONSTANTS.urls.createReport, data, postOptions)
 				.then(
-					function (response) {
+					function success(response) {
 						successCallback(response.data);
 					},
-					function (error) {
-						errorCallback(error);
+					function error(err) {
+						errorCallback(err);
 					}
 				);
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$http.get(CONSTANTS.urls.getReport + reportId)
 				.then(
-					function(response) {
-						successCallback(response.data);					
-					}, 
-					function (error) {
-						errorCallback(error);
+					function success(response) {
+						successCallback(response.data);
+					},
+					function error(err) {
+						errorCallback(err);
 					}
 				);
-		};
+		}
 
 		function getNearby(settings, successCallback, errorCallback) {
 			var postOptions = {
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			};		
+			};
 
-			$http.post("//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng", settings, postOptions)
+			$http.post(CONSTANTS.urls.getReportLatLng, settings, postOptions)
 				.then(
-					function (response) {
+					function success(response) {
 						successCallback(response.data);
 					},
-					function (error) {
-						errorCallback(error);
+					function error(err) {
+						errorCallback(err);
 					}
 				);
 		}
-
 
 		return {
 			post: post,
@@ -60,5 +58,4 @@
 			getNearby: getNearby
 		};
 	}
-
-})(angular.module('baltcogoApp'));
+}(angular.module('baltcogoApp')));

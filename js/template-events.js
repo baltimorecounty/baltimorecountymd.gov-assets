@@ -1,32 +1,35 @@
-(function($, TextResizer) {
-	/*Prevent a search with no text*/
-	$(document).on('click', '.search-button', function (e) {
-        var val = $('.search-input').val();
+(function ($, TextResizer) {
 
-        if (val.length === 0) {
-            e.preventDefault();
-        }
+  function onDocumentReady() {
+    var textResizer = new TextResizer({
+      listClass: "resizer-list"
     });
+  }
 
-	/*Toggle hamburger menu*/
-    $(document).on('click', '.hamburger-btn', function(e) {
-        e.preventDefault();
-        $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
-    });
+  function searchButtonClicked(e) {
+    var val = $('.search-input').val();
 
-    /*Submit url to rate form*/
-    $(document).on('submit', '#RateThisPageForm', function(){ 
-        document.getElementById('url').value = window.location.href;
-        
-        if ($('input#website').val().length) {
-            return false;
-        } 
-    });
+    if (val.length === 0) {
+      e.preventDefault();
+    }
+  }
 
-    /*Initialize the Text Resizer*/
-    $(document).ready(function () {
-        var textResizer = new TextResizer({
-            listClass: "resizer-list"
-        });
-    });
+  function toggleMobileNavigation(e) {
+    e.preventDefault();
+    $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
+  }
+
+  /**
+   * Stuff to kick off when the template is loaded
+   */
+  $(document).ready(onDocumentReady);
+
+  /**
+   * Events
+   */
+  /*Toggle hamburger menu*/
+  $(document).on('click', '.hamburger-btn', toggleMobileNavigation);
+
+  /*Prevent a search with no text*/
+  $(document).on('click', '.search-button', searchButtonClicked);
 })(jQuery, TextResizer);
