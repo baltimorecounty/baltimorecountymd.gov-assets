@@ -9,3 +9,13 @@
 		</div>
 	</form>
 </div>
+<script type="x-handlebars-template" id="search-results-template">
+	{{#if this.length}}
+	<ul>
+		{{#each this}}
+		<li>{{Term}}</li>
+		{{/each}}
+	</ul>
+	{{/if}}
+</script>
+<div id="header-search-results"></div>

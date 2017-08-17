@@ -1,14 +1,13 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage) {
+baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars) {
 	'use strict';
 
 	var searchData;
 
-	var onDataLoadedHandler = function onSearchTermAjaxSuccess(data, callback) {
+	var onDataLoadedHandler = function onSearchTermAjaxSuccess(data) {
 		searchData = data;
 		sessionStorage.setItem('searchData', JSON.stringify(data));
-		callback();
 	};
 
 	var onDataLoadedError = function onSearchTermAjaxError(err) {
@@ -33,20 +32,36 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage) {
 		return matches;
 	};
 
+	var searchBoxKeydownHandler = function searchBoxKeydownHandler(event) {
+		var $target = $(event.target);
+		var matches = search($target.val()).slice(0, 5);
+		var $source = $('#search-results-template');
+		var template = Handlebars.compile($source.html());
+		var html = template(matches);
+		$('#header-search-results').html(html);
+	};
+
 	var init = function init(callback) {
 		if (sessionStorage && sessionStorage.searchData) {
 			searchData = JSON.parse(sessionStorage.searchData);
-			onDataLoadedHandler(searchData, callback);
 		} else {
-			$.ajax('/mockups/search/data/searchTerms.json')
-				.then(function success(data) {
-					onDataLoadedHandler(data, callback);
-				}, onDataLoadedError);
+			$.ajax('http://ba224964:1100/mockups/search/data/searchTerms.json')
+				.then(onDataLoadedHandler, onDataLoadedError);
+		}
+
+		if (typeof callback !== 'undefined') {
+			callback();
 		}
 	};
+
+	$(document).on('keydown', '#q', searchBoxKeydownHandler);
 
 	return {
 		init: init,
 		search: search
 	};
-}(jQuery, sessionStorage));
+}(jQuery, sessionStorage, Handlebars));
+
+$(function init() {
+	baltimoreCounty.keywordSearch.init();
+});
