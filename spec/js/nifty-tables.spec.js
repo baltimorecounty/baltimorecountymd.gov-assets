@@ -1,90 +1,84 @@
-var basePath = window['__karma__'] ? 'base' : '';
+var basePath = window.__karma__ ? 'base' : '';
 
-describe('NiftyTables', function () {
+describe('NiftyTables', function NiftyTables() {
+	describe('getFirstTextFromCell', function getFirstTextFromCell() {
+		beforeEach(function beforeEach() {
+			jasmine.getFixtures().fixturesPath = basePath + '/spec/js/fixtures';
+			loadFixtures('nifty-tables-sortable.fixture.html');
+		});
 
-    describe('getFirstTextFromCell', function () {
+		it('gets first text of the first column of the first row of the table', function () {
+			var tableRow = $('.nifty-table.nifty-table-sortable tr').has('td').first().get(),
+				clickedColumnIndex = 0,
+				expected = 'aaaa',
+				actual = baltimoreCounty.niftyTables.getFirstTextFromCell(tableRow, clickedColumnIndex);
 
-        beforeEach(function () {
-            jasmine.getFixtures().fixturesPath = basePath + '/spec/js/fixtures';
-            loadFixtures('nifty-tables-sortable.fixture.html');
-        });
+			expect(actual).toEqual(expected);
+		});
 
-        it('gets first text of the first column of the first row of the table', function () {
-            var tableRow = $('.nifty-table.nifty-table-sortable tr').has('td').first().get(),
-                clickedColumnIndex = 0,
-                expected = 'aaaa',
-                actual = baltimoreCounty.niftyTables.getFirstTextFromCell(tableRow, clickedColumnIndex);
+		it('gets first text of the second column of the second row of the table', function () {
+			var tableRow = $('.nifty-table.nifty-table-sortable tr').has('td').eq(1).get(),
+				clickedColumnIndex = 1,
+				expected = '3333',
+				actual = baltimoreCounty.niftyTables.getFirstTextFromCell(tableRow, clickedColumnIndex);
 
-            expect(actual).toEqual(expected);
-        });
+			expect(actual).toEqual(expected);
+		});
 
-        it('gets first text of the second column of the second row of the table', function () {
-            var tableRow = $('.nifty-table.nifty-table-sortable tr').has('td').eq(1).get(),
-                clickedColumnIndex = 1,
-                expected = '3333',
-                actual = baltimoreCounty.niftyTables.getFirstTextFromCell(tableRow, clickedColumnIndex);
+		it('gets first text of the third column of the third row of the table', function () {
+			var tableRow = $('.nifty-table.nifty-table-sortable tr').has('td').eq(2).get(),
+				clickedColumnIndex = 2,
+				expected = '$2222',
+				actual = baltimoreCounty.niftyTables.getFirstTextFromCell(tableRow, clickedColumnIndex);
 
-            expect(actual).toEqual(expected);
-        });
+			expect(actual).toEqual(expected);
+		});
+	});
 
-        it('gets first text of the third column of the third row of the table', function () {
-            var tableRow = $('.nifty-table.nifty-table-sortable tr').has('td').eq(2).get(),
-                clickedColumnIndex = 2,
-                expected = '$2222',
-                actual = baltimoreCounty.niftyTables.getFirstTextFromCell(tableRow, clickedColumnIndex);
+	describe('tableSort', function () {
+		var fakeEvent,
+			$niftyTable,
+			$niftyTableHeaderRow,
+			getConcatinatedColumnString = function ($table) {
+				var actualFirstColumnTextArr = [];
+				$.each($table.find('tr td:first-child'), function (idx, item) {
+					actualFirstColumnTextArr.push($(item).text());
+				});
+				return actualFirstColumnTextArr.join('');
+			};
 
-            expect(actual).toEqual(expected);
-        });
+		beforeEach(function () {
+			jasmine.getFixtures().fixturesPath = basePath + '/spec/js/fixtures';
+			loadFixtures('nifty-tables-sortable.fixture.html');
 
-    });
+			fakeEvent = {};
+			$niftyTable = $('.nifty-table.nifty-table-sortable');
+			$niftyTableHeaderRow = $niftyTable.find('tr').has('th');
+		});
 
-    describe('tableSort', function () {
+		it('sorts the table ascendingly when a column header link is clicked for the first time', function () {
+			var expected = 'aaaabbbbcccc';
 
-        var fakeEvent,
-            $niftyTable,
-            $niftyTableHeaderRow,
-            getConcatinatedColumnString = function ($table) {
-                var actualFirstColumnTextArr = [];
-                $.each($table.find('tr td:first-child'), function (idx, item) {
-                    actualFirstColumnTextArr.push($(item).text());
-                });
-                return actualFirstColumnTextArr.join('');
-            };
+			fakeEvent.target = $niftyTableHeaderRow.find('a').first().get();
 
-        beforeEach(function () {
-            jasmine.getFixtures().fixturesPath = basePath + '/spec/js/fixtures';
-            loadFixtures('nifty-tables-sortable.fixture.html');
+			baltimoreCounty.niftyTables.tableSort(fakeEvent);
 
-            fakeEvent = {};
-            $niftyTable = $('.nifty-table.nifty-table-sortable');
-            $niftyTableHeaderRow = $niftyTable.find('tr').has('th');
-        });
+			var actual = getConcatinatedColumnString($niftyTable);
 
-        it('sorts the table ascendingly when a column header link is clicked for the first time', function () {
-            var expected = 'aaaabbbbcccc';
+			expect(actual).toEqual(expected);
+		});
 
-            fakeEvent.target = $niftyTableHeaderRow.find('a').first().get();
+		it('sorts the table descendingly when a column header link is clicked for the second time', function () {
+			var expected = 'ccccbbbbaaaa';
 
-            baltimoreCounty.niftyTables.tableSort(fakeEvent);
+			fakeEvent.target = $niftyTableHeaderRow.find('a').first().get();
 
-            var actual = getConcatinatedColumnString($niftyTable);
+			baltimoreCounty.niftyTables.tableSort(fakeEvent);
+			baltimoreCounty.niftyTables.tableSort(fakeEvent);
 
-            expect(actual).toEqual(expected);
-        });
+			var actual = getConcatinatedColumnString($niftyTable);
 
-        it('sorts the table descendingly when a column header link is clicked for the second time', function () {
-            var expected = 'ccccbbbbaaaa';
-
-            fakeEvent.target = $niftyTableHeaderRow.find('a').first().get();
-
-            baltimoreCounty.niftyTables.tableSort(fakeEvent);
-            baltimoreCounty.niftyTables.tableSort(fakeEvent);
-
-            var actual = getConcatinatedColumnString($niftyTable);
-
-            expect(actual).toEqual(expected);
-        });
-
-    });
-
+			expect(actual).toEqual(expected);
+		});
+	});
 });
