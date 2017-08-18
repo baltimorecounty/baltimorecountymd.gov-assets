@@ -64,8 +64,9 @@
 			font-size: 1.2em;
 			padding: .25em .5em;
 
-			&:hover {
+			&:hover, &:focus {
 				background-color: $lightest-gray;
+				outline: 0;
 			}
 		}
 	}

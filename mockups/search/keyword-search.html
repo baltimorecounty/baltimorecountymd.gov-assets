@@ -2,7 +2,8 @@
 	<form id="search-form" class="search-form" action="#">
 		<div class="table-cell">
 			<label class="search-label" for="q">Search</label>
-			<input class="search-input" autocomplete="off" id="q" name="q" placeholder="Search for agencies, services and more..." type="text" />
+			<input class="search-input" autocomplete="off" id="q" name="q" placeholder="Search for agencies, services and more..." type="text" tabindex="0" />
+			<div id="header-search-results"></div>
 		</div>
 		<div class="table-cell">
 			<input class="search-button" value="Search" name="search-button" type="submit" />
@@ -13,9 +14,8 @@
 	{{#if this.length}}
 	<ul>
 		{{#each this}}
-		<li>{{{Term}}}</li>
+		<li tabindex="0">{{{Term}}}</li>
 		{{/each}}
 	</ul>
 	{{/if}}
 </script>
-<div id="header-search-results"></div>
