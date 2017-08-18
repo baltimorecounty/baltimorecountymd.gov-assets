@@ -36,19 +36,14 @@ describe('keywordSearch', function keywordSearch() {
 			allMatches = [{ Term: 'aba' }, { Term: 'aaa' }, { Term: 'abc' }, { Term: 'bca' }, { Term: 'bac' }];
 		});
 
-		it('orders the results by name first', function ordering() {
+		it('orders the results by term first', function ordering() {
 			var actual = baltimoreCounty.keywordSearch.orderByNameThenPopularity('aa', allMatches);
 			expect(actual[0].Term).toBe('aaa');
 		});
 
-		it('orders the results by name first', function ordering() {
+		it('orders the results by rank second', function ordering() {
 			var actual = baltimoreCounty.keywordSearch.orderByNameThenPopularity('aa', allMatches);
 			expect(actual[1].Term).toBe('aba');
-		});
-
-		it('orders the results by name first', function ordering() {
-			var actual = baltimoreCounty.keywordSearch.orderByNameThenPopularity('aa', allMatches);
-			expect(actual[4].Term).toBe('bac');
 		});
 	});
 });
