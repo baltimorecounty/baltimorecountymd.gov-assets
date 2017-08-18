@@ -10,7 +10,8 @@
 		urls: {
 			geocodeServer: 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
 			suggestions: '//testservices.baltimorecountymd.gov/api/gis/addressLookup/',
-			createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
+			// createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
+			createReport: 'http://localhost:1000/api/baltcogo/createreport',
 			getReport: '//testservices.baltimorecountymd.gov/api/citysourced/getreport/',
 			getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng',
 			json: {
@@ -26,31 +27,6 @@
 	app.constant('CONSTANTS', constants);
 }(angular.module('baltcogoApp')));
 
-/* (function constantsWrapper(app) {
-	'use strict';
-
-	app.factory('CONSTANTS', constants);
-
-	function constants() {
-		return {
-			urls: {
-				geocodeServer: 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
-				suggestions: '//testservices.baltimorecountymd.gov/api/gis/addressLookup/',
-				createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
-				getReport: '//testservices.baltimorecountymd.gov/api/citysourced/getreport/',
-				getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng',
-				json: {
-					animalBreeds: '/sebin/y/a/animal-breeds.json',
-					animalColors: '/sebin/u/u/animal-colors.json',
-					animalTypes: '/sebin/a/e/animal-types.json',
-					categories: '/sebin/q/m/categories.json',
-					petTypes: '/sebin/m/a/pet-types.json'
-				}
-			}
-		};
-	}
-}(angular.module('baltcogoApp')));
- */
 /* eslint global-require: 0 */
 
 (function mapServiceCompositeWrapper(app) {
@@ -459,8 +435,8 @@
 				self.page += 1;
 
 				if (self.page === 2 && self.category.name === 'Website') {
-					self.longitude = 0;
-					self.latitude = 0;
+					self.latitude = 39.4003288;
+					self.longitude = -76.6087134;
 					self.page = 3;
 				}
 
@@ -474,8 +450,8 @@
 			self.page -= 1;
 
 			if (self.page === 2 && self.category.name === 'Website') {
-				self.longitude = 0;
-				self.latitude = 0;
+				self.latitude = 39.4003288;
+				self.longitude = -76.6087134;
 				self.page = 1;
 			}
 
