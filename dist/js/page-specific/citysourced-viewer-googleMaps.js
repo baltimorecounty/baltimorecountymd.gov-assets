@@ -6,7 +6,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function (googleMaps, undefined
 		autocomplete,
 		targetCounty = 'Baltimore County',
 		spatialReferenceId = 4269,
-		geocodeServerUrlBCGIS = 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
+		geocodeServerUrlBCGIS = '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer',
 
 		/**
 		 * Creates the map, and renders it in the mapElementId element.

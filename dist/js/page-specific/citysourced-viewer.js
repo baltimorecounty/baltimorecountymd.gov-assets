@@ -89,7 +89,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function($, querystringer, map
 		init = function() {
 
 			var qs = querystringer.getAsDictionary(),
-				reportId = qs.reportId;
+				reportId = qs.reportid;
 
 			if (reportId) {
 				$.ajax("//testservices.baltimorecountymd.gov/api/citysourced/getreport/" + reportId)
