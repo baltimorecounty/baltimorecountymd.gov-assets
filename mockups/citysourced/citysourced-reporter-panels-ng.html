@@ -171,8 +171,8 @@
 					
 					<div class="cs-form-control address-search" ng-class="{ 'error': citySourcedReporterForm.address.$dirty &&  citySourcedReporterForm.address.$invalid }">
 						<div class="address-search-wrapper">
-							<label for="address">Enter the closest address to your service request<span class="required">*</span></label>
-							<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" autocomplete="off" required />
+							<label for="address">Enter the closest street address to your service request<span class="required">*</span></label>
+							<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Amazing St" aria-required="true" autocomplete="off" required />
 							<i class="fa fa-search address-search-icon" aria-hidden="true"></i>
 							<ul ng-if="reporter.autocompleteResults.length > 0" class="autocomplete-results">
 								<li ng-repeat="autocompleteResult in reporter.autocompleteResults"><button type="button" ng-click="reporter.setLocation(this, autocompleteResult.longitude, autocompleteResult.latitude)">{{ autocompleteResult.address }}</button></li>
