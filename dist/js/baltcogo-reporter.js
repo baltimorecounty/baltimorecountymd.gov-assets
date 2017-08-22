@@ -3,54 +3,29 @@
 
 	angular.module('baltcogoApp', []);
 })();
-(function constantsWrapper(app) {
+(function constantsWrapper(app, baltCoGoConstants) {
 	'use strict';
 
 	var constants = {
 		urls: {
-			geocodeServer: 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
-			suggestions: '//testservices.baltimorecountymd.gov/api/gis/addressLookup/',
-			createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
-			getReport: '//testservices.baltimorecountymd.gov/api/citysourced/getreport/',
-			getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng',
+			geocodeServer: baltCoGoConstants.urls.api.geocodeServer,
+			suggestions: baltCoGoConstants.urls.api.suggestions,
+			createReport: baltCoGoConstants.urls.api.createReport,
+			getReport: baltCoGoConstants.urls.api.getReport,
+			getReportLatLng: baltCoGoConstants.urls.api.getReportLatLng,
 			json: {
-				animalBreeds: '/sebin/y/a/animal-breeds.json',
-				animalColors: '/sebin/u/u/animal-colors.json',
-				animalTypes: '/sebin/a/e/animal-types.json',
-				categories: '/sebin/q/m/categories.json',
-				petTypes: '/sebin/m/a/pet-types.json'
+				animalBreeds: baltCoGoConstants.urls.json.animalBreeds,
+				animalColors: baltCoGoConstants.urls.json.animalColors,
+				animalTypes: baltCoGoConstants.urls.json.animalTypes,
+				categories: baltCoGoConstants.urls.json.categories,
+				petTypes: baltCoGoConstants.urls.json.petTypes
 			}
 		}
 	};
 
 	app.constant('CONSTANTS', constants);
-}(angular.module('baltcogoApp')));
+}(angular.module('baltcogoApp'), baltimoreCounty.constants.baltCoGo));
 
-/* (function constantsWrapper(app) {
-	'use strict';
-
-	app.factory('CONSTANTS', constants);
-
-	function constants() {
-		return {
-			urls: {
-				geocodeServer: 'http://bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
-				suggestions: '//testservices.baltimorecountymd.gov/api/gis/addressLookup/',
-				createReport: '//testservices.baltimorecountymd.gov/api/baltcogo/createreport',
-				getReport: '//testservices.baltimorecountymd.gov/api/citysourced/getreport/',
-				getReportLatLng: '//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng',
-				json: {
-					animalBreeds: '/sebin/y/a/animal-breeds.json',
-					animalColors: '/sebin/u/u/animal-colors.json',
-					animalTypes: '/sebin/a/e/animal-types.json',
-					categories: '/sebin/q/m/categories.json',
-					petTypes: '/sebin/m/a/pet-types.json'
-				}
-			}
-		};
-	}
-}(angular.module('baltcogoApp')));
- */
 /* eslint global-require: 0 */
 
 (function mapServiceCompositeWrapper(app) {
@@ -459,8 +434,8 @@
 				self.page += 1;
 
 				if (self.page === 2 && self.category.name === 'Website') {
-					self.longitude = 0;
-					self.latitude = 0;
+					self.latitude = 39.4003288;
+					self.longitude = -76.6087134;
 					self.page = 3;
 				}
 
@@ -474,8 +449,8 @@
 			self.page -= 1;
 
 			if (self.page === 2 && self.category.name === 'Website') {
-				self.longitude = 0;
-				self.latitude = 0;
+				self.latitude = 39.4003288;
+				self.longitude = -76.6087134;
 				self.page = 1;
 			}
 
