@@ -48,10 +48,9 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function viewerGoogleMaps(baltC
 	 */
 	var reverseGeocode = function reverseGeocode(latitude, longitude, successCallback) {
 		// eslint-disable-next-line global-require
-		require([
-			'esri/tasks/Locator',
-			'esri/geometry/Point'
-		], function locationToAddress(Locator, Point) {
+		require(['esri/tasks/Locator', 'esri/geometry/Point'], locationToAddress);
+
+		function locationToAddress(Locator, Point) {
 			var point = new Point(longitude, latitude);
 
 			var locatorSettings = {
@@ -65,7 +64,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function viewerGoogleMaps(baltC
 			locator.locationToAddress(point).then(successCallback, function error(err) {
 				console.log(err);
 			});
-		});
+		}
 	};
 
 	/**

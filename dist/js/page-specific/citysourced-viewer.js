@@ -1,6 +1,6 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.citySourcedViewer = (function viewer($, querystringer, moment, 
+baltimoreCounty.pageSpecific.citySourcedViewer = (function viewer($, querystringer, moment,
 	baltCoGoConstants) {
 	'use strict';
 
