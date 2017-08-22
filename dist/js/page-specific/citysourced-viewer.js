@@ -1,10 +1,11 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.citySourcedViewer = (function viewer($, querystringer, moment) {
+baltimoreCounty.pageSpecific.citySourcedViewer = (function viewer($, querystringer, moment, 
+	baltCoGoConstants) {
 	'use strict';
 
 	var getNearbyData = function getNearbyData(settings, callback) {
-		$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/getreportsbylatlng', {
+		$.ajax(baltCoGoConstants.urls.api.getReportLatLng, {
 			method: 'POST',
 			data: settings
 		})
@@ -95,7 +96,7 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function viewer($, querystring
 		var reportId = qs.reportid;
 
 		if (reportId) {
-			$.ajax('//testservices.baltimorecountymd.gov/api/citysourced/getreport/' + reportId)
+			$.ajax(baltCoGoConstants.urls.api.getReport + '/' + reportId)
 				.done(function done(data) {
 					var reportData = data;
 					var startDate = new Date();
@@ -152,8 +153,11 @@ baltimoreCounty.pageSpecific.citySourcedViewer = (function viewer($, querystring
 	return {
 		init: init
 	};
-}(jQuery, baltimoreCounty.utility.querystringer,
-	baltimoreCounty.pageSpecific.viewerGoogleMaps, moment)); // eslint-disable-line no-undef
+}(jQuery,
+	baltimoreCounty.utility.querystringer,
+	moment,
+	baltimoreCounty.constants.baltCoGo
+)); // eslint-disable-line no-undef
 
 $(function runInit() {
 	baltimoreCounty.pageSpecific.citySourcedViewer.init();

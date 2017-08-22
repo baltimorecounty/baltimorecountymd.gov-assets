@@ -1,9 +1,9 @@
 namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.viewerGoogleMaps = (function viewerGoogleMaps() {
+baltimoreCounty.pageSpecific.viewerGoogleMaps = (function viewerGoogleMaps(baltCoGoConstants) {
 	var marker;
 	var spatialReferenceId = 4269;
-	var geocodeServerUrlBCGIS = '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/AddressPoint_NAD83/GeocodeServer';
+	var geocodeServerUrlBCGIS = baltCoGoConstants.urls.api.geocodeServer;
 
 	/**
 	 * Creates the map, and renders it in the mapElementId element.
@@ -150,4 +150,4 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function viewerGoogleMaps() {
 	return {
 		initGoogle: initGoogle
 	};
-}());
+}(baltimoreCounty.constants.baltCoGo));
