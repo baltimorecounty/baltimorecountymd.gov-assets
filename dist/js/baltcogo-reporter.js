@@ -440,7 +440,7 @@
 				}
 
 				if (self.page === 2) {
-					setTimeout(mapResize, 500);
+					$timeout(mapResize, 500);
 				}
 			} else { $scope.citySourcedReporterForm.$setSubmitted(); }
 		};
@@ -455,7 +455,7 @@
 			}
 
 			if (self.page === 2) {
-				setTimeout(mapResize, 500);
+				$timeout(mapResize, 500);
 			}
 		};
 
@@ -540,13 +540,25 @@
 		function validatePanel() {
 			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]');
 			var requiredElementsCount = requiredElements.length;
-			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
 			var controls = $scope.citySourcedReporterForm.$$controls;
 
 			angular.forEach(controls, function forEachControl(formControl) {
 				if (formControl.$$element.closest('.panel').is(':visible')) {
-					if (formControl.$pristine) { formControl.$setDirty(); }
-					if (formControl.$untouched) { formControl.$setTouched(); }
+					if (formControl.$pristine) {
+						formControl.$setDirty();
+					}
+
+					if (formControl.$untouched) {
+						formControl.$setTouched();
+					}
+
+					if (formControl.$$element.is('#map-latitude') && self.latitude === 0) {
+						formControl.$setValidity('required', false);
+					}
+
+					if (formControl.$$element.is('#map-longitude') && self.longitude === 0) {
+						formControl.$setValidity('required', false);
+					}
 
 					if (formControl.$$element.is('#address')) {
 						if (self.latitude === 0 || self.longitude === 0) {
@@ -555,6 +567,8 @@
 					}
 				}
 			});
+
+			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
 
 			return requiredElementsCount === validRequiredElementsCount;
 		}
@@ -577,6 +591,11 @@
 					$scope.$apply();
 				}
 				return;
+			}
+
+			if (keycode === 46 || keycode === 8) {
+				self.longitude = 0;
+				self.latitude = 0;
 			}
 
 			if (self.address && self.address.trim().length > 3) {
