@@ -1,5 +1,5 @@
 const frisby = require('frisby');
-const joi = frisby.Joi;
+const urls = require('./urls');
 
 const responseData = [{
 	Id: '257702',
@@ -17,13 +17,13 @@ const goodParams = {
 
 describe('CitySourced GetReportsByLatLng', function CreateReport() {
 	it('will return 200 when passed valid data', function validDataTest(done) {
-		frisby.post('http://localhost:1000/api/citysourced/getreportsbylatlng', goodParams)
+		frisby.post(urls.getReportLatLng, goodParams)
 			.expect('status', 200)
 			.done(done);
 	});
 
 	it('will return 400 when passed no data', function validDataTest(done) {
-		frisby.post('http://localhost:1000/api/citysourced/getreportsbylatlng')
+		frisby.post(urls.getReportLatLng)
 			.expect('status', 400)
 			.done(done);
 	});

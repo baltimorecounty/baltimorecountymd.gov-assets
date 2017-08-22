@@ -1,5 +1,6 @@
 const frisby = require('frisby');
 const joi = frisby.Joi;
+const urls = require('./urls');
 
 const validData = [{
 	name: 'Category',
@@ -45,7 +46,7 @@ const wrongTypeData = '';
 
 describe('CitySourced CreateReport', function CreateReport() {
 	it('will return 200 when passed valid data', function validDataTest(done) {
-		frisby.post('http://localhost:1000/api/baltcogo/createreport', validData)
+		frisby.post(urls.createReport, validData)
 			.expect('status', 200)
 			.expect('jsonTypes', {
 				CsResponse: {
@@ -60,13 +61,13 @@ describe('CitySourced CreateReport', function CreateReport() {
 	});
 
 	it('will return a bad request (400) error when passed empty data', function invalidDataTest(done) {
-		frisby.post('http://localhost:1000/api/baltcogo/createreport', emptyData)
+		frisby.post(urls.createReport, emptyData)
 			.expect('status', 400)
 			.done(done);
 	});
 
 	it('will return a bad request (400) error when passed the wrong type of data', function invalidDataTest(done) {
-		frisby.post('http://localhost:1000/api/baltcogo/createreport', wrongTypeData)
+		frisby.post(urls.createReport, wrongTypeData)
 			.expect('status', 400)
 			.done(done);
 	});
