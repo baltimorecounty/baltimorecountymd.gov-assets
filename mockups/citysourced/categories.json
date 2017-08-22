@@ -55,6 +55,26 @@
 	}],
 	"description": 1024810,
 	"types": [{
+			"name": "Abandoned Vehicle (unregistered and/or inoperable)",
+			"id": 1023415
+		}, {
+			"name": "Excessive animal feces in neighbor's yard",
+			"id": 1023417
+		},
+		{
+			"name": "Failure to maintain plumbing system in a rental home",
+			"id": 1024825
+		},
+		{
+			"name": "Failure to provide carbon monoxide detectors in a rental home",
+			"id": 1024824
+		},
+
+		{
+			"name": "Graffiti",
+			"id": 1023414
+		},
+		{
 			"name": "Junk, trash, or debris on private property",
 			"id": 1023412
 		},
@@ -63,36 +83,12 @@
 			"id": 1024826
 		},
 		{
-			"name": "Tall grass and weeds in yard",
-			"id": 1023413
-		},
-		{
-			"name": "Graffiti",
-			"id": 1023414
-		},
-		{
-			"name": "Abandoned Vehicle (unregistered and/or inoperable)",
-			"id": 1023415
-		},
-		{
-			"name": "Building Without a Permit",
-			"id": 1023416
-		},
-		{
-			"name": "Excessive animal feces in neighbor's yard",
-			"id": 1023417
-		},
-		{
-			"name": "Failure to provide carbon monoxide detectors in a rental home",
-			"id": 1024824
-		},
-		{
-			"name": "Failure to maintain plumbing system in a rental home",
-			"id": 1024825
-		},
-		{
 			"name": "Rats",
 			"id": 1024584
+		},
+		{
+			"name": "Tall grass and weeds in yard",
+			"id": 1023413
 		},
 		{
 			"name": "Other code complaint",
