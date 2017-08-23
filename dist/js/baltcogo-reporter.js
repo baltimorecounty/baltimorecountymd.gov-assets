@@ -599,10 +599,15 @@
 			}
 
 			if (self.address && self.address.trim().length > 3) {
+
+				var addressParts = self.address.trim().split(',');
+				var addressPartToSearch = addressParts[0];
+
 				mapServiceComposite
-					.suggestAddresses(self.address, function displayAutoCompleteResults(autoCompleteResults) {
-						self.autocompleteResults = autoCompleteResults;
-					});
+					.suggestAddresses(addressPartToSearch,
+						function displayAutoCompleteResults(autoCompleteResults) {
+							self.autocompleteResults = autoCompleteResults;
+						});
 			} else {
 				self.autocompleteResults = [];
 			}
