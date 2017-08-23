@@ -599,7 +599,6 @@
 			}
 
 			if (self.address && self.address.trim().length > 3) {
-
 				var addressParts = self.address.trim().split(',');
 				var addressPartToSearch = addressParts[0];
 
