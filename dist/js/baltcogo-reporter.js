@@ -34,7 +34,6 @@
 	function mapServiceComposite($http, CONSTANTS) {
 		var marker;
 		var spatialReferenceId = 4269;
-		var geocodeServerUrlBCGIS = CONSTANTS.urls.geocodeServer;
 
 		var createMap = function createMap(mapElementId, settings) {
 			return new google.maps.Map(document.getElementById(mapElementId), settings);
@@ -55,19 +54,8 @@
 		};
 
 		var reverseGeocode = function reverseGeocode(latitude, longitude, onSuccess, onError) {
-			require(['esri/tasks/Locator', 'esri/geometry/Point'], function esri(EsriLocator, EsriPoint) {
-				var point = new EsriPoint(longitude, latitude);
-
-				var locatorSettings = {
-					countryCode: 'US',
-					outSpatialReference: spatialReferenceId,
-					url: geocodeServerUrlBCGIS
-				};
-
-				var esriLocator = new EsriLocator(locatorSettings);
-
-				esriLocator.locationToAddress(point).then(onSuccess, onError);
-			});
+			$http.get(CONSTANTS.urls.geocodeServer + '/reverseGeocode?location=%7B%22x%22%3A' + longitude + '%2C+%22y%22%3A' + latitude + '%7D&f=pjson')
+				.then(onSuccess, onError);
 		};
 
 		var suggestAddresses = function suggestAddresses(enteredAddress, callback) {
@@ -214,7 +202,8 @@
 			zoom: 14,
 			mapTypeId: 'roadmap',
 			mapTypeControl: false,
-			streetViewControl: false
+			streetViewControl: false,
+			gestureHandling: 'greedy'
 		};
 
 		map = mapServiceComposite.createMap('map', mapSettings);
@@ -675,9 +664,9 @@
 				.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
 					$wrapper.removeClass('error');
 					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-					self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
+					self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
 					$scope.$apply();
-				}, function error() {
+				}, function error(a) {
 					$wrapper.addClass('error');
 					addressField.$setDirty();
 					self.address = '';

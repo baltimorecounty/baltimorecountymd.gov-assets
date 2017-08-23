@@ -32,7 +32,8 @@
 			zoom: 14,
 			mapTypeId: 'roadmap',
 			mapTypeControl: false,
-			streetViewControl: false
+			streetViewControl: false,
+			gestureHandling: 'greedy'
 		};
 
 		map = mapServiceComposite.createMap('map', mapSettings);
@@ -493,9 +494,9 @@
 				.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
 					$wrapper.removeClass('error');
 					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-					self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
+					self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
 					$scope.$apply();
-				}, function error() {
+				}, function error(a) {
 					$wrapper.addClass('error');
 					addressField.$setDirty();
 					self.address = '';
