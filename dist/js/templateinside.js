@@ -5716,7 +5716,7 @@ baltimoreCounty.constants = (function constants() {
 	'use strict';
 
 	var rootUrl = 'https://testservices.baltimorecountymd.gov';
-	// var rootUrl = 'http://localhost:1000s';
+	// var rootUrl = 'http://localhost:1000';
 
 	var baltCoGo = {
 		urls: {

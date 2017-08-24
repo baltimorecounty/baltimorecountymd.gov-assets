@@ -34,7 +34,6 @@
 	function mapServiceComposite($http, CONSTANTS) {
 		var marker;
 		var spatialReferenceId = 4269;
-		var geocodeServerUrlBCGIS = CONSTANTS.urls.geocodeServer;
 
 		var createMap = function createMap(mapElementId, settings) {
 			return new google.maps.Map(document.getElementById(mapElementId), settings);
@@ -55,19 +54,8 @@
 		};
 
 		var reverseGeocode = function reverseGeocode(latitude, longitude, onSuccess, onError) {
-			require(['esri/tasks/Locator', 'esri/geometry/Point'], function esri(EsriLocator, EsriPoint) {
-				var point = new EsriPoint(longitude, latitude);
-
-				var locatorSettings = {
-					countryCode: 'US',
-					outSpatialReference: spatialReferenceId,
-					url: geocodeServerUrlBCGIS
-				};
-
-				var esriLocator = new EsriLocator(locatorSettings);
-
-				esriLocator.locationToAddress(point).then(onSuccess, onError);
-			});
+			$http.get(CONSTANTS.urls.geocodeServer + '/reverseGeocode?location=%7B%22x%22%3A' + longitude + '%2C+%22y%22%3A' + latitude + '%7D&f=pjson')
+				.then(onSuccess, onError);
 		};
 
 		var suggestAddresses = function suggestAddresses(enteredAddress, callback) {
@@ -214,7 +202,8 @@
 			zoom: 14,
 			mapTypeId: 'roadmap',
 			mapTypeControl: false,
-			streetViewControl: false
+			streetViewControl: false,
+			gestureHandling: 'greedy'
 		};
 
 		map = mapServiceComposite.createMap('map', mapSettings);
@@ -440,7 +429,7 @@
 				}
 
 				if (self.page === 2) {
-					setTimeout(mapResize, 500);
+					$timeout(mapResize, 500);
 				}
 			} else { $scope.citySourcedReporterForm.$setSubmitted(); }
 		};
@@ -455,7 +444,7 @@
 			}
 
 			if (self.page === 2) {
-				setTimeout(mapResize, 500);
+				$timeout(mapResize, 500);
 			}
 		};
 
@@ -470,14 +459,11 @@
 		};
 
 		self.trackBreed = function trackBreed() {
-			angular.element.each(self.animalBreedData, function eachAnimalBreedData(index, breed) {
+			angular.forEach(self.animalBreedData, function eachAnimalBreedData(breed) {
 				if (breed.id === self.petType.id) {
 					self.breeds = breed.breeds ? breed.breeds : [];
 					self.sex = breed.sex;
-					return true;
 				}
-
-				return false;
 			});
 		};
 
@@ -540,13 +526,25 @@
 		function validatePanel() {
 			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]');
 			var requiredElementsCount = requiredElements.length;
-			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
 			var controls = $scope.citySourcedReporterForm.$$controls;
 
 			angular.forEach(controls, function forEachControl(formControl) {
 				if (formControl.$$element.closest('.panel').is(':visible')) {
-					if (formControl.$pristine) { formControl.$setDirty(); }
-					if (formControl.$untouched) { formControl.$setTouched(); }
+					if (formControl.$pristine) {
+						formControl.$setDirty();
+					}
+
+					if (formControl.$untouched) {
+						formControl.$setTouched();
+					}
+
+					if (formControl.$$element.is('#map-latitude') && self.latitude === 0) {
+						formControl.$setValidity('required', false);
+					}
+
+					if (formControl.$$element.is('#map-longitude') && self.longitude === 0) {
+						formControl.$setValidity('required', false);
+					}
 
 					if (formControl.$$element.is('#address')) {
 						if (self.latitude === 0 || self.longitude === 0) {
@@ -555,6 +553,8 @@
 					}
 				}
 			});
+
+			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
 
 			return requiredElementsCount === validRequiredElementsCount;
 		}
@@ -579,11 +579,20 @@
 				return;
 			}
 
+			if (keycode === 46 || keycode === 8) {
+				self.longitude = 0;
+				self.latitude = 0;
+			}
+
 			if (self.address && self.address.trim().length > 3) {
+				var addressParts = self.address.trim().split(',');
+				var addressPartToSearch = addressParts[0];
+
 				mapServiceComposite
-					.suggestAddresses(self.address, function displayAutoCompleteResults(autoCompleteResults) {
-						self.autocompleteResults = autoCompleteResults;
-					});
+					.suggestAddresses(addressPartToSearch,
+						function displayAutoCompleteResults(autoCompleteResults) {
+							self.autocompleteResults = autoCompleteResults;
+						});
 			} else {
 				self.autocompleteResults = [];
 			}
@@ -652,9 +661,9 @@
 				.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
 					$wrapper.removeClass('error');
 					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-					self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
+					self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
 					$scope.$apply();
-				}, function error() {
+				}, function error(a) {
 					$wrapper.addClass('error');
 					addressField.$setDirty();
 					self.address = '';
