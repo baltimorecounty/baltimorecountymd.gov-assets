@@ -44,8 +44,8 @@
 
 		<div role="alert" class="bc-citysourced-reporter-alert alert-success" ng-if="!reporter.isLoading && reporter.isDone && reporter.isSuccess">
 			<h2>Your Submission Has Been Received</h2>
-			<p>Thank you for submitting your report. Your tracking number is: <span id="issueId">{{ reporter.issueId }}</span>.</p>
-			<p>You will receive an email in a few minutes with information about what happens next. You can also track your status online by entering your tracking number at <a href="/followup" title="Track your issue status online.">http://www.baltimorecountymd.gov/followup</a>.</p>
+			<p>Thank you for submitting your report. You will receive an email in a few minutes with your tracking number and additional information.</p>
+			<p>You can track your status online at any time by entering your tracking number at  <a href="/followup" title="Track your issue status online.">http://www.baltimorecountymd.gov/followup</a>.</p>
 		</div>
 
 		<div role="alert" class="bc-citysourced-reporter-alert alert-warning" ng-show="!reporter.isLoading && reporter.isDone && !reporter.isSuccess">
@@ -71,7 +71,7 @@
 						<select id="categories" name="categories" 
 							ng-model="reporter.category" 
 							ng-change="reporter.loadSubCategories()" 
-							ng-options="cat.id as cat.name for cat in reporter.categoryData track by cat.id" 
+							ng-options="cat as cat.name for cat in reporter.categoryData track by cat.id" 
 							required>
 							<option value="">-- Please select a category --</option>
 						</select>
@@ -83,7 +83,7 @@
 						<select id="subCategories" name="subCategories" 
 							ng-model="reporter.subCategory"
 							ng-if="reporter.subCategories.length"	
-							ng-options="cat.id as cat.name for cat in reporter.subCategories track by cat.id"
+							ng-options="cat as cat.name for cat in reporter.subCategories track by cat.id"
 							required>
 							<option value="">-- Please select a sub-category --</option>
 						</select>
@@ -171,11 +171,13 @@
 					
 					<div class="cs-form-control address-search" ng-class="{ 'error': citySourcedReporterForm.address.$dirty &&  citySourcedReporterForm.address.$invalid }">
 						<div class="address-search-wrapper">
-							<label for="address">Enter the closest address to your service request<span class="required">*</span></label>
-							<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" autocomplete="off" required />
-							<i class="fa fa-search address-search-icon" aria-hidden="true"></i>
+							<label for="address">Enter the closest street address to your service request<span class="required">*</span></label>
+							<div class="address-input-wrapper">
+								<input type="text" id="address" name="address" ng-model="reporter.address" placeholder="123 Amazing St" aria-required="true" autocomplete="off" required />
+								<i class="fa fa-search address-search-icon" aria-hidden="true"></i>
+							</div>
 							<ul ng-if="reporter.autocompleteResults.length > 0" class="autocomplete-results">
-								<li ng-repeat="autocompleteResult in reporter.autocompleteResults"><button ng-click="reporter.lookupAddress(autocompleteResult)">{{ autocompleteResult }}</button></li>
+								<li ng-repeat="autocompleteResult in reporter.autocompleteResults"><button type="button" ng-click="reporter.setLocation(this, autocompleteResult.longitude, autocompleteResult.latitude)">{{ autocompleteResult.address }}</button></li>
 							</ul>
 							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.address.$dirty" ng-show="citySourcedReporterForm.address.$error.required">You must select a location inside Baltimore County.</p>
 						</div>
@@ -215,17 +217,6 @@
 							<label for="city">City</label>
 							<input type="text" id="city" name="city" ng-model="reporter.city" value="" aria-required="true" required />
 							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.city.$dirty" ng-show="citySourcedReporterForm.city.$error.required">Please enter your city.</p>
-						</div>
-						<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.state.$dirty &&  citySourcedReporterForm.state.$invalid }">
-							<label for="state">State</label>
-							<select id="state" name="state" 
-								ng-model="reporter.state" 
-								ng-options="state.id as state.name for state in reporter.states track by state.id" 
-								ng-init="reporter.state = reporter.states[0]"
-								readonly
-								required>
-							</select>
-							<p role="alert" class="error-message" ng-if="citySourcedReporterForm.state.$dirty" ng-show="citySourcedReporterForm.state.$touched && citySourcedReporterForm.state.$invalid">Please select your state.</p>
 						</div>
 						<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.zipCode.$touched && citySourcedReporterForm.zipCode.$invalid }">
 							<label for="zipCode">ZIP Code</label>

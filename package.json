@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Static assets (CSS and JS) for the baltimorecountymd.gov website.",
   "main": "gulpfile.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-baltimorecounty": "^1.0.7",
+    "frisby": "^2.0.2",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
@@ -15,6 +19,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-strip-code": "^0.1.4",
     "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.8",
     "jasmine": "^2.5.2",
     "jasmine-jquery": "^2.1.1",
     "jquery": "^1.11.1",

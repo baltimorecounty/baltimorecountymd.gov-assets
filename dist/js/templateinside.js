@@ -89,25 +89,25 @@ if (!Array.prototype.some) {
 /*
  * Creates namespaces safely and conveniently, reusing 
  * existing objects instead of overwriting them.
- */ 
+ */
 function namespacer(ns) {
-	var nsArr = ns.split('.'),
-		parent = window;
-	
-	if (!nsArr.length)
-		return;
+  var nsArr = ns.split('.');
+  var parent = window;
 
-	for (var i = 0; i < nsArr.length; i++) {
-		var nsPart = nsArr[i];
+  if (!nsArr.length) {
+    return;
+  }
 
-		if (typeof parent[nsPart] === 'undefined') {
-			parent[nsPart] = {};
-		}
+  for (var i = 0, len = nsArr.length; i < len; i++) {
+    var nsPart = nsArr[i];
 
-		parent = parent[nsPart];
-	}
+    if (typeof parent[nsPart] === 'undefined') {
+      parent[nsPart] = {};
+    }
+
+    parent = parent[nsPart];
+  }
 }
-
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.cdnFallback = (function() {
@@ -5712,6 +5712,38 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 } catch (e) {}
 namespacer('baltimoreCounty');
 
+baltimoreCounty.constants = (function constants() {
+	'use strict';
+
+	var rootUrl = 'https://services.baltimorecountymd.gov';
+	// var rootUrl = 'http://localhost:1000';
+
+	var baltCoGo = {
+		urls: {
+			api: {
+				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				createReport: rootUrl + '/api/baltcogo/createreport',
+				getReport: rootUrl + '/api/citysourced/getreport',
+				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				suggestions: rootUrl + '/api/gis/addressLookup/'
+			},
+			json: {
+				animalBreeds: '/sebin/y/a/animal-breeds.json',
+				animalColors: '/sebin/u/u/animal-colors.json',
+				animalTypes: '/sebin/a/e/animal-types.json',
+				categories: '/sebin/q/m/categories.json',
+				petTypes: '/sebin/m/a/pet-types.json'
+			}
+		}
+	};
+
+	return {
+		baltCoGo: baltCoGo
+	};
+}());
+
+namespacer('baltimoreCounty');
+
 baltimoreCounty.internalCarousel = (function($) {
 
 	var fixLinks = function() {
@@ -5770,38 +5802,52 @@ $(function() {
     false);
 
 })(jQuery);
-(function($, TextResizer) {
-	/*Prevent a search with no text*/
-	$(document).on('click', '.search-button', function (e) {
-        var val = $('.search-input').val();
+(function ($, TextResizer) {
 
-        if (val.length === 0) {
-            e.preventDefault();
-        }
+  function onDocumentReady() {
+    var textResizer = new TextResizer({
+      listClass: "resizer-list"
     });
+  }
 
-	/*Toggle hamburger menu*/
-    $(document).on('click', '.hamburger-btn', function(e) {
-        e.preventDefault();
-        $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
-    });
+  function searchButtonClicked(e) {
+    var val = $('.search-input').val();
 
-    /*Submit url to rate form*/
-    $(document).on('submit', '#RateThisPageForm', function(){ 
-        document.getElementById('url').value = window.location.href;
-        
-        if ($('input#website').val().length) {
-            return false;
-        } 
-    });
+    if (val.length === 0) {
+      e.preventDefault();
+    }
+  }
 
-    /*Initialize the Text Resizer*/
-    $(document).ready(function () {
-        var textResizer = new TextResizer({
-            listClass: "resizer-list"
-        });
-    });
+  function toggleMobileNavigation(e) {
+    e.preventDefault();
+    $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
+  }
+
+  /**
+   * Stuff to kick off when the template is loaded
+   */
+  $(document).ready(onDocumentReady);
+
+  /**
+   * Events
+   */
+  /*Toggle hamburger menu*/
+  $(document).on('click', '.hamburger-btn', toggleMobileNavigation);
+
+  /*Prevent a search with no text*/
+  $(document).on('click', '.search-button', searchButtonClicked);
 })(jQuery, TextResizer);
+(function ($) {
+  function ratePage() {
+    document.getElementById('url').value = window.location.href;
+
+    if ($('input#website').val().length) {
+      return false;
+    }
+  }
+  /*Submit url to rate form*/
+  $(document).on('submit', '#RateThisPageForm', ratePage);
+})(jQuery);
 namespacer('baltimoreCounty');
 
 baltimoreCounty.niftyTables = (function ($, numericStringTools, undefined) {
@@ -6243,79 +6289,122 @@ baltimoreCounty.contentFilter = (function($, utilities) {
 
 })(jQuery, baltimoreCounty.utility);
 // Collapse the other items
-(function($) {
+(function accordionMenu($) {
+  var clickedAccordionLevel = 0;
 
-    $(function() {
+  /**
+   * Add active class to any links inside the local navigation on the page
+   */
+  function addCurrentClass($element) {
+    var pathName = window.location.pathname;
+    var elmHref = $element.attr('href');
 
-		var clickedAccordionLevel = 0;
+    if (elmHref.indexOf(pathName) > -1) {
+      $element.closest('.panel').addClass('current');
+    }
+  }
 
+  /* Returns whether this is a parent or child accordion link. */
+  function getAccordionLevel($element) {
+    return $element.parents('ul').length + 1;
+  }
+
+  function textNodeFilter(idx, element) {
+    if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
+      return true;
+    }
+    return false;
+  }
+
+  function hideTextOnlyNodes($elm) {
+    $elm
+      .contents()
+      .filter(textNodeFilter)
+      .parent().css('display', 'none');
+  }
+
+  function openActiveItem(idx, item) {
+    var itemHref = item.getAttribute('href');
+    var $item = $(item);
+
+    if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
+      $item.addClass('current');
+      var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+      $collapsables.addClass('in');
+      var $siblings = $collapsables.siblings('.accordion-collapsed');
+
+      if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
+    } else {
+      addCurrentClass($item);
+    }
+  }
+
+  function toggleAccordion(e, action) {
+    var $collapsable = $(e.currentTarget);
+    var $siblings = $collapsable.siblings('.accordion-collapsed');
+    var accordionLevel = getAccordionLevel($collapsable);
+
+    if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
+      if (action === 'hide') {
+        $siblings.removeClass('active');
+      }
+      if (action === 'show') {
+        $siblings.addClass('active');
+      }
+    }
+  }
+
+  function onAccordionHide(e) {
+    toggleAccordion(e, 'hide');
+  }
+
+  function onAccordionShow(e) {
+    toggleAccordion(e, 'show');
+  }
+
+  function setUpCollapse(e) {
+    $(e.target).siblings('.collapse').collapse('toggle');
+    return false;
+  }
+
+  function trackAccordionLevel(e) {
+    var $currentTarget = $(e.currentTarget);
+
+    clickedAccordionLevel = getAccordionLevel($currentTarget);
+    $currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
+  }
+
+  /**
+   * When the page is ready
+   */
+  $(function() {
 		/* Opens any items that match the current URL, so the user 
 		 * sees the current page as being active. 
 		 */
-		$('.bc-accordion-menu ul li a').each(function(idx, item) {
-			var itemHref = item.getAttribute('href');
-			if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
-				$(item).addClass('current');
-				var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
-				$collapsables.addClass('in');
-				var $siblings = $collapsables.siblings('.accordion-collapsed');
-				
-				if (!$siblings.hasClass('active'))
-					$siblings.addClass('active');
-			}      
-		}); 
+    $('.bc-accordion-menu a').each(openActiveItem);
 
+    // Hide all text-only nodes.
+    hideTextOnlyNodes($('.bc-accordion-menu .panel ul li'));
+
+    /**
+     * Events
+     */
 		/* Updates the tracked current accordion level, since Bootstrap Collapse
 		 * wasn't exactly designed for nested menus.
 		 */
-		$('.bc-accordion-menu .panel .accordion-collapsed').on('click', function(e) {
-			var $currentTarget = $(e.currentTarget);
+    $(document).on('click', '.bc-accordion-menu .panel .accordion-collapsed', trackAccordionLevel);
 
-			clickedAccordionLevel = getAccordionLevel($currentTarget);
-			$currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
-		});
+    // Set up the DIVs to expand and collapse their siblings.
+    $(document).on('click', '.bc-accordion-menu .accordion-collapsed', setUpCollapse);
 
-		/* Making sure only the active accordion level's "active" css class is cleared when the menu expands. */
-		$('.bc-accordion-menu .collapse').on('show.bs.collapse', function() {
-			var $collapsable = $(this);
-			var $siblings = $collapsable.siblings('.accordion-collapsed');
-			var accordionLevel = getAccordionLevel($collapsable);
+    /* Ensure he active accordion level's "active" css class is cleared when the menu expands. */
+    $('.bc-accordion-menu .collapse').on('show.bs.collapse', onAccordionShow);
 
-			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) 
-				$siblings.addClass('active');
+    /* Ensure the active accordion level's "active" css class is cleared when the menu collapses. */
+    $('.bc-accordion-menu .collapse').on('hide.bs.collapse', onAccordionHide);
+  });
+}(jQuery));
 
-		});
-
-		/* Making sure only the active accordion level's "active" css class is cleared when the menu collapses. */
-		$('.bc-accordion-menu .collapse').on('hide.bs.collapse', function() {
-			var $collapsable = $(this);
-			var $siblings = $collapsable.siblings('.accordion-collapsed');
-			var accordionLevel = getAccordionLevel($collapsable);
-
-			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) 
-				$siblings.removeClass('active');
-		});
-		
-		// Hide all text-only nodes.
-		$('.bc-accordion-menu .panel ul li').contents().filter(textNodeFilter).parent().css('display','none');
-
-		// Set up the DIVs to expand and collapse their siblings.
-		$('.bc-accordion-menu .accordion-collapsed').on('click', function(e) { $(e.target).siblings('.collapse').collapse('toggle'); return false; });
-
-		/* Returns whether this is a parent or child accordion link. */
-		function getAccordionLevel($element) {
-			return $element.parents('ul').length + 1;
-		}
-
-		function textNodeFilter(idx, element) {
-			if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
-				return true;
-			}
-		}
-
-    });
-
-})(jQuery);
 var baltimoreCounty = baltimoreCounty || {};
 
 baltimoreCounty.youtubePlaylistGallery = (function($) {

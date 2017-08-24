@@ -142,7 +142,7 @@
 						position: absolute;
 						width: 100%;
 						z-index: 200;
-
+	
 						li {
 							border-bottom: 1px solid $lightest-gray;
 							padding: 0;							
@@ -187,9 +187,13 @@
 					text-transform: capitalize;
                 }
 
+				.address-input-wrapper {
+					position: relative;
+				}
+
 				.address-search-icon {
 					position: absolute;
-					top: 27px;
+					bottom: 7px;
 					left: 8px;
 					color: #999;
 				}
