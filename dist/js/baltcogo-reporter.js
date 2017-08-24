@@ -459,14 +459,11 @@
 		};
 
 		self.trackBreed = function trackBreed() {
-			angular.element.each(self.animalBreedData, function eachAnimalBreedData(index, breed) {
+			angular.forEach(self.animalBreedData, function eachAnimalBreedData(breed) {
 				if (breed.id === self.petType.id) {
 					self.breeds = breed.breeds ? breed.breeds : [];
 					self.sex = breed.sex;
-					return true;
 				}
-
-				return false;
 			});
 		};
 
