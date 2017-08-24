@@ -154,7 +154,7 @@ window.onafterprint = afterPrint;
     var resultsTemplate = "";
     resultsTemplate += "<h1 class='title'>Stormwater Remediation Fee Detail<\/h1>";
     resultsTemplate += "{{#.}}{{#AccountNumber}}<a class=\"print-data\" href=\"\">";
-    resultsTemplate += "<img src=\"http:\/\/www.baltimorecountymd.gov\/sebin\/w\/w\/print-button.gif\" width=\"59\" height=\"20\" border=\"0\" alt=\"Print this page.\" title=\"Print this page.\" \/>";
+    resultsTemplate += "<img src=\"\/\/www.baltimorecountymd.gov\/sebin\/w\/w\/print-button.gif\" width=\"59\" height=\"20\" border=\"0\" alt=\"Print this page.\" title=\"Print this page.\" \/>";
     resultsTemplate += "<\/a>{{\/AccountNumber}}";
     resultsTemplate += "<div class=\"property-info\">";
     resultsTemplate += "{{#AccountNumber}}";

@@ -14,21 +14,21 @@ var i = 0, //used for loop to find number of questions
 	liString = "";
 	//declare links to coplogic thru site executive redirects
 	var link = {
-		precincts: "http://www.baltimorecountymd.gov/Agencies/police/precinctsall.html",
-		start_report: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/no-report-type.html",
+		precincts: "/Agencies/police/precinctsall.html",
+		start_report: "/Redirect/externalwebsites/Coplogic/no-report-type.html",
 		theft: {
-			motor: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/theftfromvehicleredirect.html",
-			nomotor: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/theftredirect.html",
-			sepage: "http://www.baltimorecountymd.gov/Agencies/police/onlinereport/theft.html"
+			motor: "/Redirect/externalwebsites/Coplogic/theftfromvehicleredirect.html",
+			nomotor: "/Redirect/externalwebsites/Coplogic/theftredirect.html",
+			sepage: "/Agencies/police/onlinereport/theft.html"
 		},
-		abandoned: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/abandonedvehicleredirect.html",
-		lost_property: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/lostpropertyredirect.html",
+		abandoned: "/Redirect/externalwebsites/Coplogic/abandonedvehicleredirect.html",
+		lost_property: "/Redirect/externalwebsites/Coplogic/lostpropertyredirect.html",
 		des_of_property: {
-			motor: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/destructionpropertyvehicleredirect.html",
-			nomotor: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/destructionpropertyredirect.html"
+			motor: "/Redirect/externalwebsites/Coplogic/destructionpropertyvehicleredirect.html",
+			nomotor: "/Redirect/externalwebsites/Coplogic/destructionpropertyredirect.html"
 		},
-		hit_and_run: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/hitandrunredirect.html",
-		shop_lifting: "http://www.baltimorecountymd.gov/Redirect/externalwebsites/Coplogic/startreport.html" //Need to replace with Prod//Need to replace with Prod
+		hit_and_run: "/Redirect/externalwebsites/Coplogic/hitandrunredirect.html",
+		shop_lifting: "/Redirect/externalwebsites/Coplogic/startreport.html" //Need to replace with Prod//Need to replace with Prod
 	};
 	
 	//definitions for the qtips, for the keywords
