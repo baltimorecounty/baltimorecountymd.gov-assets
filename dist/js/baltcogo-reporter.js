@@ -662,12 +662,10 @@
 					$wrapper.removeClass('error');
 					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
 					self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
-					$scope.$apply();
 				}, function error(a) {
 					$wrapper.addClass('error');
 					addressField.$setDirty();
 					self.address = '';
-					$scope.$apply();
 				});
 		}
 
