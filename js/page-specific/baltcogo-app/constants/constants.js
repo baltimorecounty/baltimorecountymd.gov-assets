@@ -15,6 +15,12 @@
 				categories: baltCoGoConstants.urls.json.categories,
 				petTypes: baltCoGoConstants.urls.json.petTypes
 			}
+		},
+		locations: {
+			courtHouse: {
+				latitude: baltCoGoConstants.locations.courtHouse.latitude,
+				longitude: baltCoGoConstants.locations.courtHouse.longitude
+			}
 		}
 	};
 
