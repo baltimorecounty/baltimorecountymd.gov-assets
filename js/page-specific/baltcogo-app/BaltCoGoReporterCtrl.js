@@ -253,8 +253,8 @@
 				self.page += 1;
 
 				if (self.page === 2 && self.category.name === 'Website') {
-					self.latitude = 39.4003288;
-					self.longitude = -76.6087134;
+					self.latitude = 39.4001526;
+					self.longitude = -76.6074448;
 					self.page = 3;
 				}
 
@@ -268,8 +268,8 @@
 			self.page -= 1;
 
 			if (self.page === 2 && self.category.name === 'Website') {
-				self.latitude = 39.4003288;
-				self.longitude = -76.6087134;
+				self.latitude = 39.4001526;
+				self.longitude = -76.6074448;
 				self.page = 1;
 			}
 
