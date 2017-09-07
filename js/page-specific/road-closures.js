@@ -1,3 +1,4 @@
+/* eslint-disable */
 require(["BcGisQuery", "jquery", "footable", "mustache"], function (BcGisQuery, $, footable, Mustache) {
     var template = '<table data-filter="#filter" class="footable table">';
     template += '<thead><tr><th class="footable-first-column" data-toggle="true">Road</th><th data-toggle="true">Community</th><th data-hide="phone,tablet" data-sort-initial="true" data-name="Closed">Closed Date</th><th data-hide="phone,tablet" data-name="Between">Between</th><th data-hide="phone">Reason</th></tr></thead>';
@@ -18,7 +19,7 @@ require(["BcGisQuery", "jquery", "footable", "mustache"], function (BcGisQuery, 
             "CLOSURE_ID", "FIRST_ROAD_CLOSURE_DATE", "FIRST_CLOSURE_TYPE", "FIRST_STLABEL", "FIRST_INTERSECTIONLIST", "FIRST_COMMUNITY"],
         resultsContainer: 'results',
         //serviceUrl: "http://arcgisdev101/arcgis/rest/services/Apps/RoadClosure/MapServer/0",
-        serviceUrl: "//gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/0",
+        serviceUrl: "https://gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/0",
         template: template
     });
 
@@ -37,7 +38,7 @@ require(["BcGisQuery", "jquery", "footable", "mustache"], function (BcGisQuery, 
                 "CLOSURE_ID", "ROAD_CLOSURE_DATE", "CLOSURE_TYPE ", "CLOSED_ROAD_NAME ", "CROSS_ST_1", "CROSS_ST_2", "COMMUNITY"],
             resultsContainer: 'unmapped-results',
             //serviceUrl: "http://arcgisdev101/arcgis/rest/services/Apps/RoadClosure/MapServer/3",
-            serviceUrl: "//gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/3",
+            serviceUrl: "https://gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/3",
             template: template
         });
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 require([
     "esri/tasks/query", "esri/tasks/QueryTask",
     "dojo/dom", "dojo/on", "dojo/domReady!"], function (Query, QueryTask, dom, on) {
