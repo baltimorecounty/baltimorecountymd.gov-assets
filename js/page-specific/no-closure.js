@@ -2,7 +2,7 @@ require([
     "esri/tasks/query", "esri/tasks/QueryTask",
     "dojo/dom", "dojo/on", "dojo/domReady!"], function (Query, QueryTask, dom, on) {
 
-    var queryTask = new QueryTask("//gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/0");
+    var queryTask = new QueryTask("https://gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/0");
 
     var query = new Query();
     query.returnGeometry = false;
@@ -41,7 +41,7 @@ require(["BcGisQuery", "jquery", "footable"], function(BcGisQuery, $, footable) 
         ],
         resultsContainer: 'unmapped-results',
         //serviceUrl: "http://arcgisdev101/arcgis/rest/services/Apps/RoadClosure/MapServer/3",
-        serviceUrl: "//gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/3",
+        serviceUrl: "https://gis.baltimorecountymd.gov/arcgis/rest/services/Apps/RoadClosureProd/MapServer/3",
         template: template
     });
 
