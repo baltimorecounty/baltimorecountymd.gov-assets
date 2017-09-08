@@ -13,7 +13,7 @@ baltimoreCounty.pageSpecific.fasTrack = (function fasTrack($) {
 		type: 'baltcogo',
 		pattern: /^\d+$/i,
 		action: function action(trackingNumber) {
-			window.location = '/baltcogo/viewer?reportId=' + trackingNumber;
+			window.location = '/iwant/status.html?reportId=' + trackingNumber;
 		}
 	}, {
 		type: 'fastrack',
@@ -27,7 +27,7 @@ baltimoreCounty.pageSpecific.fasTrack = (function fasTrack($) {
 	 * Submits form data to FasTrack.
 	 */
 	var submitToFasTrack = function submitToFasTrack($form) {
-		var appServer = 'http://egov.baltimorecountymd.gov/ECMS/';
+		var appServer = 'https://egov.baltimorecountymd.gov/ECMS/';
 		var dataString = $form.serialize();
 
 		$.ajax({
