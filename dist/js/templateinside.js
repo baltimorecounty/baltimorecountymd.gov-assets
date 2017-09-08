@@ -5715,7 +5715,7 @@ namespacer('baltimoreCounty');
 baltimoreCounty.constants = (function constants() {
 	'use strict';
 
-	var rootUrl = 'https://testservices.baltimorecountymd.gov';
+	var rootUrl = 'https://services.baltimorecountymd.gov';
 	// var rootUrl = 'http://localhost:1000';
 
 	var baltCoGo = {
@@ -5839,7 +5839,11 @@ $(function() {
 })(jQuery, TextResizer);
 (function ($) {
   function ratePage() {
-    document.getElementById('url').value = window.location.href;
+    var urlElm = document.getElementById('url');
+    
+    if (urlElm) {
+        urlElm.value = window.location.href;
+    }
 
     if ($('input#website').val().length) {
       return false;
