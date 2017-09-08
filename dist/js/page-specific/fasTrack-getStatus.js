@@ -9,7 +9,7 @@ status check functionality in the Intake controller for the ECMS project
 // var _appServer = 'http://localhost:50851/ECMS/';
 //var _appServer = 'http://dprmmstr-dev.co.ba.md.us/ECMS/';
 // var _appServer = 'http://dprmmaster.co.ba.md.us/ECMS/';
-var _appServer = 'http://egov.baltimorecountymd.gov/ECMS/';
+var _appServer = 'https://egov.baltimorecountymd.gov/ECMS/';
 
 $.extend({
     getUrlVars: function () {
