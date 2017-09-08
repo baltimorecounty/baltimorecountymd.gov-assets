@@ -25,8 +25,8 @@
 
 		var mapSettings = {
 			center: {
-				lat: 39.4003288,
-				lng: -76.60652470000002
+				lat: CONSTANTS.locations.courstHouse.latitude,
+				lng: CONSTANTS.locations.courstHouse.longitude
 			},
 			scrollwheel: false,
 			zoom: 14,
@@ -253,8 +253,8 @@
 				self.page += 1;
 
 				if (self.page === 2 && self.category.name === 'Website') {
-					self.latitude = 39.4003288;
-					self.longitude = -76.6087134;
+					self.latitude = CONSTANTS.locations.courstHouse.latitude;
+					self.longitude = CONSTANTS.locations.courstHouse.longitude;
 					self.page = 3;
 				}
 
@@ -268,8 +268,8 @@
 			self.page -= 1;
 
 			if (self.page === 2 && self.category.name === 'Website') {
-				self.latitude = 39.4003288;
-				self.longitude = -76.6087134;
+				self.latitude = CONSTANTS.locations.courstHouse.latitude;
+				self.longitude = CONSTANTS.locations.courstHouse.longitude;
 				self.page = 1;
 			}
 
@@ -492,12 +492,10 @@
 					$wrapper.removeClass('error');
 					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
 					self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
-					$scope.$apply();
 				}, function error(a) {
 					$wrapper.addClass('error');
 					addressField.$setDirty();
 					self.address = '';
-					$scope.$apply();
 				});
 		}
 

@@ -94,7 +94,10 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTe
 			start_comment: 'test-code',
 			end_comment: 'end-test-code'
 		}))
-		.pipe(uglify().on('error', util.log))
+		.pipe(uglify())
+		.on('error', function reportError(err) {
+			util.log(util.colors.red('[Error]'), err.toString());
+		})
 		.pipe(rename({
 			suffix: '.min'
 		}))
@@ -108,6 +111,9 @@ gulp.task('compressPageSpecificFiles', function compressPageSpecificFiles() {
 			end_comment: 'end-test-code'
 		}))
 		.pipe(uglify())
+		.on('error', function reportError(err) {
+			util.log(util.colors.red('[Error]'), err.toString());
+		})
 		.pipe(rename({
 			suffix: '.min'
 		}))
