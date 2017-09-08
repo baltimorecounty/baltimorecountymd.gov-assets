@@ -5734,6 +5734,12 @@ baltimoreCounty.constants = (function constants() {
 				categories: '/sebin/q/m/categories.json',
 				petTypes: '/sebin/m/a/pet-types.json'
 			}
+		},
+		locations: {
+			courtHouse: {
+				latitude: 39.4001526,
+				longitude: -76.6074448
+			}
 		}
 	};
 
