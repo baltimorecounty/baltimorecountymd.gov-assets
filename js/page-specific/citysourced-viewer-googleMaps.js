@@ -72,7 +72,7 @@ baltimoreCounty.pageSpecific.viewerGoogleMaps = (function viewerGoogleMaps(baltC
 	 */
 	var getInfoWindowHtml = function getInfoWindowHtml(dataItem) {
 		var html = '<div class="maps-info-window">' +
-			'<h4><a href="/CitySourced/preview/viewer?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></h4>' +
+			'<h4><a href="/iwant/status.html?reportId=' + dataItem.Id + '">' + dataItem.IssueType + '</a></h4>' +
 			'<ul>' +
 			'<li>Status: ' + dataItem.StatusType + '</li>' +
 			'<li>Reported on ' + dataItem.DateCreated + '</li>' +
