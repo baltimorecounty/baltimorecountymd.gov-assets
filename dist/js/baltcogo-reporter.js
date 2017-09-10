@@ -201,8 +201,8 @@
 
 		var mapSettings = {
 			center: {
-				lat: CONSTANTS.locations.courstHouse.latitude,
-				lng: CONSTANTS.locations.courstHouse.longitude
+				lat: CONSTANTS.locations.courtHouse.latitude,
+				lng: CONSTANTS.locations.courtHouse.longitude
 			},
 			scrollwheel: false,
 			zoom: 14,
@@ -429,8 +429,8 @@
 				self.page += 1;
 
 				if (self.page === 2 && self.category.name === 'Website') {
-					self.latitude = CONSTANTS.locations.courstHouse.latitude;
-					self.longitude = CONSTANTS.locations.courstHouse.longitude;
+					self.latitude = CONSTANTS.locations.courtHouse.latitude;
+					self.longitude = CONSTANTS.locations.courtHouse.longitude;
 					self.page = 3;
 				}
 
@@ -444,8 +444,8 @@
 			self.page -= 1;
 
 			if (self.page === 2 && self.category.name === 'Website') {
-				self.latitude = CONSTANTS.locations.courstHouse.latitude;
-				self.longitude = CONSTANTS.locations.courstHouse.longitude;
+				self.latitude = CONSTANTS.locations.courtHouse.latitude;
+				self.longitude = CONSTANTS.locations.courtHouse.longitude;
 				self.page = 1;
 			}
 
