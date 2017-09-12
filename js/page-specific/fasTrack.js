@@ -4,10 +4,18 @@ baltimoreCounty.pageSpecific.fasTrack = (function fasTrack($) {
 	'use strict';
 
 	var trackingCodeTests = [{
-		type: 'accela',
-		pattern: /^(ACCMP|CC|CRH|CS|PP|TS|CE|CP|CB|CG)\d+$/i,
+		type: 'accelaAnimal',
+		pattern: /^(ACCMP)/i,
 		action: function action() {
-			window.location = 'https://citizenaccess.baltimorecountymd.gov/CitizenAccess/';
+			$('#citizen-access-info').find('a').attr('href', 'https://citizenaccess.baltimorecountymd.gov/CitizenAccess/Cap/CapHome.aspx?&Module=Enforce');
+			$('#citizen-access-info').fadeIn(250);
+		}
+	}, {
+		type: 'accelaCode',
+		pattern: /^(CC|CRH|CS|PP|TS|CE|CP|CB|CG)\d+$/i,
+		action: function action() {
+			$('#citizen-access-info').find('a').attr('href', 'https://citizenaccess.baltimorecountymd.gov/CitizenAccess/Cap/CapHome.aspx?&Module=Enforcement');
+			$('#citizen-access-info').fadeIn(250);
 		}
 	}, {
 		type: 'baltcogo',
