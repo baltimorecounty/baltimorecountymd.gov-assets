@@ -1,9 +1,63 @@
 var assert = require('chai').assert;
 var expect = require('chai').expect;
 var sinon = require('sinon');
-global.namespacer = require('../../../js/utility/namespacer.js');
-var formatters = require('../../../js/utility/formatters.js');
+var formatter = require('../../../js/utility/formatters.js');
 
+describe('Phone Number Formatter', function (done) {
+    it('should convert a decimal to the currency as a string', function (done) {
+        var input = 1000.57;
+        var actual = formatter('currency', input);
+
+        expect(actual).to.eql("$1,000.57");
+
+        done();
+      });
+
+      it('should convert a decimal as string to the currency as a string', function (done) {
+        var input = "1000.57";
+        var actual = formatter('currency', input);
+
+        expect(actual).to.eql("$1,000.57");
+
+        done();
+      });
+
+      it('should convert a integer to the currency as a string', function (done) {
+        var input = 1000;
+        var actual = formatter('currency', input);
+
+        expect(actual).to.eql("$1,000.00");
+
+        done();
+      });
+
+      it('should convert a integer as string to the currency as a string', function (done) {
+        var input = "1000";
+        var actual = formatter('currency', input);
+
+        expect(actual).to.eql("$1,000.00");
+
+        done();
+      });
+
+      it('should properly round a decimal and convert the decimal to the currency as a string', function (done) {
+        var input = 1000.57889;
+        var actual = formatter('currency', input);
+
+        expect(actual).to.eql("$1,000.58");
+
+        done();
+      });
+
+      it('should properly round a decimal as a string and convert the decimal as a string to the currency as a string', function (done) {
+        var input = "1000.57889";
+        var actual = formatter('currency', input);
+
+        expect(actual).to.eql("$1,000.58");
+
+        done();
+      });
+});
 
 describe('Phone Number Formatter', function (done) {
   var sandbox;
@@ -25,7 +79,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return the given format xxx-xxx-xxxx', function (done) {
     var input = "(911) 911-4545";
     var format = "xxx-xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
 
     expect(actual).to.eql("911-911-4545");
 
@@ -35,7 +89,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return the given format (xxx) xxx-xxxx', function (done) {
     var input = "911-911-4545";
     var format = "(xxx) xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
 
     expect(actual).to.eql("(911) 911-4545");
 
@@ -45,7 +99,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return the given format (xxx) xxx-xxxx with 1 prefix', function (done) {
     var input = "1-911-911-4545";
     var format = "(xxx) xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
 
     expect(actual).to.eql("(911) 911-4545");
 
@@ -55,7 +109,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return the given format 1 (xxx) xxx-xxxx', function (done) {
     var input = "1-911-911-4545";
     var format = "x (xxx) xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
 
     expect(actual).to.eql("1 (911) 911-4545");
 
@@ -65,7 +119,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return the given format (xxx) xxx-xxxx', function (done) {
     var input = 9119114545;
     var format = "(xxx) xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
 
     expect(actual).to.eql("(911) 911-4545");
 
@@ -75,7 +129,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return the given format 1 (xxx) xxx-xxxx', function (done) {
     var input = 19119114545;
     var format = "x (xxx) xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
 
     expect(actual).to.eql("1 (911) 911-4545");
 
@@ -85,7 +139,7 @@ describe('Phone Number Formatter', function (done) {
   it('should return nothing when there it\'s not possible to format the number and log an error to the console', function (done) {
     var input = "91-911-4545";
     var format = "(xxx) xxx-xxxx";
-    var actual = formatters.format('phoneNumber', input, format);
+    var actual = formatter('phoneNumber', input, format);
     //TODO: check if teh error is thrown to the console
     expect(actual).to.eql(null);
     sinon.assert.calledOnce(console.error);
