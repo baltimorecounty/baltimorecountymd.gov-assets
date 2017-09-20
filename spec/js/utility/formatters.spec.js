@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var formatter = require('../../../js/utility/formatters.js');
 
-describe('Phone Number Formatter', function (done) {
+describe('Currency Formatter', function (done) {
     it('should convert a decimal to the currency as a string', function (done) {
         var input = 1000.57;
         var actual = formatter('currency', input);
