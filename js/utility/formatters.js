@@ -1,4 +1,6 @@
-var formatters = (function () {
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.format = (function () {
     var _formatters = {
         currency: function formatCurrency(input) {
             if (!input) {
@@ -54,5 +56,3 @@ var formatters = (function () {
         return _formatters[key](val, strFormat);
     };
 })();
-
-module.exports = formatters;
