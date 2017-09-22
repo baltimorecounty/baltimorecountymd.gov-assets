@@ -358,7 +358,7 @@
             var requiredElementsCount = requiredElements.length;
             var controls = $scope.citySourcedReporterForm.$$controls;
             var isAddressForm = false;
-            var numberOfValidRecords = requiredElementsCount;
+            var isAddressValid = true;
 
             angular.forEach(controls, function forEachControl(formControl) {
                 if (formControl.$$element.closest('.panel').is(':visible')) {
@@ -380,7 +380,7 @@
 
                         if (hasInvalidAddress) {
                             formControl.$setValidity('required', false);
-                            numberOfValidRecords = numberOfValidRecords - 1;
+                            isAddressValid = false;
                         }
                     }
                 }
@@ -388,9 +388,7 @@
 
             var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
 
-            return isAddressForm ?
-                numberOfValidRecords === requiredElementsCount :
-                requiredElementsCount === validRequiredElementsCount;
+            return isAddressForm ? isAddressValid :  requiredElementsCount === validRequiredElementsCount;
         }
 
         /** *** Private - Handlers **** */
