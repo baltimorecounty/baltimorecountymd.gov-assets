@@ -1,4 +1,4 @@
-(function BaltCoGoReporterCtrl(app, querystringer) {
+(function BaltCoGoReporterCtrl(app, querystringer, bcFormat) {
     'use strict';
 
     app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
@@ -91,7 +91,7 @@
             },
             {
                 name: 'DeviceNumber',
-                value: self.deviceNumber
+                value: bcFormat('phoneNumber', self.deviceNumber, 'xxx-xxx-xxxx')
             }
             ];
 
@@ -388,7 +388,7 @@
 
             var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
 
-            return isAddressForm ? isAddressValid :  requiredElementsCount === validRequiredElementsCount;
+            return isAddressForm ? isAddressValid : requiredElementsCount === validRequiredElementsCount;
         }
 
         /** *** Private - Handlers **** */
@@ -513,4 +513,4 @@
             }
         }
     }
-}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer));
+}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format));
