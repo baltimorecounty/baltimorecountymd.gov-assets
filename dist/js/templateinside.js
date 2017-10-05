@@ -222,6 +222,8 @@ baltimoreCounty.utility.formValidator = (function($) {
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.format = (function () {
+    'use strict';
+
     function formatCurrency(input) {
         if (!input) {
             return;
@@ -429,6 +431,8 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.validate = (function () {
+    'use strict';
+
     function validatePhoneNumber(str) {
         /**
              * Valid Formats:
