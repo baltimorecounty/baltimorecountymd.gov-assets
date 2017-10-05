@@ -1,6 +1,8 @@
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.format = (function () {
+    'use strict';
+
     function formatCurrency(input) {
         if (!input) {
             return;
