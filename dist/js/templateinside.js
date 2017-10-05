@@ -219,6 +219,70 @@ baltimoreCounty.utility.formValidator = (function($) {
             requiredFieldPatternValidator: requiredFieldPatternValidator
         };
 })(jQuery);
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.format = (function () {
+    function formatCurrency(input) {
+        if (!input) {
+            return;
+        }
+
+        if (input && typeof input === 'string') {
+            input = parseFloat(input);
+        }
+
+        var currencyFormatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            // the default value for minimumFractionDigits depends on the currency
+            // and is usually already 2
+        });
+
+        return currencyFormatter.format(input);
+    }
+
+    function formatPhoneNumber(input, format) {
+        if (typeof input === 'number') {
+            input = input.toString();
+        }
+
+        var exp = /\d+/g;
+        var numbersOnly = input.match(exp).join('').split('');
+        var numberOfXs = format.split('').filter(function (char) {
+            return char === 'x';
+        }).length;
+        var hasOneAsPrefix = numberOfXs + 1 === numbersOnly.length;
+
+        // 1 has been included in the str, but is not in the desired format
+        if (hasOneAsPrefix) {
+            numbersOnly.shift();
+        }
+
+        if (numberOfXs === numbersOnly.length || hasOneAsPrefix) {
+            numbersOnly.forEach(function (number) {
+                format = format.replace('x', number);
+            });
+        }
+        else {
+            console.error("Incorrect Format. Double Check your values.");
+            return null;
+        }
+
+        return format;
+    }
+
+    var _formatters = {
+        currency: formatCurrency,
+        phoneNumber: formatPhoneNumber
+    };
+
+    function format(key, val, strFormat) {
+        return _formatters[key](val, strFormat);
+    }
+
+    return format;
+})();
 ;(function($, undefined) {
     'use strict';
 
@@ -362,6 +426,37 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
     };
 
 })();
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.validate = (function () {
+    function validatePhoneNumber(str) {
+        /**
+             * Valid Formats:
+                (123)456-7890
+                (123) 456-7890
+                123-456-7890
+                123.456.7890
+                1234567890
+                +31636363634 (not working)
+                075-63546725 (not working)
+            */
+        //var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+        var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+        return exp.test(str);
+    }
+
+    var _validators = {
+        phoneNumber: validatePhoneNumber
+    };
+
+    function validate(key, val) {
+        return _validators[key](val);
+    }
+
+    return validate;
+})();
+
+module.exports = validators;
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
