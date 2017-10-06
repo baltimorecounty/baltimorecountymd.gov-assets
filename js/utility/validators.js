@@ -27,5 +27,3 @@ baltimoreCounty.utility.validate = (function () {
 
     return validate;
 })();
-
-module.exports = validators;
