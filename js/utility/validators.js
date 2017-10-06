@@ -24,7 +24,7 @@ baltimoreCounty.utility.validate = (function () {
     };
 
     function validate(key, val) {
-        return _validators[key](val);B
+        return _validators[key](val);
     }
 
     return validate;
