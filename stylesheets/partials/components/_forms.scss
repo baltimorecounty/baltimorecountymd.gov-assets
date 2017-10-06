@@ -16,7 +16,7 @@
 .seCheckboxLabel,
 .seRadioLabel {
     cursor: pointer;
-    
+
     &:focus {
         outline: none;
     }
@@ -74,7 +74,7 @@
         margin-right: 1em;
         padding: 3px;
         vertical-align: 20%;
-    }   
+    }
 }
 
 /* Overrides */
@@ -92,4 +92,16 @@
 }
 #mainContent .SEAFGroupHorizontal.horizontal  .seText {
     padding: 0;
+}
+
+.form-group {
+    padding: 0 10px;
+
+    & input {
+        margin-right: 5px;
+    }
+
+    &.form-group--inline {
+        display: inline-block;
+    }
 }
