@@ -1,6 +1,8 @@
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.validate = (function () {
+    'use strict';
+
     function validatePhoneNumber(str) {
         /**
              * Valid Formats:
@@ -27,3 +29,7 @@ baltimoreCounty.utility.validate = (function () {
 
     return validate;
 })();
+/* test-code */
+module.exports = validators;
+/* end-test-code */
+
