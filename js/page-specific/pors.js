@@ -72,8 +72,12 @@ function categoryCheck(type, arrayValue, rank, question, answer, arrayName) {
 //type = type listed in the typeArray,
 //link = link variable you created for the type
 function generateLink(object, type, link) {
-    if (object.parent().hasClass(type)) {
-        $('div.success').html("<p>Your report is qualified to file online.</p>&nbsp;<a href='" + link + "' class='startReport'>File a Report Now</a>").css('color', 'black');
+    var $questionContainer = $(object).closest('.question-container');
+    var hasMatchingType = $questionContainer.hasClass(type);
+
+    if (hasMatchingType) {
+        $('div.success')
+            .html("<p>Your report is qualified to file online.</p>&nbsp;<a href='" + link + "' class='startReport'>File a Report Now</a>").css('color', 'black');
     }
 }
 
@@ -91,16 +95,16 @@ function questionStringBuilder(counter, type) {
         var noAnswerClassStr = hasNoAnswer ? "class='noanswer nomotor' " : "";
 
         liString += [
-            "<li class='" + type + "'>",
-                "<p>" + question + "</p>",
-                "<div class='form-group'>",
-                    "<input type='radio' " + (isAnswerYes ? correctAnswerClassStr : noAnswerClassStr) + "name='q" + rank + "' id='q-yes-" + rank + "' />",
-                    "<label for='q-yes-" + rank + "'>Yes</label>",
-                "</div>",
-                "<div class='form-group'>",
-                    "<input type='radio' " + (isAnswerNo ? correctAnswerClassStr : noAnswerClassStr) + "name='q" + rank + "' id='q-no-" + rank + "' />",
-                    "<label for='q-no-" + rank + "'>No</label>",
-                "</div>",
+            "<li class='question-container " + type + "'>",
+            "<p>" + question + "</p>",
+            "<div class='form-group form-group--inline'>",
+            "<input type='radio' " + (isAnswerYes ? correctAnswerClassStr : noAnswerClassStr) + "name='q" + rank + "' id='q-yes-" + rank + "' />",
+            "<label for='q-yes-" + rank + "'>Yes</label>",
+            "</div>",
+            "<div class='form-group form-group--inline'>",
+            "<input type='radio' " + (isAnswerNo ? correctAnswerClassStr : noAnswerClassStr) + "name='q" + rank + "' id='q-no-" + rank + "' />",
+            "<label for='q-no-" + rank + "'>No</label>",
+            "</div>",
             "</li>"
         ].join("");
     }
@@ -258,36 +262,50 @@ $(document).ready(function () {
 
                 //question has been answered correctly
                 if ($(this).hasClass('correct')) {
-                    //add a class of answered for selecting purposes
-                    $(this).parent().addClass("answered").css('color', 'gray');
-                    $(this).parent().children(':input').attr('disabled', 'disabled');
-                    $(this).parent().children().children().attr('style', 'color:gray;');
-                    $(this).parent().removeClass('active');
-                    $(this).parent().next().addClass('active').css('color', 'black');
-                    $(this).parent().next().children(':input').removeAttr('disabled');
-                    $(this).parent().next().children().children().attr('style', '').css('color', '');
+                    var $this = $(this);
+                    var $questionContainer = $this.closest('.question-container');
+
+                    $questionContainer
+                        .addClass("answered")
+                        .removeClass('active')
+                        .css('color', 'gray')
+                        .find('input').attr('disabled', 'disabled').end()
+                        .children().css('color', 'gray');
+
+                    $questionContainer.next()
+                        .addClass('active')
+                        .css('color', 'black')
+                        .find('input').removeAttr('disabled').end()
+                        .children().css('color', 'black');
 
                     //if answer of correct = answer of questions show file link button
                     if (i == j) {
                         //modify the link based on which type of report it is
-                        generateLink($(this), 'lostproperty', link.lost_property);
-                        generateLink($(this), 'hitandrun', link.hit_and_run);
-                        generateLink($(this), 'abandonedvehicle', link.abandoned);
-                        generateLink($(this), 'shoplifting', link.shop_lifting);
+                        generateLink($this, 'lostproperty', link.lost_property);
+                        generateLink($this, 'hitandrun', link.hit_and_run);
+                        generateLink($this, 'abandonedvehicle', link.abandoned);
+                        generateLink($this, 'shoplifting', link.shop_lifting);
                     }
 
-                    if ($(this).parent().next().children().html() != null) {
+                    if ($questionContainer.next().children().html() != null) {
                         //qtips only show after the question has been enabled
-                        generateQtip($(this).parent().next().children().html(), keywordArray);
+                        generateQtip($questionContainer.next().children().html(), keywordArray);
 
                     }
                 }
 
                 //wrong answer
                 else {
-                    $(this).parent().css('color', 'gray');
-                    $(this).parent().children(':input').attr('disabled', 'disabled');
-                    $(this).parent().siblings(':not(.answered)').hide();
+                    var $this = $(this);
+                    var $questionContainer = $this.closest('.question-container');
+
+                    $questionContainer
+                        .find('input').attr('disabled', 'disabled')
+                        .children().css('color', 'gray').end();
+
+                    $questionContainer
+                        .siblings(':not(.answered)').hide();
+
                     if ($(this).parent().html().indexOf("Baltimore County, Maryland?") > -1) {
                         $('div.noreport').html("<p>Sorry, you cannot file your report with Baltimore County. Notify the jurisidiction where the incident occured.").css('color', 'red');
                     }
@@ -308,12 +326,14 @@ $(document).ready(function () {
     });
 
     $('a.startReport').live('click', function () {
-
-        var linkDomain = $(this).attr("href"),
+        var $this = $(this);
+        var linkDomain = $this.attr("href"),
             message = '<div class="disclaimer">	<h2>Citizen Online Reporting System Disclaimer</h2>	<p><strong>You are about to launch the Citizen Online Reporting Application. Please read the disclaimer below before proceeding.</strong></p><p>This web site provides a means of Submitting a Police Report that can be used by the public to report crime.</p>	<ol>		<li><p>To report an emergency or crime in progress call 911 immediately.</p></li>		<li><p>On this web site you may report abandoned vehicle(s), destruction of property, destruction of vehicle(s), hit and run, lost property, theft and theft from a vehicle. For an immediate response please use your telephone and dial 911.</p></li>		<li><p>We encourage good faith reporting of information regarding a crime through this web site. The Baltimore County Police Department reserves the right to contact you to verify or clarify the information you provide.</p></li>		<li><p>Pursuant to Maryland law it is a crime to make false statements and/or misuse electronic communication. Violators will be prosecuted to the full extent of the law.</p></li>	</ol>	<p>Acceptance of the above terms is required in order to continue to the Online Police Report.</p>	<p>The application which you are filing is being filed under oath.</p>		<h3>&#167; 9-501. False statement - To law enforcement officer.</h3>	<p>(a) Prohibited.- A person may not make, or cause to be made, a statement, report, or complaint that the person knows to be false as a whole or in material part, to a law enforcement officer of the State, of a county, municipal corporation, or other political subdivision of the State, or of the Maryland-National Capital Park and Planning Police with intent to deceive and to cause an investigation or other action to be taken as a result of the statement, report, or complaint.</p>	<p>(b) Penalty.- A person who violates this section is guilty of a misdemeanor and on conviction is subject to imprisonment not exceeding 6 months or a fine not exceeding $500 or both.<br />	<p><small>[An Code 1957, art. 27, &sect; 150(a), (c); 2002, ch. 26, &sect; 2.]</small></p>	<p>If your incident qualifies for an online report and you wish to continue,</p></div><a href="' + linkDomain + '" id="leaveThisPage">I Agree</a>&nbsp;&nbsp;&nbsp;<a href="#" id="stayOnPage" onClick="$.fancybox.close();">I Do Not Agree</a>';
 
-        $(this).attr("id", "inline");
-        $(this).attr("href", "#data");
+        $this
+            .attr("id", "inline")
+            .attr("href", "#data");
+
         $.fancybox(message, {
             'showCloseButton': false,
             'hideOnOverlayClick': false,
@@ -323,11 +343,8 @@ $(document).ready(function () {
                 //$("a#leaveThisPage").attr("target", "_blank");
                 $("a#leaveThisPage").click(function () {
                     $.fancybox.close();
-
                 });
             }
         });
-
-
     });
 });
