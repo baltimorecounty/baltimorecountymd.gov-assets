@@ -62,6 +62,7 @@ gulp.task('concatTemplateJs', function concatTemplateJs() {
 		'js/lib/slick.min.js',
 		'js/lib/review.js',
 		'js/keyword-search.js',
+		'js/constants.js',
 		'js/internal-carousel.js',
 		'js/mobile-search.js',
 		'js/template-events.js',
@@ -94,7 +95,10 @@ gulp.task('compressFiles', ['concatHomepageJs', 'concatBaltCoGoAppJs', 'concatTe
 			start_comment: 'test-code',
 			end_comment: 'end-test-code'
 		}))
-		.pipe(uglify().on('error', util.log))
+		.pipe(uglify())
+		.on('error', function reportError(err) {
+			util.log(util.colors.red('[Error]'), err.toString());
+		})
 		.pipe(rename({
 			suffix: '.min'
 		}))
@@ -108,6 +112,9 @@ gulp.task('compressPageSpecificFiles', function compressPageSpecificFiles() {
 			end_comment: 'end-test-code'
 		}))
 		.pipe(uglify())
+		.on('error', function reportError(err) {
+			util.log(util.colors.red('[Error]'), err.toString());
+		})
 		.pipe(rename({
 			suffix: '.min'
 		}))
