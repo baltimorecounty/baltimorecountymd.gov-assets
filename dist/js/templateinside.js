@@ -5881,7 +5881,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		if (sessionStorage && sessionStorage.searchData) {
 			searchData = JSON.parse(sessionStorage.searchData);
 		} else {
-			$.ajax('/sebin/m/l/searchTerms.json')
+			$.ajax('/sebin/m/m/searchTerms.json')
 				.then(onDataLoadedHandler, onDataLoadedError);
 		}
 

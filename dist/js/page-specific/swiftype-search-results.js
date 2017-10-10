@@ -1,16 +1,16 @@
-namespacer("baltimoreCounty.pageSpecific");
+namespacer('baltimoreCounty.pageSpecific');
 
-baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer, Handlebars, undefined) {
-
+baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchResults($,
+	querystringer, Handlebars) {
 	var $searchResultsTarget;
 	var templateSelector = '#swiftype-search-results-template';
 	var errorMessageHtml = '<p>There were no results found for this search.</p>';
 
 	function getSearchResults(searchTerm, pageNumber) {
-		pageNumber = pageNumber || 1;
-		searchTerm = searchTerm.replace(/\+/g, '%20');
+		var currentPageNumber = pageNumber || 1;
+		var cleanedSearchTerm = searchTerm.replace(/\+/g, '%20');
 
-		$.ajax('//ba224964:1000/api/search/' + searchTerm + '/' + pageNumber).then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
+		$.ajax('//ba224964/api/search/' + cleanedSearchTerm + '/' + currentPageNumber).then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
 	}
 
 	function searchResultRequestErrorHandler(err) {
@@ -28,10 +28,12 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 		info.index = {
 			first: ((info.current_page - 1) * info.per_page) + 1,
-			last: info.current_page * info.per_page < info.total_result_count ? info.current_page * info.per_page : info.total_result_count
+			last: info.current_page * info.per_page < info.total_result_count ?
+				info.current_page * info.per_page :
+				info.total_result_count
 		};
 
-		$.each(hits, function(index, hit) {
+		$.each(hits, function eachHit(index, hit) {
 			var highlight = hit.highlight.title || hit.highlight.sections || hit.highlight.body;
 			var title = hit.title;
 			var url = hit.url;
@@ -43,7 +45,7 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 			});
 		});
 
-		for (var i = 1; i <= info.num_pages; i++) {
+		for (var i = 1; i <= info.num_pages; i += 1) {
 			pageLinks.push({
 				page: i,
 				current: i === info.current_page
@@ -52,8 +54,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 		var source = $(templateSelector).html();
 		var template = Handlebars.compile(source);
-		var searchResultsHtml = template({ 
-			searchResult: searchResults, 
+		var searchResultsHtml = template({
+			searchResult: searchResults,
 			info: info,
 			pageLinks: pageLinks
 		});
@@ -65,7 +67,7 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 
 	function init() {
 		var queryStringDictionary = querystringer.getAsDictionary();
-		
+
 		$searchResultsTarget = $('.search-results');
 
 		if (queryStringDictionary.q) {
@@ -78,9 +80,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function($, querystringer,
 	return {
 		init: init
 	};
+}(jQuery, baltimoreCounty.utility.querystringer, Handlebars));
 
-})(jQuery, baltimoreCounty.utility.querystringer, Handlebars);
-
-$(function() { 
-	baltimoreCounty.pageSpecific.swiftypeSearchResults.init(); 
+$(function initialize() {
+	baltimoreCounty.pageSpecific.swiftypeSearchResults.init();
 });

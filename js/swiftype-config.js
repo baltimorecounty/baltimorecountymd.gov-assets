@@ -1,7 +1,7 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.swifTypeConfig = (function swifTypeConfig($, undefined) {
-	var customRenderFunction = function customRenderFunction(document_type, item) {
+baltimoreCounty.swifTypeConfig = (function swifTypeConfig() {
+	var customRenderFunction = function customRenderFunction(documentType, item) {
 		var highlight = item.highlight.body || item.highlight.sections || item.highlight.title;
 		var out = '';
 		out = out.concat('<div class="st-autocomplete-search-result">');
@@ -13,12 +13,12 @@ baltimoreCounty.swifTypeConfig = (function swifTypeConfig($, undefined) {
 	return {
 		customRenderFunction: customRenderFunction
 	};
-}(jQuery));
+}());
 
 
 $(function swifTypeConfig() {
 	$('#q').swiftype({
 		renderFunction: baltimoreCounty.swifTypeConfig.customRenderFunction,
-		engineKey: '4nioYNESzQAAvy7fKxeY'
+		engineKey: 'nSDFND5ew9Fver-n-jfs'
 	});
 });
