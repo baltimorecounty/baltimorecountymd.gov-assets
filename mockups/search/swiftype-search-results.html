@@ -25,6 +25,9 @@
 					<a href="{{../../info.base_url}}{{page}}">{{page}}</a>
 				{{/if}}
 			{{/each}}
+			{{#if tooManyResults}}
+			<p><em>Your search returned more than 200 results. Try different terms to narrow your results.</em></p>
+			{{/if}}
 		</div>
 		{{else}}
 		<p>We couldn't find any pages matching your search.</p>
