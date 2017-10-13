@@ -5876,16 +5876,12 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	};
 
 	var init = function init(callback) {
-		var searchBoxPadding = 18;
-
 		if (sessionStorage && sessionStorage.searchData) {
 			searchData = JSON.parse(sessionStorage.searchData);
 		} else {
 			$.ajax('/sebin/m/m/searchTerms.json')
 				.then(onDataLoadedHandler, onDataLoadedError);
 		}
-
-		$('#header-search-results').width($('#q').width() + searchBoxPadding);
 
 		if (typeof callback !== 'undefined') {
 			callback();

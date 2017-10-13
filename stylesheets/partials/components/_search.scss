@@ -10,7 +10,8 @@
     left: -999em;
   }
   .table-cell {
-    display: table-cell;
+	display: table-cell;
+	position: relative;
     width: 100%;
   }
 
@@ -72,7 +73,13 @@
 	}
 }
 
-
+#homepage {
+	#header-search-results {
+		left: initial;
+		top: 60px;
+		width: 99%;
+	}
+}
 
 @media only screen and (max-width: 991px) {
   .search-container.inside-template {
