@@ -42,6 +42,8 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
 		'js/lib/slick.min.js',
 		'js/lib/handlebars.js',
 		'js/lib/picturefill.min.js',
+		'js/keyword-search.js',
+		'js/text-resizer.js',
 		'js/flickr-feed.js',
 		'js/county-news-snippet.js',
 		'js/template-events.js',
