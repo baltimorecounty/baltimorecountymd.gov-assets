@@ -1,0 +1,11 @@
+.form-group {
+    padding: 0 10px;
+
+    input {
+        margin-right: 5px;
+    }
+
+    &.form-group--inline {
+        display: inline-block;
+    }
+}
