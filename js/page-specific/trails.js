@@ -23,6 +23,11 @@ require(["myPlaceholder", "bootstrap", "esri/dijit/Legend", "underscore",
         return decodeHTMLEntities;
     })();
 
+    var urls = {
+        parkLayer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Apps/WalkingTrails/MapServer/0',
+        trailLayer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Apps/WalkingTrails/MapServer/1'
+    };
+
     var parkInfoWindowTemplate,
     trailsTemplate,
     trailTemplate,
@@ -137,7 +142,7 @@ require(["myPlaceholder", "bootstrap", "esri/dijit/Legend", "underscore",
         //On Zoom Change
         map.on("extent-change", onZoom);
 
-        parkLayer = new FeatureLayer("//gis.baltimorecountymd.gov/arcgis/rest/services/Apps/WalkingTrailsExternalViewer/MapServer/0", {
+        parkLayer = new FeatureLayer(urls.parkLayer, {
             name: "parks",
             mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
             outFields: ["*"], //Return all fields from the layer
@@ -150,7 +155,7 @@ require(["myPlaceholder", "bootstrap", "esri/dijit/Legend", "underscore",
         //Listen for click event on point
         parkLayer.on("click", DisplayParkInfoWindow);
 
-        trailLayer = new FeatureLayer("//gis.baltimorecountymd.gov/arcgis/rest/services/Apps/WalkingTrailsExternalViewer/MapServer/1", {
+        trailLayer = new FeatureLayer(urls.trailLayer, {
             name: "trails",
             mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
             outFields: ["*"], //Return all fields from the layer
