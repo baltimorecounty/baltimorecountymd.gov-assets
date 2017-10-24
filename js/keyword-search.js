@@ -1,6 +1,6 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars) {
+baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars, constants) {
 	'use strict';
 
 	var searchData;
@@ -35,7 +35,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		if (sessionStorage && sessionStorage.searchData) {
 			searchData = JSON.parse(sessionStorage.searchData);
 		} else {
-			$.ajax('/sebin/m/m/searchTerms.json')
+			$.ajax(constants.keywordSearch.urls.searchTerms)
 				.then(onDataLoadedHandler, onDataLoadedError);
 		}
 
@@ -205,7 +205,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		search: search,
 		orderByNameThenPopularity: orderByNameThenPopularity
 	};
-}(jQuery, sessionStorage, Handlebars));
+}(jQuery, sessionStorage, Handlebars, baltimoreCounty.constants));
 
 $(function init() {
 	baltimoreCounty.keywordSearch.init();
