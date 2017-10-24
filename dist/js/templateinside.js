@@ -5849,7 +5849,7 @@ namespacer('baltimoreCounty');
 baltimoreCounty.constants = (function constants() {
 	'use strict';
 
-	var rootUrl = 'https://services.baltimorecountymd.gov';
+	var rootUrl = 'https://testservices.baltimorecountymd.gov';
 	// var rootUrl = 'http://localhost:1000';
 
 	var baltCoGo = {
@@ -5936,7 +5936,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 			searchData = JSON.parse(sessionStorage.searchData);
 		} else {
 			$.ajax(constants.keywordSearch.urls.searchTerms)
-				.then(onDataLoadedHandler, onDataLoadedError);
+				.then(onDataLoadedHandler);
 		}
 
 		if (typeof callback !== 'undefined') {
@@ -5953,15 +5953,6 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	var onDataLoadedHandler = function onDataLoadedHandler(data) {
 		searchData = data;
 		sessionStorage.setItem('searchData', JSON.stringify(data));
-	};
-
-	/**
-	 * Error handler
-	 * 
-	 * @param {Object} err 
-	 */
-	var onDataLoadedError = function onDataLoadedError(err) {
-		console.log(err);
 	};
 
 	/**
@@ -6042,15 +6033,15 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		var keyCode = event.which || event.keyCode;
 		var $target = $(event.currentTarget);
 		var $searchResults = $('#header-search-results');
-		var $visibleSearchResults = $searchResults.find('li').is(':visible');
+		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
 		var $allSearchResults = $searchResults.find('li');
 
-		if (keyCode === constants.keyCodes.arrowDown && $visibleSearchResults) {
+		if (keyCode === constants.keyCodes.arrowDown && areSearchResultsVisible) {
 			$allSearchResults.first().trigger('focus');
 			return;
 		}
 
-		if (keyCode === constants.keyCodes.arrowUp && $visibleSearchResults) {
+		if (keyCode === constants.keyCodes.arrowUp && areSearchResultsVisible) {
 			$allSearchResults.last().trigger('focus');
 			return;
 		}
