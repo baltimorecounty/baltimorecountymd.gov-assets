@@ -1,4 +1,5 @@
 @import "../../../modules/colors";
+@import "../../../modules/variables";
 
 #maincontainer {
 	.search-results {
@@ -13,7 +14,7 @@
 				padding-top: 2em;
 
 				.title {
-					font-family: Patua One;
+					font-family: $headline-font;
 					font-size: 22px !important;
 					color: $navy !important;
 					font-weight: normal;

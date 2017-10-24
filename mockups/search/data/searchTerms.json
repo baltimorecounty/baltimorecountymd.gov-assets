@@ -1,1801 +1,488 @@
-[{
-		"Term": "my neighborhood",
-		"Rank": 1
-	},
-	{
-		"Term": "ess",
-		"Rank": 2
-	},
-	{
-		"Term": "jobs",
-		"Rank": 3
-	},
-	{
-		"Term": "property tax search",
-		"Rank": 4
-	},
-	{
-		"Term": "zoning",
-		"Rank": 5
-	},
-	{
-		"Term": "code enforcement",
-		"Rank": 6
-	},
-	{
-		"Term": "rental registration",
-		"Rank": 7
-	},
-	{
-		"Term": "animal services",
-		"Rank": 8
-	},
-	{
-		"Term": "jobs baltimore county",
-		"Rank": 9
-	},
-	{
-		"Term": "human resources",
-		"Rank": 10
-	},
-	{
-		"Term": "marriage license",
-		"Rank": 11
-	},
-	{
-		"Term": "property tax bill",
-		"Rank": 12
-	},
-	{
-		"Term": "permits approvals and inspections",
-		"Rank": 13
-	},
-	{
-		"Term": "landfill",
-		"Rank": 14
-	},
-	{
-		"Term": "trash schedule baltimore county",
-		"Rank": 15
-	},
-	{
-		"Term": "police",
-		"Rank": 16
-	},
-	{
-		"Term": "real property tax search",
-		"Rank": 17
-	},
-	{
-		"Term": "county code",
-		"Rank": 18
-	},
-	{
-		"Term": "recreation and parks",
-		"Rank": 19
-	},
-	{
-		"Term": "animal licenses",
-		"Rank": 20
-	},
-	{
-		"Term": "property taxes",
-		"Rank": 21
-	},
-	{
-		"Term": "pet adoption",
-		"Rank": 22
-	},
-	{
-		"Term": "taxes property",
-		"Rank": 23
-	},
-	{
-		"Term": "health department",
-		"Rank": 24
-	},
-	{
-		"Term": "liquor board",
-		"Rank": 25
-	},
-	{
-		"Term": "police news",
-		"Rank": 26
-	},
-	{
-		"Term": "code complaint",
-		"Rank": 27
-	},
-	{
-		"Term": "animal adoption",
-		"Rank": 28
-	},
-	{
-		"Term": "gis",
-		"Rank": 29
-	},
-	{
-		"Term": "zoning baltimore county",
-		"Rank": 30
-	},
-	{
-		"Term": "lost pets",
-		"Rank": 31
-	},
-	{
-		"Term": "summer camp",
-		"Rank": 32
-	},
-	{
-		"Term": "county council",
-		"Rank": 33
-	},
-	{
-		"Term": "inspection connection",
-		"Rank": 34
-	},
-	{
-		"Term": "recycling schedule",
-		"Rank": 35
-	},
-	{
-		"Term": "retirement",
-		"Rank": 36
-	},
-	{
-		"Term": "register of wills",
-		"Rank": 37
-	},
-	{
-		"Term": "employees self services",
-		"Rank": 38
-	},
-	{
-		"Term": "forms",
-		"Rank": 39
-	},
-	{
-		"Term": "employment baltimore county",
-		"Rank": 40
-	},
-	{
-		"Term": "divorce",
-		"Rank": 41
-	},
-	{
-		"Term": "jury duty",
-		"Rank": 42
-	},
-	{
-		"Term": "property tax payment",
-		"Rank": 43
-	},
-	{
-		"Term": "code enforcement violations",
-		"Rank": 44
-	},
-	{
-		"Term": "permits",
-		"Rank": 45
-	},
-	{
-		"Term": "purchasing",
-		"Rank": 46
-	},
-	{
-		"Term": "property tax",
-		"Rank": 47
-	},
-	{
-		"Term": "employment",
-		"Rank": 48
-	},
-	{
-		"Term": "police department baltimore county",
-		"Rank": 49
-	},
-	{
-		"Term": "zoning map",
-		"Rank": 50
-	},
-	{
-		"Term": "jury duty baltimore county",
-		"Rank": 51
-	},
-	{
-		"Term": "housing",
-		"Rank": 52
-	},
-	{
-		"Term": "water bill",
-		"Rank": 53
-	},
-	{
-		"Term": "environmental protection and sustainability",
-		"Rank": 54
-	},
-	{
-		"Term": "rental license",
-		"Rank": 55
-	},
-	{
-		"Term": "trash/recycling baltimore county",
-		"Rank": 56
-	},
-	{
-		"Term": "street light program",
-		"Rank": 57
-	},
-	{
-		"Term": "senior centers baltimore county",
-		"Rank": 58
-	},
-	{
-		"Term": "building permits",
-		"Rank": 59
-	},
-	{
-		"Term": "economic development",
-		"Rank": 60
-	},
-	{
-		"Term": "careers",
-		"Rank": 61
-	},
-	{
-		"Term": "land records baltimore county",
-		"Rank": 62
-	},
-	{
-		"Term": "solicitations",
-		"Rank": 63
-	},
-	{
-		"Term": "christmas tree pickup",
-		"Rank": 64
-	},
-	{
-		"Term": "noise",
-		"Rank": 65
-	},
-	{
-		"Term": "job",
-		"Rank": 66
-	},
-	{
-		"Term": "real property tax bill",
-		"Rank": 67
-	},
-	{
-		"Term": "public works",
-		"Rank": 68
-	},
-	{
-		"Term": "water baltimore county",
-		"Rank": 69
-	},
-	{
-		"Term": "fire",
-		"Rank": 70
-	},
-	{
-		"Term": "planning",
-		"Rank": 71
-	},
-	{
-		"Term": "solid waste management baltimore county",
-		"Rank": 72
-	},
-	{
-		"Term": "tax sale",
-		"Rank": 73
-	},
-	{
-		"Term": "trash collection baltimore county",
-		"Rank": 74
-	},
-	{
-		"Term": "parking tickets",
-		"Rank": 75
-	},
-	{
-		"Term": "tax bill",
-		"Rank": 76
-	},
-	{
-		"Term": "dog license baltimore county",
-		"Rank": 77
-	},
-	{
-		"Term": "corrections",
-		"Rank": 78
-	},
-	{
-		"Term": "deeds",
-		"Rank": 79
-	},
-	{
-		"Term": "county code",
-		"Rank": 80
-	},
-	{
-		"Term": "closings",
-		"Rank": 81
-	},
-	{
-		"Term": "food supplement program",
-		"Rank": 82
-	},
-	{
-		"Term": "housing in baltimore county",
-		"Rank": 83
-	},
-	{
-		"Term": "tax bill online",
-		"Rank": 84
-	},
-	{
-		"Term": "bids",
-		"Rank": 85
-	},
-	{
-		"Term": "employee self service",
-		"Rank": 86
-	},
-	{
-		"Term": "zoning regulations baltimore county",
-		"Rank": 87
-	},
-	{
-		"Term": "pay speed camera ticket",
-		"Rank": 88
-	},
-	{
-		"Term": "aging",
-		"Rank": 89
-	},
-	{
-		"Term": "health",
-		"Rank": 90
-	},
-	{
-		"Term": "code",
-		"Rank": 91
-	},
-	{
-		"Term": "report abandoned vehicle",
-		"Rank": 92
-	},
-	{
-		"Term": "volunteer recreation and parks council",
-		"Rank": 93
-	},
-	{
-		"Term": "find your zoning",
-		"Rank": 94
-	},
-	{
-		"Term": "permits and inspections",
-		"Rank": 95
-	},
-	{
-		"Term": "spay/neuter",
-		"Rank": 96
-	},
-	{
-		"Term": "budget",
-		"Rank": 97
-	},
-	{
-		"Term": "employee benefits baltimore county",
-		"Rank": 98
-	},
-	{
-		"Term": "animal control baltimore county",
-		"Rank": 99
-	},
-	{
-		"Term": "district court of baltimore county",
-		"Rank": 100
-	},
-	{
-		"Term": "jobs in baltimore county maryland",
-		"Rank": 101
-	},
-	{
-		"Term": "real property taxes",
-		"Rank": 102
-	},
-	{
-		"Term": "property management",
-		"Rank": 103
-	},
-	{
-		"Term": "county holidays",
-		"Rank": 104
-	},
-	{
-		"Term": "careers",
-		"Rank": 105
-	},
-	{
-		"Term": "building inspections",
-		"Rank": 106
-	},
-	{
-		"Term": "child support baltimore county md",
-		"Rank": 107
-	},
-	{
-		"Term": "deed",
-		"Rank": 108
-	},
-	{
-		"Term": "w2",
-		"Rank": 109
-	},
-	{
-		"Term": "real estate taxes",
-		"Rank": 110
-	},
-	{
-		"Term": "rental registration forms",
-		"Rank": 111
-	},
-	{
-		"Term": "scholarship information baltimore county",
-		"Rank": 112
-	},
-	{
-		"Term": "dump",
-		"Rank": 113
-	},
-	{
-		"Term": "google",
-		"Rank": 114
-	},
-	{
-		"Term": "trash/recycling collection",
-		"Rank": 115
-	},
-	{
-		"Term": "parks and recreation",
-		"Rank": 116
-	},
-	{
-		"Term": "property tax bill online",
-		"Rank": 117
-	},
-	{
-		"Term": "rocky point beach and park",
-		"Rank": 118
-	},
-	{
-		"Term": "ehs",
-		"Rank": 119
-	},
-	{
-		"Term": "report tall grass and weeds",
-		"Rank": 120
-	},
-	{
-		"Term": "clerk of the court",
-		"Rank": 121
-	},
-	{
-		"Term": "development management",
-		"Rank": 122
-	},
-	{
-		"Term": "find my zoning",
-		"Rank": 123
-	},
-	{
-		"Term": "liquor license baltimore county",
-		"Rank": 124
-	},
-	{
-		"Term": "taxes county",
-		"Rank": 125
-	},
-	{
-		"Term": "benefits",
-		"Rank": 126
-	},
-	{
-		"Term": "highways",
-		"Rank": 127
-	},
-	{
-		"Term": "oregon ridge park",
-		"Rank": 128
-	},
-	{
-		"Term": "administrative hearings",
-		"Rank": 129
-	},
-	{
-		"Term": "animal shelter in baltimore county",
-		"Rank": 130
-	},
-	{
-		"Term": "speed camera tickets",
-		"Rank": 131
-	},
-	{
-		"Term": "dogs",
-		"Rank": 132
-	},
-	{
-		"Term": "code violations",
-		"Rank": 133
-	},
-	{
-		"Term": "pay parking ticket",
-		"Rank": 134
-	},
-	{
-		"Term": "GIS",
-		"Rank": 135
-	},
-	{
-		"Term": "recycling baltimore county",
-		"Rank": 136
-	},
-	{
-		"Term": "name change",
-		"Rank": 137
-	},
-	{
-		"Term": "social services",
-		"Rank": 138
-	},
-	{
-		"Term": "iwatch",
-		"Rank": 139
-	},
-	{
-		"Term": "land records",
-		"Rank": 140
-	},
-	{
-		"Term": "public works baltimore county",
-		"Rank": 141
-	},
-	{
-		"Term": "building codes",
-		"Rank": 142
-	},
-	{
-		"Term": "lien certificate",
-		"Rank": 143
-	},
-	{
-		"Term": "food stamps program",
-		"Rank": 144
-	},
-	{
-		"Term": "baltimore circuit court cases",
-		"Rank": 145
-	},
-	{
-		"Term": "electrical inspections baltimore county",
-		"Rank": 146
-	},
-	{
-		"Term": "pay schedule",
-		"Rank": 147
-	},
-	{
-		"Term": "police report",
-		"Rank": 148
-	},
-	{
-		"Term": "pet license renewal",
-		"Rank": 149
-	},
-	{
-		"Term": "tree removal",
-		"Rank": 150
-	},
-	{
-		"Term": "medical assistance program",
-		"Rank": 151
-	},
-	{
-		"Term": "stormwater management",
-		"Rank": 152
-	},
-	{
-		"Term": "tax sale auction",
-		"Rank": 153
-	},
-	{
-		"Term": "water",
-		"Rank": 154
-	},
-	{
-		"Term": "eviction",
-		"Rank": 155
-	},
-	{
-		"Term": "trash",
-		"Rank": 156
-	},
-	{
-		"Term": "aging department",
-		"Rank": 157
-	},
-	{
-		"Term": "lost dogs",
-		"Rank": 158
-	},
-	{
-		"Term": "pai",
-		"Rank": 159
-	},
-	{
-		"Term": "pets",
-		"Rank": 160
-	},
-	{
-		"Term": "budget and finance baltimore county",
-		"Rank": 161
-	},
-	{
-		"Term": "email",
-		"Rank": 162
-	},
-	{
-		"Term": "inclement weather",
-		"Rank": 163
-	},
-	{
-		"Term": "rental homes in baltimore county md",
-		"Rank": 164
-	},
-	{
-		"Term": "taxes",
-		"Rank": 165
-	},
-	{
-		"Term": "building permits",
-		"Rank": 166
-	},
-	{
-		"Term": "payroll",
-		"Rank": 167
-	},
-	{
-		"Term": "police and fire news",
-		"Rank": 168
-	},
-	{
-		"Term": "traffic calming",
-		"Rank": 169
-	},
-	{
-		"Term": "parking residential",
-		"Rank": 170
-	},
-	{
-		"Term": "procurement",
-		"Rank": 171
-	},
-	{
-		"Term": "groundwater",
-		"Rank": 172
-	},
-	{
-		"Term": "volunteer",
-		"Rank": 173
-	},
-	{
-		"Term": "permit",
-		"Rank": 174
-	},
-	{
-		"Term": "animal shelter",
-		"Rank": 175
-	},
-	{
-		"Term": "daily docket",
-		"Rank": 176
-	},
-	{
-		"Term": "metro service charge",
-		"Rank": 177
-	},
-	{
-		"Term": "parking",
-		"Rank": 178
-	},
-	{
-		"Term": "rental registration reports",
-		"Rank": 179
-	},
-	{
-		"Term": "chickens",
-		"Rank": 180
-	},
-	{
-		"Term": "eps",
-		"Rank": 181
-	},
-	{
-		"Term": "planning baltimore county",
-		"Rank": 182
-	},
-	{
-		"Term": "development projects",
-		"Rank": 183
-	},
-	{
-		"Term": "jury juror",
-		"Rank": 184
-	},
-	{
-		"Term": "parcel search",
-		"Rank": 185
-	},
-	{
-		"Term": "sewer baltimore county",
-		"Rank": 186
-	},
-	{
-		"Term": "animal control",
-		"Rank": 187
-	},
-	{
-		"Term": "baltimore county public library",
-		"Rank": 188
-	},
-	{
-		"Term": "rabies clinic",
-		"Rank": 189
-	},
-	{
-		"Term": "social services food stamps",
-		"Rank": 190
-	},
-	{
-		"Term": "water and sewer maryland",
-		"Rank": 191
-	},
-	{
-		"Term": "internships",
-		"Rank": 192
-	},
-	{
-		"Term": "planning board",
-		"Rank": 193
-	},
-	{
-		"Term": "salaries",
-		"Rank": 194
-	},
-	{
-		"Term": "auditor",
-		"Rank": 195
-	},
-	{
-		"Term": "fingerprinting",
-		"Rank": 196
-	},
-	{
-		"Term": "mugshots",
-		"Rank": 197
-	},
-	{
-		"Term": "open complaints",
-		"Rank": 198
-	},
-	{
-		"Term": "building permit",
-		"Rank": 199
-	},
-	{
-		"Term": "business license",
-		"Rank": 200
-	},
-	{
-		"Term": "my zoning",
-		"Rank": 201
-	},
-	{
-		"Term": "recycling",
-		"Rank": 202
-	},
-	{
-		"Term": "fire department",
-		"Rank": 203
-	},
-	{
-		"Term": "judges baltimore county",
-		"Rank": 204
-	},
-	{
-		"Term": "marriage",
-		"Rank": 205
-	},
-	{
-		"Term": "parks",
-		"Rank": 206
-	},
-	{
-		"Term": "parks in baltimore county",
-		"Rank": 207
-	},
-	{
-		"Term": "solid waste",
-		"Rank": 208
-	},
-	{
-		"Term": "summer camps",
-		"Rank": 209
-	},
-	{
-		"Term": "file a police report",
-		"Rank": 210
-	},
-	{
-		"Term": "section 8 baltimore county md",
-		"Rank": 211
-	},
-	{
-		"Term": "snow removal",
-		"Rank": 212
-	},
-	{
-		"Term": "board of appeals",
-		"Rank": 213
-	},
-	{
-		"Term": "tax",
-		"Rank": 214
-	},
-	{
-		"Term": "taxes real estate",
-		"Rank": 215
-	},
-	{
-		"Term": "procurement",
-		"Rank": 216
-	},
-	{
-		"Term": "notary public baltimore county",
-		"Rank": 217
-	},
-	{
-		"Term": "permit search",
-		"Rank": 218
-	},
-	{
-		"Term": "personal property taxes",
-		"Rank": 219
-	},
-	{
-		"Term": "rental housing",
-		"Rank": 220
-	},
-	{
-		"Term": "maps",
-		"Rank": 221
-	},
-	{
-		"Term": "pension",
-		"Rank": 222
-	},
-	{
-		"Term": "environmental agreement",
-		"Rank": 223
-	},
-	{
-		"Term": "jobs baltimore county md",
-		"Rank": 224
-	},
-	{
-		"Term": "jobs at department of social services",
-		"Rank": 225
-	},
-	{
-		"Term": "noise ordinance",
-		"Rank": 226
-	},
-	{
-		"Term": "sign permit",
-		"Rank": 227
-	},
-	{
-		"Term": "case search",
-		"Rank": 228
-	},
-	{
-		"Term": "rats baltimore county",
-		"Rank": 229
-	},
-	{
-		"Term": "real property",
-		"Rank": 230
-	},
-	{
-		"Term": "tax bills online",
-		"Rank": 231
-	},
-	{
-		"Term": "arrest warrant maryland",
-		"Rank": 232
-	},
-	{
-		"Term": "roads department",
-		"Rank": 233
-	},
-	{
-		"Term": "birth certificate",
-		"Rank": 234
-	},
-	{
-		"Term": "council",
-		"Rank": 235
-	},
-	{
-		"Term": "department of aging baltimore county",
-		"Rank": 236
-	},
-	{
-		"Term": "real estate taxes baltimore county",
-		"Rank": 237
-	},
-	{
-		"Term": "design manual",
-		"Rank": 238
-	},
-	{
-		"Term": "docket",
-		"Rank": 239
-	},
-	{
-		"Term": "economic and workforce development",
-		"Rank": 240
-	},
-	{
-		"Term": "public information act requests",
-		"Rank": 241
-	},
-	{
-		"Term": "trash pickup",
-		"Rank": 242
-	},
-	{
-		"Term": "zoning regulations",
-		"Rank": 243
-	},
-	{
-		"Term": "adoption baltimore county",
-		"Rank": 244
-	},
-	{
-		"Term": "county ride",
-		"Rank": 245
-	},
-	{
-		"Term": "inspections",
-		"Rank": 246
-	},
-	{
-		"Term": "social services child custody",
-		"Rank": 247
-	},
-	{
-		"Term": "warrants in baltimore maryland",
-		"Rank": 248
-	},
-	{
-		"Term": "animal",
-		"Rank": 249
-	},
-	{
-		"Term": "deck",
-		"Rank": 250
-	},
-	{
-		"Term": "electrical permits baltimore county",
-		"Rank": 251
-	},
-	{
-		"Term": "my nieghborhood",
-		"Rank": 252
-	},
-	{
-		"Term": "property taxes search",
-		"Rank": 253
-	},
-	{
-		"Term": "workforce development",
-		"Rank": 254
-	},
-	{
-		"Term": "county office closings",
-		"Rank": 255
-	},
-	{
-		"Term": "prequalification",
-		"Rank": 256
-	},
-	{
-		"Term": "road closures",
-		"Rank": 257
-	},
-	{
-		"Term": "water public works",
-		"Rank": 258
-	},
-	{
-		"Term": "subdivision",
-		"Rank": 259
-	},
-	{
-		"Term": "county code enforcement",
-		"Rank": 260
-	},
-	{
-		"Term": "foster care",
-		"Rank": 261
-	},
-	{
-		"Term": "sediment control",
-		"Rank": 262
-	},
-	{
-		"Term": "sheriff's office",
-		"Rank": 263
-	},
-	{
-		"Term": "tax bills",
-		"Rank": 264
-	},
-	{
-		"Term": "circuit court of baltimore",
-		"Rank": 265
-	},
-	{
-		"Term": "county executive",
-		"Rank": 266
-	},
-	{
-		"Term": "employee salaries",
-		"Rank": 267
-	},
-	{
-		"Term": "schools in baltimore county",
-		"Rank": 268
-	},
-	{
-		"Term": "stormfighter",
-		"Rank": 269
-	},
-	{
-		"Term": "tax sale property",
-		"Rank": 270
-	},
-	{
-		"Term": "dog license application",
-		"Rank": 271
-	},
-	{
-		"Term": "dpw",
-		"Rank": 272
-	},
-	{
-		"Term": "fence permit",
-		"Rank": 273
-	},
-	{
-		"Term": "social services medical assistance",
-		"Rank": 274
-	},
-	{
-		"Term": "county",
-		"Rank": 275
-	},
-	{
-		"Term": "emergency preparedness",
-		"Rank": 276
-	},
-	{
-		"Term": "fmla",
-		"Rank": 277
-	},
-	{
-		"Term": "food",
-		"Rank": 278
-	},
-	{
-		"Term": "oit",
-		"Rank": 279
-	},
-	{
-		"Term": "shredding",
-		"Rank": 280
-	},
-	{
-		"Term": "career",
-		"Rank": 281
-	},
-	{
-		"Term": "divorce forms",
-		"Rank": 282
-	},
-	{
-		"Term": "recycling yard materials",
-		"Rank": 283
-	},
-	{
-		"Term": "background check",
-		"Rank": 284
-	},
-	{
-		"Term": "bureau of utilities",
-		"Rank": 285
-	},
-	{
-		"Term": "landmarks preservation commission",
-		"Rank": 286
-	},
-	{
-		"Term": "payroll paycheck",
-		"Rank": 287
-	},
-	{
-		"Term": "state's attorney",
-		"Rank": 288
-	},
-	{
-		"Term": "fireworks baltimore county",
-		"Rank": 289
-	},
-	{
-		"Term": "insurance",
-		"Rank": 290
-	},
-	{
-		"Term": "payment of property tax",
-		"Rank": 291
-	},
-	{
-		"Term": "transportation",
-		"Rank": 292
-	},
-	{
-		"Term": "911 central communications center",
-		"Rank": 293
-	},
-	{
-		"Term": "assisted living",
-		"Rank": 294
-	},
-	{
-		"Term": "baltimore county licenses miscellaneous permits",
-		"Rank": 295
-	},
-	{
-		"Term": "Bykota",
-		"Rank": 296
-	},
-	{
-		"Term": "department of planning",
-		"Rank": 297
-	},
-	{
-		"Term": "guardianship",
-		"Rank": 298
-	},
-	{
-		"Term": "inmate search",
-		"Rank": 299
-	},
-	{
-		"Term": "invitations to bid",
-		"Rank": 300
-	},
-	{
-		"Term": "permit processing",
-		"Rank": 301
-	},
-	{
-		"Term": "pia",
-		"Rank": 302
-	},
-	{
-		"Term": "red light tickets",
-		"Rank": 303
-	},
-	{
-		"Term": "training",
-		"Rank": 304
-	},
-	{
-		"Term": "benefits",
-		"Rank": 305
-	},
-	{
-		"Term": "hours",
-		"Rank": 306
-	},
-	{
-		"Term": "complaint",
-		"Rank": 307
-	},
-	{
-		"Term": "construction bid results",
-		"Rank": 308
-	},
-	{
-		"Term": "department of public works baltimore county",
-		"Rank": 309
-	},
-	{
-		"Term": "rats",
-		"Rank": 310
-	},
-	{
-		"Term": "stansbury park dundalk",
-		"Rank": 311
-	},
-	{
-		"Term": "zoning forms",
-		"Rank": 312
-	},
-	{
-		"Term": "circuit court of maryland for baltimore county",
-		"Rank": 313
-	},
-	{
-		"Term": "code enforce",
-		"Rank": 314
-	},
-	{
-		"Term": "drc",
-		"Rank": 315
-	},
-	{
-		"Term": "permit status",
-		"Rank": 316
-	},
-	{
-		"Term": "personal property tax bill",
-		"Rank": 317
-	},
-	{
-		"Term": "plumbing",
-		"Rank": 318
-	},
-	{
-		"Term": "public records",
-		"Rank": 319
-	},
-	{
-		"Term": "real estate compliance",
-		"Rank": 320
-	},
-	{
-		"Term": "recycling program baltimore county",
-		"Rank": 321
-	},
-	{
-		"Term": "senior centers",
-		"Rank": 322
-	},
-	{
-		"Term": "holiday",
-		"Rank": 323
-	},
-	{
-		"Term": "camps",
-		"Rank": 324
-	},
-	{
-		"Term": "deeds",
-		"Rank": 325
-	},
-	{
-		"Term": "eastern landfill",
-		"Rank": 326
-	},
-	{
-		"Term": "employee directory",
-		"Rank": 327
-	},
-	{
-		"Term": "fence",
-		"Rank": 328
-	},
-	{
-		"Term": "food permit",
-		"Rank": 329
-	},
-	{
-		"Term": "emt",
-		"Rank": 330
-	},
-	{
-		"Term": "myneighborhood",
-		"Rank": 331
-	},
-	{
-		"Term": "paid firefighters",
-		"Rank": 332
-	},
-	{
-		"Term": "real estate taxes paid",
-		"Rank": 333
-	},
-	{
-		"Term": "records",
-		"Rank": 334
-	},
-	{
-		"Term": "retirement office",
-		"Rank": 335
-	},
-	{
-		"Term": "senior apartments in baltimore county",
-		"Rank": 336
-	},
-	{
-		"Term": "standard details",
-		"Rank": 337
-	},
-	{
-		"Term": "department of social services baltimore county",
-		"Rank": 338
-	},
-	{
-		"Term": "ess login",
-		"Rank": 339
-	},
-	{
-		"Term": "food stamps",
-		"Rank": 340
-	},
-	{
-		"Term": "homestead tax credit",
-		"Rank": 341
-	},
-	{
-		"Term": "rental",
-		"Rank": 342
-	},
-	{
-		"Term": "septic",
-		"Rank": 343
-	},
-	{
-		"Term": "traffic",
-		"Rank": 344
-	},
-	{
-		"Term": "dog license renewal",
-		"Rank": 345
-	},
-	{
-		"Term": "fingerprint",
-		"Rank": 346
-	},
-	{
-		"Term": "fire marshall",
-		"Rank": 347
-	},
-	{
-		"Term": "food stamp benefits",
-		"Rank": 348
-	},
-	{
-		"Term": "gis data",
-		"Rank": 349
-	},
-	{
-		"Term": "job descriptions",
-		"Rank": 350
-	},
-	{
-		"Term": "pay scale",
-		"Rank": 351
-	},
-	{
-		"Term": "pay/search property taxes",
-		"Rank": 352
-	},
-	{
-		"Term": "property search",
-		"Rank": 353
-	},
-	{
-		"Term": "rental license application",
-		"Rank": 354
-	},
-	{
-		"Term": "building code",
-		"Rank": 355
-	},
-	{
-		"Term": "citations",
-		"Rank": 356
-	},
-	{
-		"Term": "community associations",
-		"Rank": 357
-	},
-	{
-		"Term": "czmp",
-		"Rank": 358
-	},
-	{
-		"Term": "information technology",
-		"Rank": 359
-	},
-	{
-		"Term": "mbe",
-		"Rank": 360
-	},
-	{
-		"Term": "paying property taxes",
-		"Rank": 361
-	},
-	{
-		"Term": "revenue authority",
-		"Rank": 362
-	},
-	{
-		"Term": "section 8 housing in baltimore county",
-		"Rank": 363
-	},
-	{
-		"Term": "signs",
-		"Rank": 364
-	},
-	{
-		"Term": "survey control",
-		"Rank": 365
-	},
-	{
-		"Term": "cafr",
-		"Rank": 366
-	},
-	{
-		"Term": "ers",
-		"Rank": 367
-	},
-	{
-		"Term": "hearings",
-		"Rank": 368
-	},
-	{
-		"Term": "rental assistance program",
-		"Rank": 369
-	},
-	{
-		"Term": "staff directory",
-		"Rank": 370
-	},
-	{
-		"Term": "assessment of property tax",
-		"Rank": 371
-	},
-	{
-		"Term": "property records",
-		"Rank": 372
-	},
-	{
-		"Term": "court baltimore county",
-		"Rank": 373
-	},
-	{
-		"Term": "court records",
-		"Rank": 374
-	},
-	{
-		"Term": "gathering permit",
-		"Rank": 375
-	},
-	{
-		"Term": "permit construction",
-		"Rank": 376
-	},
-	{
-		"Term": "soccer",
-		"Rank": 377
-	},
-	{
-		"Term": "solar",
-		"Rank": 378
-	},
-	{
-		"Term": "tobacco",
-		"Rank": 379
-	},
-	{
-		"Term": "agencies",
-		"Rank": 380
-	},
-	{
-		"Term": "camp",
-		"Rank": 381
-	},
-	{
-		"Term": "contract bid",
-		"Rank": 382
-	},
-	{
-		"Term": "department of aging",
-		"Rank": 383
-	},
-	{
-		"Term": "elections",
-		"Rank": 384
-	},
-	{
-		"Term": "file for divorce",
-		"Rank": 385
-	},
-	{
-		"Term": "homeless office",
-		"Rank": 386
-	},
-	{
-		"Term": "lien application",
-		"Rank": 387
-	},
-	{
-		"Term": "maryland energy assistance program baltimore county",
-		"Rank": 388
-	},
-	{
-		"Term": "mou",
-		"Rank": 389
-	},
-	{
-		"Term": "Parking",
-		"Rank": 390
-	},
-	{
-		"Term": "real property tax payment",
-		"Rank": 391
-	},
-	{
-		"Term": "rec",
-		"Rank": 392
-	},
-	{
-		"Term": "sdat",
-		"Rank": 393
-	},
-	{
-		"Term": "traffic engineering",
-		"Rank": 394
-	},
-	{
-		"Term": "where do i vote",
-		"Rank": 395
-	},
-	{
-		"Term": "building permit application",
-		"Rank": 396
-	},
-	{
-		"Term": "calendar",
-		"Rank": 397
-	},
-	{
-		"Term": "certificate of occupancy",
-		"Rank": 398
-	},
-	{
-		"Term": "dept of aging",
-		"Rank": 399
-	},
-	{
-		"Term": "filing fees",
-		"Rank": 400
-	},
-	{
-		"Term": "grading permit",
-		"Rank": 401
-	},
-	{
-		"Term": "grants",
-		"Rank": 402
-	},
-	{
-		"Term": "liquor license board",
-		"Rank": 403
-	},
-	{
-		"Term": "lms",
-		"Rank": 404
-	},
-	{
-		"Term": "loch raven fishing",
-		"Rank": 405
-	},
-	{
-		"Term": "login",
-		"Rank": 406
-	},
-	{
-		"Term": "master plan",
-		"Rank": 407
-	},
-	{
-		"Term": "pools",
-		"Rank": 408
-	},
-	{
-		"Term": "property owner search",
-		"Rank": 409
-	},
-	{
-		"Term": "use and occupancy",
-		"Rank": 410
-	},
-	{
-		"Term": "baltimore city",
-		"Rank": 411
-	},
-	{
-		"Term": "building permit",
-		"Rank": 412
-	},
-	{
-		"Term": "rental license",
-		"Rank": 413
-	},
-	{
-		"Term": "community updates",
-		"Rank": 414
-	},
-	{
-		"Term": "complaints",
-		"Rank": 415
-	},
-	{
-		"Term": "dog license",
-		"Rank": 416
-	},
-	{
-		"Term": "electrical inspections main page",
-		"Rank": 417
-	},
-	{
-		"Term": "fences",
-		"Rank": 418
-	},
-	{
-		"Term": "homeowners tax credit",
-		"Rank": 419
-	},
-	{
-		"Term": "identity theft",
-		"Rank": 420
-	},
-	{
-		"Term": "license dog",
-		"Rank": 421
-	},
-	{
-		"Term": "license permits",
-		"Rank": 422
-	},
-	{
-		"Term": "map",
-		"Rank": 423
-	},
-	{
-		"Term": "pay personal property tax",
-		"Rank": 424
-	},
-	{
-		"Term": "police department",
-		"Rank": 425
-	},
-	{
-		"Term": "report code violation",
-		"Rank": 426
-	},
-	{
-		"Term": "volunteer",
-		"Rank": 427
-	},
-	{
-		"Term": "agency",
-		"Rank": 428
-	},
-	{
-		"Term": "office of budget and finance",
-		"Rank": 429
-	},
-	{
-		"Term": "bid",
-		"Rank": 430
-	},
-	{
-		"Term": "bulk trash",
-		"Rank": 431
-	},
-	{
-		"Term": "carbon monoxide",
-		"Rank": 432
-	},
-	{
-		"Term": "child support",
-		"Rank": 433
-	},
-	{
-		"Term": "crime baltimore county",
-		"Rank": 434
-	},
-	{
-		"Term": "directory",
-		"Rank": 435
-	},
-	{
-		"Term": "energy assistance maryland",
-		"Rank": 436
-	},
-	{
-		"Term": "first time home buyer",
-		"Rank": 437
-	},
-	{
-		"Term": "my benefits",
-		"Rank": 438
-	},
-	{
-		"Term": "park board",
-		"Rank": 439
-	},
-	{
-		"Term": "pikesville senior center",
-		"Rank": 440
-	},
-	{
-		"Term": "plumbing license",
-		"Rank": 441
-	},
-	{
-		"Term": "police baltimore county",
-		"Rank": 442
-	},
-	{
-		"Term": "property tax bills",
-		"Rank": 443
-	},
-	{
-		"Term": "pssc",
-		"Rank": 444
-	},
-	{
-		"Term": "recording fees",
-		"Rank": 445
-	},
-	{
-		"Term": "right of way manual",
-		"Rank": 446
-	},
-	{
-		"Term": "salary",
-		"Rank": 447
-	},
-	{
-		"Term": "scholarships",
-		"Rank": 448
-	},
-	{
-		"Term": "sidewalk",
-		"Rank": 449
-	},
-	{
-		"Term": "substance abuse",
-		"Rank": 450
-	}
-]
+[{"Term":"my neighborhood","Rank":1},
+{"Term":"ess","Rank":2},
+{"Term":"jobs","Rank":3},
+{"Term":"property tax search","Rank":4},
+{"Term":"zoning","Rank":5},
+{"Term":"code enforcement","Rank":6},
+{"Term":"rental registration","Rank":7},
+{"Term":"animal services","Rank":8},
+{"Term":"jobs baltimore county","Rank":9},
+{"Term":"human resources","Rank":10},
+{"Term":"office of human resources","Rank":11},
+{"Term":"marriage license","Rank":12},
+{"Term":"property tax bill","Rank":13},
+{"Term":"permits approvals and inspections","Rank":14},
+{"Term":"department of permits approvals and inspections","Rank":15},
+{"Term":"landfill","Rank":16},
+{"Term":"trash schedule baltimore county","Rank":17},
+{"Term":"police","Rank":18},
+{"Term":"real property tax search","Rank":19},
+{"Term":"county code","Rank":20},
+{"Term":"recreation and parks","Rank":21},
+{"Term":"department of recreation and parks","Rank":22},
+{"Term":"animal licenses","Rank":23},
+{"Term":"property taxes","Rank":24},
+{"Term":"pet adoption","Rank":25},
+{"Term":"taxes property","Rank":26},
+{"Term":"health department","Rank":27},
+{"Term":"liquor board","Rank":28},
+{"Term":"police news","Rank":29},
+{"Term":"code complaints","Rank":30},
+{"Term":"file a code complaint","Rank":31},
+{"Term":"animal adoption","Rank":32},
+{"Term":"gis","Rank":33},
+{"Term":"zoning baltimore county","Rank":34},
+{"Term":"lost pets","Rank":35},
+{"Term":"summer camp","Rank":36},
+{"Term":"county council","Rank":37},
+{"Term":"inspection connection","Rank":38},
+{"Term":"recycling schedule","Rank":39},
+{"Term":"retirement","Rank":40},
+{"Term":"register of wills","Rank":41},
+{"Term":"forms","Rank":42},
+{"Term":"employment baltimore county","Rank":43},
+{"Term":"divorce","Rank":44},
+{"Term":"jury duty","Rank":45},
+{"Term":"property tax payment","Rank":46},
+{"Term":"code enforcement violations","Rank":47},
+{"Term":"permits","Rank":48},
+{"Term":"purchasing","Rank":49},
+{"Term":"property tax","Rank":50},
+{"Term":"employment","Rank":51},
+{"Term":"police department baltimore county","Rank":52},
+{"Term":"zoning map","Rank":53},
+{"Term":"housing","Rank":54},
+{"Term":"water bill","Rank":55},
+{"Term":"environmental protection and sustainability","Rank":56},
+{"Term":"department of environmental protection and sustainability","Rank":57},
+{"Term":"rental license","Rank":58},
+{"Term":"street light program","Rank":59},
+{"Term":"senior centers baltimore county","Rank":60},
+{"Term":"building permits","Rank":61},
+{"Term":"economic development","Rank":62},
+{"Term":"careers","Rank":63},
+{"Term":"land records baltimore county","Rank":64},
+{"Term":"solicitations","Rank":65},
+{"Term":"christmas tree pickup","Rank":66},
+{"Term":"noise","Rank":67},
+{"Term":"real property tax bill","Rank":68},
+{"Term":"public works","Rank":69},
+{"Term":"water baltimore county","Rank":70},
+{"Term":"fire","Rank":71},
+{"Term":"planning","Rank":72},
+{"Term":"solid waste management baltimore county","Rank":73},
+{"Term":"tax sale","Rank":74},
+{"Term":"trash collection baltimore county","Rank":75},
+{"Term":"parking tickets","Rank":76},
+{"Term":"tax bill","Rank":77},
+{"Term":"dog license baltimore county","Rank":78},
+{"Term":"corrections","Rank":79},
+{"Term":"deeds","Rank":80},
+{"Term":"closings","Rank":81},
+{"Term":"food supplement program","Rank":82},
+{"Term":"housing in baltimore county","Rank":83},
+{"Term":"tax bill online","Rank":84},
+{"Term":"bids","Rank":85},
+{"Term":"employee self service","Rank":86},
+{"Term":"zoning regulations baltimore county","Rank":87},
+{"Term":"pay speed camera ticket","Rank":88},
+{"Term":"aging","Rank":89},
+{"Term":"health","Rank":90},
+{"Term":"report abandoned vehicle","Rank":91},
+{"Term":"volunteer recreation and parks council","Rank":92},
+{"Term":"permits and inspections","Rank":93},
+{"Term":"spay/neuter","Rank":94},
+{"Term":"budget","Rank":95},
+{"Term":"employee benefits baltimore county","Rank":96},
+{"Term":"district court of baltimore county","Rank":97},
+{"Term":"jobs in baltimore county","Rank":98},
+{"Term":"real property taxes","Rank":99},
+{"Term":"property management","Rank":100},
+{"Term":"county holidays","Rank":101},
+{"Term":"building inspections","Rank":102},
+{"Term":"child support baltimore county","Rank":103},
+{"Term":"real estate taxes","Rank":104},
+{"Term":"rental registration forms","Rank":105},
+{"Term":"scholarship information baltimore county","Rank":106},
+{"Term":"dump","Rank":107},
+{"Term":"trash and recycling collection","Rank":108},
+{"Term":"parks and recreation","Rank":109},
+{"Term":"rocky point beach and park","Rank":110},
+{"Term":"environmental health","Rank":111},
+{"Term":"report tall grass and weeds","Rank":112},
+{"Term":"clerk of the court","Rank":113},
+{"Term":"development management","Rank":114},
+{"Term":"find my zoning","Rank":115},
+{"Term":"liquor license baltimore county","Rank":116},
+{"Term":"taxes county","Rank":117},
+{"Term":"benefits","Rank":118},
+{"Term":"highways","Rank":119},
+{"Term":"oregon ridge park","Rank":120},
+{"Term":"administrative hearings","Rank":121},
+{"Term":"animal shelter in baltimore county","Rank":122},
+{"Term":"speed camera tickets","Rank":123},
+{"Term":"dogs","Rank":124},
+{"Term":"code violations","Rank":125},
+{"Term":"pay parking ticket","Rank":126},
+{"Term":"recycling baltimore county","Rank":127},
+{"Term":"name change","Rank":128},
+{"Term":"social services","Rank":129},
+{"Term":"iwatch","Rank":130},
+{"Term":"land records","Rank":131},
+{"Term":"public works baltimore county","Rank":132},
+{"Term":"building codes","Rank":133},
+{"Term":"lien certificate","Rank":134},
+{"Term":"food stamps program","Rank":135},
+{"Term":"baltimore circuit court cases","Rank":136},
+{"Term":"electrical inspections baltimore county","Rank":137},
+{"Term":"police report","Rank":138},
+{"Term":"pet license renewal","Rank":139},
+{"Term":"tree removal","Rank":140},
+{"Term":"medical assistance program","Rank":141},
+{"Term":"stormwater management","Rank":142},
+{"Term":"tax sale auction","Rank":143},
+{"Term":"water","Rank":144},
+{"Term":"eviction","Rank":145},
+{"Term":"trash","Rank":146},
+{"Term":"aging department","Rank":147},
+{"Term":"lost dogs","Rank":148},
+{"Term":"pets","Rank":149},
+{"Term":"budget and finance","Rank":150},
+{"Term":"inclement weather","Rank":151},
+{"Term":"rental homes in baltimore county","Rank":152},
+{"Term":"taxes","Rank":153},
+{"Term":"payroll","Rank":154},
+{"Term":"police and fire news","Rank":155},
+{"Term":"traffic calming","Rank":156},
+{"Term":"residential parking","Rank":157},
+{"Term":"procurement","Rank":158},
+{"Term":"groundwater","Rank":159},
+{"Term":"volunteer","Rank":160},
+{"Term":"animal shelter","Rank":161},
+{"Term":"daily docket","Rank":162},
+{"Term":"metro service charge","Rank":163},
+{"Term":"parking","Rank":164},
+{"Term":"rental registration reports","Rank":165},
+{"Term":"chickens","Rank":166},
+{"Term":"planning baltimore county","Rank":167},
+{"Term":"development projects","Rank":168},
+{"Term":"jury call in numbers","Rank":169},
+{"Term":"parcel search","Rank":170},
+{"Term":"sewer baltimore county","Rank":171},
+{"Term":"animal control","Rank":172},
+{"Term":"baltimore county public library","Rank":173},
+{"Term":"rabies clinic","Rank":174},
+{"Term":"social services food stamps","Rank":175},
+{"Term":"water and sewer maryland","Rank":176},
+{"Term":"internships","Rank":177},
+{"Term":"planning board","Rank":178},
+{"Term":"salaries","Rank":179},
+{"Term":"auditor","Rank":180},
+{"Term":"fingerprinting","Rank":181},
+{"Term":"mugshots","Rank":182},
+{"Term":"open complaints","Rank":183},
+{"Term":"business license","Rank":184},
+{"Term":"my zoning","Rank":185},
+{"Term":"recycling","Rank":186},
+{"Term":"fire department","Rank":187},
+{"Term":"judges baltimore county","Rank":188},
+{"Term":"marriage","Rank":189},
+{"Term":"parks","Rank":190},
+{"Term":"parks in baltimore county","Rank":191},
+{"Term":"solid waste","Rank":192},
+{"Term":"summer camps","Rank":193},
+{"Term":"file a police report","Rank":194},
+{"Term":"section 8 baltimore county","Rank":195},
+{"Term":"snow removal","Rank":196},
+{"Term":"board of appeals","Rank":197},
+{"Term":"tax","Rank":198},
+{"Term":"taxes real estate","Rank":199},
+{"Term":"notary public baltimore county","Rank":200},
+{"Term":"permit search","Rank":201},
+{"Term":"personal property taxes","Rank":202},
+{"Term":"rental housing","Rank":203},
+{"Term":"maps","Rank":204},
+{"Term":"pension","Rank":205},
+{"Term":"environmental agreement","Rank":206},
+{"Term":"jobs at department of social services","Rank":207},
+{"Term":"noise ordinance","Rank":208},
+{"Term":"sign permit","Rank":209},
+{"Term":"case search","Rank":210},
+{"Term":"rats baltimore county","Rank":211},
+{"Term":"real property","Rank":212},
+{"Term":"arrest warrant maryland","Rank":213},
+{"Term":"roads and highways","Rank":214},
+{"Term":"birth certificate","Rank":215},
+{"Term":"council","Rank":216},
+{"Term":"department of aging","Rank":217},
+{"Term":"real estate taxes baltimore county","Rank":218},
+{"Term":"design manual","Rank":219},
+{"Term":"docket","Rank":220},
+{"Term":"economic and workforce development","Rank":221},
+{"Term":"department of economic and workforce development","Rank":222},
+{"Term":"public information act requests","Rank":223},
+{"Term":"trash pickup","Rank":224},
+{"Term":"zoning regulations","Rank":225},
+{"Term":"adoption baltimore county","Rank":226},
+{"Term":"county ride","Rank":227},
+{"Term":"inspections","Rank":228},
+{"Term":"social services child custody","Rank":229},
+{"Term":"warrants in baltimore maryland","Rank":230},
+{"Term":"animal","Rank":231},
+{"Term":"deck","Rank":232},
+{"Term":"electrical permits baltimore county","Rank":233},
+{"Term":"property taxes search","Rank":234},
+{"Term":"workforce development","Rank":235},
+{"Term":"county office closings","Rank":236},
+{"Term":"prequalification","Rank":237},
+{"Term":"road closures","Rank":238},
+{"Term":"water public works","Rank":239},
+{"Term":"subdivision","Rank":240},
+{"Term":"county code enforcement","Rank":241},
+{"Term":"foster care","Rank":242},
+{"Term":"sediment control","Rank":243},
+{"Term":"sheriff's office","Rank":244},
+{"Term":"circuit court of baltimore county","Rank":245},
+{"Term":"county executive","Rank":246},
+{"Term":"employee salaries","Rank":247},
+{"Term":"schools in baltimore county","Rank":248},
+{"Term":"stormfighter","Rank":249},
+{"Term":"tax sale property","Rank":250},
+{"Term":"dog license application","Rank":251},
+{"Term":"fence permit","Rank":252},
+{"Term":"social services medical assistance","Rank":253},
+{"Term":"emergency preparedness","Rank":254},
+{"Term":"fmla","Rank":255},
+{"Term":"food","Rank":256},
+{"Term":"shredding","Rank":257},
+{"Term":"divorce forms","Rank":258},
+{"Term":"yard material collection","Rank":259},
+{"Term":"background check","Rank":260},
+{"Term":"bureau of utilities","Rank":261},
+{"Term":"landmarks preservation commission","Rank":262},
+{"Term":"payroll paycheck","Rank":263},
+{"Term":"state's attorney","Rank":264},
+{"Term":"fireworks baltimore county","Rank":265},
+{"Term":"insurance","Rank":266},
+{"Term":"payment of property tax","Rank":267},
+{"Term":"transportation","Rank":268},
+{"Term":"911 central communications center","Rank":269},
+{"Term":"assisted living","Rank":270},
+{"Term":"baltimore county licenses miscellaneous permits","Rank":271},
+{"Term":"department of planning","Rank":272},
+{"Term":"guardianship","Rank":273},
+{"Term":"inmate search","Rank":274},
+{"Term":"invitations to bid","Rank":275},
+{"Term":"permit processing","Rank":276},
+{"Term":"pia requests","Rank":277},
+{"Term":"red light tickets","Rank":278},
+{"Term":"training","Rank":279},
+{"Term":"hours","Rank":280},
+{"Term":"construction bid results","Rank":281},
+{"Term":"department of public works","Rank":282},
+{"Term":"rats","Rank":283},
+{"Term":"stansbury park dundalk","Rank":284},
+{"Term":"zoning forms","Rank":285},
+{"Term":"circuit court of maryland for baltimore county","Rank":286},
+{"Term":"code enforce","Rank":287},
+{"Term":"permit status","Rank":288},
+{"Term":"personal property tax bill","Rank":289},
+{"Term":"plumbing","Rank":290},
+{"Term":"public records","Rank":291},
+{"Term":"real estate compliance","Rank":292},
+{"Term":"recycling program baltimore county","Rank":293},
+{"Term":"senior centers","Rank":294},
+{"Term":"holidays","Rank":295},
+{"Term":"camps","Rank":296},
+{"Term":"eastern sanitary landfill","Rank":297},
+{"Term":"employee directory","Rank":298},
+{"Term":"food permit","Rank":299},
+{"Term":"emt","Rank":300},
+{"Term":"paid firefighters","Rank":301},
+{"Term":"real estate taxes paid","Rank":302},
+{"Term":"records","Rank":303},
+{"Term":"retirement office","Rank":304},
+{"Term":"senior apartments in baltimore county","Rank":305},
+{"Term":"standard details","Rank":306},
+{"Term":"department of social services baltimore county","Rank":307},
+{"Term":"food stamps","Rank":308},
+{"Term":"homestead tax credit","Rank":309},
+{"Term":"rental","Rank":310},
+{"Term":"septic","Rank":311},
+{"Term":"traffic","Rank":312},
+{"Term":"dog license renewal","Rank":313},
+{"Term":"fire marshal","Rank":314},
+{"Term":"food stamp benefits","Rank":315},
+{"Term":"gis data","Rank":316},
+{"Term":"job descriptions","Rank":317},
+{"Term":"pay scales","Rank":318},
+{"Term":"pay schedule","Rank":319},
+{"Term":"search property tax","Rank":320},
+{"Term":"property search","Rank":321},
+{"Term":"rental license application","Rank":322},
+{"Term":"citations","Rank":323},
+{"Term":"community associations","Rank":324},
+{"Term":"czmp","Rank":325},
+{"Term":"information technology","Rank":326},
+{"Term":"paying property taxes","Rank":327},
+{"Term":"revenue authority","Rank":328},
+{"Term":"section 8 housing in baltimore county","Rank":329},
+{"Term":"signs","Rank":330},
+{"Term":"survey control","Rank":331},
+{"Term":"cafr financial report","Rank":332},
+{"Term":"hearings","Rank":333},
+{"Term":"rental assistance program","Rank":334},
+{"Term":"staff directory","Rank":335},
+{"Term":"assessment of property tax","Rank":336},
+{"Term":"property records","Rank":337},
+{"Term":"court baltimore county","Rank":338},
+{"Term":"court records","Rank":339},
+{"Term":"gathering permit","Rank":340},
+{"Term":"permit construction","Rank":341},
+{"Term":"soccer","Rank":342},
+{"Term":"solar","Rank":343},
+{"Term":"tobacco","Rank":344},
+{"Term":"agencies","Rank":345},
+{"Term":"contract bid","Rank":346},
+{"Term":"elections","Rank":347},
+{"Term":"file for divorce","Rank":348},
+{"Term":"homeless office","Rank":349},
+{"Term":"lien application","Rank":350},
+{"Term":"maryland energy assistance program baltimore county","Rank":351},
+{"Term":"real property tax payment","Rank":352},
+{"Term":"traffic engineering","Rank":353},
+{"Term":"where do i vote","Rank":354},
+{"Term":"building permit application","Rank":355},
+{"Term":"calendar","Rank":356},
+{"Term":"certificate of occupancy","Rank":357},
+{"Term":"filing fees","Rank":358},
+{"Term":"grading permit","Rank":359},
+{"Term":"grants","Rank":360},
+{"Term":"liquor license board","Rank":361},
+{"Term":"loch raven fishing center","Rank":362},
+{"Term":"master plan","Rank":363},
+{"Term":"swimming pools","Rank":364},
+{"Term":"property owner search","Rank":365},
+{"Term":"use and occupancy","Rank":366},
+{"Term":"community updates","Rank":367},
+{"Term":"complaints","Rank":368},
+{"Term":"dog license","Rank":369},
+{"Term":"fences","Rank":370},
+{"Term":"homeowners tax credit","Rank":371},
+{"Term":"identity theft","Rank":372},
+{"Term":"license dog","Rank":373},
+{"Term":"license permits","Rank":374},
+{"Term":"pay property tax","Rank":375},
+{"Term":"police department","Rank":376},
+{"Term":"report code violation","Rank":377},
+{"Term":"office of budget and finance","Rank":378},
+{"Term":"bulk trash","Rank":379},
+{"Term":"carbon monoxide","Rank":380},
+{"Term":"child support","Rank":381},
+{"Term":"crime in baltimore county","Rank":382},
+{"Term":"directory","Rank":383},
+{"Term":"energy assistance maryland","Rank":384},
+{"Term":"first time home buyer","Rank":385},
+{"Term":"my benefits","Rank":386},
+{"Term":"park board","Rank":387},
+{"Term":"pikesville senior center","Rank":388},
+{"Term":"plumbing license","Rank":389},
+{"Term":"police baltimore county","Rank":390},
+{"Term":"pssc","Rank":391},
+{"Term":"recording fees","Rank":392},
+{"Term":"right of way manual","Rank":393},
+{"Term":"salary","Rank":394},
+{"Term":"scholarships","Rank":395},
+{"Term":"sidewalk","Rank":396},
+{"Term":"substance abuse","Rank":397},
+{"Term":"appeals board","Rank":398},
+{"Term":"arts and sciences commission","Rank":399},
+{"Term":"baltimore county tourism","Rank":400},
+{"Term":"boards and commissions","Rank":401},
+{"Term":"board of elections","Rank":402},
+{"Term":"communications office","Rank":403},
+{"Term":"comprehensive zoning map process","Rank":404},
+{"Term":"enjoy baltimore county","Rank":405},
+{"Term":"ethics","Rank":406},
+{"Term":"find data","Rank":407},
+{"Term":"flu shots","Rank":408},
+{"Term":"homefront veterans services","Rank":409},
+{"Term":"human relations","Rank":410},
+{"Term":"local management board","Rank":411},
+{"Term":"lost cats","Rank":412},
+{"Term":"make a payment","Rank":413},
+{"Term":"office of information technology","Rank":414},
+{"Term":"office of law","Rank":415},
+{"Term":"open data portal","Rank":416},
+{"Term":"orphans' court","Rank":417},
+{"Term":"pay red light ticket","Rank":418},
+{"Term":"people's counsel","Rank":419},
+{"Term":"planned unit developments","Rank":420},
+{"Term":"rabies information","Rank":421},
+{"Term":"reach hotline","Rank":422},
+{"Term":"report a hit and run","Rank":423},
+{"Term":"report a theft","Rank":424},
+{"Term":"report rats","Rank":425},
+{"Term":"report suspicious activity","Rank":426},
+{"Term":"snap supplemental nutrition assistance program","Rank":427},
+{"Term":"speed camera locations","Rank":428},
+{"Term":"stormwater remediation fee","Rank":429},
+{"Term":"substance use hotline","Rank":430},
+{"Term":"tourism","Rank":431},
+{"Term":"tourism and promotion","Rank":432},
+{"Term":"trail finder","Rank":433},
+{"Term":"video","Rank":434},
+{"Term":"walking trails","Rank":435},
+{"Term":"youtube","Rank":436},
+{"Term":"kevin kamenetz","Rank":437},
+{"Term":"loch raven boat rental","Rank":438},
+{"Term":"detention center","Rank":439},
+{"Term":"towing","Rank":440},
+{"Term":"election judge","Rank":441},
+{"Term":"sample ballot","Rank":442},
+{"Term":"absentee ballot","Rank":443},
+{"Term":"variance","Rank":444},
+{"Term":"job classifications","Rank":445},
+{"Term":"volunteer background check","Rank":446},
+{"Term":"parks in baltimore county","Rank":447},
+{"Term":"ground water","Rank":448},
+{"Term":"medicaid","Rank":449},
+{"Term":"get ready get set get fit 5k","Rank":450},
+{"Term":"household hazardous waste disposal","Rank":451},
+{"Term":"trash and recycling drop-off facilities","Rank":452},
+{"Term":"tax credits for business","Rank":453},
+{"Term":"tax credits for home owners","Rank":454},
+{"Term":"tax credits","Rank":455},
+{"Term":"starting a business","Rank":456},
+{"Term":"minority business enterprise","Rank":457},
+{"Term":"women's business enterprise","Rank":458},
+{"Term":"find a park","Rank":459},
+{"Term":"oregon ridge nature center","Rank":460},
+{"Term":"marshy point park","Rank":461},
+{"Term":"miami beach","Rank":462},
+{"Term":"cromwell valley park","Rank":463},
+{"Term":"lake roland","Rank":464},
+{"Term":"bykota senior center","Rank":465},
+{"Term":"woodlawn senior center","Rank":466},
+{"Term":"parkville senior center","Rank":467},
+{"Term":"liberty senior center","Rank":468},
+{"Term":"cockeysville senior center","Rank":469},
+{"Term":"arbutus senior center","Rank":470},
+{"Term":"catonsville senior center","Rank":471},
+{"Term":"ateaze senior center","Rank":472},
+{"Term":"edgemere senior center","Rank":473},
+{"Term":"fleming senior center","Rank":474},
+{"Term":"hereford senior center","Rank":475},
+{"Term":"jacksonville senior center","Rank":476},
+{"Term":"lansdowne-baltimore highlands senior center","Rank":477},
+{"Term":"overlea-fullerton senior center","Rank":478},
+{"Term":"reisterstown senior center","Rank":479},
+{"Term":"rosedale senior center","Rank":480},
+{"Term":"victory villa senior center","Rank":481},
+{"Term":"cathy bevins","Rank":482},
+{"Term":"vicki almond","Rank":483},
+{"Term":"todd crandell","Rank":484},
+{"Term":"tom quirk","Rank":485},
+{"Term":"wade kach","Rank":486},
+{"Term":"david marks","Rank":487},
+{"Term":"julian jones","Rank":488}]

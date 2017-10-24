@@ -4,6 +4,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	'use strict';
 
 	var searchData;
+	var maxSearchCount = 5;
 
 	var documentClickHandler = function documentClickHandler() {
 		var $searchResults = $('#header-search-results');
@@ -78,8 +79,10 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		var orderedMatches = [];
 
 		matches.forEach(function eachMatch(match) {
-			if (match.Term.indexOf(searchTerm) === 0) {
-				orderedMatches.push(match);
+			if (Object.prototype.hasOwnProperty.call(match, 'Term')) {
+				if (match.Term.indexOf(searchTerm) === 0) {
+					orderedMatches.push(match);
+				}
 			}
 		});
 
@@ -99,7 +102,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	var scrollStoppingKeydownHandler = function scrollStoppingKeydownHandler(event) {
 		var keyCode = event.which || event.keyCode;
 
-		if ([38, 40].indexOf(keyCode) !== -1) {
+		if ([constants.keyCodes.arrowUp, constants.keyCodes.arrowDown].indexOf(keyCode) !== -1) {
 			event.preventDefault();
 		}
 	};
@@ -109,7 +112,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	 * 
 	 * @param {string} searchTerm 
 	 */
-	var search = function search(searchTerm) {
+	var search = function search(searchTerm, maxMatches) {
 		if (!searchData || !searchData.length) {
 			throw Error('Module "keywordSearch" is not initialized.');
 		}
@@ -118,16 +121,18 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 
 		if (typeof searchTerm === 'string' && searchTerm.trim().length > 0) {
 			searchData.forEach(function forEach(element) {
-				if (element.Term.indexOf(searchTerm) > -1) {
-					allMatches.push(element);
+				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
+					if (element.Term.indexOf(searchTerm) > -1) {
+						allMatches.push(element);
+					}
 				}
 			});
 		}
 
-		var topFiveOrderedMatches = orderByNameThenPopularity(searchTerm, allMatches).slice(0, 5);
-		var topFiveHighlightedOrderedMatches = highlightMatches(searchTerm, topFiveOrderedMatches);
+		var topOrderedMatches = orderByNameThenPopularity(searchTerm, allMatches).slice(0, maxMatches);
+		var topHighlightedOrderedMatches = highlightMatches(searchTerm, topOrderedMatches);
 
-		return topFiveHighlightedOrderedMatches;
+		return topHighlightedOrderedMatches;
 	};
 
 	/**
@@ -138,18 +143,20 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		var keyCode = event.which || event.keyCode;
 		var $target = $(event.currentTarget);
 		var $searchResults = $('#header-search-results');
+		var $visibleSearchResults = $searchResults.find('li').is(':visible');
+		var $allSearchResults = $searchResults.find('li');
 
-		if (keyCode === 40 && $searchResults.find('li').is(':visible')) {
-			$searchResults.find('li').first().trigger('focus');
+		if (keyCode === constants.keyCodes.arrowDown && $visibleSearchResults) {
+			$allSearchResults.first().trigger('focus');
 			return;
 		}
 
-		if (keyCode === 38 && $searchResults.find('li').is(':visible')) {
-			$searchResults.find('li').last().trigger('focus');
+		if (keyCode === constants.keyCodes.arrowUp && $visibleSearchResults) {
+			$allSearchResults.last().trigger('focus');
 			return;
 		}
 
-		var matches = search($target.val());
+		var matches = search($target.val(), maxSearchCount);
 		var $source = $('#search-results-template');
 		var template = Handlebars.compile($source.html());
 		var html = template(matches);
@@ -169,13 +176,13 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		var $searchResults = $('#header-search-results');
 		var $target = $(event.currentTarget);
 
-		if (event.type === 'click' || keyCode === 13) {
+		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
 			$searchBox.val($target.text());
 			$searchResults.hide();
 			return;
 		}
 
-		if (keyCode === 38 && $target.is('li')) {
+		if (keyCode === constants.keyCodes.arrowUp && $target.is('li')) {
 			if ($target.is(':first-child')) {
 				$searchBox.trigger('focus');
 			} else {
@@ -185,7 +192,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 			return;
 		}
 
-		if (keyCode === 40 && $target.is('li')) {
+		if (keyCode === constants.keyCodes.arrowDown && $target.is('li')) {
 			if ($target.is(':last-child')) {
 				$searchBox.trigger('focus');
 			} else {
