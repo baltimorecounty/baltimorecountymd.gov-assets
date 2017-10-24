@@ -5849,7 +5849,7 @@ namespacer('baltimoreCounty');
 baltimoreCounty.constants = (function constants() {
 	'use strict';
 
-	var rootUrl = 'https://testservices.baltimorecountymd.gov';
+	var rootUrl = 'https://services.baltimorecountymd.gov';
 	// var rootUrl = 'http://localhost:1000';
 
 	var baltCoGo = {
