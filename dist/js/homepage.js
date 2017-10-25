@@ -5125,6 +5125,350 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
 * http://scottjehl.github.io/picturefill
 * Copyright (c) 2014 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
 window.matchMedia||(window.matchMedia=function(){"use strict";var a=window.styleMedia||window.media;if(!a){var b=document.createElement("style"),c=document.getElementsByTagName("script")[0],d=null;b.type="text/css",b.id="matchmediajs-test",c.parentNode.insertBefore(b,c),d="getComputedStyle"in window&&window.getComputedStyle(b,null)||b.currentStyle,a={matchMedium:function(a){var c="@media "+a+"{ #matchmediajs-test { width: 1px; } }";return b.styleSheet?b.styleSheet.cssText=c:b.textContent=c,"1px"===d.width}}}return function(b){return{matches:a.matchMedium(b||"all"),media:b||"all"}}}()),function(a,b,c){"use strict";function d(a){var b,c,d,e,g,h=a||{};b=h.elements||f.getAllElements();for(var i=0,j=b.length;j>i;i++)if(c=b[i],d=c.parentNode,e=void 0,g=void 0,"IMG"===c.nodeName.toUpperCase()&&(c[f.ns]||(c[f.ns]={}),h.reevaluate||!c[f.ns].evaluated)){if("PICTURE"===d.nodeName.toUpperCase()){if(f.removeVideoShim(d),e=f.getMatch(c,d),e===!1)continue}else e=void 0;("PICTURE"===d.nodeName.toUpperCase()||c.srcset&&!f.srcsetSupported||!f.sizesSupported&&c.srcset&&c.srcset.indexOf("w")>-1)&&f.dodgeSrcset(c),e?(g=f.processSourceSet(e),f.applyBestCandidate(g,c)):(g=f.processSourceSet(c),(void 0===c.srcset||c[f.ns].srcset)&&f.applyBestCandidate(g,c)),c[f.ns].evaluated=!0}}function e(){function c(){var b;a._picturefillWorking||(a._picturefillWorking=!0,a.clearTimeout(b),b=a.setTimeout(function(){d({reevaluate:!0}),a._picturefillWorking=!1},60))}d();var e=setInterval(function(){return d(),/^loaded|^i|^c/.test(b.readyState)?void clearInterval(e):void 0},250);a.addEventListener?a.addEventListener("resize",c,!1):a.attachEvent&&a.attachEvent("onresize",c)}if(a.HTMLPictureElement)return void(a.picturefill=function(){});b.createElement("picture");var f={};f.ns="picturefill",function(){f.srcsetSupported="srcset"in c,f.sizesSupported="sizes"in c}(),f.trim=function(a){return a.trim?a.trim():a.replace(/^\s+|\s+$/g,"")},f.endsWith=function(a,b){return a.endsWith?a.endsWith(b):-1!==a.indexOf(b,a.length-b.length)},f.restrictsMixedContent=function(){return"https:"===a.location.protocol},f.matchesMedia=function(b){return a.matchMedia&&a.matchMedia(b).matches},f.getDpr=function(){return a.devicePixelRatio||1},f.getWidthFromLength=function(a){a=a&&a.indexOf("%")>-1==!1&&(parseFloat(a)>0||a.indexOf("calc(")>-1)?a:"100vw",a=a.replace("vw","%"),f.lengthEl||(f.lengthEl=b.createElement("div"),f.lengthEl.style.cssText="border:0;display:block;font-size:1em;left:0;margin:0;padding:0;position:absolute;visibility:hidden"),f.lengthEl.style.width=a,b.body.appendChild(f.lengthEl),f.lengthEl.className="helper-from-picturefill-js",f.lengthEl.offsetWidth<=0&&(f.lengthEl.style.width=b.documentElement.offsetWidth+"px");var c=f.lengthEl.offsetWidth;return b.body.removeChild(f.lengthEl),c},f.types={},f.types["image/jpeg"]=!0,f.types["image/gif"]=!0,f.types["image/png"]=!0,f.types["image/svg+xml"]=b.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),f.types["image/webp"]=function(){var a="image/webp";c.onerror=function(){f.types[a]=!1,d()},c.onload=function(){f.types[a]=1===c.width,d()},c.src="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA="},f.verifyTypeSupport=function(a){var b=a.getAttribute("type");return null===b||""===b?!0:"function"==typeof f.types[b]?(f.types[b](),"pending"):f.types[b]},f.parseSize=function(a){var b=/(\([^)]+\))?\s*(.+)/g.exec(a);return{media:b&&b[1],length:b&&b[2]}},f.findWidthFromSourceSize=function(a){for(var b,c=f.trim(a).split(/\s*,\s*/),d=0,e=c.length;e>d;d++){var g=c[d],h=f.parseSize(g),i=h.length,j=h.media;if(i&&(!j||f.matchesMedia(j))){b=i;break}}return f.getWidthFromLength(b)},f.parseSrcset=function(a){for(var b=[];""!==a;){a=a.replace(/^\s+/g,"");var c,d=a.search(/\s/g),e=null;if(-1!==d){c=a.slice(0,d);var f=c.slice(-1);if((","===f||""===c)&&(c=c.replace(/,+$/,""),e=""),a=a.slice(d+1),null===e){var g=a.indexOf(",");-1!==g?(e=a.slice(0,g),a=a.slice(g+1)):(e=a,a="")}}else c=a,a="";(c||e)&&b.push({url:c,descriptor:e})}return b},f.parseDescriptor=function(a,b){var c,d=b||"100vw",e=a&&a.replace(/(^\s+|\s+$)/g,""),g=f.findWidthFromSourceSize(d);if(e)for(var h=e.split(" "),i=h.length-1;i>=0;i--){var j=h[i],k=j&&j.slice(j.length-1);if("h"!==k&&"w"!==k||f.sizesSupported){if("x"===k){var l=j&&parseFloat(j,10);c=l&&!isNaN(l)?l:1}}else c=parseFloat(parseInt(j,10)/g)}return c||1},f.getCandidatesFromSourceSet=function(a,b){for(var c=f.parseSrcset(a),d=[],e=0,g=c.length;g>e;e++){var h=c[e];d.push({url:h.url,resolution:f.parseDescriptor(h.descriptor,b)})}return d},f.dodgeSrcset=function(a){a.srcset&&(a[f.ns].srcset=a.srcset,a.removeAttribute("srcset"))},f.processSourceSet=function(a){var b=a.getAttribute("srcset"),c=a.getAttribute("sizes"),d=[];return"IMG"===a.nodeName.toUpperCase()&&a[f.ns]&&a[f.ns].srcset&&(b=a[f.ns].srcset),b&&(d=f.getCandidatesFromSourceSet(b,c)),d},f.applyBestCandidate=function(a,b){var c,d,e;a.sort(f.ascendingSort),d=a.length,e=a[d-1];for(var g=0;d>g;g++)if(c=a[g],c.resolution>=f.getDpr()){e=c;break}if(e&&!f.endsWith(b.src,e.url))if(f.restrictsMixedContent()&&"http:"===e.url.substr(0,"http:".length).toLowerCase())void 0!==typeof console&&console.warn("Blocked mixed content image "+e.url);else{b.src=e.url,b.currentSrc=b.src;var h=b.style||{},i="webkitBackfaceVisibility"in h,j=h.zoom;i&&(h.zoom=".999",i=b.offsetWidth,h.zoom=j)}},f.ascendingSort=function(a,b){return a.resolution-b.resolution},f.removeVideoShim=function(a){var b=a.getElementsByTagName("video");if(b.length){for(var c=b[0],d=c.getElementsByTagName("source");d.length;)a.insertBefore(d[0],c);c.parentNode.removeChild(c)}},f.getAllElements=function(){for(var a=[],c=b.getElementsByTagName("img"),d=0,e=c.length;e>d;d++){var g=c[d];("PICTURE"===g.parentNode.nodeName.toUpperCase()||null!==g.getAttribute("srcset")||g[f.ns]&&null!==g[f.ns].srcset)&&a.push(g)}return a},f.getMatch=function(a,b){for(var c,d=b.childNodes,e=0,g=d.length;g>e;e++){var h=d[e];if(1===h.nodeType){if(h===a)return c;if("SOURCE"===h.nodeName.toUpperCase()){null!==h.getAttribute("src")&&void 0!==typeof console&&console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");var i=h.getAttribute("media");if(h.getAttribute("srcset")&&(!i||f.matchesMedia(i))){var j=f.verifyTypeSupport(h);if(j===!0){c=h;break}if("pending"===j)return!1}}}}return c},e(),d._=f,"object"==typeof module&&"object"==typeof module.exports?module.exports=d:"function"==typeof define&&define.amd?define(function(){return d}):"object"==typeof a&&(a.picturefill=d)}(this,this.document,new this.Image);
+namespacer('baltimoreCounty');
+
+baltimoreCounty.constants = (function constants() {
+	'use strict';
+
+	var rootUrl = 'https://testservices.baltimorecountymd.gov';
+	// var rootUrl = 'http://localhost:1000';
+
+	var baltCoGo = {
+		urls: {
+			api: {
+				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				createReport: rootUrl + '/api/baltcogo/createreport',
+				getReport: rootUrl + '/api/citysourced/getreport',
+				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				suggestions: rootUrl + '/api/gis/addressLookup/'
+			},
+			json: {
+				animalBreeds: '/sebin/y/a/animal-breeds.json',
+				animalColors: '/sebin/u/u/animal-colors.json',
+				animalTypes: '/sebin/a/e/animal-types.json',
+				categories: '/sebin/q/m/categories.json',
+				petTypes: '/sebin/m/a/pet-types.json'
+			}
+		},
+		locations: {
+			courtHouse: {
+				latitude: 39.4001526,
+				longitude: -76.6074448
+			}
+		}
+	};
+
+	var keywordSearch = {
+		urls: {
+			api: rootUrl + '/api/search/',
+			searchTerms: '/sebin/m/n/searchTerms.json'
+		}
+	};
+
+	var keyCodes = {
+		arrowUp: 30,
+		arrowDown: 40,
+		enter: 13
+	};
+
+	return {
+		baltCoGo: baltCoGo,
+		keywordSearch: keywordSearch,
+		keyCodes: keyCodes
+	};
+}());
+
+namespacer('baltimoreCounty');
+
+baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars, constants) {
+	'use strict';
+
+	var searchData;
+	var maxSearchCount = 5;
+
+	var documentClickHandler = function documentClickHandler() {
+		var $searchResults = $('#header-search-results');
+
+		if ($searchResults.is(':visible')) {
+			$searchResults.hide();
+		}
+	};
+
+	/**
+	 * Highlights the matched term in the results.
+	 * 
+	 * @param {String} searchTerm 
+	 * @param {Array<Term, Order>} matches 
+	 */
+	var highlightMatches = function highlightMatches(searchTerm, matches) {
+		var highlightedMatches = [];
+
+		matches.forEach(function forEachTopFiveMatch(match) {
+			var highlightedMatch = $.extend({}, match);
+			highlightedMatch.Term = highlightedMatch.Term.replace(searchTerm, '<strong>' + searchTerm + '</strong>');
+			highlightedMatches.push(highlightedMatch);
+		});
+
+		return highlightedMatches;
+	};
+
+	var init = function init(callback) {
+		if (sessionStorage && sessionStorage.searchData) {
+			searchData = JSON.parse(sessionStorage.searchData);
+		} else {
+			$.ajax(constants.keywordSearch.urls.searchTerms)
+				.then(onDataLoadedHandler);
+		}
+
+		if (typeof callback !== 'undefined') {
+			callback();
+		}
+	};
+
+
+	/**
+	 * Handles the loaded data and puts it in session storage in the browser.
+	 * 
+	 * @param {Array<Term, Order>} data 
+	 */
+	var onDataLoadedHandler = function onDataLoadedHandler(data) {
+		searchData = data;
+		sessionStorage.setItem('searchData', JSON.stringify(data));
+	};
+
+	/**
+	 * Matches the almighty Google's autocomplete rules
+	 * 
+	 * @param {string} searchTerm 
+	 * @param {Array<Term, Order>} matches 
+	 */
+	var orderByNameThenPopularity = function orderByNameThenPopularity(searchTerm, matches) {
+		if (matches.length === 0 || matches.length === 1) {
+			return matches;
+		}
+
+		var orderedMatches = [];
+
+		matches.forEach(function eachMatch(match) {
+			if (Object.prototype.hasOwnProperty.call(match, 'Term')) {
+				if (match.Term.indexOf(searchTerm) === 0) {
+					orderedMatches.push(match);
+				}
+			}
+		});
+
+		matches.forEach(function eachMatch(match) {
+			if (match.Term.indexOf(searchTerm) !== 0) {
+				orderedMatches.push(match);
+			}
+		});
+
+		return orderedMatches;
+	};
+
+	/**
+	 * Stops the browser window from scrolling when the up and down
+	 * arrows are used on the search results.
+	 */
+	var scrollStoppingKeydownHandler = function scrollStoppingKeydownHandler(event) {
+		var keyCode = event.which || event.keyCode;
+
+		if ([constants.keyCodes.arrowUp, constants.keyCodes.arrowDown].indexOf(keyCode) !== -1) {
+			event.preventDefault();
+		}
+	};
+
+	/**
+	 * Does the actual searching.
+	 * 
+	 * @param {string} searchTerm 
+	 */
+	var search = function search(searchTerm, maxMatches) {
+		if (!searchData || !searchData.length) {
+			throw Error('Module "keywordSearch" is not initialized.');
+		}
+
+		var allMatches = [];
+
+		if (typeof searchTerm === 'string' && searchTerm.trim().length > 0) {
+			searchData.forEach(function forEach(element) {
+				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
+					if (element.Term.indexOf(searchTerm) > -1) {
+						allMatches.push(element);
+					}
+				}
+			});
+		}
+
+		var topOrderedMatches = orderByNameThenPopularity(searchTerm, allMatches).slice(0, maxMatches);
+		var topHighlightedOrderedMatches = highlightMatches(searchTerm, topOrderedMatches);
+
+		return topHighlightedOrderedMatches;
+	};
+
+	/**
+	 * Handler for the searchBox Keyup event
+	 * @param {Event} event 
+	 */
+	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
+		var keyCode = event.which || event.keyCode;
+		var $target = $(event.currentTarget);
+		var $searchResults = $('#header-search-results');
+		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
+		var $allSearchResults = $searchResults.find('li');
+
+		if (keyCode === constants.keyCodes.arrowDown && areSearchResultsVisible) {
+			$allSearchResults.first().trigger('focus');
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowUp && areSearchResultsVisible) {
+			$allSearchResults.last().trigger('focus');
+			return;
+		}
+
+		var matches = search($target.val(), maxSearchCount);
+		var $source = $('#search-results-template');
+		var template = Handlebars.compile($source.html());
+		var html = template(matches);
+
+		$searchResults.html(html);
+		$searchResults.show();
+	};
+
+	/**
+	 * Handles the keyboard navigation for the search results.
+	 * 
+	 * @param {Event} event 
+	 */
+	var searchSuggestionsClickKeyupHandler = function searchSuggestionsClickHandler(event) {
+		var $searchBox = $(event.data.searchBoxSelector);
+		var keyCode = event.which || event.keyCode;
+		var $searchResults = $('#header-search-results');
+		var $target = $(event.currentTarget);
+
+		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
+			$searchBox.val($target.text());
+			$searchResults.hide();
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowUp && $target.is('li')) {
+			if ($target.is(':first-child')) {
+				$searchBox.trigger('focus');
+			} else {
+				$target.prev().trigger('focus');
+			}
+
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowDown && $target.is('li')) {
+			if ($target.is(':last-child')) {
+				$searchBox.trigger('focus');
+			} else {
+				$target.next().trigger('focus');
+			}
+		}
+	};
+
+	$(document).on('keyup', '#q', searchBoxKeyupHandler);
+	$(document).on('click keyup', '#header-search-results li', { searchBoxSelector: '#q' }, searchSuggestionsClickKeyupHandler);
+	$(document).on('keydown', '#header-search-results li', { searchBoxSelector: '#q' }, scrollStoppingKeydownHandler);
+	$(document).on('keydown', '#q', scrollStoppingKeydownHandler);
+	$(document).on('click', documentClickHandler);
+
+	return {
+		init: init,
+		search: search,
+		orderByNameThenPopularity: orderByNameThenPopularity
+	};
+}(jQuery, sessionStorage, Handlebars, baltimoreCounty.constants));
+
+$(function init() {
+	baltimoreCounty.keywordSearch.init();
+});
+
+var TextResizer = (function (window, undefined, $) {
+    var TextResizer = function (options) {
+        this.listClass = options.listClass || "text-resizer";
+        this.normalBtnId = options.normalBtnId || "normal-text";
+        this.largeBtnId = options.largeBtnId || "large-text";
+        this.largestBtnId = options.largestBtnId || "largest-text";
+        this.mainContainerId = options.mainContainerId || "main-content";
+
+        var largeTextClass = 'large-text',
+            largestTextClass = 'largest-text',
+            $textButtonList = $('.' + this.listClass),
+            $mainContainer = $("#" + this.mainContainerId),
+            existsLocalStorage = typeof (Storage) !== "undefined",
+            activeClass = 'active';
+
+        var getPreference = function () {
+            return existsLocalStorage && localStorage.getItem("size");
+        },
+        initialize = function () {
+            var preference = getPreference();
+            if (!preference) {
+                preference = "normal-text";
+            }
+
+            $textButtonList.find("#" + preference).addClass(activeClass);
+            $mainContainer.addClass(preference);
+        },
+        removePreference = function () {
+            localStorage.removeItem("size");
+        },
+        savePreference = function (size) {
+            if (existsLocalStorage) {
+                localStorage.setItem("size", size);
+            }
+        };
+
+        $(document).on('click', $textButtonList.selector + " button", function() {
+            $textButtonList.find("button").removeClass(activeClass);
+            $(this).addClass(activeClass);
+        });
+
+        /*Text Resizer Events*/
+        $(document).on('click', '#' + this.normalBtnId, function (e) {
+            e.preventDefault();
+            
+            $mainContainer.removeClass(largeTextClass + " " + largestTextClass);
+            
+            removePreference();
+        });
+
+        $(document).on('click', '#' + this.largeBtnId, function (e) {
+            e.preventDefault();
+
+            $mainContainer.removeClass(largestTextClass)
+                .addClass(largeTextClass);
+
+            savePreference(largeTextClass);
+        });
+
+        $(document).on('click', '#' + this.largestBtnId, function (e) {
+            e.preventDefault();
+
+            $mainContainer.removeClass(largeTextClass)
+                .addClass(largestTextClass);
+
+            savePreference(largestTextClass);
+        });
+
+        initialize();
+
+    };
+
+    return TextResizer;
+})(window, undefined, jQuery);
+(function() {
+    /*Initialize teh Text Resizer*/
+    var textResizer = new TextResizer({
+        listClass: "resizer-list"
+    });   
+})();
 var Flickr = (function(window, undefined, $, Handlebars) {
   $.support.cors = true;
   var Flickr = function(options) {
@@ -5279,41 +5623,6 @@ var ShowNews = (function($) {
     /* end-test-code */
 
 })(jQuery);
-(function ($, TextResizer) {
-
-  function onDocumentReady() {
-    var textResizer = new TextResizer({
-      listClass: "resizer-list"
-    });
-  }
-
-  function searchButtonClicked(e) {
-    var val = $('.search-input').val();
-
-    if (val.length === 0) {
-      e.preventDefault();
-    }
-  }
-
-  function toggleMobileNavigation(e) {
-    e.preventDefault();
-    $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
-  }
-
-  /**
-   * Stuff to kick off when the template is loaded
-   */
-  $(document).ready(onDocumentReady);
-
-  /**
-   * Events
-   */
-  /*Toggle hamburger menu*/
-  $(document).on('click', '.hamburger-btn', toggleMobileNavigation);
-
-  /*Prevent a search with no text*/
-  $(document).on('click', '.search-button', searchButtonClicked);
-})(jQuery, TextResizer);
 (function ($, Flickr) {
     $(document).ready(function () {
         var $flickFeedContainer = $('.county-photo-feed');

@@ -31,7 +31,22 @@ baltimoreCounty.constants = (function constants() {
 		}
 	};
 
+	var keywordSearch = {
+		urls: {
+			api: rootUrl + '/api/search/',
+			searchTerms: '/sebin/m/n/searchTerms.json'
+		}
+	};
+
+	var keyCodes = {
+		arrowUp: 30,
+		arrowDown: 40,
+		enter: 13
+	};
+
 	return {
-		baltCoGo: baltCoGo
+		baltCoGo: baltCoGo,
+		keywordSearch: keywordSearch,
+		keyCodes: keyCodes
 	};
 }());
