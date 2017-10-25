@@ -439,8 +439,6 @@ require([
                 //Sort the list in alphabetical order
                 parks = addLatLong(parks.sort(compare));
 
-                //parks = addLatLong(parks);
-
                 parks.convertLinks = function () {
                     return function (text, render) {
                         var words = decodeEntities(render(text));
