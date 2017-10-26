@@ -113,7 +113,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		if (typeof searchTerm === 'string' && searchTerm.trim().length > 0) {
 			searchData.forEach(function forEach(element) {
 				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
-					if (element.Term.indexOf(searchTerm) > -1) {
+					if (element.Term.toLowerCase().indexOf(searchTerm) > -1) {
 						allMatches.push(element);
 					}
 				}
@@ -133,6 +133,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
 		var keyCode = event.which || event.keyCode;
 		var $target = $(event.currentTarget);
+		var searchTerm = $target.val().toLowerCase();
 		var $searchResults = $('#header-search-results');
 		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
 		var $allSearchResults = $searchResults.find('li');
@@ -147,7 +148,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 			return;
 		}
 
-		var matches = search($target.val(), maxSearchCount);
+		var matches = search(searchTerm);
 		var $source = $('#search-results-template');
 		var template = Handlebars.compile($source.html());
 		var html = template(matches);
