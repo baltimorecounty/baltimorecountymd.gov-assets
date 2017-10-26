@@ -111,19 +111,21 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		}
 
 		var allMatches = [];
+		var lowerCaseSearchTerm = searchTerm.toLowerCase();
 
-		if (typeof searchTerm === 'string' && searchTerm.trim().length > 0) {
+		if (typeof lowerCaseSearchTerm === 'string' && lowerCaseSearchTerm.trim().length > 0) {
 			searchData.forEach(function forEach(element) {
 				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
-					if (element.Term.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+					if (element.Term.toLowerCase().indexOf(lowerCaseSearchTerm) > -1) {
 						allMatches.push(element);
 					}
 				}
 			});
 		}
 
-		var topOrderedMatches = orderByNameThenPopularity(searchTerm, allMatches).slice(0, maxMatches);
-		var topHighlightedOrderedMatches = highlightMatches(searchTerm, topOrderedMatches);
+		var topOrderedMatches = orderByNameThenPopularity(lowerCaseSearchTerm, allMatches)
+			.slice(0, maxMatches);
+		var topHighlightedOrderedMatches = highlightMatches(lowerCaseSearchTerm, topOrderedMatches);
 
 		return topHighlightedOrderedMatches;
 	};
