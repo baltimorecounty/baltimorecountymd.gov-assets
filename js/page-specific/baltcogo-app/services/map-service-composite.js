@@ -7,6 +7,12 @@
 		var marker;
 		var spatialReferenceId = 4269;
 
+		var clearMarkers = function clearMarkers() {
+			if (marker) {
+				marker.setMap(null);
+			}
+		};
+
 		var createMap = function createMap(mapElementId, settings) {
 			return new google.maps.Map(document.getElementById(mapElementId), settings);
 		};
@@ -67,6 +73,7 @@
 		}
 
 		return {
+			clearMarkers: clearMarkers,
 			createMap: createMap,
 			createMarker: createMarker,
 			pan: pan,

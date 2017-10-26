@@ -507,6 +507,9 @@
 		function reportMapError($wrapper, addressField) {
 			$wrapper.addClass('error');
 			addressField.$setDirty();
+			self.latitude = 0;
+			self.longitude = 0;
+			mapServiceComposite.clearMarkers();
 			return '';
 		}
 
