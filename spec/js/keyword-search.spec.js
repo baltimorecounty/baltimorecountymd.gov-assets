@@ -1,15 +1,31 @@
 /* eslint-disable no-undef */
 
 describe('keywordSearch', function keywordSearch() {
+	var testSearchTerms;
+
 	beforeEach(function beforeEachKeywordSearch(done) {
+		testSearchTerms = [{ Term: 'jobs', Rank: 1 },
+			{ Term: 'jobs1', Rank: 2 },
+			{ Term: 'jobs2', Rank: 3 },
+			{ Term: 'jobs3', Rank: 4 },
+			{ Term: 'jobs2', Rank: 5 },
+			{ Term: 'jobs3', Rank: 6 },
+			{ Term: 'jobs2', Rank: 7 },
+			{ Term: 'jobs3', Rank: 8 }];
+
 		baltimoreCounty.keywordSearch.init(function initDone() {
 			done();
-		});
+		}, testSearchTerms);
 	});
 
 	describe('search', function search() {
-		it('suggests searches when provided a keyword', function loadsData() {
+		it('suggests searches when provided a lower-case keyword', function loadsData() {
 			var actual = baltimoreCounty.keywordSearch.search('jobs');
+			expect(actual.length).toBeGreaterThan(1);
+		});
+
+		it('suggests searches when provided an upper-case keyword', function loadsData() {
+			var actual = baltimoreCounty.keywordSearch.search('JOBS');
 			expect(actual.length).toBeGreaterThan(1);
 		});
 

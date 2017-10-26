@@ -34,7 +34,7 @@ baltimoreCounty.constants = (function constants() {
 	var keywordSearch = {
 		urls: {
 			api: rootUrl + '/api/search/',
-			searchTerms: '/sebin/m/n/searchTerms.json'
+			searchTerms: '/sebin/m/l/searchTerms.json'
 		}
 	};
 
