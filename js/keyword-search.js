@@ -172,6 +172,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
 			$searchBox.val($target.text());
 			$searchResults.hide();
+			$searchBox.closest('form').trigger('submit');
 			return;
 		}
 
