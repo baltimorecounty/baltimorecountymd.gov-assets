@@ -5184,7 +5184,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	'use strict';
 
 	var searchData;
-	var maxSearchCount = 5;
+	var maxResultCount = 5;
 
 	var documentClickHandler = function documentClickHandler() {
 		var $searchResults = $('#header-search-results');
@@ -5314,6 +5314,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		var keyCode = event.which || event.keyCode;
 		var $target = $(event.currentTarget);
 		var searchTerm = $target.val().toLowerCase();
+		var maxResults = event.data.maxResultCount;
 		var $searchResults = $('#header-search-results');
 		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
 		var $allSearchResults = $searchResults.find('li');
@@ -5328,7 +5329,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 			return;
 		}
 
-		var matches = search(searchTerm, maxSearchCount);
+		var matches = search(searchTerm, maxResults);
 		var $source = $('#search-results-template');
 		var template = Handlebars.compile($source.html());
 		var html = template(matches);
@@ -5373,7 +5374,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		}
 	};
 
-	$(document).on('keyup', '#q', searchBoxKeyupHandler);
+	$(document).on('keyup', '#q', { maxResultCount: maxResultCount }, searchBoxKeyupHandler);
 	$(document).on('click keyup', '#header-search-results li', { searchBoxSelector: '#q' }, searchSuggestionsClickKeyupHandler);
 	$(document).on('keydown', '#header-search-results li', { searchBoxSelector: '#q' }, scrollStoppingKeydownHandler);
 	$(document).on('keydown', '#q', scrollStoppingKeydownHandler);
