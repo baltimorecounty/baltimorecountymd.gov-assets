@@ -32,8 +32,10 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		return highlightedMatches;
 	};
 
-	var init = function init(callback) {
-		if (sessionStorage && sessionStorage.searchData) {
+	var init = function init(callback, injectedSearchData) {
+		if (injectedSearchData) {
+			searchData = injectedSearchData;
+		} else if (sessionStorage && sessionStorage.searchData) {
 			searchData = JSON.parse(sessionStorage.searchData);
 		} else {
 			$.ajax(constants.keywordSearch.urls.searchTerms)
@@ -113,7 +115,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		if (typeof searchTerm === 'string' && searchTerm.trim().length > 0) {
 			searchData.forEach(function forEach(element) {
 				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
-					if (element.Term.toLowerCase().indexOf(searchTerm) > -1) {
+					if (element.Term.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
 						allMatches.push(element);
 					}
 				}
@@ -133,7 +135,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
 		var keyCode = event.which || event.keyCode;
 		var $target = $(event.currentTarget);
-		var searchTerm = $target.val().toLowerCase();
+		var searchTerm = $target.val();
 		var maxResults = event.data.maxResultCount;
 		var $searchResults = $('#header-search-results');
 		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
