@@ -6047,7 +6047,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 			return;
 		}
 
-		var matches = search(searchTerm);
+		var matches = search(searchTerm, maxSearchCount);
 		var $source = $('#search-results-template');
 		var template = Handlebars.compile($source.html());
 		var html = template(matches);
