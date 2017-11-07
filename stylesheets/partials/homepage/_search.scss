@@ -2,42 +2,42 @@
 
 /*Search Box*/
 .search-container {
-	background: rgba(230, 230, 230, 0.89) none repeat scroll 0 0;
-	margin: 40px auto;
-	max-width: 900px;
-	width: 80%;
+    background: rgba(230, 230, 230, 0.89) none repeat scroll 0 0;
+    margin: 40px auto;
+    max-width: 900px;
+    width: 80%;
 }
 
 .search-input-container {
-	@extend .clearfix;
+  @extend .clearfix;
 }
 
 @media only screen and (max-width: 992px) {
 
-	.search-container {
-		background: none;
-		margin: 0 auto;
-		width: 90%;
-		padding: 10px;
-	}
-	
+  .search-container {
+      background: none;
+      margin: 0 auto;
+      width: 90%;
+      padding: 10px;
+  }
+  
 	.carousel-wrapper {
 
 		.search-container {
 			margin: 0;
-			max-width: 100%;
+      max-width: 100%;
 			position: relative;
 			width: auto;
 
 			.search {
 				padding: 40px;
 			}
-		}
+    	}
 
-		.alert {
-			margin:-20px 20px 0;
-		}
-	}
+    	.alert {
+    		margin:-20px 20px 0;
+    	}
+  	}
 }
 
 @media only screen and (max-width: 767px) {
@@ -53,36 +53,36 @@
 		}
 	}
 	
-	.alert {
-		font-size: .9em;
-		margin: -20px 0 20px;
+  .alert {
+    font-size: .9em;
+    margin: -20px 0 20px;
 
-		h1 {
-			line-height: 1.5;
-		}
-	}
+    h1 {
+      line-height: 1.5;
+    }
+  }
 }
 
 @media only screen and (max-width: 400px) {
-	.search .search-button {
-		padding: 9.5px 5px;
-	}
-	.search {
-		.search-button {
-			padding: 8.5px 5px;
-			height: auto;
-		}
+  .search .search-button {
+    padding: 9.5px 5px;
+  }
+  .search {
+    .search-button {
+      padding: 8.5px 5px;
+      height: auto;
+    }
 
-		.search-input {
-			height: auto;
-			padding: 10px 10px;
-		}
-	}
-	.search-input-container {
-		font-size: .95em;
-	}
-}	
+    .search-input {
+      height: auto;
+      padding: 11px 10px;
+    }
+  }
+  .search-input-container {
+    font-size: .95em;
+  }
+}
 
 
 
-		
+    
