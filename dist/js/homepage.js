@@ -5161,7 +5161,7 @@ baltimoreCounty.constants = (function constants() {
 	var keywordSearch = {
 		urls: {
 			api: rootUrl + '/api/search/',
-			searchTerms: '/sebin/m/n/searchTerms.json'
+			searchTerms: '/sebin/m/l/searchTerms.json'
 		}
 	};
 
@@ -5184,7 +5184,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	'use strict';
 
 	var searchData;
-	var maxSearchCount = 5;
+	var maxResultCount = 5;
 
 	var documentClickHandler = function documentClickHandler() {
 		var $searchResults = $('#header-search-results');
@@ -5212,8 +5212,10 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		return highlightedMatches;
 	};
 
-	var init = function init(callback) {
-		if (sessionStorage && sessionStorage.searchData) {
+	var init = function init(callback, injectedSearchData) {
+		if (injectedSearchData) {
+			searchData = injectedSearchData;
+		} else if (sessionStorage && sessionStorage.searchData) {
 			searchData = JSON.parse(sessionStorage.searchData);
 		} else {
 			$.ajax(constants.keywordSearch.urls.searchTerms)
@@ -5289,19 +5291,21 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		}
 
 		var allMatches = [];
+		var lowerCaseSearchTerm = searchTerm.toLowerCase();
 
-		if (typeof searchTerm === 'string' && searchTerm.trim().length > 0) {
+		if (typeof lowerCaseSearchTerm === 'string' && lowerCaseSearchTerm.trim().length > 0) {
 			searchData.forEach(function forEach(element) {
 				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
-					if (element.Term.indexOf(searchTerm) > -1) {
+					if (element.Term.toLowerCase().indexOf(lowerCaseSearchTerm) > -1) {
 						allMatches.push(element);
 					}
 				}
 			});
 		}
 
-		var topOrderedMatches = orderByNameThenPopularity(searchTerm, allMatches).slice(0, maxMatches);
-		var topHighlightedOrderedMatches = highlightMatches(searchTerm, topOrderedMatches);
+		var topOrderedMatches = orderByNameThenPopularity(lowerCaseSearchTerm, allMatches)
+			.slice(0, maxMatches);
+		var topHighlightedOrderedMatches = highlightMatches(lowerCaseSearchTerm, topOrderedMatches);
 
 		return topHighlightedOrderedMatches;
 	};
@@ -5313,6 +5317,8 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
 		var keyCode = event.which || event.keyCode;
 		var $target = $(event.currentTarget);
+		var searchTerm = $target.val();
+		var maxResults = event.data.maxResultCount;
 		var $searchResults = $('#header-search-results');
 		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
 		var $allSearchResults = $searchResults.find('li');
@@ -5327,7 +5333,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 			return;
 		}
 
-		var matches = search($target.val(), maxSearchCount);
+		var matches = search(searchTerm, maxResults);
 		var $source = $('#search-results-template');
 		var template = Handlebars.compile($source.html());
 		var html = template(matches);
@@ -5350,6 +5356,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
 			$searchBox.val($target.text());
 			$searchResults.hide();
+			$searchBox.closest('form').trigger('submit');
 			return;
 		}
 
@@ -5372,7 +5379,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 		}
 	};
 
-	$(document).on('keyup', '#q', searchBoxKeyupHandler);
+	$(document).on('keyup', '#q', { maxResultCount: maxResultCount }, searchBoxKeyupHandler);
 	$(document).on('click keyup', '#header-search-results li', { searchBoxSelector: '#q' }, searchSuggestionsClickKeyupHandler);
 	$(document).on('keydown', '#header-search-results li', { searchBoxSelector: '#q' }, scrollStoppingKeydownHandler);
 	$(document).on('keydown', '#q', scrollStoppingKeydownHandler);
@@ -5667,3 +5674,38 @@ var ShowNews = (function($) {
     window.onload = deferImages;
 
 })(jQuery, Flickr);
+
+(function TemplateEvents($, TextResizer) {
+	function onDocumentReady() {
+		var textResizer = new TextResizer({
+			listClass: 'resizer-list'
+		});
+	}
+
+	function searchButtonClicked(e) {
+		var val = $('.search-input').val();
+
+		if (val.length === 0) {
+			e.preventDefault();
+		}
+	}
+
+	function toggleMobileNavigation(e) {
+		e.preventDefault();
+		$('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
+	}
+
+	/**
+   * Stuff to kick off when the template is loaded
+   */
+	$(document).ready(onDocumentReady);
+
+	/**
+   * Events
+   */
+	/* Toggle hamburger menu */
+	$(document).on('click', '.hamburger-btn', toggleMobileNavigation);
+
+	/* Prevent a search with no text */
+	$(document).on('click', '.search-button', searchButtonClicked);
+}(jQuery, TextResizer));
