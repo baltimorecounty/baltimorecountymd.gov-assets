@@ -76,3 +76,13 @@ Loads local version of a JS library when the CDN load fails.
 **filename**: cdnFallback.js 
 ### Dependencies
 * [jQuery](https://jquery.com/)
+
+
+## Inline Form Validation (for SE forms)
+Adds inline validation to SiteExecutive forms.
+
+**filename**: inline-form-validation.js  
+**usage**: TBD    
+### Dependencies
+* [jQuery](https://jquery.com/)
+* [Validate](https://validatejs.org/)

@@ -22,8 +22,10 @@
     }
 }
 
-.gsc-completion-container {
-  font-size: 1.2em !important;
+.gsc-completion-container,
+.gsc-completion-container table,
+.gsc-completion-container table td {
+  font-size: 16px !important;
   font-weight: normal !important;
 }
 

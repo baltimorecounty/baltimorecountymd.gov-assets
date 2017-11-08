@@ -1,6 +1,7 @@
 namespacer('baltimoreCounty');
 
-baltimoreCounty.contentFilter = (function($) {
+baltimoreCounty.contentFilter = (function($, utilities) {
+    
 
     var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
         DEFAULT_SEARCH_BOX_SELECTOR = '.bc-filter-form .bc-filter-form-filter',
@@ -22,33 +23,76 @@ baltimoreCounty.contentFilter = (function($) {
                 contentType = options.contentType || DEFAULT_CONTENT_TYPE,
                 $wrapper = safeLoad(wrapperSelector),
                 $searchBox = safeLoad(searchBoxSelector),
-                $clearButton = safeLoad(clearButtonSelector),
-                $errorMessage = safeLoad(errorMessageSelector);
+                $errorMessage = safeLoad(errorMessageSelector),
+				$clearIcon = $('.icon-clear');
 
             $errorMessage.hide();
 
-            /*if (contentType === 'table')
-                $wrapper.find('th').each(setColumnWidthToInitialWidth);*/
-
             $searchBox.on('keyup', function(eventObject) {
-                switch (contentType) {
-                    case 'table':
-                        filterTable($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
-                        break;
-                    case 'list':
-                        filterList($wrapper, $(eventObject.currentTarget).val(), $errorMessage);
-                        break;
-                }            
+                utilities.debounce(function() {
+                    var criteria = $(eventObject.currentTarget).val();
+                    if (criteria.length) {
+                        showIcon('clear');
+                    } else {
+                        showIcon('search');
+                    }
+
+                    switch (contentType) {
+                        case 'table':
+                            filterTable($wrapper, criteria, $errorMessage);
+                            break;
+                        case 'list':
+                            filterList($wrapper, criteria, $errorMessage);
+                            break;
+                    }
+                }, 100);   
             });
             
             $searchBox.closest('form').on('submit', function(e) {
                 return false;
             });
 
-            $clearButton.on('click', function() {
-                clearFilter($wrapper, $searchBox, $errorMessage);
+             $clearIcon.on('click', function() {
+                clearFilter($wrapper, $searchBox, $errorMessage, function() {
+					showIcon('search');
+				});
             });
         },  
+
+		showIcon = function(iconType, callback) {
+			setTimeout(function() {
+				var $iconSearch = $('.icon-search'),
+					$iconClear = $('.icon-clear'),
+					animationDuration = 150,
+					animationPropertiesOut = { 
+						top: 0,
+						opacity: 0
+					},
+					animationPropertiesIn = { 
+						top: '25px',
+						opacity: 1
+					};
+					
+				
+				if (iconType === 'search' && $iconClear.is(':visible')) {
+					$iconClear.animate(animationPropertiesOut, animationDuration, function() {
+						$iconSearch.animate(animationPropertiesIn, animationDuration, function() {
+							if (typeof(callback) === 'function')
+								callback();
+						});
+					});
+				}
+				
+				if (iconType === 'clear' && $iconSearch.is(':visible')) {
+					$iconSearch.animate(animationPropertiesOut, animationDuration, function() {
+						$iconClear.animate(animationPropertiesIn, animationDuration, function() {
+							if (typeof(callback) === 'function')
+								callback();
+						});
+					});				
+				}
+			}, 0);
+		},
 
         setColumnWidthToInitialWidth = function(index, item) {
             var $columnHeader = $(item);
@@ -132,13 +176,15 @@ baltimoreCounty.contentFilter = (function($) {
         /*
          * Clears the filter and displays all nodes in the list.
          */
-        clearFilter = function($wrapper, $searchbox, $errorMessage) {
+        clearFilter = function($wrapper, $searchbox, $errorMessage, callback) {
             var $everythingWeFilter = $wrapper.find('li, div, tr');
 			$everythingWeFilter.show();
             resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
             resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
             $searchbox.val('');
             $errorMessage.hide();
+			if (typeof(callback) === 'function')
+				callback();
         };
 
     /* Reveal! */
@@ -147,4 +193,4 @@ baltimoreCounty.contentFilter = (function($) {
         init: init
     };
 
-})(jQuery);
+})(jQuery, baltimoreCounty.utility);

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>DevLabs - Create a 2D map with a feature layer</title>
+	<style>
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+		}
+
+		#viewDiv {
+			height: 600px;
+			width: 800px;
+			padding: 0;
+			margin: 4em;
+		}
+	</style>
+
+	<link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+
+	<script src="https://js.arcgis.com/4.3/"></script>
+
+	<script>
+		var searchBox;
+
+		require([
+			'esri/Map',
+			'esri/views/MapView',
+			'esri/symbols/PictureMarkerSymbol',
+			'esri/Graphic',
+			'esri/geometry/Point',
+			'esri/widgets/Search',
+			'dojo/domReady!'
+		], function (Map, MapView, PictureMarkerSymbol, Graphic, Point, Search) {
+
+			var mapSettings = {
+				basemap: "topo-vector"
+			};
+			var map = new Map(mapSettings);
+
+			var mapViewSettings = {
+				container: "viewDiv",
+				map: map,
+				zoom: 13,
+				center: [-76.6063945, 39.4001857]
+			};
+			var view = new MapView(mapViewSettings);
+
+			var viewClickHandler = function(e) {
+				var longitude = e.mapPoint.longitude; // +  .00045;
+				var latitude = e.mapPoint.latitude; // + .00115;
+				var point = new Point(longitude, latitude);
+				var pictureMarkerSymbol = new PictureMarkerSymbol({
+					url: 'http://dev.baltimorecountymd.gov/sebin/n/f/icon-marker-my-report.png', 
+					height: 60, 
+					width: 35
+				});
+				var marker = new Graphic(point, pictureMarkerSymbol);
+
+				view.graphics.removeAll();
+				view.graphics.add(marker);
+			};
+			view.on('click', viewClickHandler);
+
+			var search = new Search({
+				view: view
+			});
+			view.ui.add(search, "top-right");
+			search.container.style.display = 'none';
+			searchBox = search;
+		});
+
+
+	</script>
+</head>
+
+<body>
+	<div id="viewDiv"></div>
+	<input type="text" id="test">
+
+	<script>
+		document.getElementById('test').addEventListener('keyup', function(event) {
+			document.getElementById(searchBox.id + '_input').value = event.currentTarget.value;
+
+			console.log(searchBox);
+		});
+	</script>
+</body>
+
+</html>

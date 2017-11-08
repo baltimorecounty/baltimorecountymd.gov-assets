@@ -1,0 +1,131 @@
+<!doctype html>
+
+<html lang="en-us">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+	<script>
+		$.ajax('https://services.baltimorecountymd.gov/api/citysourced/feeds/twitter')
+			.done(function(data) {
+				var $tweets = $('#socialData');
+
+				$.each(data, function(index, item) {
+					var text = data[index].text,
+						pubDate = new Date(data[index].created_at),
+						months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+						days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+						displayDate = days[pubDate.getDay()] + " " + (pubDate.getHours() > 12 ? pubDate.getHours() - 12 : pubDate.getHours()) + ":" + (pubDate.getMinutes() < 10 ? "0" + pubDate.getMinutes() : pubDate.getMinutes()) + (pubDate.getHours() < 12 ? "a.m. " : "p.m. ") + months[pubDate.getMonth()] + " " + pubDate.getDate() + ", " + pubDate.getFullYear(),
+						html = "<div class=\"social twitter\"><div class=\"logo\"></div><p>" + text + "</p><p><em class=\"date\" data-date-code=\"" + pubDate.getTime() + "\">" + displayDate + "</em></p></div>"
+					
+					html = html.replace(/(https?:[^\s<]+)/g, "<a href=\"$1\">$1</a>");
+					html = html.replace(/(pic\.twitter\.com[^\s<]+)/g, "<a href=\"http://$1\">$1</a>");
+
+					$tweets.append(html);
+
+				});
+			
+				$.ajax('https://services.baltimorecountymd.gov/api/citysourced/feeds/facebook')
+					.done(function(data) {
+						var $socialData = $('#socialData');
+						
+						$.each(data, function(index, item) {
+							var message = item.Message,
+								pubDate = new Date(item.Created_Time),
+								months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+								days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+								displayDate = days[pubDate.getDay()] + " " + (pubDate.getHours() > 12 ? pubDate.getHours() - 12 : pubDate.getHours()) + ":" + (pubDate.getMinutes() < 10 ? "0" + pubDate.getMinutes() : pubDate.getMinutes()) + (pubDate.getHours() < 12 ? "a.m. " : "p.m. ") + months[pubDate.getMonth()] + " " + pubDate.getDate() + ", " + pubDate.getFullYear(),
+								html = "<div class=\"social facebook\"><div class=\"logo\"></div><p>" + message + "</p><p><em class=\"date\" data-date-code=\"" + pubDate.getTime() + "\">" + displayDate + "</em></p></div>"
+
+							html = html.replace(/(https?:[^\s<]+)/, "<a href=\"$1\">$1</a>");
+							
+							$socialData.append(html);
+						});
+
+						$(function() {
+							var $socialData = $('#socialData');
+							var sortedChildren = $socialData.children().toArray().sort(function(a, b) {
+								var a_date = $(a).find('.date').attr('data-date-code'),
+									b_date = $(b).find('.date').attr('data-date-code');
+
+								if (a_date > b_date)
+									return -1;
+								if (a_date === b_date)
+									return 0;
+								if (a_date < b_date)
+									return 1;
+							});
+							$socialData.detach();
+							
+							$("body").append(sortedChildren);
+						});
+					});
+			});
+
+	</script>
+
+	<title>CitySourced - Social</title>
+
+	<style>
+		body {
+			background: #999; 
+			font-family: Arial, Helvetica, sans-serif;
+			margin: 0;
+			padding: 0;
+			font-size: 16px;
+		}
+
+		.social {
+			position: relative;
+			background: white;
+			margin: 1em;
+			padding: 1em;
+			box-shadow: 0px 4px 10px #666;
+			border-radius: 4px;
+		}
+
+		.facebook {
+			border-left: 40px solid #3B5998;
+		}
+
+		.twitter {
+			border-left: 40px solid #4099FF;
+		}
+
+		.social p {
+			color: #333;
+			margin: .5em;
+		}			
+
+		.social p em {
+			color: #999;
+			font-size: .8em;
+		}
+
+		.logo {
+			position: absolute;
+			left: -32px;
+			top: 8px;
+			height: 24px;
+			width: 24px;
+		}
+
+		.facebook .logo {
+			background: url(images/social-logo-facebook.png);
+		}
+
+		.twitter .logo {
+			background: url(images/social-logo-twitter.png);
+		}
+	</style>
+</head>
+<body>
+	<div id="socialData"></div>
+
+	<script>
+		
+	</script>
+</body>
+</html>
