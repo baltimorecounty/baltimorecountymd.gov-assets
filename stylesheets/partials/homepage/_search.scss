@@ -18,7 +18,7 @@
       background: none;
       margin: 0 auto;
       width: 90%;
-      padding: 10px;
+      padding: 0;
   }
   
 	.carousel-wrapper {
@@ -34,10 +34,10 @@
 			}
     	}
 
-    	.alert {
-    		margin:-20px 20px 0;
-    	}
-  	}
+		.alert {
+			margin: 0 20px;
+		}
+	}
 }
 
 @media only screen and (max-width: 767px) {

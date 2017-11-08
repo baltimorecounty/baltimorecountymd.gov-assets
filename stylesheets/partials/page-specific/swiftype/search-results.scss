@@ -1,0 +1,45 @@
+@import "../../../modules/colors";
+@import "../../../modules/variables";
+
+#maincontainer {
+	.search-results {
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			border-top: 1px solid $lightest-gray;
+
+			li {
+				border-bottom: 1px dotted $navy;
+				padding-top: 2em;
+
+				.title {
+					font-family: $headline-font;
+					font-size: 22px !important;
+					color: $navy !important;
+					font-weight: normal;
+					margin: 0 0 15px;
+					text-decoration: none !important;					
+				}
+
+				p { 
+					em {
+						font-style: normal;
+						font-weight: bold;
+					}
+				}
+
+				.url {
+					color: $navy !important;
+					font-weight: bold;
+					font-size: .8em;
+					word-wrap: break-word;
+				}
+			}
+		}
+
+		.pager {
+			margin: 1em 0;
+		}
+	}
+}

@@ -11,6 +11,7 @@
 @import "partials/base/footer";
 @import "partials/base/image";
 
+@import "partials/components/autocomplete";
 @import "vendor/slick-carousel";
 
 @import "partials/components/alert";
@@ -42,6 +43,7 @@
 @import "partials/components/photoGallery";
 
 /*@import "partials/components/forms";*/
+@import "partials/components/formControls";
 
 @import "partials/inside/rateForm";
 @import "partials/homepage/search";

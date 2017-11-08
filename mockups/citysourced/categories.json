@@ -1,4 +1,29 @@
 [{
+	"name": "Budget and Finance",
+	"id": 1023380,
+	"types": [{
+			"name": "Bids, disbursements and vendors",
+			"id": 1024925
+		},
+		{
+			"name": "Parking, red light and speed camera violations",
+			"id": 1024930
+		},
+		{
+			"name": "Personal injury and property claims",
+			"id": 1024932
+		},
+		{
+			"name": "Property taxes",
+			"id": 1024934
+		},
+		{
+			"name": "Other budget and finance problems",
+			"id": 1024937
+		}
+	],
+	"description": 1024808
+}, {
 	"name": "Building and Development",
 	"id": 1024816,
 	"types": [{
@@ -28,9 +53,28 @@
 		"name": "MD",
 		"id": 1023615
 	}],
-	"otherDescription": 1024805,
 	"description": 1024810,
 	"types": [{
+			"name": "Abandoned Vehicle (unregistered and/or inoperable)",
+			"id": 1023415
+		}, {
+			"name": "Excessive animal feces in neighbor's yard",
+			"id": 1023417
+		},
+		{
+			"name": "Failure to maintain plumbing system in a rental home",
+			"id": 1024825
+		},
+		{
+			"name": "Failure to provide carbon monoxide detectors in a rental home",
+			"id": 1024824
+		},
+
+		{
+			"name": "Graffiti",
+			"id": 1023414
+		},
+		{
 			"name": "Junk, trash, or debris on private property",
 			"id": 1023412
 		},
@@ -39,36 +83,12 @@
 			"id": 1024826
 		},
 		{
-			"name": "Tall grass and weeds in yard",
-			"id": 1023413
-		},
-		{
-			"name": "Graffiti",
-			"id": 1023414
-		},
-		{
-			"name": "Abandoned Vehicle (unregistered and/or inoperable)",
-			"id": 1023415
-		},
-		{
-			"name": "Building Without a Permit",
-			"id": 1023416
-		},
-		{
-			"name": "Excessive animal feces in neighbor's yard",
-			"id": 1023417
-		},
-		{
-			"name": "Failure to provide carbon monoxide detectors in a rental home",
-			"id": 1024824
-		},
-		{
-			"name": "Failure to maintain plumbing system in a rental home",
-			"id": 1024825
-		},
-		{
 			"name": "Rats",
 			"id": 1024584
+		},
+		{
+			"name": "Tall grass and weeds in yard",
+			"id": 1023413
 		},
 		{
 			"name": "Other code complaint",
@@ -259,4 +279,29 @@
 		"name": "Unregistered rental property",
 		"id": 1024829
 	}]
+}, {
+	"name": "Website",
+	"id": 1024585,
+	"types": [{
+			"name": "Broken link",
+			"id": 1024587
+		},
+		{
+			"name": "Typo/Misspelling",
+			"id": 1024588
+		},
+		{
+			"name": "Out of date information",
+			"id": 1024589
+		},
+		{
+			"name": "Technical error message",
+			"id": 1024590
+		},
+		{
+			"name": "Other website problem",
+			"id": 1024591
+		}
+	],
+	"description": 1024813
 }]

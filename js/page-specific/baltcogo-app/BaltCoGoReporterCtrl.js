@@ -1,302 +1,317 @@
-(function (app, querystringer) {
+(function BaltCoGoReporterCtrl(app, querystringer) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
 
-	function reporterController($http, $scope, $timeout, mapServiceComposite, reportService) {
+	function reporterController($http,
+		$scope,
+		$timeout,
+		mapServiceComposite,
+		reportService,
+		CONSTANTS) {
+		var self = this;
+		var categoryId = querystringer.getAsDictionary().categoryid * 1;
+		var map;
 
-		var self = this,
-			targetCounty = 'Baltimore County',
-			categoryId = querystringer.getAsDictionary().categoryid * 1,
-			map;
-
-		$http.get('/sebin/y/z/animal-breeds.json').then(breedSuccessHandler, errorHandler);
-		$http.get('/sebin/u/t/animal-colors.json').then(colorSuccessHandler, errorHandler); 
-		$http.get('/sebin/a/d/animal-types.json').then(animalTypeSuccessHandler, errorHandler);
-		$http.get('/sebin/q/n/categories.json').then(categorySuccessHandler, errorHandler);
-		$http.get('/sebin/m/z/pet-types.json').then(petTypeSuccessHandler, errorHandler);
-		
 		self.isAnimal = false;
-		self.page = 1;		
+		self.page = 1;
 		self.isDone = false;
 		self.isSuccess = false;
 		self.issueId = '';
 		self.isLoading = false;
 		self.latitude = 0;
 		self.longitude = 0;
+		self.category = 0;
 
 		var mapSettings = {
-				center: {
-					lat: 39.4003288,
-					lng: -76.60652470000002
-				},
-				scrollwheel: false,
-				zoom: 14,
-				mapTypeId: 'roadmap',
-				mapTypeControl: false,
-				streetViewControl: false
+			center: {
+				lat: CONSTANTS.locations.courtHouse.latitude,
+				lng: CONSTANTS.locations.courtHouse.longitude
 			},
-			autocompleteSettings = {
-				types: ['geocode']
-			};
+			scrollwheel: false,
+			zoom: 14,
+			mapTypeId: 'roadmap',
+			mapTypeControl: false,
+			streetViewControl: false,
+			gestureHandling: 'greedy'
+		};
 
 		map = mapServiceComposite.createMap('map', mapSettings);
-		google.maps.event.addListener(map, 'click', mapClickHandler);
 
-		angular.element('#citysourced-reporter-form').on('keyup keypress', preventSubmitOnEnterPressHandler);
-		angular.element('#address').on('keyup', autocompleteHandler);
+		$http.get(CONSTANTS.urls.json.animalBreeds).then(breedSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.animalColors).then(colorSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.animalTypes).then(animalTypeSuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.categories).then(categorySuccessHandler, errorHandler);
+		$http.get(CONSTANTS.urls.json.petTypes).then(petTypeSuccessHandler, errorHandler);
+
+		google.maps.event.addListener(map, 'click', mapClickHandler);
+		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
+		angular.element(document).on('keyup', '#address', autocompleteHandler);
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 
+		self.fileReportClick = function fileReportClick() {
+			if (!validatePanel()) { return; }
 
-		self.fileReportClick = function () {
-			if (!validatePanel()) 
-				return;
+			/** * Static fields ********* */
 
-			/*** Static fields **********/
-			
 			var data = [{
-					name: 'Category',
-					id: self.category,
-					value: getValueForId(self.categoryData, self.category)
-				},
-				{
-					name: 'SubCategory',
-					id: self.subCategory,
-					value: getValueForId(self.subCategories, self.subCategory)
-				},
-				{
-					name: 'Description',
-					id: self.descriptionId,
-					value: self.description
-				},
-				{
-					name: 'Latitude',
-					value: self.latitude
-				},
-				{
-					name: 'Longitude',
-					value: self.longitude
-				},
-				{
-					name: 'FirstName',
-					value: self.firstName
-				},
-				{
-					name: 'LastName',
-					value: self.lastName
-				},
-				{
-					name: 'Email',
-					value: self.email
-				},
-				{
-					name: 'DeviceNumber',
-					value: self.deviceNumber
-				}
+				name: 'Category',
+				id: self.category.id,
+				value: self.category.name
+			},
+			{
+				name: 'SubCategory',
+				id: self.subCategory.id,
+				value: self.subCategory.name
+			},
+			{
+				name: 'Description',
+				id: self.descriptionId,
+				value: self.description
+			},
+			{
+				name: 'Latitude',
+				value: self.latitude
+			},
+			{
+				name: 'Longitude',
+				value: self.longitude
+			},
+			{
+				name: 'FirstName',
+				value: self.firstName
+			},
+			{
+				name: 'LastName',
+				value: self.lastName
+			},
+			{
+				name: 'Email',
+				value: self.email
+			},
+			{
+				name: 'DeviceNumber',
+				value: self.deviceNumber
+			}
 			];
 
-			/*** Conditional fields **********/
+			/** * Conditional fields ********* */
 
-			if (self.locationDescription) data.push({
-				name: 'Description Of Location',
-				id: self.descriptionOfLocationId,
-				value: self.locationDescription
-			});
-
-			if (self.otherDescription) data.push({
-				name: 'Other Description',
-				id: self.otherDescriptionId,
-				value: self.otherDescription
-			});
-
-			if (self.petType) data.push({
-				name: 'Pet Type',
-				id: self.petType.id,
-				value: getValueForId(self.petTypeData, self.petType.id)
-			});
-
-			if (self.petSex) data.push({
-				name: 'Sex',
-				id: self.petSex.id,
-				value: getValueForId(self.sex, self.petSex.id)
-			});
-
-			if (self.otherPetType) data.push({
-				name: 'Other Pet Type',
-				id: self.otherPetType,
-				value: getValueForId(self.animalTypeData, self.otherPetType)
-			});
-
-			if (self.primaryBreed) data.push({
-				name: 'Primary Breed',
-				id: self.primaryBreed,
-				value: getValueForId(self.breeds, self.primaryBreed)
-			});
-
-			if (self.primaryColor) data.push({
-				name: 'Primary Color',
-				id: self.primaryColor,
-				value: getValueForId(self.animalColorData, self.primaryColor)
-			});
-
-			if (self.animalDescription) data.push({
-				name: 'Description Of Animal',
-				id: angular.element('#animalDescription').attr('data-cs-id') * 1,
-				value: self.animalDescription
-			});
-
-			if (self.streetAddress) data.push({
-				name: 'Complainant Address',
-				id: self.streetAddressId,
-				value: self.streetAddress
-			});
-
-			if (self.city) data.push({
-				name: 'Complainant City',
-				id: self.cityId,
-				value: self.city
-			});
-
-			if (self.state) {
-				var stateId = self.state.id ? self.state.id : self.state;
-
+			if (self.locationDescription) {
 				data.push({
-					name: 'Complainant State',
-					id: stateId,
-					value: getValueForId(self.states, stateId)
+					name: 'Description Of Location',
+					id: self.descriptionOfLocationId,
+					value: self.locationDescription
 				});
 			}
 
-			if (self.zipCode) data.push({
-				name: 'Complainant Zip Code',
-				id: self.zipCodeId,
-				value: self.zipCode
-			});
+			if (self.otherDescription) {
+				data.push({
+					name: 'Other Description',
+					id: self.otherDescriptionId,
+					value: self.otherDescription
+				});
+			}
 
-			/*** POST **********/
+			if (self.petType) {
+				data.push({
+					name: 'Pet Type',
+					id: self.petType.id,
+					value: getValueForId(self.petTypeData, self.petType.id)
+				});
+			}
+
+			if (self.petSex) {
+				data.push({
+					name: 'Sex',
+					id: self.petSex.id,
+					value: getValueForId(self.sex, self.petSex.id)
+				});
+			}
+
+			if (self.otherPetType) {
+				data.push({
+					name: 'Other Pet Type',
+					id: self.otherPetType,
+					value: getValueForId(self.animalTypeData, self.otherPetType)
+				});
+			}
+
+			if (self.primaryBreed) {
+				data.push({
+					name: 'Primary Breed',
+					id: self.primaryBreed,
+					value: getValueForId(self.breeds, self.primaryBreed)
+				});
+			}
+
+			if (self.primaryColor) {
+				data.push({
+					name: 'Primary Color',
+					id: self.primaryColor,
+					value: getValueForId(self.animalColorData, self.primaryColor)
+				});
+			}
+
+			if (self.animalDescription) {
+				data.push({
+					name: 'Description Of Animal',
+					id: angular.element('#animalDescription').attr('data-cs-id') * 1,
+					value: self.animalDescription
+				});
+			}
+
+			if (self.streetAddress) {
+				data.push({
+					name: 'Complainant Address',
+					id: self.streetAddressId,
+					value: self.streetAddress
+				});
+			}
+
+			if (self.city) {
+				data.push({
+					name: 'Complainant City',
+					id: self.cityId,
+					value: self.city
+				});
+			}
+
+			if (self.zipCode) {
+				data.push({
+					name: 'Complainant Zip Code',
+					id: self.zipCodeId,
+					value: self.zipCode
+				});
+			}
+
+			/** * POST ********* */
 
 			self.isLoading = true;
 			self.isDone = true;
 
-			reportService.post(data, 
-				function(responseData) {
+			reportService.post(data,
+				function postSuccess(responseData) {
 					self.isLoading = false;
 					self.isSuccess = true;
 					self.issueId = JSON.parse(responseData).CsResponse.ReportId;
-				}, 
-				function(errorData) {
+				},
+				function postError(errorData) {
 					self.isLoading = false;
 					console.log(errorData);
 				});
 		};
 
-		self.loadSubCategories = function () {
+		self.loadSubCategories = function loadSubCategories() {
 			if (!self.category) {
 				self.subCategories = [];
 				return;
 			}
 
-			angular.forEach(self.categoryData, function (element) {
+			angular.forEach(self.categoryData, function forEachCategoryData(element) {
 				clearCategoryData();
-
-				if (element.id == self.category) {
-
+				if (element.id === self.category.id) {
 					self.subCategories = element.types;
-					
+
 					if (element.states) {
 						self.states = element.states;
 						self.state = element.states[0]; // Maryland
 					} else {
 						self.states = [];
 					}
-					
+
 					if (element.fields) {
 						self.streetAddressId = element.fields.streetAddress;
 						self.cityId = element.fields.city;
 						self.zipCodeId = element.fields.zipCode;
 					}
 
-					self.isAnimal = element.name.toLowerCase() === 'pets and animals';					
+					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
 
-					$timeout(function() {
-						if (element.descriptionOfAnimal)
+					$timeout(function descriptionSettingWrapper() {
+						if (element.descriptionOfAnimal) {
 							self.descriptionOfAnimalId = element.descriptionOfAnimal;
+						}
 
-						if (element.descriptionOfLocation)
+						if (element.descriptionOfLocation) {
 							self.descriptionOfLocationId = element.descriptionOfLocation;
+						}
 
-						if (element.otherDescription)
+						if (element.otherDescription) {
 							self.otherDescriptionId = element.otherDescription;
+						}
 					}, 0);
 
 
 					self.descriptionId = element.description;
-
-					
 				}
 			});
 		};
 
-		self.nextClick = function () {
+		self.nextClick = function nextClick() {
 			if (validatePanel()) {
-				self.page++; 
+				self.page += 1;
+
+				if (self.page === 2 && self.category.name === 'Website') {
+					self.latitude = CONSTANTS.locations.courtHouse.latitude;
+					self.longitude = CONSTANTS.locations.courtHouse.longitude;
+					self.page = 3;
+				}
 
 				if (self.page === 2) {
-					setTimeout(function() {
-						var currentCenter = map.getCenter();
-						google.maps.event.trigger(map, "resize");
-						map.setCenter(currentCenter);
-					}, 500);
+					$timeout(mapResize, 500);
 				}
-			}
-			else
-				$scope.citySourcedReporterForm.$setSubmitted();				
+			} else { $scope.citySourcedReporterForm.$setSubmitted(); }
 		};
 
-		self.prevClick = function () {
-			self.page--; 
+		self.prevClick = function prevClick() {
+			self.page -= 1;
+
+			if (self.page === 2 && self.category.name === 'Website') {
+				self.latitude = CONSTANTS.locations.courtHouse.latitude;
+				self.longitude = CONSTANTS.locations.courtHouse.longitude;
+				self.page = 1;
+			}
+
 			if (self.page === 2) {
-				setTimeout(function() {
-					var currentCenter = map.getCenter();
-					google.maps.event.trigger(map, "resize");
-					map.setCenter(currentCenter);
-				}, 500);
+				$timeout(mapResize, 500);
 			}
 		};
 
-		self.trackBreed = function () {
-			angular.element.each(self.animalBreedData, function (index, breed) {
+		self.setLocation = function setLocation(sender, longitude, latitude) {
+			self.address = sender.autocompleteResult.address;
+			self.longitude = longitude;
+			self.latitude = latitude;
+			self.autocompleteResults = [];
+
+			mapServiceComposite.pan(map, latitude, longitude);
+			mapServiceComposite.createMarker(map, latitude, longitude);
+		};
+
+		self.trackBreed = function trackBreed() {
+			angular.forEach(self.animalBreedData, function eachAnimalBreedData(breed) {
 				if (breed.id === self.petType.id) {
 					self.breeds = breed.breeds ? breed.breeds : [];
 					self.sex = breed.sex;
-					return true;
 				}
 			});
 		};
 
-		self.lookupAddress = function(address) {
-			self.autocompleteResults = [];
-			self.address = address;
-			geocodeAndMarkAddress(address);
-		};
+		/** *** Private - Helpers **** */
 
-		/***** Private - Helpers *****/
-
-		function autoSelectCategories(categoryId) {
-			angular.forEach(self.categoryData, function(categoryItem) {
-				if (categoryItem.id === categoryId) {
+		function autoSelectCategories(selectedCategoryId) {
+			angular.forEach(self.categoryData, function forEachCategoryData(categoryItem) {
+				if (categoryItem.id === selectedCategoryId) {
 					self.category = categoryItem;
-					self.loadSubCategories(categoryItem.id);
-				} else {
-					if (categoryItem.types) {
-						angular.forEach(categoryItem.types, function(typeItem) {
-							if (typeItem.id === categoryId) {
-								self.category = categoryItem;
-								self.loadSubCategories(categoryItem.id);
-								self.subCategory = typeItem;
-							}
-						});						
-					}
+					self.loadSubCategories();
+				} else if (categoryItem.types) {
+					angular.forEach(categoryItem.types, function forEachCategoryItemType(typeItem) {
+						if (typeItem.id === selectedCategoryId) {
+							self.category = categoryItem;
+							self.loadSubCategories();
+							self.subCategory = typeItem;
+						}
+					});
 				}
 			});
 		}
@@ -311,72 +326,74 @@
 			self.animalDescription = '';
 			self.streetAddress = '';
 			self.city = '';
-			self.zipCode = '';	
+			self.zipCode = '';
 			self.descriptionOfAnimalId = 0;
 			self.descriptionOfLocationId = 0;
 			self.otherDescriptionId = 0;
-		
-		}
-
-		function geocodeAndMarkAddress(singleLineAddress) {
-			mapServiceComposite.addressLookup(singleLineAddress, function(foundAddress) {
-				self.latitude = foundAddress.location.y;
-				self.longitude = foundAddress.location.x;
-				mapServiceComposite.pan(map, self.latitude, self.longitude);
-				mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-			}, function(err) {
-				displayAddressError();
-			});
 		}
 
 		function getValueForId(nameIdData, id) {
 			var name = '';
 
-			angular.forEach(nameIdData, function (element) {
+			angular.forEach(nameIdData, function forEachNameId(element) {
 				if (element.id === id) {
 					name = element.name;
 					return true;
 				}
+
+				return false;
 			});
 
 			return name;
 		}
 
-		function getFirstSuggestion() {
-			var pacItem = angular.element('.pac-item').first(),
-				firstSuggestion = pacItem.find('.pac-item-query').text() + ' ' + pacItem.find('> span').last().text();
-			
-			return firstSuggestion;
+		function mapResize() {
+			var currentCenter = map.getCenter();
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(currentCenter);
 		}
 
 		function validatePanel() {
-			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]'),
-				requiredElementsCount = requiredElements.length,
-				validRequiredElementsCount = requiredElements.filter('.ng-valid').length,
-				controls = $scope.citySourcedReporterForm.$$controls;
+			var requiredElements = angular.element('#citysourced-reporter-form .panel:visible [required]');
+			var requiredElementsCount = requiredElements.length;
+			var controls = $scope.citySourcedReporterForm.$$controls;
+			var isAddressForm = false;
+			var isAddressValid = true;
 
-			angular.forEach(controls, function (formControl, key, obj) {
+			angular.forEach(controls, function forEachControl(formControl) {
 				if (formControl.$$element.closest('.panel').is(':visible')) {
-					if (formControl.$pristine)
+					var isLatitude = formControl.$$element.is('#map-latitude');
+					var isLongitude = formControl.$$element.is('#map-longitude');
+					var isAddress = formControl.$$element.is('#address');
+					var hasInvalidAddress = self.latitude === 0 || self.longitude === 0;
+
+					if (formControl.$pristine) {
 						formControl.$setDirty();
-					if (formControl.$untouched)
-						formControl.$setTouched();
-
-					if (formControl.$$element.is('#address')) {
-						if (self.latitude === 0 || self.longitude === 0) {
-							formControl.$setValidity('required', false);
-						}
-
 					}
-				}			
+
+					if (formControl.$untouched) {
+						formControl.$setTouched();
+					}
+
+					if ((isLatitude || isLongitude || isAddress)) {
+						isAddressForm = true;
+
+						if (hasInvalidAddress) {
+							formControl.$setValidity('required', false);
+							isAddressValid = false;
+						}
+					}
+				}
 			});
 
-			return requiredElementsCount === validRequiredElementsCount;
+			var validRequiredElementsCount = requiredElements.filter('.ng-valid').length;
+
+			return isAddressForm ? isAddressValid : requiredElementsCount === validRequiredElementsCount;
 		}
 
-		/***** Private - Handlers *****/		
+		/** *** Private - Handlers **** */
 
-		function autocompleteHandler(event) {	
+		function autocompleteHandler(event) {
 			var keycode = event.which || event.keyCode;
 
 			if (keycode === 40) {
@@ -387,26 +404,30 @@
 
 			if (keycode === 13) {
 				if (self.autocompleteResults.length > 0) {
-					var topAutocompleteResult = self.autocompleteResults[0];
-					self.address = topAutocompleteResult;
-					self.autocompleteResults = [];
+					var $topAutocompleteResult = angular.element('.autocomplete-results button').first();
+					$topAutocompleteResult.trigger('click');
 					$scope.$apply();
-					geocodeAndMarkAddress(topAutocompleteResult);
 				}
-			} else {
-				if (self.address && self.address.trim().length > 3) {
-					mapServiceComposite.suggestAddresses(self.address, function(autoCompleteResults) {
-						self.autocompleteResults = autoCompleteResults;
-						$scope.$apply();
-					});
-				}
+				return;
 			}
-		}
 
-		function autocompletePlaceChangedHandler() {	
-			var place = autocomplete.getPlace();
-			if (place.formatted_address)
-				geocodeAndMarkAddress(place.formatted_address);			
+			if (keycode === 46 || keycode === 8) {
+				self.longitude = 0;
+				self.latitude = 0;
+			}
+
+			if (self.address && self.address.trim().length > 3) {
+				var addressParts = self.address.trim().split(',');
+				var addressPartToSearch = addressParts[0];
+
+				mapServiceComposite
+					.suggestAddresses(addressPartToSearch,
+						function displayAutoCompleteResults(autoCompleteResults) {
+							self.autocompleteResults = autoCompleteResults;
+						});
+			} else {
+				self.autocompleteResults = [];
+			}
 		}
 
 		function autocompleteResultButtonKeyboardNavigationHandler(event) {
@@ -416,13 +437,13 @@
 			if (!$target.is('.autocomplete-results button')) {
 				return;
 			}
-			
+
 			if (keycode === 27 && angular.element('.autocomplete-results').is(':visible')) {
 				self.autocompleteResults = [];
 				$scope.$apply();
 			}
 
-			event.preventDefault();			
+			event.preventDefault();
 
 			if (keycode === 13 || keycode === 32) {
 				$target.trigger('click');
@@ -447,44 +468,49 @@
 
 		function categorySuccessHandler(response) {
 			self.categoryData = response.data;
-			if (categoryId)
+			if (categoryId) {
 				autoSelectCategories(categoryId);
+			}
 		}
 
 		function colorSuccessHandler(response) {
 			self.animalColorData = response.data;
 		}
 
-		function displayAddressError() {
-			angular.element('#map').closest('cs-form-control').addClass('error');
-			$scope.citySourcedReporterForm.address.$setDirty();
-			self.address = '';
-			$scope.$apply();
-		}
-
 		function errorHandler(err) {
 			console.log(err);
 		}
 
-		function mapClickHandler(event) {			
-			var $wrapper = angular.element('#map').closest('cs-form-control'),
-				addressField = $scope.citySourcedReporterForm.address;
-			
+		function mapClickHandler(event) {
+			var $wrapper = angular.element('#map').closest('cs-form-control');
+			var addressField = $scope.citySourcedReporterForm.address;
+
 			self.autocompleteResults = [];
 			self.latitude = event.latLng.lat();
 			self.longitude = event.latLng.lng();
 
-			mapServiceComposite.reverseGeocode(self.latitude, self.longitude, function (response) {
-				$wrapper.removeClass('error');
-				mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-				self.address = response.address.Street.toLowerCase() + ', ' + response.address.City.toLowerCase() + ', ' + response.address.State.toUpperCase();
-				$scope.$apply();
-			}, function(err) {
-				$wrapper.addClass('error');
-				addressField.$setDirty();
-				self.address = '';				
-				$scope.$apply();
-			});
+			mapServiceComposite
+				.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
+					$wrapper.removeClass('error');
+
+					if (response.data.error) {
+						self.address = reportMapError($wrapper, addressField);
+					} else {
+						mapServiceComposite.createMarker(map, self.latitude, self.longitude);
+						self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
+					}
+				}, function error(a) {
+					self.address = reportMapError($wrapper, addressField);
+				});
+		}
+
+		function reportMapError($wrapper, addressField) {
+			$wrapper.addClass('error');
+			addressField.$setDirty();
+			self.latitude = 0;
+			self.longitude = 0;
+			mapServiceComposite.clearMarkers();
+			return '';
 		}
 
 		function petTypeSuccessHandler(response) {
@@ -496,9 +522,7 @@
 
 			if (keyCode === 13) {
 				event.preventDefault();
-			}		
+			}
 		}
-
 	}
-
-})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer);
+}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer));

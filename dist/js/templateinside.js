@@ -110,6 +110,38 @@ function namespacer(ns) {
 }
 namespacer('baltimoreCounty.utility');
 
+baltimoreCounty.utility.binarySearch = (function binarySearchClosure() {
+	'use strict';
+
+	var binarySearch = function binarySearch(list, item) {
+		var min = 0;
+		var max = list.length - 1;
+		var guess;
+
+		while (min <= max) {
+			guess = Math.floor((min + max) / 2);
+
+			if (list[guess] === item) {
+				return guess;
+			}
+
+			if (list[guess] < item) {
+				min = guess + 1;
+			} else {
+				max = guess - 1;
+			}
+		}
+
+		return -1;
+	};
+
+	return {
+		binarySearch: binarySearch
+	};
+}());
+
+namespacer('baltimoreCounty.utility');
+
 baltimoreCounty.utility.cdnFallback = (function() {
 
     /*
@@ -219,6 +251,72 @@ baltimoreCounty.utility.formValidator = (function($) {
             requiredFieldPatternValidator: requiredFieldPatternValidator
         };
 })(jQuery);
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.format = (function () {
+    'use strict';
+
+    function formatCurrency(input) {
+        if (!input) {
+            return;
+        }
+
+        if (input && typeof input === 'string') {
+            input = parseFloat(input);
+        }
+
+        var currencyFormatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            // the default value for minimumFractionDigits depends on the currency
+            // and is usually already 2
+        });
+
+        return currencyFormatter.format(input);
+    }
+
+    function formatPhoneNumber(input, format) {
+        if (typeof input === 'number') {
+            input = input.toString();
+        }
+
+        var exp = /\d+/g;
+        var numbersOnly = input.match(exp).join('').split('');
+        var numberOfXs = format.split('').filter(function (char) {
+            return char === 'x';
+        }).length;
+        var hasOneAsPrefix = numberOfXs + 1 === numbersOnly.length;
+
+        // 1 has been included in the str, but is not in the desired format
+        if (hasOneAsPrefix) {
+            numbersOnly.shift();
+        }
+
+        if (numberOfXs === numbersOnly.length || hasOneAsPrefix) {
+            numbersOnly.forEach(function (number) {
+                format = format.replace('x', number);
+            });
+        }
+        else {
+            console.error("Incorrect Format. Double Check your values.");
+            return null;
+        }
+
+        return format;
+    }
+
+    var _formatters = {
+        currency: formatCurrency,
+        phoneNumber: formatPhoneNumber
+    };
+
+    function format(key, val, strFormat) {
+        return _formatters[key](val, strFormat);
+    }
+
+    return format;
+})();
 ;(function($, undefined) {
     'use strict';
 
@@ -362,6 +460,42 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
     };
 
 })();
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.validate = (function () {
+    'use strict';
+
+    function validatePhoneNumber(str) {
+        /**
+             * Valid Formats:
+                (123)456-7890
+                (123) 456-7890
+                123-456-7890
+                123.456.7890
+                1234567890
+                +31636363634 (not working)
+                075-63546725 (not working)
+            */
+        //var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+        var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+        return exp.test(str);
+    }
+
+    var _validators = {
+        phoneNumber: validatePhoneNumber
+    };
+
+    function validate(key, val) {
+        return _validators[key](val);
+    }
+
+    return validate;
+})();
+/* test-code */
+module.exports = validators;
+/* end-test-code */
+
+
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -5712,6 +5846,277 @@ b=a.length;if(this.mode==="core")for(;b--;)a[b].innerHTML=a[b].hasAttribute("dat
 } catch (e) {}
 namespacer('baltimoreCounty');
 
+baltimoreCounty.constants = (function constants() {
+	'use strict';
+
+	var rootUrl = 'https://services.baltimorecountymd.gov';
+	// var rootUrl = 'http://localhost:1000';
+
+	var baltCoGo = {
+		urls: {
+			api: {
+				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				createReport: rootUrl + '/api/baltcogo/createreport',
+				getReport: rootUrl + '/api/citysourced/getreport',
+				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				suggestions: rootUrl + '/api/gis/addressLookup/'
+			},
+			json: {
+				animalBreeds: '/sebin/y/a/animal-breeds.json',
+				animalColors: '/sebin/u/u/animal-colors.json',
+				animalTypes: '/sebin/a/e/animal-types.json',
+				categories: '/sebin/q/m/categories.json',
+				petTypes: '/sebin/m/a/pet-types.json'
+			}
+		},
+		locations: {
+			courtHouse: {
+				latitude: 39.4001526,
+				longitude: -76.6074448
+			}
+		}
+	};
+
+	var keywordSearch = {
+		urls: {
+			api: rootUrl + '/api/search/',
+			searchTerms: '/sebin/m/l/searchTerms.json'
+		}
+	};
+
+	var keyCodes = {
+		arrowUp: 30,
+		arrowDown: 40,
+		enter: 13
+	};
+
+	return {
+		baltCoGo: baltCoGo,
+		keywordSearch: keywordSearch,
+		keyCodes: keyCodes
+	};
+}());
+
+namespacer('baltimoreCounty');
+
+baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars, constants) {
+	'use strict';
+
+	var searchData;
+	var maxResultCount = 5;
+
+	var documentClickHandler = function documentClickHandler() {
+		var $searchResults = $('#header-search-results');
+
+		if ($searchResults.is(':visible')) {
+			$searchResults.hide();
+		}
+	};
+
+	/**
+	 * Highlights the matched term in the results.
+	 * 
+	 * @param {String} searchTerm 
+	 * @param {Array<Term, Order>} matches 
+	 */
+	var highlightMatches = function highlightMatches(searchTerm, matches) {
+		var highlightedMatches = [];
+
+		matches.forEach(function forEachTopFiveMatch(match) {
+			var highlightedMatch = $.extend({}, match);
+			highlightedMatch.Term = highlightedMatch.Term.replace(searchTerm, '<strong>' + searchTerm + '</strong>');
+			highlightedMatches.push(highlightedMatch);
+		});
+
+		return highlightedMatches;
+	};
+
+	var init = function init(callback, injectedSearchData) {
+		if (injectedSearchData) {
+			searchData = injectedSearchData;
+		} else if (sessionStorage && sessionStorage.searchData) {
+			searchData = JSON.parse(sessionStorage.searchData);
+		} else {
+			$.ajax(constants.keywordSearch.urls.searchTerms)
+				.then(onDataLoadedHandler);
+		}
+
+		if (typeof callback !== 'undefined') {
+			callback();
+		}
+	};
+
+
+	/**
+	 * Handles the loaded data and puts it in session storage in the browser.
+	 * 
+	 * @param {Array<Term, Order>} data 
+	 */
+	var onDataLoadedHandler = function onDataLoadedHandler(data) {
+		searchData = data;
+		sessionStorage.setItem('searchData', JSON.stringify(data));
+	};
+
+	/**
+	 * Matches the almighty Google's autocomplete rules
+	 * 
+	 * @param {string} searchTerm 
+	 * @param {Array<Term, Order>} matches 
+	 */
+	var orderByNameThenPopularity = function orderByNameThenPopularity(searchTerm, matches) {
+		if (matches.length === 0 || matches.length === 1) {
+			return matches;
+		}
+
+		var orderedMatches = [];
+
+		matches.forEach(function eachMatch(match) {
+			if (Object.prototype.hasOwnProperty.call(match, 'Term')) {
+				if (match.Term.indexOf(searchTerm) === 0) {
+					orderedMatches.push(match);
+				}
+			}
+		});
+
+		matches.forEach(function eachMatch(match) {
+			if (match.Term.indexOf(searchTerm) !== 0) {
+				orderedMatches.push(match);
+			}
+		});
+
+		return orderedMatches;
+	};
+
+	/**
+	 * Stops the browser window from scrolling when the up and down
+	 * arrows are used on the search results.
+	 */
+	var scrollStoppingKeydownHandler = function scrollStoppingKeydownHandler(event) {
+		var keyCode = event.which || event.keyCode;
+
+		if ([constants.keyCodes.arrowUp, constants.keyCodes.arrowDown].indexOf(keyCode) !== -1) {
+			event.preventDefault();
+		}
+	};
+
+	/**
+	 * Does the actual searching.
+	 * 
+	 * @param {string} searchTerm 
+	 */
+	var search = function search(searchTerm, maxMatches) {
+		if (!searchData || !searchData.length) {
+			throw Error('Module "keywordSearch" is not initialized.');
+		}
+
+		var allMatches = [];
+		var lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+		if (typeof lowerCaseSearchTerm === 'string' && lowerCaseSearchTerm.trim().length > 0) {
+			searchData.forEach(function forEach(element) {
+				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
+					if (element.Term.toLowerCase().indexOf(lowerCaseSearchTerm) > -1) {
+						allMatches.push(element);
+					}
+				}
+			});
+		}
+
+		var topOrderedMatches = orderByNameThenPopularity(lowerCaseSearchTerm, allMatches)
+			.slice(0, maxMatches);
+		var topHighlightedOrderedMatches = highlightMatches(lowerCaseSearchTerm, topOrderedMatches);
+
+		return topHighlightedOrderedMatches;
+	};
+
+	/**
+	 * Handler for the searchBox Keyup event
+	 * @param {Event} event 
+	 */
+	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
+		var keyCode = event.which || event.keyCode;
+		var $target = $(event.currentTarget);
+		var searchTerm = $target.val();
+		var maxResults = event.data.maxResultCount;
+		var $searchResults = $('#header-search-results');
+		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
+		var $allSearchResults = $searchResults.find('li');
+
+		if (keyCode === constants.keyCodes.arrowDown && areSearchResultsVisible) {
+			$allSearchResults.first().trigger('focus');
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowUp && areSearchResultsVisible) {
+			$allSearchResults.last().trigger('focus');
+			return;
+		}
+
+		var matches = search(searchTerm, maxResults);
+		var $source = $('#search-results-template');
+		var template = Handlebars.compile($source.html());
+		var html = template(matches);
+
+		$searchResults.html(html);
+		$searchResults.show();
+	};
+
+	/**
+	 * Handles the keyboard navigation for the search results.
+	 * 
+	 * @param {Event} event 
+	 */
+	var searchSuggestionsClickKeyupHandler = function searchSuggestionsClickHandler(event) {
+		var $searchBox = $(event.data.searchBoxSelector);
+		var keyCode = event.which || event.keyCode;
+		var $searchResults = $('#header-search-results');
+		var $target = $(event.currentTarget);
+
+		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
+			$searchBox.val($target.text());
+			$searchResults.hide();
+			$searchBox.closest('form').trigger('submit');
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowUp && $target.is('li')) {
+			if ($target.is(':first-child')) {
+				$searchBox.trigger('focus');
+			} else {
+				$target.prev().trigger('focus');
+			}
+
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowDown && $target.is('li')) {
+			if ($target.is(':last-child')) {
+				$searchBox.trigger('focus');
+			} else {
+				$target.next().trigger('focus');
+			}
+		}
+	};
+
+	$(document).on('keyup', '#q', { maxResultCount: maxResultCount }, searchBoxKeyupHandler);
+	$(document).on('click keyup', '#header-search-results li', { searchBoxSelector: '#q' }, searchSuggestionsClickKeyupHandler);
+	$(document).on('keydown', '#header-search-results li', { searchBoxSelector: '#q' }, scrollStoppingKeydownHandler);
+	$(document).on('keydown', '#q', scrollStoppingKeydownHandler);
+	$(document).on('click', documentClickHandler);
+
+	return {
+		init: init,
+		search: search,
+		orderByNameThenPopularity: orderByNameThenPopularity
+	};
+}(jQuery, sessionStorage, Handlebars, baltimoreCounty.constants));
+
+$(function init() {
+	baltimoreCounty.keywordSearch.init();
+});
+
+namespacer('baltimoreCounty');
+
 baltimoreCounty.internalCarousel = (function($) {
 
 	var fixLinks = function() {
@@ -5770,44 +6175,48 @@ $(function() {
     false);
 
 })(jQuery);
-(function ($, TextResizer) {
+(function TemplateEvents($, TextResizer) {
+	function onDocumentReady() {
+		var textResizer = new TextResizer({
+			listClass: 'resizer-list'
+		});
+	}
 
-  function onDocumentReady() {
-    var textResizer = new TextResizer({
-      listClass: "resizer-list"
-    });
-  }
+	function searchButtonClicked(e) {
+		var val = $('.search-input').val();
 
-  function searchButtonClicked(e) {
-    var val = $('.search-input').val();
+		if (val.length === 0) {
+			e.preventDefault();
+		}
+	}
 
-    if (val.length === 0) {
-      e.preventDefault();
-    }
-  }
+	function toggleMobileNavigation(e) {
+		e.preventDefault();
+		$('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
+	}
 
-  function toggleMobileNavigation(e) {
-    e.preventDefault();
-    $('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
-  }
-
-  /**
+	/**
    * Stuff to kick off when the template is loaded
    */
-  $(document).ready(onDocumentReady);
+	$(document).ready(onDocumentReady);
 
-  /**
+	/**
    * Events
    */
-  /*Toggle hamburger menu*/
-  $(document).on('click', '.hamburger-btn', toggleMobileNavigation);
+	/* Toggle hamburger menu */
+	$(document).on('click', '.hamburger-btn', toggleMobileNavigation);
 
-  /*Prevent a search with no text*/
-  $(document).on('click', '.search-button', searchButtonClicked);
-})(jQuery, TextResizer);
+	/* Prevent a search with no text */
+	$(document).on('click', '.search-button', searchButtonClicked);
+}(jQuery, TextResizer));
+
 (function ($) {
   function ratePage() {
-    document.getElementById('url').value = window.location.href;
+    var urlElm = document.getElementById('url');
+    
+    if (urlElm) {
+        urlElm.value = window.location.href;
+    }
 
     if ($('input#website').val().length) {
       return false;
