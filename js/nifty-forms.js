@@ -3,133 +3,100 @@ namespacer('baltimoreCounty');
 /*
  * Adds nifty checkboxes and radio buttons to a Site Executive form.
  */
-baltimoreCounty.niftyForms = (function() {
+baltimoreCounty.niftyForms = (function niftyForms() {
 
-    var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
-        checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
-        checkboxesSelector = '.seCheckbox',
-        radiosSelector = '.seRadio',
+	var checkboxesAndRadiosLabelSelector = '.seCheckboxLabel, .seRadioLabel',
+		checkboxesAndRadiosSelector = '.seCheckbox, .seRadio',
+		checkboxesSelector = '.seCheckbox',
+		radiosSelector = '.seRadio',
+		$focusedElement,
 
-        focusChanged = function(e) {
-            var $input = $(e.currentTarget),
-                inputId = $input.attr('id'),
-                $label = $('label[for="' + inputId + '"]');
-            
-            removeFocus();
-            $label.addClass('is-focused');
-        },
+		focusChanged = function(e) {
+			var $target = $(e.target),
+				inputId = $target.attr('id'),
+				$label = $('label[for="' + inputId + '"]');
+			
+			$focusedElement = undefined;
 
-        inputChanged = function(e) {
-            var $input = $(e.currentTarget),
-                inputId = $input.attr('id'),
-                isChecked = $input.prop('checked'),
-                $label = $('label[for="' + inputId + '"]');
-                
-                if ($input.is('[type=radio]')) {
-                    var radioName = $input.attr('name')
-                    var $radioInputs = $('input[name="' + radioName + '"]');
+			if ($target.parent().is(checkboxesAndRadiosLabelSelector)) {
+				$focusedElement = $target.parent();
+			} else {
+				if ($target.is(checkboxesAndRadiosLabelSelector)) { 
+					$focusedElement = $target;
+				} else {
+					$focusedElement = $label;
+				}
+			}
 
-                    $radioInputs.each(function() {
-                        var $radioLabel = $('label[for="' + $(this).attr('id') + '"]');
+			removeFocus();
 
-                        $radioLabel.removeClass('checked');
-                    });
-                }
+			if ($focusedElement && $focusedElement.length)
+				$focusedElement.addClass('is-focused');
+		},
 
-            $label.toggleClass('checked')
-        },
+		makeItemCheckedOnClickHandler = function(e) {
+			var $target = $(e.currentTarget);
+			$target.find('input').trigger('click');
+		},
 
-        /*
-         * Toggle the click label's checkbox/radio button. This is necessary because
-         * the niftyness is the ::before pseudo-element of the label tag, and not the 
-         * input itself.
-         */
-        toggleChecked = function($label) {
-            var labelFor = $label.attr('for'),
-                $input = $label.siblings('#' + labelFor);
+		/*
+		 * Toggles the checkedness of the underlying input when the user hits the space bar.
+		 */
+		makeItemCheckedOnKeyupHandler = function(e) {
+			var $target = $(e.currentTarget);
+			var $input = $target.find('input');
+			var keyCode = e.which || e.keyCode;
+			var KEYCODE_SPACEBAR = 32;
 
-            if (!$input.length)
-                $input = $label.find('input').first();
+			if (keyCode === KEYCODE_SPACEBAR) {	
+				$input.prop('checked', !$input.prop('checked'));
+/*
+				if ($target.is(checkboxesAndRadiosLabelSelector)) {
+					if ($input.prop('checked')) {						
+						$target.addClass('checked');
+					} else	{
+						$target.removeClass('checked');
+					}
+				}
+*/			}
+		},
 
-            if ($input.is('[type=radio]')) {
-                var inputName = $input.attr('name');
+		removeFocus = function() {
+			if ($focusedElement)
+				$focusedElement.removeClass('is-focused');
+		}
 
-                $label.closest('form').find('input[name=' + inputName + ']')
-                    .prop('checked', false)
-                    .siblings(checkboxesAndRadiosLabelSelector)
-                    .removeClass('checked');
-            }
+		/*
+		 * Filter that finds checkboxes and radios that aren't in a list.
+		 */ 
+		singleCheckboxAndRadioFilter = function(index, item) {
+			return $(item).siblings('label').length === 0;
+		},	
 
-            $input.focus();
+		toggleLabelChecked = function(e) {
+			var $target = $(e.target);
+			var $label =  $target.siblings('label');
+			var targetName = $target.attr('name');
+			var targetId = $target.attr('id');
 
-            $label.toggleClass('checked');
-            $input.prop('checked', $label.hasClass('checked'));
-        },
+			if ($label.length === 0 && $target.is(checkboxesAndRadiosLabelSelector)) {
+				$label = $target;
+				$target = $(e.target);
+			}
 
-        /*
-         * Toggles the checkedness of the underlying input when the user clicks the label. 
-         */
-        makeItemCheckedOnClickHandler = function(e) {
-            var $label = $(e.target);
-            
-            toggleChecked($label);
-        },
+			if ($label.length === 0 && $target.parent().is(checkboxesAndRadiosLabelSelector)) {
+				$label = $target.parent();
+			}
 
-        /*
-         * Toggles the checkedness of the underlying input when the user hits the space bar.
-         */
-        makeItemCheckedOnKeyupHandler = function(e) {
-            var $label = $(e.target),
-                KEYCODE_SPACEBAR = 32;
+			if ($target.is('input[type=radio]')) {
+				var $radioButtonSet = $('input[name=' + targetName + ']');
+				$radioButtonSet.not($('#' + targetId)).prop('checked', false).siblings('label').removeClass('checked');
+			}
 
-                if (e.which === KEYCODE_SPACEBAR) {
-                    e.preventDefault();
-                    toggleChecked($label);
-                }
-        },
+			if ($target.prop('checked')) {						
+				$label.addClass('checked');
+			} else	
+				$label.removeClass('checked');
+		};
 
-        removeFocus = function() {
-            $('.is-focused').removeClass('is-focused');
-        }
-
-        /*
-         * Filter that finds checkboxes and radios that aren't in a list.
-         */ 
-        singleCheckboxAndRadioFilter = function(index, item) {
-            return $(item).siblings('label').length === 0;
-        };
-
-    /*
-     * Attach events and add aria roles to labels. 
-     */
-    $(function() {
-
-        var $forms = $('form'),
-            $singleCheckboxes = $forms.find(checkboxesSelector).filter(singleCheckboxAndRadioFilter),
-            $singleRadios = $forms.find(radiosSelector).filter(singleCheckboxAndRadioFilter),
-            $singleCheckboxWrappers = $singleCheckboxes.wrap('<div class="seCheckboxLabel"></div>'),
-            $singleRadioWrappers = $singleRadios.wrap('<div class="seRadioLabel"></div>'),
-            $checkboxAndRadioLabels = $forms.find(checkboxesAndRadiosLabelSelector).add($singleCheckboxWrappers).add($singleRadioWrappers);
-
-        $checkboxAndRadioLabels
-            .on('click', makeItemCheckedOnClickHandler)
-            .on('keyup', makeItemCheckedOnKeyupHandler)
-            // .attr('tabindex', '-1')
-            .attr('aria-checked', false);
-
-        $(document)
-            .on('change', checkboxesAndRadiosSelector, inputChanged)
-            .on('focus', checkboxesAndRadiosSelector, focusChanged)
-            .on('blur', checkboxesAndRadiosSelector, removeFocus);
-        
-        $checkboxAndRadioLabels.filter('.seCheckboxLabel').attr('role', 'checkbox');
-        $checkboxAndRadioLabels.filter('.seRadioLabel').attr('role', 'radio');        
-    });
-
-    /* test-code */
-    return {
-        toggleChecked: toggleChecked
-    };
-    /* end-test-code */
-
-})();
+}());

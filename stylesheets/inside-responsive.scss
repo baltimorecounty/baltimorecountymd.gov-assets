@@ -11,6 +11,9 @@
 @import "partials/base/footer";
 @import "partials/base/image";
 
+@import "partials/components/autocomplete";
+@import "vendor/slick-carousel";
+
 @import "partials/components/alert";
 @import "partials/components/social";
 @import "partials/components/textResizer";
@@ -22,13 +25,26 @@
 @import "partials/components/facebookWidget.scss";
 @import "partials/components/filter";
 @import "partials/components/rateForm";
-@import "partials/components/forms";
+@import "partials/components/formFields";
+@import "partials/components/spayNeuter";
+@import "partials/homepage/carousel";
+@import "partials/components/carousel-internal";
+
+/* Bootstrap elements */
+@import "partials/bootstrap/variables";
+@import "partials/bootstrap/mixins";
+@import "partials/bootstrap/insideGrid";
+@import "partials/bootstrap/forms";
+@import "partials/bootstrap/labels";
+@import "partials/components/niftyTables";
 @import "partials/components/youtubePlaylistGallery";
 @import "partials/components/collapse";
 @import "partials/components/accordionMenu";
 @import "partials/components/photoGallery";
 
-@import "partials/inside/insideGrid";
+/*@import "partials/components/forms";*/
+@import "partials/components/formControls";
+
 @import "partials/inside/rateForm";
 @import "partials/homepage/search";
 @import "partials/inside/search";

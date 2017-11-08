@@ -1,0 +1,46 @@
+@import "../../../modules/colors";
+
+#mainContent {
+
+	.seSearchForm { 
+		display: none;
+	}
+
+	.seSolr_resultBar {
+		font-size: .8em;
+		padding-bottom: 1em;
+		border-bottom: 1px solid $lightest-gray;
+	}
+
+	.seSolr_title {
+		color: $navy;
+		font-family: 'Patua One';
+		font-weight: normal;
+		font-size: 22px;
+		padding-top: 1em;
+
+		a {
+			text-decoration: none;
+		}
+	}
+
+	.seSolr_url {
+		color: $navy;
+		font-size: .8em;
+		word-wrap: break-word;
+	}
+
+	.seSolr_summary {
+		padding: 1em 0 1.5em;
+		border-bottom: 1px dotted $navy;
+	}
+
+	#seSolr_pagination {
+		margin-top: 1.5em;
+
+		.seSolr_page {
+			display: inline-block;
+			margin-right: .5em;
+		}
+	}
+}

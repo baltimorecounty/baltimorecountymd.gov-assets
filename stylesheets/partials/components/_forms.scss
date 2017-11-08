@@ -1,5 +1,3 @@
-$error-shadow: 0 0 5px $red;
-
 #mainContent .seLabelCell {
     padding-top: .5em;
     vertical-align: top;
@@ -7,16 +5,6 @@ $error-shadow: 0 0 5px $red;
 
 .SEAFGroupVertical > div {
     margin-bottom: .75em;
-}
-
-.error-field {
-    -webkit-box-shadow: $error-shadow;
-    -moz-box-shadow: $error-shadow;
-    box-shadow: $error-shadow;
-}
-
-.error-label {
-    color: $red;
 }
 
 .seCheckbox,
@@ -28,7 +16,7 @@ $error-shadow: 0 0 5px $red;
 .seCheckboxLabel,
 .seRadioLabel {
     cursor: pointer;
-    
+
     &:focus {
         outline: none;
     }
@@ -54,9 +42,9 @@ $error-shadow: 0 0 5px $red;
         text-align: center;
         -webkit-font-smoothing: antialiased;
         width: 20px;
-    }
-
-    &.error-field {
+	}
+	
+	&.error-field {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
@@ -104,6 +92,40 @@ $error-shadow: 0 0 5px $red;
 .seRequiredMarker, .inline-form-error-message {
     font-size: .75em;
 }
+
+    &.checked::before {
+        color: #444;
+    }
+}
+
+.seCheckboxLabel {
+    &.checked::before {
+        content: '\f00c';
+    }
+    &::before {
+        content: '\f00c';
+        margin-right: .5em;
+        padding: 1px;
+        margin-top: 1px;
+    }
+}
+
+.seRadioLabel {
+    white-space: nowrap;
+
+    &.checked::before {
+        content: '\f111';
+    }
+    &::before {
+        border-radius: 20px;
+        content: '\f111';
+        font-size: .7em;
+        margin-right: 1em;
+        padding: 3px;
+        vertical-align: 20%;
+    }
+}
+
 
 /* Overrides */
 /* TODO - This should be fixed in red-inside.css */

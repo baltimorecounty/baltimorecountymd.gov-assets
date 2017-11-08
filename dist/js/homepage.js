@@ -1,23 +1,112 @@
+// Production steps of ECMA-262, Edition 5, 15.4.4.14
+// Reference: http://es5.github.io/#x15.4.4.14
+if (!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function(searchElement, fromIndex) {
+
+    var k;
+
+    // 1. Let o be the result of calling ToObject passing
+    //    the this value as the argument.
+    if (this == null) {
+      throw new TypeError('"this" is null or not defined');
+    }
+
+    var o = Object(this);
+
+    // 2. Let lenValue be the result of calling the Get
+    //    internal method of o with the argument "length".
+    // 3. Let len be ToUint32(lenValue).
+    var len = o.length >>> 0;
+
+    // 4. If len is 0, return -1.
+    if (len === 0) {
+      return -1;
+    }
+
+    // 5. If argument fromIndex was passed let n be
+    //    ToInteger(fromIndex); else let n be 0.
+    var n = fromIndex | 0;
+
+    // 6. If n >= len, return -1.
+    if (n >= len) {
+      return -1;
+    }
+
+    // 7. If n >= 0, then Let k be n.
+    // 8. Else, n<0, Let k be len - abs(n).
+    //    If k is less than 0, then let k be 0.
+    k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+    // 9. Repeat, while k < len
+    while (k < len) {
+      // a. Let Pk be ToString(k).
+      //   This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the
+      //    HasProperty internal method of o with argument Pk.
+      //   This step can be combined with c
+      // c. If kPresent is true, then
+      //    i.  Let elementK be the result of calling the Get
+      //        internal method of o with the argument ToString(k).
+      //   ii.  Let same be the result of applying the
+      //        Strict Equality Comparison Algorithm to
+      //        searchElement and elementK.
+      //  iii.  If same is true, return k.
+      if (k in o && o[k] === searchElement) {
+        return k;
+      }
+      k++;
+    }
+    return -1;
+  };
+}
+// Production steps of ECMA-262, Edition 5, 15.4.4.17
+// Reference: http://es5.github.io/#x15.4.4.17
+if (!Array.prototype.some) {
+  Array.prototype.some = function(fun/*, thisArg*/) {
+    'use strict';
+
+    if (this == null) {
+      throw new TypeError('Array.prototype.some called on null or undefined');
+    }
+
+    if (typeof fun !== 'function') {
+      throw new TypeError();
+    }
+
+    var t = Object(this);
+    var len = t.length >>> 0;
+
+    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+    for (var i = 0; i < len; i++) {
+      if (i in t && fun.call(thisArg, t[i], i, t)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
 /*
  * Creates namespaces safely and conveniently, reusing 
  * existing objects instead of overwriting them.
- */ 
+ */
 function namespacer(ns) {
-	var nsArr = ns.split('.'),
-		parent = window;
-	
-	if (!nsArr.length)
-		return;
+  var nsArr = ns.split('.');
+  var parent = window;
 
-	for (var i = 0; i < nsArr.length; i++) {
-		var nsPart = nsArr[i];
+  if (!nsArr.length) {
+    return;
+  }
 
-		if (typeof parent[nsPart] === 'undefined') {
-			parent[nsPart] = {};
-		}
+  for (var i = 0, len = nsArr.length; i < len; i++) {
+    var nsPart = nsArr[i];
 
-		parent = parent[nsPart];
-	}
+    if (typeof parent[nsPart] === 'undefined') {
+      parent[nsPart] = {};
+    }
+
+    parent = parent[nsPart];
+  }
 }
 namespacer('baltimoreCounty.utility');
 
@@ -65,6 +154,11 @@ namespacer('baltimoreCounty.utility');
 baltimoreCounty.utility.querystringer = (function(undefined) {
     'use strict';
 
+	/**
+	 * Turns the querystring key/value pairs into a dictionary.
+	 * 
+	 * Important: All of the returned dictionary's keys will be lower-cased.
+	 */
     var getAsDictionary = function() {
 
         if (window.location.search) {
@@ -78,7 +172,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
                     keyValueArr = qsArray[i].split('='),
                     entry = {};
 
-                qsDict[keyValueArr[KEY]] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
+                qsDict[keyValueArr[KEY].toLowerCase()] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
             }
 
             return qsDict;
@@ -109,7 +203,7 @@ baltimoreCounty.utility.jsonTools = (function(undefined) {
                 } else {
                     match = getSubtree(item[subtreePropertyName], searchValue);
                 }
-            }
+			} 
         });
         return match;
     },
@@ -5031,6 +5125,357 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
 * http://scottjehl.github.io/picturefill
 * Copyright (c) 2014 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
 window.matchMedia||(window.matchMedia=function(){"use strict";var a=window.styleMedia||window.media;if(!a){var b=document.createElement("style"),c=document.getElementsByTagName("script")[0],d=null;b.type="text/css",b.id="matchmediajs-test",c.parentNode.insertBefore(b,c),d="getComputedStyle"in window&&window.getComputedStyle(b,null)||b.currentStyle,a={matchMedium:function(a){var c="@media "+a+"{ #matchmediajs-test { width: 1px; } }";return b.styleSheet?b.styleSheet.cssText=c:b.textContent=c,"1px"===d.width}}}return function(b){return{matches:a.matchMedium(b||"all"),media:b||"all"}}}()),function(a,b,c){"use strict";function d(a){var b,c,d,e,g,h=a||{};b=h.elements||f.getAllElements();for(var i=0,j=b.length;j>i;i++)if(c=b[i],d=c.parentNode,e=void 0,g=void 0,"IMG"===c.nodeName.toUpperCase()&&(c[f.ns]||(c[f.ns]={}),h.reevaluate||!c[f.ns].evaluated)){if("PICTURE"===d.nodeName.toUpperCase()){if(f.removeVideoShim(d),e=f.getMatch(c,d),e===!1)continue}else e=void 0;("PICTURE"===d.nodeName.toUpperCase()||c.srcset&&!f.srcsetSupported||!f.sizesSupported&&c.srcset&&c.srcset.indexOf("w")>-1)&&f.dodgeSrcset(c),e?(g=f.processSourceSet(e),f.applyBestCandidate(g,c)):(g=f.processSourceSet(c),(void 0===c.srcset||c[f.ns].srcset)&&f.applyBestCandidate(g,c)),c[f.ns].evaluated=!0}}function e(){function c(){var b;a._picturefillWorking||(a._picturefillWorking=!0,a.clearTimeout(b),b=a.setTimeout(function(){d({reevaluate:!0}),a._picturefillWorking=!1},60))}d();var e=setInterval(function(){return d(),/^loaded|^i|^c/.test(b.readyState)?void clearInterval(e):void 0},250);a.addEventListener?a.addEventListener("resize",c,!1):a.attachEvent&&a.attachEvent("onresize",c)}if(a.HTMLPictureElement)return void(a.picturefill=function(){});b.createElement("picture");var f={};f.ns="picturefill",function(){f.srcsetSupported="srcset"in c,f.sizesSupported="sizes"in c}(),f.trim=function(a){return a.trim?a.trim():a.replace(/^\s+|\s+$/g,"")},f.endsWith=function(a,b){return a.endsWith?a.endsWith(b):-1!==a.indexOf(b,a.length-b.length)},f.restrictsMixedContent=function(){return"https:"===a.location.protocol},f.matchesMedia=function(b){return a.matchMedia&&a.matchMedia(b).matches},f.getDpr=function(){return a.devicePixelRatio||1},f.getWidthFromLength=function(a){a=a&&a.indexOf("%")>-1==!1&&(parseFloat(a)>0||a.indexOf("calc(")>-1)?a:"100vw",a=a.replace("vw","%"),f.lengthEl||(f.lengthEl=b.createElement("div"),f.lengthEl.style.cssText="border:0;display:block;font-size:1em;left:0;margin:0;padding:0;position:absolute;visibility:hidden"),f.lengthEl.style.width=a,b.body.appendChild(f.lengthEl),f.lengthEl.className="helper-from-picturefill-js",f.lengthEl.offsetWidth<=0&&(f.lengthEl.style.width=b.documentElement.offsetWidth+"px");var c=f.lengthEl.offsetWidth;return b.body.removeChild(f.lengthEl),c},f.types={},f.types["image/jpeg"]=!0,f.types["image/gif"]=!0,f.types["image/png"]=!0,f.types["image/svg+xml"]=b.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),f.types["image/webp"]=function(){var a="image/webp";c.onerror=function(){f.types[a]=!1,d()},c.onload=function(){f.types[a]=1===c.width,d()},c.src="data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA="},f.verifyTypeSupport=function(a){var b=a.getAttribute("type");return null===b||""===b?!0:"function"==typeof f.types[b]?(f.types[b](),"pending"):f.types[b]},f.parseSize=function(a){var b=/(\([^)]+\))?\s*(.+)/g.exec(a);return{media:b&&b[1],length:b&&b[2]}},f.findWidthFromSourceSize=function(a){for(var b,c=f.trim(a).split(/\s*,\s*/),d=0,e=c.length;e>d;d++){var g=c[d],h=f.parseSize(g),i=h.length,j=h.media;if(i&&(!j||f.matchesMedia(j))){b=i;break}}return f.getWidthFromLength(b)},f.parseSrcset=function(a){for(var b=[];""!==a;){a=a.replace(/^\s+/g,"");var c,d=a.search(/\s/g),e=null;if(-1!==d){c=a.slice(0,d);var f=c.slice(-1);if((","===f||""===c)&&(c=c.replace(/,+$/,""),e=""),a=a.slice(d+1),null===e){var g=a.indexOf(",");-1!==g?(e=a.slice(0,g),a=a.slice(g+1)):(e=a,a="")}}else c=a,a="";(c||e)&&b.push({url:c,descriptor:e})}return b},f.parseDescriptor=function(a,b){var c,d=b||"100vw",e=a&&a.replace(/(^\s+|\s+$)/g,""),g=f.findWidthFromSourceSize(d);if(e)for(var h=e.split(" "),i=h.length-1;i>=0;i--){var j=h[i],k=j&&j.slice(j.length-1);if("h"!==k&&"w"!==k||f.sizesSupported){if("x"===k){var l=j&&parseFloat(j,10);c=l&&!isNaN(l)?l:1}}else c=parseFloat(parseInt(j,10)/g)}return c||1},f.getCandidatesFromSourceSet=function(a,b){for(var c=f.parseSrcset(a),d=[],e=0,g=c.length;g>e;e++){var h=c[e];d.push({url:h.url,resolution:f.parseDescriptor(h.descriptor,b)})}return d},f.dodgeSrcset=function(a){a.srcset&&(a[f.ns].srcset=a.srcset,a.removeAttribute("srcset"))},f.processSourceSet=function(a){var b=a.getAttribute("srcset"),c=a.getAttribute("sizes"),d=[];return"IMG"===a.nodeName.toUpperCase()&&a[f.ns]&&a[f.ns].srcset&&(b=a[f.ns].srcset),b&&(d=f.getCandidatesFromSourceSet(b,c)),d},f.applyBestCandidate=function(a,b){var c,d,e;a.sort(f.ascendingSort),d=a.length,e=a[d-1];for(var g=0;d>g;g++)if(c=a[g],c.resolution>=f.getDpr()){e=c;break}if(e&&!f.endsWith(b.src,e.url))if(f.restrictsMixedContent()&&"http:"===e.url.substr(0,"http:".length).toLowerCase())void 0!==typeof console&&console.warn("Blocked mixed content image "+e.url);else{b.src=e.url,b.currentSrc=b.src;var h=b.style||{},i="webkitBackfaceVisibility"in h,j=h.zoom;i&&(h.zoom=".999",i=b.offsetWidth,h.zoom=j)}},f.ascendingSort=function(a,b){return a.resolution-b.resolution},f.removeVideoShim=function(a){var b=a.getElementsByTagName("video");if(b.length){for(var c=b[0],d=c.getElementsByTagName("source");d.length;)a.insertBefore(d[0],c);c.parentNode.removeChild(c)}},f.getAllElements=function(){for(var a=[],c=b.getElementsByTagName("img"),d=0,e=c.length;e>d;d++){var g=c[d];("PICTURE"===g.parentNode.nodeName.toUpperCase()||null!==g.getAttribute("srcset")||g[f.ns]&&null!==g[f.ns].srcset)&&a.push(g)}return a},f.getMatch=function(a,b){for(var c,d=b.childNodes,e=0,g=d.length;g>e;e++){var h=d[e];if(1===h.nodeType){if(h===a)return c;if("SOURCE"===h.nodeName.toUpperCase()){null!==h.getAttribute("src")&&void 0!==typeof console&&console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");var i=h.getAttribute("media");if(h.getAttribute("srcset")&&(!i||f.matchesMedia(i))){var j=f.verifyTypeSupport(h);if(j===!0){c=h;break}if("pending"===j)return!1}}}}return c},e(),d._=f,"object"==typeof module&&"object"==typeof module.exports?module.exports=d:"function"==typeof define&&define.amd?define(function(){return d}):"object"==typeof a&&(a.picturefill=d)}(this,this.document,new this.Image);
+namespacer('baltimoreCounty');
+
+baltimoreCounty.constants = (function constants() {
+	'use strict';
+
+	var rootUrl = 'https://services.baltimorecountymd.gov';
+	// var rootUrl = 'http://localhost:1000';
+
+	var baltCoGo = {
+		urls: {
+			api: {
+				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				createReport: rootUrl + '/api/baltcogo/createreport',
+				getReport: rootUrl + '/api/citysourced/getreport',
+				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				suggestions: rootUrl + '/api/gis/addressLookup/'
+			},
+			json: {
+				animalBreeds: '/sebin/y/a/animal-breeds.json',
+				animalColors: '/sebin/u/u/animal-colors.json',
+				animalTypes: '/sebin/a/e/animal-types.json',
+				categories: '/sebin/q/m/categories.json',
+				petTypes: '/sebin/m/a/pet-types.json'
+			}
+		},
+		locations: {
+			courtHouse: {
+				latitude: 39.4001526,
+				longitude: -76.6074448
+			}
+		}
+	};
+
+	var keywordSearch = {
+		urls: {
+			api: rootUrl + '/api/search/',
+			searchTerms: '/sebin/m/l/searchTerms.json'
+		}
+	};
+
+	var keyCodes = {
+		arrowUp: 30,
+		arrowDown: 40,
+		enter: 13
+	};
+
+	return {
+		baltCoGo: baltCoGo,
+		keywordSearch: keywordSearch,
+		keyCodes: keyCodes
+	};
+}());
+
+namespacer('baltimoreCounty');
+
+baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars, constants) {
+	'use strict';
+
+	var searchData;
+	var maxResultCount = 5;
+
+	var documentClickHandler = function documentClickHandler() {
+		var $searchResults = $('#header-search-results');
+
+		if ($searchResults.is(':visible')) {
+			$searchResults.hide();
+		}
+	};
+
+	/**
+	 * Highlights the matched term in the results.
+	 * 
+	 * @param {String} searchTerm 
+	 * @param {Array<Term, Order>} matches 
+	 */
+	var highlightMatches = function highlightMatches(searchTerm, matches) {
+		var highlightedMatches = [];
+
+		matches.forEach(function forEachTopFiveMatch(match) {
+			var highlightedMatch = $.extend({}, match);
+			highlightedMatch.Term = highlightedMatch.Term.replace(searchTerm, '<strong>' + searchTerm + '</strong>');
+			highlightedMatches.push(highlightedMatch);
+		});
+
+		return highlightedMatches;
+	};
+
+	var init = function init(callback, injectedSearchData) {
+		if (injectedSearchData) {
+			searchData = injectedSearchData;
+		} else if (sessionStorage && sessionStorage.searchData) {
+			searchData = JSON.parse(sessionStorage.searchData);
+		} else {
+			$.ajax(constants.keywordSearch.urls.searchTerms)
+				.then(onDataLoadedHandler);
+		}
+
+		if (typeof callback !== 'undefined') {
+			callback();
+		}
+	};
+
+
+	/**
+	 * Handles the loaded data and puts it in session storage in the browser.
+	 * 
+	 * @param {Array<Term, Order>} data 
+	 */
+	var onDataLoadedHandler = function onDataLoadedHandler(data) {
+		searchData = data;
+		sessionStorage.setItem('searchData', JSON.stringify(data));
+	};
+
+	/**
+	 * Matches the almighty Google's autocomplete rules
+	 * 
+	 * @param {string} searchTerm 
+	 * @param {Array<Term, Order>} matches 
+	 */
+	var orderByNameThenPopularity = function orderByNameThenPopularity(searchTerm, matches) {
+		if (matches.length === 0 || matches.length === 1) {
+			return matches;
+		}
+
+		var orderedMatches = [];
+
+		matches.forEach(function eachMatch(match) {
+			if (Object.prototype.hasOwnProperty.call(match, 'Term')) {
+				if (match.Term.indexOf(searchTerm) === 0) {
+					orderedMatches.push(match);
+				}
+			}
+		});
+
+		matches.forEach(function eachMatch(match) {
+			if (match.Term.indexOf(searchTerm) !== 0) {
+				orderedMatches.push(match);
+			}
+		});
+
+		return orderedMatches;
+	};
+
+	/**
+	 * Stops the browser window from scrolling when the up and down
+	 * arrows are used on the search results.
+	 */
+	var scrollStoppingKeydownHandler = function scrollStoppingKeydownHandler(event) {
+		var keyCode = event.which || event.keyCode;
+
+		if ([constants.keyCodes.arrowUp, constants.keyCodes.arrowDown].indexOf(keyCode) !== -1) {
+			event.preventDefault();
+		}
+	};
+
+	/**
+	 * Does the actual searching.
+	 * 
+	 * @param {string} searchTerm 
+	 */
+	var search = function search(searchTerm, maxMatches) {
+		if (!searchData || !searchData.length) {
+			throw Error('Module "keywordSearch" is not initialized.');
+		}
+
+		var allMatches = [];
+		var lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+		if (typeof lowerCaseSearchTerm === 'string' && lowerCaseSearchTerm.trim().length > 0) {
+			searchData.forEach(function forEach(element) {
+				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
+					if (element.Term.toLowerCase().indexOf(lowerCaseSearchTerm) > -1) {
+						allMatches.push(element);
+					}
+				}
+			});
+		}
+
+		var topOrderedMatches = orderByNameThenPopularity(lowerCaseSearchTerm, allMatches)
+			.slice(0, maxMatches);
+		var topHighlightedOrderedMatches = highlightMatches(lowerCaseSearchTerm, topOrderedMatches);
+
+		return topHighlightedOrderedMatches;
+	};
+
+	/**
+	 * Handler for the searchBox Keyup event
+	 * @param {Event} event 
+	 */
+	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
+		var keyCode = event.which || event.keyCode;
+		var $target = $(event.currentTarget);
+		var searchTerm = $target.val();
+		var maxResults = event.data.maxResultCount;
+		var $searchResults = $('#header-search-results');
+		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
+		var $allSearchResults = $searchResults.find('li');
+
+		if (keyCode === constants.keyCodes.arrowDown && areSearchResultsVisible) {
+			$allSearchResults.first().trigger('focus');
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowUp && areSearchResultsVisible) {
+			$allSearchResults.last().trigger('focus');
+			return;
+		}
+
+		var matches = search(searchTerm, maxResults);
+		var $source = $('#search-results-template');
+		var template = Handlebars.compile($source.html());
+		var html = template(matches);
+
+		$searchResults.html(html);
+		$searchResults.show();
+	};
+
+	/**
+	 * Handles the keyboard navigation for the search results.
+	 * 
+	 * @param {Event} event 
+	 */
+	var searchSuggestionsClickKeyupHandler = function searchSuggestionsClickHandler(event) {
+		var $searchBox = $(event.data.searchBoxSelector);
+		var keyCode = event.which || event.keyCode;
+		var $searchResults = $('#header-search-results');
+		var $target = $(event.currentTarget);
+
+		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
+			$searchBox.val($target.text());
+			$searchResults.hide();
+			$searchBox.closest('form').trigger('submit');
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowUp && $target.is('li')) {
+			if ($target.is(':first-child')) {
+				$searchBox.trigger('focus');
+			} else {
+				$target.prev().trigger('focus');
+			}
+
+			return;
+		}
+
+		if (keyCode === constants.keyCodes.arrowDown && $target.is('li')) {
+			if ($target.is(':last-child')) {
+				$searchBox.trigger('focus');
+			} else {
+				$target.next().trigger('focus');
+			}
+		}
+	};
+
+	$(document).on('keyup', '#q', { maxResultCount: maxResultCount }, searchBoxKeyupHandler);
+	$(document).on('click keyup', '#header-search-results li', { searchBoxSelector: '#q' }, searchSuggestionsClickKeyupHandler);
+	$(document).on('keydown', '#header-search-results li', { searchBoxSelector: '#q' }, scrollStoppingKeydownHandler);
+	$(document).on('keydown', '#q', scrollStoppingKeydownHandler);
+	$(document).on('click', documentClickHandler);
+
+	return {
+		init: init,
+		search: search,
+		orderByNameThenPopularity: orderByNameThenPopularity
+	};
+}(jQuery, sessionStorage, Handlebars, baltimoreCounty.constants));
+
+$(function init() {
+	baltimoreCounty.keywordSearch.init();
+});
+
+var TextResizer = (function (window, undefined, $) {
+    var TextResizer = function (options) {
+        this.listClass = options.listClass || "text-resizer";
+        this.normalBtnId = options.normalBtnId || "normal-text";
+        this.largeBtnId = options.largeBtnId || "large-text";
+        this.largestBtnId = options.largestBtnId || "largest-text";
+        this.mainContainerId = options.mainContainerId || "main-content";
+
+        var largeTextClass = 'large-text',
+            largestTextClass = 'largest-text',
+            $textButtonList = $('.' + this.listClass),
+            $mainContainer = $("#" + this.mainContainerId),
+            existsLocalStorage = typeof (Storage) !== "undefined",
+            activeClass = 'active';
+
+        var getPreference = function () {
+            return existsLocalStorage && localStorage.getItem("size");
+        },
+        initialize = function () {
+            var preference = getPreference();
+            if (!preference) {
+                preference = "normal-text";
+            }
+
+            $textButtonList.find("#" + preference).addClass(activeClass);
+            $mainContainer.addClass(preference);
+        },
+        removePreference = function () {
+            localStorage.removeItem("size");
+        },
+        savePreference = function (size) {
+            if (existsLocalStorage) {
+                localStorage.setItem("size", size);
+            }
+        };
+
+        $(document).on('click', $textButtonList.selector + " button", function() {
+            $textButtonList.find("button").removeClass(activeClass);
+            $(this).addClass(activeClass);
+        });
+
+        /*Text Resizer Events*/
+        $(document).on('click', '#' + this.normalBtnId, function (e) {
+            e.preventDefault();
+            
+            $mainContainer.removeClass(largeTextClass + " " + largestTextClass);
+            
+            removePreference();
+        });
+
+        $(document).on('click', '#' + this.largeBtnId, function (e) {
+            e.preventDefault();
+
+            $mainContainer.removeClass(largestTextClass)
+                .addClass(largeTextClass);
+
+            savePreference(largeTextClass);
+        });
+
+        $(document).on('click', '#' + this.largestBtnId, function (e) {
+            e.preventDefault();
+
+            $mainContainer.removeClass(largeTextClass)
+                .addClass(largestTextClass);
+
+            savePreference(largestTextClass);
+        });
+
+        initialize();
+
+    };
+
+    return TextResizer;
+})(window, undefined, jQuery);
+(function() {
+    /*Initialize teh Text Resizer*/
+    var textResizer = new TextResizer({
+        listClass: "resizer-list"
+    });   
+})();
 var Flickr = (function(window, undefined, $, Handlebars) {
   $.support.cors = true;
   var Flickr = function(options) {
@@ -5073,106 +5518,116 @@ var Flickr = (function(window, undefined, $, Handlebars) {
   };
   return Flickr;
 })(window, undefined, jQuery, Handlebars);
-var ShowNews = (function ($) {
+var ShowNews = (function($) {
     /*News Related Methods*/
-    var createReadMoreLink = function ($newsItem, $link) {
-        $newsItem.append($link.clone().html("Read More >>"));
-    },
-    getDisplayDate = function (date) {
-        var Months = {
-            "Jan": "January",
-                "Feb": "February",
-                "Mar": "March",
-                "Apr": "April",
-                "May": "May",
-                "Jun": "June",
-                "Jul": "July",
-                "Aug": "August",
-                "Sep": "September",
-                "Oct": "October",
-                "Nov": "November",
-                "Dec": "December"
+    var createReadMoreLink = function($newsItem, $link) {
+            $newsItem.append($link.clone().html("Read More >>"));
         },
-        dateParts = date.split(" "),
-            month = Months[dateParts[2]],
-            day = dateParts[1];
+        getDisplayDate = function(date) {
+            var Months = {
+                "0": "January",
+                "1": "February",
+                "2": "March", 
+                "3": "April",
+                "4": "May",
+                "5": "June",
+                "6": "July",
+                "7": "August",
+                "8": "September",
+                "9": "October",
+                "10": "November",
+                "11": "December"
+            };
+            var isGMT = date.indexOf("GMT") > -1
+            var dateObj = new Date(date);
+            if (isGMT) {
+                dateObj.setHours(dateObj.getHours() - dateObj.getTimezoneOffset() / 60);
+            }
+            var month = Months[dateObj.getMonth()];
+            var day = dateObj.getDate();
 
-        return month + " " + day;
-    },
-    getExcerpt = function ($newsItemDesc) {
-        var supportsCustomElements = !! $('seml', $newsItemDesc).html(),
-            excerptHtml = supportsCustomElements ? $newsItemDesc.children().html() : $newsItemDesc.html(),
-            htmlArray = removeUnwantedItems($.parseHTML(excerptHtml));
+            return month + " " + day;
+        },
+        getExcerpt = function($newsItemDesc) {
+            var supportsCustomElements = !!$('seml', $newsItemDesc).html(),
+                excerptHtml = supportsCustomElements ? $newsItemDesc.children().html() : $newsItemDesc.html(),
+                htmlArray = removeUnwantedItems($.parseHTML(excerptHtml));
 
-        if (htmlArray.length) {
-            return supportsCustomElements ? htmlArray[1].textContent : htmlArray[1].innerText;
-        }
-        return null;
-    },
-    removeUnwantedItems = function (htmlArray) {
-        
-        if (htmlArray) {
-            for (var i = 0, len = htmlArray.length; i < len; i++) {
-                var item = htmlArray[i];
+            if (htmlArray.length) {
+                return supportsCustomElements ? htmlArray[1].textContent : htmlArray[1].innerText;
+            }
+            return null;
+        },
+        removeUnwantedItems = function(htmlArray) {
 
-                if (!item) {
-                    htmlArray.splice(i, 1);
-                } else {
-                    //i > 1 keeps the first two items of the array regardless if they are a bad item, unless they are empty or bad.  The first two items of the array should either be a p tag or h2 tag 
-                    var isBadItem = i > 1 && item && (item.tagName === 'IMG' || item.tagName === 'UL' || (item.innerHTML && item.innerHTML.indexOf('seimage') > 0)),
-                        isBadChildItem = i > 1 && item && (item.children && item.children[0] && item.children[0].tagName === 'IMG'),
-                        isBadElement = item && item.tagName === undefined,
-                        isEmptyItem = item && $.trim(item.innerHTML).length === 0;
+            if (htmlArray) {
+                for (var i = 0, len = htmlArray.length; i < len; i++) {
+                    var item = htmlArray[i];
 
-                    if (isBadItem || isBadChildItem || isBadElement || isEmptyItem) {
+                    if (!item) {
                         htmlArray.splice(i, 1);
+                    } else {
+                        //i > 1 keeps the first two items of the array regardless if they are a bad item, unless they are empty or bad.  The first two items of the array should either be a p tag or h2 tag 
+                        var isBadItem = i > 1 && item && (item.tagName === 'IMG' || item.tagName === 'UL' || (item.innerHTML && item.innerHTML.indexOf('seimage') > 0)),
+                            isBadChildItem = i > 1 && item && (item.children && item.children[0] && item.children[0].tagName === 'IMG'),
+                            isBadElement = item && item.tagName === undefined,
+                            isEmptyItem = item && $.trim(item.innerHTML).length === 0;
+
+                        if (isBadItem || isBadChildItem || isBadElement || isEmptyItem) {
+                            htmlArray.splice(i, 1);
+                        }
                     }
                 }
+                return htmlArray;
             }
-            return htmlArray;
-        }
-        return [];
-    },
-    setDisplayDate = function ($newsItem, date) {
-        $('.title', $newsItem).after("<span class='pub-date'>" + date + "</span>");
-    },
-    showNewsSummaries = function () {
-        var $newsItems = $('.item');
-        $newsItems.each(function ($item) {
-            var $newsItem = $(this),
-                $newsItemDesc = $newsItem.find('.description'),
-                $linkToEntry = $newsItem.find("h3").find("a"),
-                pubDate = getDisplayDate($('.pubDate', $newsItem).text());
+            return [];
+        },
+        setDisplayDate = function($newsItem, date) {
+            $('.title', $newsItem).after("<span class='pub-date'>" + date + "</span>");
+        },
+        showNewsSummaries = function() {
+            var $newsItems = $('.item');
+            $newsItems.each(function($item) {
+                var $newsItem = $(this),
+                    $newsItemDesc = $newsItem.find('.description'),
+                    $linkToEntry = $newsItem.find("h3").find("a"),
+                    pubDate = getDisplayDate($('.pubDate', $newsItem).text());
 
-            //Create a read more linked based on the Blog Title's Anchor Href
-            createReadMoreLink($newsItem, $linkToEntry);
+                //Create a read more linked based on the Blog Title's Anchor Href
+                createReadMoreLink($newsItem, $linkToEntry);
 
-            //Include the published date after the news title
-            setDisplayDate($newsItem, pubDate);
+                //Include the published date after the news title
+                setDisplayDate($newsItem, pubDate);
 
-            //Ensure that the exceprt text is not too long
-            //For now we are limiting it to 50 words
-            //If for some reason there is nothing in teh story, ste the story to an empty string
-            var excerpt = getExcerpt($newsItemDesc);
-            var excerptText = trimExceprtText(excerpt, 50) || '';
+                //Ensure that the exceprt text is not too long
+                //For now we are limiting it to 50 words
+                //If for some reason there is nothing in teh story, ste the story to an empty string
+                var excerpt = getExcerpt($newsItemDesc);
+                var excerptText = trimExceprtText(excerpt, 50) || '';
 
-            $newsItemDesc.html("<p>" + excerptText + "</p>");
-        });
-    },
-    trimExceprtText = function (excerpt, limit) {
-        if (excerpt) {
-            var words = excerpt.split(' ');
-            return words.length < limit ? excerpt : words.splice(0, limit).join(" ") + "...";
-        }
-        return '';
-    };
+                $newsItemDesc.html("<p>" + excerptText + "</p>");
+            });
+        },
+        trimExceprtText = function(excerpt, limit) {
+            if (excerpt) {
+                var words = excerpt.split(' ');
+                return words.length < limit ? excerpt : words.splice(0, limit).join(" ") + "...";
+            }
+            return '';
+        };
     //Hide the neccessary items to show the news summary
     //Used because Site Executive does not offer this feature
-    $(document).ready(function () {
+    $(document).ready(function() {
         var $newsFeed = $('.news-feed');
         $newsFeed.find('.item').eq(2).css("clear", "both"); //Hack, adds cleafix to syndication module
         showNewsSummaries();
     });
+
+    /* test-code */
+    return {
+        getDisplayDate: getDisplayDate
+    };
+    /* end-test-code */
 
 })(jQuery);
 (function ($, Flickr) {
@@ -5219,3 +5674,38 @@ var ShowNews = (function ($) {
     window.onload = deferImages;
 
 })(jQuery, Flickr);
+
+(function TemplateEvents($, TextResizer) {
+	function onDocumentReady() {
+		var textResizer = new TextResizer({
+			listClass: 'resizer-list'
+		});
+	}
+
+	function searchButtonClicked(e) {
+		var val = $('.search-input').val();
+
+		if (val.length === 0) {
+			e.preventDefault();
+		}
+	}
+
+	function toggleMobileNavigation(e) {
+		e.preventDefault();
+		$('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
+	}
+
+	/**
+   * Stuff to kick off when the template is loaded
+   */
+	$(document).ready(onDocumentReady);
+
+	/**
+   * Events
+   */
+	/* Toggle hamburger menu */
+	$(document).on('click', '.hamburger-btn', toggleMobileNavigation);
+
+	/* Prevent a search with no text */
+	$(document).on('click', '.search-button', searchButtonClicked);
+}(jQuery, TextResizer));

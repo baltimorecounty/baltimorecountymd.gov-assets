@@ -16,7 +16,7 @@
 @import "partials/components/alert";
 
 
-@import "partials/inside/insideGrid";
+@import "partials/bootstrap/insideGrid";
 @import "partials/inside/rateForm";
 @import "partials/inside/search";
 
@@ -53,4 +53,9 @@ input[type="submit"] {
 		-webkit-appearance: none;
      -webkit-border-radius: 0;
      border-radius: 0;
+}
+
+//HACK: Ensure Tables Fit their containers
+#BACO_table {
+	width: 100% !important;
 }

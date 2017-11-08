@@ -17,11 +17,9 @@ module.exports = function(config) {
       'js/utility/namespacer.js',
       'js/utility/*.js',
       'js/polyfills/*.js',
-      'js/nifty-tables.js',
       'spec/js/**/*.spec.js',
       {
         pattern: 'spec/js/fixtures/**/*.html',
-        watched: true,
         included: false,
         served: true
       }
@@ -41,8 +39,7 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    },
+    preprocessors: {},
 
 
     // test results reporter to use
@@ -72,7 +69,6 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
 
-
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true,
@@ -80,5 +76,5 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};

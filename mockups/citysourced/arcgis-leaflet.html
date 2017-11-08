@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Load Leaflet from CDN-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+
+	<!-- Load Esri Leaflet locally, after cloning this repository -->
+	<script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+
+   <!-- Esri Leaflet Geocoder -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		#map {
+			height: 600px;
+			margin: 4em;
+			width: 800px;			
+		}
+	</style>
+</head>
+
+<body>
+	<div id="map"></div>
+	<script>
+		var map = L.map('map').setView([39.4001857, -76.6063945], 15);
+		L.esri.basemapLayer("Streets").addTo(map);
+
+		// create the geocoding control and add it to the map
+		var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+
+		// create an empty layer group to store the results and add it to the map
+		var results = L.layerGroup().addTo(map);
+
+		// listen for the results event and add every result to the map
+		searchControl.on("results", function(data) {
+			results.clearLayers();
+			for (var i = data.results.length - 1; i >= 0; i--) {
+				results.addLayer(L.marker(data.results[i].latlng));
+			}
+		});
+	</script>
+</body>
+
+</html>

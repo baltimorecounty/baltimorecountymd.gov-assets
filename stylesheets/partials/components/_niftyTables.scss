@@ -1,0 +1,51 @@
+table.nifty-table.nifty-table-sortable {
+
+    th {
+
+        .btn-sort {
+            text-decoration: none !important;
+            
+            &::after {
+                content: '\f0dc';
+                font-family: FontAwesome;
+                margin-left: .25em;
+            }
+
+        }
+
+        .btn-sort.sort-ascending {
+            &::after {
+                content: '\f0de';
+                font-family: FontAwesome;
+            }
+        }
+
+        .btn-sort.sort-descending {
+            &::after {
+                content: '\f0dd';
+                font-family: FontAwesome;
+            }
+        }
+
+    }
+
+}
+
+.nifty-table-alphabet-filter {
+    background-color: #ebebeb;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    text-align: center;
+    width: 98%;
+
+    a, span {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 1em .35em
+    }
+
+}
+
+.nifty-table-alphabet-filter + #BACO_table {
+    margin-top: 0;
+}

@@ -86,7 +86,7 @@ var getTodaysDate = function () {
         var $statusImage = $('.status-image'),
             $statusContainerData = $('.county-closings-status-container p'),
             status = $statusContainerData.length? $statusContainerData[0].innerHTML.toLowerCase() : '';
-            
+
         $statusContainerData.eq(0).prepend("<strong>Status: </strong>");
 
         $statusImage.replaceWith(icon(status, 'extraLarge'));
@@ -112,6 +112,7 @@ var getTodaysDate = function () {
             $closingsTable.DataTable({
                 info: false,
                 paging: false,
+                "bFilter": false,
                 processing: true,
                 responsive: {
                     details: {
