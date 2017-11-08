@@ -16,7 +16,6 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
         FIELD_WRAPPER_CLASS = '.seFieldCell',
         LABEL_WRAPPER_CLASS = '.seLabelCell',
         REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message',
-
         /*
         * Loads up the field IDs and error messages that SE renders in inline JavaScript.
         */
@@ -137,7 +136,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
             if ($targets.hasClass('required-checkbox-single'))
                 $targets = $targets.closest('.seCheckboxLabel');
 
-            if (!isValid($targets)) {                
+            if (!isValid($targets) && $targets.length) {                
                 $errorMessage.removeClass('hidden');
                 $targets.addClass('error-field');
                 $label.addClass('error-label');
@@ -218,7 +217,10 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
 
             $form.on('keyup click', $allRequiredFields, allFieldsKeyupClickHandler);
             $form.on('blur', $inputsSelectsTextboxes, inputsSelectsTextboxesBlurHandler);
-            $('#submit').on('click', submitClickHandler);
+
+            var submitId = $form.find('input[type="submit"]').attr('id');
+
+            $(document).on('click', '#' + submitId, submitClickHandler);
         };
 
     /*

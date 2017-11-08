@@ -6,7 +6,7 @@ $error-shadow: 0 0 5px $red;
 }
 
 .SEAFGroupVertical > div {
-    margin-bottom: .5em;
+    margin-bottom: .75em;
 }
 
 .error-field {
@@ -19,16 +19,42 @@ $error-shadow: 0 0 5px $red;
     color: $red;
 }
 
-.seCheckbox, .seRadio {
-	display: none;
+.seCheckbox,
+.seRadio {
+    position: absolute;
+    margin-left: -19191919px;
 }
 
-.seCheckboxLabel {    
+.seCheckboxLabel,
+.seRadioLabel {
+    cursor: pointer;
+    
+    &:focus {
+        outline: none;
+    }
 
+    &::before,
     &.checked::before {
         font-family: FontAwesome;
-        content: '\f00c';
-    }    
+    }
+
+    &.is-focused::before,
+    &.checked.is-focused::before {
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border: 1px solid rgba(81, 203, 238, 1);
+    }
+
+    &::before {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        color: transparent;
+        display: inline-block;
+        line-height: normal;
+        margin-bottom: 10px;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        width: 20px;
+    }
 
     &.error-field {
         -webkit-box-shadow: none;
@@ -40,60 +66,58 @@ $error-shadow: 0 0 5px $red;
         -webkit-box-shadow: $error-shadow;
         -moz-box-shadow: $error-shadow;
         box-shadow: $error-shadow;
-    }    
-
-    &::before {
-        background-color: #eee;
-        border: 1px solid #ccc;
-        content: '\13';
-        cursor: pointer;
-        display: inline-block;
-        height: 20px;
-        margin-right: .5em;
-        text-align: center;
-        width: 20px;
     }
 
+    &.checked::before {
+        color: #444;
+    }
 }
 
-.seRadioLabel {    
+.seCheckboxLabel {
+    &.checked::before {
+        content: '\f00c';
+    }
+    &::before {
+        content: '\f00c';
+        margin-right: .5em;
+        padding: 1px;
+        margin-top: 1px;
+    }
+}
+
+.seRadioLabel {
     white-space: nowrap;
 
     &.checked::before {
         content: '\f111';
-        font-family: FontAwesome;
-        font-size: .75em;
-        line-height: 1.5em;
-        position: relative;
-        top: -2px;
-    }    
-
-    &.error-field {
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
     }
-
-    &.error-field::before {
-        -webkit-box-shadow: $error-shadow;
-        -moz-box-shadow: $error-shadow;
-        box-shadow: $error-shadow;
-    }    
-
     &::before {
-        background-color: #eee;
-        border: 1px solid #ccc;
         border-radius: 20px;
-        content: '\13';
-        display: inline-block;
-        height: 20px;
-        margin-right: .5em;
-        text-align: center;
-        width: 20px;
-    }
-
+        content: '\f111';
+        font-size: .7em;
+        margin-right: 1em;
+        padding: 3px;
+        vertical-align: 20%;
+    }   
 }
 
 .seRequiredMarker, .inline-form-error-message {
     font-size: .75em;
+}
+
+/* Overrides */
+/* TODO - This should be fixed in red-inside.css */
+#column3 .seRadioLabel {
+    display: inline-block;
+    line-height: normal;
+    margin-bottom: 6px;
+    padding: 0;
+}
+#mainContent .seRadioLabel,
+#mainContent .seCheckboxLabel {
+    font-size: 1em;
+    margin-right: 15px;
+}
+#mainContent .SEAFGroupHorizontal.horizontal  .seText {
+    padding: 0;
 }

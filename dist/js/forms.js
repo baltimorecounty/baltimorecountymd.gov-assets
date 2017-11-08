@@ -576,7 +576,6 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
         FIELD_WRAPPER_CLASS = '.seFieldCell',
         LABEL_WRAPPER_CLASS = '.seLabelCell',
         REQUIRED_FIELD_ERROR_MESSAGE_SELECTOR = '.inline-form-error-message',
-
         /*
         * Loads up the field IDs and error messages that SE renders in inline JavaScript.
         */
@@ -585,7 +584,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
                 fieldValueRegExp = /_CF_onError\(_CF_this.+;/g,
                 matches = [], 
                 tempArray = [],
-                errorMessageDict = [];
+                errorMessageDict = {};
 
             // This makes sure we're only pushing distinct values into the "matches" array.
             while ((tempArray = fieldValueRegExp.exec(functionText)) !== null) {
@@ -605,14 +604,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
                         errorMessage: errorMessage
                     };    
 
-                for (var m = 0; m < errorMessageDict.length; m++) {
-                    exists = errorMessageDict[m].fieldName === errorObject.fieldName;
-                    if (exists)
-                        break;
-                }
-
-                if (!exists)
-                    errorMessageDict[errorObject.fieldName] = errorObject.errorMessage;
+                errorMessageDict[errorObject.fieldName] = errorObject.errorMessage;
             }
 
             return errorMessageDict;
@@ -643,7 +635,9 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
         * Removes a string that wraps another string. For example, changes '"test"' to 'test'.
         */
         cleanWrappedText = function(text, stringToRemove) {
-            return text.slice(text.indexOf(stringToRemove) + 1, text.lastIndexOf(stringToRemove));
+            if (text.indexOf(stringToRemove) > -1 && text.indexOf(stringToRemove) < text.lastIndexOf(stringToRemove))
+                return text.slice(text.indexOf(stringToRemove) + stringToRemove.length, text.lastIndexOf(stringToRemove));
+            return text;
         },
         
         /*
@@ -702,7 +696,7 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
             if ($targets.hasClass('required-checkbox-single'))
                 $targets = $targets.closest('.seCheckboxLabel');
 
-            if (!isValid($targets)) {                
+            if (!isValid($targets) && $targets.length) {                
                 $errorMessage.removeClass('hidden');
                 $targets.addClass('error-field');
                 $label.addClass('error-label');
@@ -783,13 +777,25 @@ baltimoreCounty.inlineFormValidation = (function(window, $) {
 
             $form.on('keyup click', $allRequiredFields, allFieldsKeyupClickHandler);
             $form.on('blur', $inputsSelectsTextboxes, inputsSelectsTextboxesBlurHandler);
-            $('#submit').on('click', submitClickHandler);
+
+            var submitId = $form.find('input[type="submit"]').attr('id');
+
+            $(document).on('click', '#' + submitId, submitClickHandler);
         };
 
     /*
     * Revealed methods
     */
     return {
+        /* test code */
+        loadFieldErrorMessageData: loadFieldErrorMessageData,
+        attachErrorMessages: attachErrorMessages,
+        cleanWrappedText: cleanWrappedText,
+        validateRequiredElementsInWrapper: validateRequiredElementsInWrapper,
+        allFieldsKeyupClickHandler: allFieldsKeyupClickHandler,
+        inputsSelectsTextboxesBlurHandler: inputsSelectsTextboxesBlurHandler,
+        submitClickHandler: submitClickHandler,
+        /* end test code */
         init: init
     };
 

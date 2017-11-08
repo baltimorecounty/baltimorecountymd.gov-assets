@@ -48,4 +48,8 @@ Adds inline validation to SiteExecutive forms.
 **usage**: TBD    
 ### Dependencies
 * [jQuery](https://jquery.com/)
+<<<<<<< HEAD
 * [Validate](https://validatejs.org/)
+=======
+* [Validate](https://validatejs.org/)
+>>>>>>> master

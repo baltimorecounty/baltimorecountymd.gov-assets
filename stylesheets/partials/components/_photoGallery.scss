@@ -1,0 +1,102 @@
+$gallery-shadow: 1px 1px 3px #666;
+
+.fancybox-title-over-wrap {
+    width: 100%;
+}
+
+.fancybox-next {
+    i {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        font-size: 3em;
+        color: white;
+        text-shadow: 1px 1px 3px #000;
+    }
+}
+
+.fancybox-prev {
+    i {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        font-size: 3em;
+        color: white;
+        text-shadow: 1px 1px 3px #000;
+    }
+}
+
+.fancybox-title-float-wrap .child {
+    border-radius: 8px !important;
+}
+
+#maincontainer {
+
+    .bc-photo-gallery {
+
+        figure {
+            background-color: #ebebeb;
+            border-radius: 10px;
+            box-shadow: $gallery-shadow;
+            box-sizing: content-box;
+            display: inline-block;
+            margin: 0;
+            padding: 1em;
+
+            a {
+                display: block;
+                overflow: hidden;
+                position: relative;
+
+                img {
+                    background: white;
+                    height: 180px;
+                    margin: 0;        
+                }
+
+                .photo-icon {
+                    color: white;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    text-shadow: $gallery-shadow;
+                    transform: translate(-50%, -50%);
+                }
+
+                &:hover {
+
+                    .photo-icon {
+                        top: 51%;
+                        left: 51%;
+                        text-shadow: none;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    .bc-photo-gallery.pull-left {
+        figure {
+            margin: 1em 2em 1em 0;
+        }
+    }
+
+    .bc-photo-gallery.pull-right {
+        figure {
+            margin: 1em 0 1em 2em;
+        }
+    }
+
+}
+
+@media (max-width: 480px) {
+    .bc-photo-gallery {
+        figure {
+            width: auto;
+        }
+    }
+}

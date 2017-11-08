@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en-us">
+<head>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="../dist/js/template.min.js"></script>
+	<script src="../js/youtube-playlist-gallery.js"></script>
+	
+	<link href="/dist/css/inside-responsive.css" rel="stylesheet" />
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+	<title>YouTube Playlist Gallery</title>
+</head>
+<body>
+	<div class="bc-youtube-playlist-gallery"></div>
+
+	<script id="youtube-playlist-item-template" type="text/x-handlebars-template">
+		{{#each youtubeItemInfo}}
+		<div class="youtube-playlist-item {{#if isHidden}}hidden{{/if}}">
+			<figure>
+				<a href="https://www.youtube.com/watch?v={{videoId}}" title="Video: {{videoTitle}}" data-fancybox-href="https://www.youtube.com/embed/{{videoId}}" data-fancybox-type="iframe" class="fancybox">
+				<i class="fa fa-play-circle-o" aria-hidden="true"></i>
+				<img src="{{thumbnailUrl}}" alt="{{videoTitle}}" /></a>
+				<figcaption>
+					<p><a href="https://www.youtube.com/watch?v={{videoId}}" title="Video: {{videoTitle}}" data-fancybox-href="https://www.youtube.com/embed/{{videoId}}" data-fancybox-type="iframe" class="fancybox">{{videoTitle}}</a></p>
+				</figcaption>
+			</figure>
+		</div>
+		{{/each}}
+	</script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js"></script>
+	<script>
+		$(document).ready(function() { 
+			baltimoreCounty.youtubePlaylistGallery.init({
+				target: '.bc-youtube-playlist-gallery',
+				templateSelector: '#youtube-playlist-item-template',
+				playlistId: 'PLYAZPzl77odrB8TBCEizC4ZvQ7NvgRoGf'
+			});
+
+			$('.fancybox').fancybox();
+		});
+	</script>
+		
+</body>
+</html>

@@ -53,10 +53,80 @@ baltimoreCounty.utility.cdnFallback = (function() {
             document.getElementsByTagName('head')[0].appendChild(scriptTag);
         else 
             document.getElementsByTagName('body')[0].appendChild(scriptTag);
-    }
+    };
 
     return { 
         load: load
+    };
+
+})();
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.querystringer = (function(undefined) {
+    'use strict';
+
+    var getAsDictionary = function() {
+
+        if (window.location.search) {
+            var qs = window.location.search.slice(1),
+                qsArray = qs.split('&'),
+                qsDict = {};
+
+            for (var i = 0; i < qsArray.length; i++) {            
+                var KEY = 0,
+                    VALUE = 1,
+                    keyValueArr = qsArray[i].split('='),
+                    entry = {};
+
+                qsDict[keyValueArr[KEY]] = keyValueArr.length === 2 ? keyValueArr[VALUE] : '';
+            }
+
+            return qsDict;
+        }
+
+        return false;
+    };
+
+    return {
+        getAsDictionary: getAsDictionary
+    };
+
+})();
+namespacer('baltimoreCounty.utility');
+
+baltimoreCounty.utility.jsonTools = (function(undefined) {
+
+    /**
+     * Extracts a subtree of a json document based on a property match.
+     */
+   var getSubtree = function(jsonData, matchPropertyName, subtreePropertyName, searchValue) {
+        var match;
+        $.each(jsonData, function(idx, item) {
+            if (item[subtreePropertyName]) {
+                if (item[matchPropertyName] === searchValue) {
+                    match = item[subtreePropertyName];   
+                    return false;                    
+                } else {
+                    match = getSubtree(item[subtreePropertyName], searchValue);
+                }
+            }
+        });
+        return match;
+    },
+	
+	getSubtreePath = function(data, matchProperty, subtreeProperty, searchValue) {
+		for (var x = 0; x < data.length; x++) {
+			if (data[x][matchProperty] == searchValue) {
+				return data[x][matchProperty];
+			}
+			if (data[x][subtreeProperty] && getSubtreePath(data[x][subtreeProperty], 'id', 'types', searchValue))
+				return [data[x][matchProperty], getSubtreePath(data[x][subtreeProperty], 'id', 'types', searchValue)];
+		}
+	};
+
+    return {
+        getSubtree: getSubtree,
+		getSubtreePath: getSubtreePath
     };
 
 })();

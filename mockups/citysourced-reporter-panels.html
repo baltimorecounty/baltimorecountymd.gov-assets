@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <title>CitySourced Mockup</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"></script>
+        <script src="/dist/js/templateinside.min.js"></script>
+        <script src="/js/page-specific/citysourced-reporter.js"></script>
+        <script src="/js/page-specific/citysourced-googleMaps.js"></script>
+        <script>
+            $(function () {
+                baltimoreCounty.pageSpecific.citySourcedReporter.init('/mockups/categories.json');
+            });
+        </script>
+        <link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
+        <link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
+        <!--[if lte IE 9]>
+        <link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
+    <![endif]-->
+        <style>
+            #map {
+                height: 350px;
+            }
+        </style>
+</head>
+
+<body id="mainContent">
+
+    <div role="alert" class="bc-citysourced-reporter-alert alert-success" style="display: none" aria-hidden="true">
+        <h2>Your Submission Has Been Received</h2>
+        <p>Thank you for submitting your report. Your tracking number is: <span id="issueId"></span>.</p>
+        <p>You will receive an email in a few minutes with information about what happens next. You can also track your status online by entering your tracking number at <a href="/followup" title="Track your issue status online.">http://www.baltimorecountymd.gov/followup</a>.</p>
+    </div>
+    <div role="alert" class="bc-citysourced-reporter-alert alert-warning" style="display: none" aria-hidden="true">
+        <h2>Your Report Was Not Submitted</h2>
+        <p>We encountered a problem processing your submission. Our team has been notified and is working to resolve it.</p>
+    </div>
+
+    <div class="bc-citysourced-reporter">
+
+        <ol class="bc-citysourced-reporter-steps">
+            <li class="highlight">Service Request <br/> Category</li>
+            <li>Service Request <br/> Location</li>
+            <li>Your Contact <br/> Information</li>
+            <li> </li>
+        </ol>
+
+        <form id="citysourced-reporter-form">
+            <fieldset class="panel">
+                <legend>How Can We Help?</legend>
+                <div id="category-selection">
+                    <label id="categories-label">Request Category</label>
+                    <p role="alert" class="error-message">Please select a category for your report.</p>
+                </div>
+                <input type="hidden" id="report-category" value="" />
+                <div class="form-control">
+                    <label for="details">Description</label>
+                    <textarea id="details" aria-required="true"></textarea>
+                    <p role="alert" class="error-message">Please enter details for your report.</p>
+                </div>
+            </fieldset>
+
+
+            <fieldset class="panel">
+                <legend>Add a Location</legend>
+                <p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
+                <div class="form-control">
+                    <label for="address">Enter the closest address to your service request</label>
+                    <input type="text" id="address" placeholder="123 Any Street, Towson, MD, 21286" aria-required="true" />
+                    <a id="addressSearch" class="contentButton"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search</span></a>
+                    <p role="alert" class="error-message">You must select a location inside Baltimore County.</p>
+                </div>
+                <div id="map" class="google-map"></div>
+                <input type="hidden" id="map-latitude" value="" />
+                <input type="hidden" id="map-longitude" value="" />
+            </fieldset>
+
+            <fieldset class="panel">
+                <legend>Your Contact Information</legend>
+                <p>We require some basic contact information in order to process your request. You'll receive status updates by email, but we'll only call you if we need more information.</p>
+                <div class="form-control">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" value="" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your first name.</p>
+                </div>
+                <div class="form-control">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" value="" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your last name.</p>
+                </div class="form-control">
+                <div class="form-control">
+                    <label for="email">Email Address</label>
+                    <input type="text" id="email" name="email" value="" placeholder="name@domain.com" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your email address.</p>
+                </div>
+                <div class="form-control">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="deviceNumber" name="deviceNumber" value="" placeholder="410-555-1212" aria-required="true" />
+                    <p role="alert" class="error-message">Please enter your phone number.</p>
+                </div>
+            </fieldset>
+            <input type="button" class="seButton pull-right" id="fileReportButton" value="File Your Report" />
+        </form>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places&callback=baltimoreCounty.pageSpecific.reporterGoogleMaps.initGoogle"
+        async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+
+
+    
+</body>
+
+</html>
