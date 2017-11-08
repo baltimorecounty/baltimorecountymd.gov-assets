@@ -60,7 +60,7 @@ baltimoreCounty.pageSpecific.docket = (function docket($, undefined) {
 			}
 
 			if (isError) {
-				$target.parent().children().hide();
+				$target.parent().find('.bc-filter-form, .bc-filter-content, .bc-docket-heading').hide();
 				$target.parent().find('.docket-error-message').show();
 			}
 		});
