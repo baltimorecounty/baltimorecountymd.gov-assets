@@ -20,6 +20,7 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 	function searchResultRequestSuccessHandler(response) {
 		var info = response.info.page;
 		var hits = response.records.page;
+		var query = info.query;
 		var maxPages = 10;
 		var tooManyResults = info.num_pages > maxPages;
 		var lastPage = tooManyResults ? maxPages : info.num_pages;
@@ -28,7 +29,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		var lastPageNumber = info.current_page * info.per_page < info.total_result_count ?
 			info.current_page * info.per_page :
 			info.total_result_count;
-		var firstPageNumber = ((info.current_page - 1) * info.per_page) + 1
+		var firstPageNumber = ((info.current_page - 1) * info.per_page) + 1;
+		var spellingSuggestion = info.spelling_suggestion ? info.spelling_suggestion.text : undefined;
 
 		info.base_url = window.location.pathname + '?q=' + info.query + '&page=';
 
@@ -62,7 +64,9 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 			searchResult: searchResults,
 			info: info,
 			pageLinks: pageLinks,
-			tooManyResults: tooManyResults
+			tooManyResults: tooManyResults,
+			spellingSuggestion: spellingSuggestion,
+			query: query
 		});
 
 		$searchResultsTarget.html(searchResultsHtml);
