@@ -48,10 +48,14 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		return pageLinks;
 	}
 
-	function calculateLastPageNumber(info) {
+	function calculateLastResultNumber(info) {
 		return info.current_page * info.per_page < info.total_result_count ?
 			info.current_page * info.per_page :
 			info.total_result_count;
+	}
+
+	function calculateFirstResultNumber(info) {
+		return ((info.current_page - 1) * info.per_page) + 1;
 	}
 
 	function searchResultRequestSuccessHandler(response) {
@@ -61,8 +65,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		var maxPages = 10;
 		var tooManyResults = info.num_pages > maxPages;
 		var lastPage = tooManyResults ? maxPages : info.num_pages;
-		var lastPageNumber = calculateLastPageNumber(info);
-		var firstPageNumber = ((info.current_page - 1) * info.per_page) + 1;
+		var lastResultNumber = calculateLastResultNumber(info);
+		var firstResultNumber = calculateFirstResultNumber(info);
 		var spellingSuggestion = info.spelling_suggestion ? info.spelling_suggestion.text : undefined;
 		var searchResults = buildSearchResults(hits);
 		var pageLinks = buildPageLinks(lastPage, info.current_page);
@@ -70,8 +74,8 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		info.base_url = window.location.pathname + '?q=' + info.query + '&page=';
 
 		info.index = {
-			first: firstPageNumber,
-			last: lastPageNumber
+			first: firstResultNumber,
+			last: lastResultNumber
 		};
 
 		var source = $(templateSelector).html();
@@ -103,6 +107,11 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 	}
 
 	return {
+		/* test-code */
+		calculateLastResultNumber: calculateLastResultNumber,
+		calculateFirstResultNumber: calculateFirstResultNumber,
+		buildPageLinks: buildPageLinks,
+		/* end-test-code */
 		init: init
 	};
 }(jQuery, baltimoreCounty.utility.querystringer, Handlebars, baltimoreCounty.constants));
