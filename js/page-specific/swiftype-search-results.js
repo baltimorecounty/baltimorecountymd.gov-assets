@@ -17,20 +17,24 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		console.error(err);
 	}
 
+	function buildResultSettings(result) {
+		var highlight = result.highlight.body || result.highlight.sections || result.highlight.title;
+		var title = result.title;
+		var url = result.url;
+
+		return {
+			highlight: highlight,
+			title: title,
+			url: url
+		};
+	}
+
 	function buildSearchResults(hits) {
 		var results = [];
 
-		$.each(hits, function eachHit(index, hit) {
-			var highlight = hit.highlight.body || hit.highlight.sections || hit.highlight.title;
-			var title = hit.title;
-			var url = hit.url;
-
-			results.push({
-				highlight: highlight,
-				title: title,
-				url: url
-			});
-		});
+		for (var i = 0, hitCount = hits.length; i < hitCount; i += 1) {
+			results.push(buildResultSettings(hits[i]));
+		}
 
 		return results;
 	}
