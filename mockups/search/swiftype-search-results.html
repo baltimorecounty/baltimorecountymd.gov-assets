@@ -7,7 +7,7 @@
 	<div class="search-results-display" style="display: none">
 		{{#if searchResult}}
 		{{#if spellingSuggestion}}
-		<p><em>Did you intend to search for <strong><a href="/search/results.html?q={{spellingSuggestion}}">{{spellingSuggestion}}</a></strong>?</em></p>
+		<p><em>Did you mean <strong><a href="/search/results.html?q={{spellingSuggestion}}">{{spellingSuggestion}}</a></strong>?</em></p>
 		{{/if}}
 		<p>Displaying results {{info.index.first}} to {{info.index.last}} of {{info.total_result_count}}.</p>
 		<ul>
@@ -35,7 +35,7 @@
 		{{else}}
 		<p>We couldn't find any pages matching your search for "{{query}}".</p>
 		{{#if spellingSuggestion}}
-			<p><em>Did you intend to search for <strong><a href="/search/results.html?q={{spellingSuggestion}}">{{spellingSuggestion}}</a></strong>?</em></p>
+			<p><em>Did you mean <strong><a href="/search/results.html?q={{spellingSuggestion}}">{{spellingSuggestion}}</a></strong>?</em></p>
 		{{/if}}
 		{{/if}}
 	</div>
