@@ -254,11 +254,8 @@ baltimoreCounty.utility.formValidator = (function($) {
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.format = (function () {
-<<<<<<< HEAD
-=======
     'use strict';
 
->>>>>>> integration
     function formatCurrency(input) {
         if (!input) {
             return;
@@ -466,11 +463,8 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.validate = (function () {
-<<<<<<< HEAD
-=======
     'use strict';
 
->>>>>>> integration
     function validatePhoneNumber(str) {
         /**
              * Valid Formats:
@@ -497,14 +491,11 @@ baltimoreCounty.utility.validate = (function () {
 
     return validate;
 })();
-<<<<<<< HEAD
-=======
 /* test-code */
 module.exports = validators;
 /* end-test-code */
 
 
->>>>>>> integration
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.

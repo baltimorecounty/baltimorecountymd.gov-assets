@@ -1,0 +1,35 @@
+.autocomplete {
+	ul {
+		margin: 0;
+		padding: 0;
+		background: white;
+		list-style-type: none;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+		li {
+			padding: .5em;
+			border-bottom: 1px solid #eee;
+
+			.st-autocomplete-search-result {
+				a {
+					color: #666;
+					display: block;
+					font-weight: bold;
+					text-decoration: none;
+
+					span {
+						font-weight: normal;
+					}
+				}
+			}
+
+			&:hover {
+				background: #eee;
+			}
+
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+	}
+}

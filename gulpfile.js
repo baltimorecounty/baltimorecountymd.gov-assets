@@ -42,10 +42,13 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
 		'js/lib/slick.min.js',
 		'js/lib/handlebars.js',
 		'js/lib/picturefill.min.js',
+		'js/constants.js',
+		'js/keyword-search.js',
+		'js/text-resizer.js',
 		'js/flickr-feed.js',
 		'js/county-news-snippet.js',
-		'js/template-events.js',
-		'js/homepage-template.js'];
+		'js/homepage-template.js',
+		'js/template-events.js'];
 	return concatFiles(files, 'homepage.js');
 });
 
@@ -62,6 +65,7 @@ gulp.task('concatTemplateJs', function concatTemplateJs() {
 		'js/lib/slick.min.js',
 		'js/lib/review.js',
 		'js/constants.js',
+		'js/keyword-search.js',
 		'js/internal-carousel.js',
 		'js/mobile-search.js',
 		'js/template-events.js',
