@@ -254,11 +254,8 @@ baltimoreCounty.utility.formValidator = (function($) {
 namespacer('baltimoreCounty.utility');
 
 baltimoreCounty.utility.format = (function () {
-<<<<<<< HEAD
-=======
     'use strict';
 
->>>>>>> integration
     function formatCurrency(input) {
         if (!input) {
             return;
@@ -465,14 +462,11 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 })();
 namespacer('baltimoreCounty.utility');
 
-baltimoreCounty.utility.validate = (function () {
-<<<<<<< HEAD
-=======
-    'use strict';
+baltimoreCounty.utility.validate = (function validateWrapper() {
+	'use strict';
 
->>>>>>> integration
-    function validatePhoneNumber(str) {
-        /**
+	function validatePhoneNumber(str) {
+		/**
              * Valid Formats:
                 (123)456-7890
                 (123) 456-7890
@@ -482,29 +476,22 @@ baltimoreCounty.utility.validate = (function () {
                 +31636363634 (not working)
                 075-63546725 (not working)
             */
-        //var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-        var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-        return exp.test(str);
-    }
+		// var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+		var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+		return exp.test(str);
+	}
 
-    var _validators = {
-        phoneNumber: validatePhoneNumber
-    };
+	var validatorDictionary = {
+		phoneNumber: validatePhoneNumber
+	};
 
-    function validate(key, val) {
-        return _validators[key](val);
-    }
+	function validate(key, val) {
+		return validatorDictionary[key](val);
+	}
 
-    return validate;
-})();
-<<<<<<< HEAD
-=======
-/* test-code */
-module.exports = validators;
-/* end-test-code */
+	return validate;
+}());
 
-
->>>>>>> integration
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
