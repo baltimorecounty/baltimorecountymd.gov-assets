@@ -8,13 +8,14 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 
 	function getSearchResults(searchTerm, pageNumber) {
 		var currentPageNumber = pageNumber || 1;
-		var cleanedSearchTerm = searchTerm.replace(/\+/g, '%20');
+		var cleanedSearchTerm = searchTerm.replace(/\+/g, '%20').trim();
 
-		$.ajax(constants.keywordSearch.urls.api + cleanedSearchTerm + '/' + currentPageNumber).then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
+		$.ajax(constants.keywordSearch.urls.api + cleanedSearchTerm + '/' + currentPageNumber)
+			.then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
 	}
 
 	function searchResultRequestErrorHandler(err) {
-		console.error(err);
+		console.error(err); // eslint-disable-line no-console
 	}
 
 	function buildResultSettings(result) {
