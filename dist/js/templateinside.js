@@ -462,11 +462,11 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 })();
 namespacer('baltimoreCounty.utility');
 
-baltimoreCounty.utility.validate = (function () {
-    'use strict';
+baltimoreCounty.utility.validate = (function validateWrapper() {
+	'use strict';
 
-    function validatePhoneNumber(str) {
-        /**
+	function validatePhoneNumber(str) {
+		/**
              * Valid Formats:
                 (123)456-7890
                 (123) 456-7890
@@ -476,25 +476,21 @@ baltimoreCounty.utility.validate = (function () {
                 +31636363634 (not working)
                 075-63546725 (not working)
             */
-        //var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-        var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-        return exp.test(str);
-    }
+		// var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+		var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+		return exp.test(str);
+	}
 
-    var _validators = {
-        phoneNumber: validatePhoneNumber
-    };
+	var validatorDictionary = {
+		phoneNumber: validatePhoneNumber
+	};
 
-    function validate(key, val) {
-        return _validators[key](val);
-    }
+	function validate(key, val) {
+		return validatorDictionary[key](val);
+	}
 
-    return validate;
-})();
-/* test-code */
-module.exports = validators;
-/* end-test-code */
-
+	return validate;
+}());
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -6667,119 +6663,93 @@ baltimoreCounty.contentFilter = (function($, utilities) {
 })(jQuery, baltimoreCounty.utility);
 // Collapse the other items
 (function accordionMenu($) {
-  var clickedAccordionLevel = 0;
+	$(function onPageReady() {
+		var clickedAccordionLevel = 0;
 
-  /**
-   * Add active class to any links inside the local navigation on the page
-   */
-  function addCurrentClass($element) {
-    var pathName = window.location.pathname;
-    var elmHref = $element.attr('href');
+		// var pathName = window.location.pathname;
 
-    if (elmHref.indexOf(pathName) > -1) {
-      $element.closest('.panel').addClass('current');
-    }
-  }
+		// $('.bc-accordion-menu ul li a').each(function forEach() {
+		// 	var $navItem = $(this);
+		// 	var href = $navItem.attr('href');
 
-  /* Returns whether this is a parent or child accordion link. */
-  function getAccordionLevel($element) {
-    return $element.parents('ul').length + 1;
-  }
+		// 	if (href.indexOf(pathName) > -1) {
+		// 		$navItem
+		// 			.addClass('.current')
+		// 			.find('.collapse')
+		// 			.addClass('in');
+		// 	}
+		// });
 
-  function textNodeFilter(idx, element) {
-    if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
-      return true;
-    }
-    return false;
-  }
+		/* Opens any items that match the current URL, so the user
+			 * sees the current page as being active.
+			 */
+		$('.bc-accordion-menu ul li a').each(function eachLink(idx, item) {
+			var itemHref = item.getAttribute('href');
+			if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
+				$(item).addClass('current');
+				var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+				$collapsables.addClass('in');
+				var $siblings = $collapsables.siblings('.accordion-collapsed');
 
-  function hideTextOnlyNodes($elm) {
-    $elm
-      .contents()
-      .filter(textNodeFilter)
-      .parent().css('display', 'none');
-  }
+				if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
+			}
+		});
 
-  function openActiveItem(idx, item) {
-    var itemHref = item.getAttribute('href');
-    var $item = $(item);
-
-    if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
-      $item.addClass('current');
-      var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
-      $collapsables.addClass('in');
-      var $siblings = $collapsables.siblings('.accordion-collapsed');
-
-      if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
-    } else {
-      addCurrentClass($item);
-    }
-  }
-
-  function toggleAccordion(e, action) {
-    var $collapsable = $(e.currentTarget);
-    var $siblings = $collapsable.siblings('.accordion-collapsed');
-    var accordionLevel = getAccordionLevel($collapsable);
-
-    if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
-      if (action === 'hide') {
-        $siblings.removeClass('active');
-      }
-      if (action === 'show') {
-        $siblings.addClass('active');
-      }
-    }
-  }
-
-  function onAccordionHide(e) {
-    toggleAccordion(e, 'hide');
-  }
-
-  function onAccordionShow(e) {
-    toggleAccordion(e, 'show');
-  }
-
-  function setUpCollapse(e) {
-    $(e.target).siblings('.collapse').collapse('toggle');
-    return false;
-  }
-
-  function trackAccordionLevel(e) {
-    var $currentTarget = $(e.currentTarget);
-
-    clickedAccordionLevel = getAccordionLevel($currentTarget);
-    $currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
-  }
-
-  /**
-   * When the page is ready
-   */
-  $(function() {
-		/* Opens any items that match the current URL, so the user 
-		 * sees the current page as being active. 
-		 */
-    $('.bc-accordion-menu a').each(openActiveItem);
-
-    // Hide all text-only nodes.
-    hideTextOnlyNodes($('.bc-accordion-menu .panel ul li'));
-
-    /**
-     * Events
-     */
 		/* Updates the tracked current accordion level, since Bootstrap Collapse
-		 * wasn't exactly designed for nested menus.
-		 */
-    $(document).on('click', '.bc-accordion-menu .panel .accordion-collapsed', trackAccordionLevel);
+			 * wasn't exactly designed for nested menus.
+			 */
+		$('.bc-accordion-menu .panel .accordion-collapsed').on('click', function panelCollapse(e) {
+			var $currentTarget = $(e.currentTarget);
 
-    // Set up the DIVs to expand and collapse their siblings.
-    $(document).on('click', '.bc-accordion-menu .accordion-collapsed', setUpCollapse);
+			clickedAccordionLevel = getAccordionLevel($currentTarget);
+			$currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
+		});
 
-    /* Ensure he active accordion level's "active" css class is cleared when the menu expands. */
-    $('.bc-accordion-menu .collapse').on('show.bs.collapse', onAccordionShow);
+		/*
+			Making sure only the active accordion level's "active"
+			css class is cleared when the menu expands.
+		*/
+		$('.bc-accordion-menu .collapse').on('show.bs.collapse', function onShow() {
+			var $collapsable = $(this);
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
+			var accordionLevel = getAccordionLevel($collapsable);
 
-    /* Ensure the active accordion level's "active" css class is cleared when the menu collapses. */
-    $('.bc-accordion-menu .collapse').on('hide.bs.collapse', onAccordionHide);
-  });
+			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) { $siblings.addClass('active'); }
+		});
+
+		/*
+			Making sure only the active accordion level's "active"
+			 css class is cleared when the menu collapses.
+		*/
+		$('.bc-accordion-menu .collapse').on('hide.bs.collapse', function onHide() {
+			var $collapsable = $(this);
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
+			var accordionLevel = getAccordionLevel($collapsable);
+
+			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) { $siblings.removeClass('active'); }
+		});
+
+		// Hide all text-only nodes.
+		$('.bc-accordion-menu .panel ul li').contents().filter(textNodeFilter).parent()
+			.css('display', 'none');
+
+		// Set up the DIVs to expand and collapse their siblings.
+		$('.bc-accordion-menu .accordion-collapsed').on('click', function onClick(e) {
+			$(e.target).siblings('.collapse').collapse('toggle'); return false;
+		});
+
+		/* Returns whether this is a parent or child accordion link. */
+		function getAccordionLevel($element) {
+			return $element.parents('ul').length + 1;
+		}
+
+		function textNodeFilter(idx, element) {
+			if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
+				return true;
+			}
+			return false;
+		}
+	});
 }(jQuery));
 
 var baltimoreCounty = baltimoreCounty || {};

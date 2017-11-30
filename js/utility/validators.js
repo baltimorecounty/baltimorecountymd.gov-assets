@@ -1,10 +1,10 @@
 namespacer('baltimoreCounty.utility');
 
-baltimoreCounty.utility.validate = (function () {
-    'use strict';
+baltimoreCounty.utility.validate = (function validateWrapper() {
+	'use strict';
 
-    function validatePhoneNumber(str) {
-        /**
+	function validatePhoneNumber(str) {
+		/**
              * Valid Formats:
                 (123)456-7890
                 (123) 456-7890
@@ -14,22 +14,18 @@ baltimoreCounty.utility.validate = (function () {
                 +31636363634 (not working)
                 075-63546725 (not working)
             */
-        //var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-        var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-        return exp.test(str);
-    }
+		// var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+		var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+		return exp.test(str);
+	}
 
-    var _validators = {
-        phoneNumber: validatePhoneNumber
-    };
+	var validatorDictionary = {
+		phoneNumber: validatePhoneNumber
+	};
 
-    function validate(key, val) {
-        return _validators[key](val);
-    }
+	function validate(key, val) {
+		return validatorDictionary[key](val);
+	}
 
-    return validate;
-})();
-/* test-code */
-module.exports = validators;
-/* end-test-code */
-
+	return validate;
+}());
