@@ -8,7 +8,7 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 
 	function getSearchResults(searchTerm, pageNumber) {
 		var currentPageNumber = pageNumber || 1;
-		var cleanedSearchTerm = searchTerm.replace(/\+/g, '%20').trim();
+		var cleanedSearchTerm = searchTerm.trim().replace(/\+/g, '%20');
 
 		$.ajax(constants.keywordSearch.urls.api + cleanedSearchTerm + '/' + currentPageNumber)
 			.then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
