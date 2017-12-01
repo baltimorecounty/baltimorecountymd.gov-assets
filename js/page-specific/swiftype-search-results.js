@@ -8,11 +8,11 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 
 	function getSearchResults(searchTerm, pageNumber) {
 		var currentPageNumber = pageNumber || 1;
-		var cleanedSearchTerm = searchTerm;
+		var cleanedSearchTerm = searchTerm.trim();
 
 		// Ensure the last character is not '+' as the the trailing space causes no results
 		if (cleanedSearchTerm[cleanedSearchTerm.length - 1] === '+') {
-			cleanedSearchTerm = cleanedSearchTerm.substr(0, (cleanedSearchTerm.length - 1));
+			cleanedSearchTerm = cleanedSearchTerm.slice(0, -1);
 		}
 
 		cleanedSearchTerm = cleanedSearchTerm.replace(/\+/g, '%20');
