@@ -1,4 +1,4 @@
-(function BaltCoGoReporterCtrl(app, querystringer) {
+(function BaltCoGoReporterCtrl(app, querystringer, bcFormat) {
 	'use strict';
 
 	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
@@ -12,6 +12,7 @@
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
+		var ANIMAL_CATEGORY_ID = 1010169;
 
 		self.isAnimal = false;
 		self.page = 1;
@@ -91,7 +92,7 @@
 			},
 			{
 				name: 'DeviceNumber',
-				value: self.deviceNumber
+				value: bcFormat('phoneNumber', self.deviceNumber, 'xxx-xxx-xxxx')
 			}
 			];
 
@@ -226,7 +227,7 @@
 						self.zipCodeId = element.fields.zipCode;
 					}
 
-					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
+					self.isAnimal = element.id === ANIMAL_CATEGORY_ID;
 
 					$timeout(function descriptionSettingWrapper() {
 						if (element.descriptionOfAnimal) {
@@ -525,4 +526,4 @@
 			}
 		}
 	}
-}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer));
+}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format));

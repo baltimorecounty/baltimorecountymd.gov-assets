@@ -1,0 +1,42 @@
+.image-cc-link {
+	border-top: 5px solid $gold;
+	
+	a {
+		color: white !important;
+		display: block;
+		padding: 0;
+		bottom: 0;
+		position: relative;
+		width: 100%;
+		z-index: 99;
+	
+		&:hover .text {
+			color: $gold;	
+		}
+	}
+
+	img {
+		border: none;
+		float: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		width: 100%;
+	}
+
+	.text {
+		position: absolute;
+		bottom: 0;
+	
+		background-color: $darker-gray;
+		color: $white;
+		display: block;
+		font-family: $headline-font;
+		font-size: .88em;
+		font-weight: normal;
+		opacity: .8;
+		padding: 10px 15px 10px;
+		text-align: right;
+		text-transform: uppercase;
+		width: 100%;
+	}
+}

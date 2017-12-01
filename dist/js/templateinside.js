@@ -462,11 +462,11 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 })();
 namespacer('baltimoreCounty.utility');
 
-baltimoreCounty.utility.validate = (function () {
-    'use strict';
+baltimoreCounty.utility.validate = (function validateWrapper() {
+	'use strict';
 
-    function validatePhoneNumber(str) {
-        /**
+	function validatePhoneNumber(str) {
+		/**
              * Valid Formats:
                 (123)456-7890
                 (123) 456-7890
@@ -476,25 +476,21 @@ baltimoreCounty.utility.validate = (function () {
                 +31636363634 (not working)
                 075-63546725 (not working)
             */
-        //var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-        var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-        return exp.test(str);
-    }
+		// var exp = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+		var exp = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+		return exp.test(str);
+	}
 
-    var _validators = {
-        phoneNumber: validatePhoneNumber
-    };
+	var validatorDictionary = {
+		phoneNumber: validatePhoneNumber
+	};
 
-    function validate(key, val) {
-        return _validators[key](val);
-    }
+	function validate(key, val) {
+		return validatorDictionary[key](val);
+	}
 
-    return validate;
-})();
-/* test-code */
-module.exports = validators;
-/* end-test-code */
-
+	return validate;
+}());
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -6227,146 +6223,161 @@ $(function() {
 })(jQuery);
 namespacer('baltimoreCounty');
 
-baltimoreCounty.niftyTables = (function ($, numericStringTools, undefined) {
-    'use strict';
+baltimoreCounty.niftyTables = (function niftyTablesWrapper($, numericStringTools, undefined) { // eslint-disable-line
 
-    var columnIndex = 0,
-        shouldSortAscending = true,
+	'use strict';
 
-        /*
-         * Since we're sorting a table, we need to work out what we're 
-         * comparing against, based on the column header that was clicked. 
+	var columnIndex = 0;
+	var shouldSortAscending = true;
+
+	/*
+         * Since we're sorting a table, we need to work out what we're
+         * comparing against, based on the column header that was clicked.
          * Then we can compare the two rows that are passed in.
          */
-        clickedColumnSorter = function (aTableRow, bTableRow) {
-            var aContent = getFirstTextFromCell(aTableRow, columnIndex).toLowerCase(),
-                bContent = getFirstTextFromCell(bTableRow, columnIndex).toLowerCase(),
-                aExtractedContent = numericStringTools.extractNumbersIfPresent(aContent),
-                bExtractedContent = numericStringTools.extractNumbersIfPresent(bContent),
-                directionComparer = shouldSortAscending ? ascendingComparer : descendingComparer;
-            return comparer(directionComparer, aExtractedContent, bExtractedContent);
-        },
+	function clickedColumnSorter(aTableRow, bTableRow, type) {
+		var aContent = getFirstTextFromCell(aTableRow, columnIndex).toLowerCase();
+		var bContent = getFirstTextFromCell(bTableRow, columnIndex).toLowerCase();
 
-        /*
+		var aExtractedContent = numericStringTools.extractNumbersIfPresent(aContent);
+		var bExtractedContent = numericStringTools.extractNumbersIfPresent(bContent);
+
+		if (type === 'time') {
+			var now = new Date();
+
+			var aFullDate = now.toDateString() + ' ' + aContent.slice(0, 5) + ' ' + aContent.slice(-2);
+			var bFullDate = now.toDateString() + ' ' + bContent.slice(0, 5) + ' ' + bContent.slice(-2);
+
+			aExtractedContent = Date.parse(aFullDate);
+			bExtractedContent = Date.parse(bFullDate);
+		}
+		var directionComparer = shouldSortAscending ? ascendingComparer : descendingComparer;
+
+		return comparer(directionComparer, aExtractedContent, bExtractedContent);
+	}
+
+	/*
          * Use the supplied comparerFunction to compare a and b.
          */
-        comparer = function (comparerFunction, a, b) {
-            return comparerFunction(a, b);
-        },
+	function comparer(comparerFunction, a, b) {
+		return comparerFunction(a, b);
+	}
 
-        /*
-         * Compares two values, and returns a result that incidates whether 
+	/*
+         * Compares two values, and returns a result that incidates whether
          * or not the values are in ascending order.
          */
-        ascendingComparer = function (a, b) {
-            if (a > b)
-                return 1;
+	function ascendingComparer(a, b) {
+		if (a > b) { return 1; }
 
-            if (b > a)
-                return -1;
+		if (b > a) { return -1; }
 
-            return 0;
-        },
+		return 0;
+	}
 
-        /*
-         * Compares two values, and returns a result that incidates whether 
+	/*
+         * Compares two values, and returns a result that incidates whether
          * or not the values are in descending order.
          */
-        descendingComparer = function (a, b) {
-            if (a < b)
-                return 1;
+	function descendingComparer(a, b) {
+		if (a < b) { return 1; }
 
-            if (b < a)
-                return -1;
+		if (b < a) { return -1; }
 
-            return 0;
-        },
+		return 0;
+	}
 
-        /*
-         * Finds the content of the first <p> in a cell from the clicked column 
+	/*
+         * Finds the content of the first <p> in a cell from the clicked column
          * of the supplied row. If there's no <p>, returns the raw text of the cell.
          */
-        getFirstTextFromCell = function (tableRow, clickedColumnIndex) {
-            var $cell = $(tableRow).find('td').eq(clickedColumnIndex),
-                $p = $cell.find('p');
+	function getFirstTextFromCell(tableRow, clickedColumnIndex) {
+		var $cell = $(tableRow).find('td').eq(clickedColumnIndex);
+		var $p = $cell.find('p');
 
-            return $p.length ? $p.text() : $cell.text();
-        },
+		return $p.length ? $p.text() : $cell.text();
+	}
 
-        /*
+	/*
          * Sorts the table based on the column header that was clicked.
          */
-        tableSort = function (e) {
-            var $clickedLink = $(e.target).closest('a'),
-                $niftyTable = $clickedLink.closest('table'),
-                $tableRows = $niftyTable.find('tr').has('td'),
-                SORT_ASCENDING_CLASS = 'sort-ascending',
-                SORT_DESCENDING_CLASS = 'sort-descending';
+	function tableSort(e) {
+		var $clickedLink = $(e.target).closest('a');
+		var $niftyTable = $clickedLink.closest('table');
+		var $tableRows = $niftyTable.find('tr').has('td');
+		var SORT_ASCENDING_CLASS = 'sort-ascending';
+		var SORT_DESCENDING_CLASS = 'sort-descending';
+		var linkText = $(e.target).text();
+		var type = linkText && $(e.target).text().toLowerCase() === 'time' ? 'time' : '';
 
-            columnIndex = $clickedLink.closest('th').index();
+		columnIndex = $clickedLink.closest('th').index();
 
-            shouldSortAscending = !($clickedLink.hasClass(SORT_ASCENDING_CLASS) || $clickedLink.hasClass(SORT_DESCENDING_CLASS)) || $clickedLink.hasClass(SORT_DESCENDING_CLASS);
+		shouldSortAscending = !($clickedLink.hasClass(SORT_ASCENDING_CLASS)
+			|| $clickedLink.hasClass(SORT_DESCENDING_CLASS))
+			|| $clickedLink.hasClass(SORT_DESCENDING_CLASS);
 
-            if (shouldSortAscending)
-                $clickedLink.removeClass(SORT_DESCENDING_CLASS).addClass(SORT_ASCENDING_CLASS);
-            else
-                $clickedLink.removeClass(SORT_ASCENDING_CLASS).addClass(SORT_DESCENDING_CLASS);
+		if (shouldSortAscending) {
+			$clickedLink.removeClass(SORT_DESCENDING_CLASS).addClass(SORT_ASCENDING_CLASS);
+		} else {
+			$clickedLink.removeClass(SORT_ASCENDING_CLASS).addClass(SORT_DESCENDING_CLASS);
+		}
 
-            $clickedLink.closest('tr').find('a').not($clickedLink).removeClass(SORT_ASCENDING_CLASS).removeClass(SORT_DESCENDING_CLASS);
+		$clickedLink.closest('tr').find('a').not($clickedLink).removeClass(SORT_ASCENDING_CLASS)
+			.removeClass(SORT_DESCENDING_CLASS);
 
-            $tableRows.detach();
-            $tableRows.sort(clickedColumnSorter);
-            $niftyTable.append($tableRows);
+		$tableRows.detach();
+		$tableRows.sort(function sortColumns(a, b) {
+			return clickedColumnSorter(a, b, type);
+		});
+		$niftyTable.append($tableRows);
 
-            resetTableStripes($tableRows, 'tr:visible:even', '#ebebeb');
-            resetTableStripes($tableRows, 'tr:visible:odd', '#fff');
-        },
+		resetTableStripes($tableRows, 'tr:visible:even', '#ebebeb');
+		resetTableStripes($tableRows, 'tr:visible:odd', '#fff');
+	}
 
-        /*
+	/*
          * Since the current table stripes are based on :nth-child(), they'll get funky
-         * when the filter removes rows. So, let's reset the row striping when there's a search. 
-         * This is using inline styles since there's inline CSS that sets the color and 
+         * when the filter removes rows. So, let's reset the row striping when there's a search.
+         * This is using inline styles since there's inline CSS that sets the color and
          * has to be overwritten.
          */
-        resetTableStripes = function($matches, selector, color) {
-            $matches.parent().children(selector).has('td').css('background-color', color);
-        },
+	function resetTableStripes($matches, selector, color) {
+		$matches.parent().children(selector).has('td').css('background-color', color);
+	}
 
-        /*
+	/*
          * Build links and attach event handlers.
          */
-        init = function () {
+	function init() {
+		var $sortableTables = $('.nifty-table').filter('.nifty-table-sortable');
+		var $sortableColumnHeadings = $sortableTables.find('th');
 
-            var $niftyTables = $('table.nifty-table'),
-                $sortableTables = $('.nifty-table').filter('.nifty-table-sortable'),
-                $sortableColumnHeadings = $sortableTables.find('th');
+		// Create sorting links
+		if ($sortableTables.length) {
+			var $headingChildren = $sortableColumnHeadings.children();
+			if ($headingChildren.length) {
+				$sortableColumnHeadings.children().wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
+			} else {
+				$sortableColumnHeadings.wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
+			}
 
-            // Create sorting links    
-            if ($sortableTables.length) {
-				var $headingChildren = $sortableColumnHeadings.children();
-				if ($headingChildren.length) {
-	                $sortableColumnHeadings.children().wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
-				} else {
-				    $sortableColumnHeadings.wrapInner('<a href="javascript:;" class="btn-sort" role="button"></a>');
-				}
+			$sortableColumnHeadings.find('.btn-sort').on('click', tableSort);
+		}
+	}
 
-                $sortableColumnHeadings.find('.btn-sort').on('click', tableSort);
-            }
-        };
+	return {
+		/* test-code */
+		getFirstTextFromCell: getFirstTextFromCell,
+		tableSort: tableSort,
+		/* end-test-code */
+		init: init
+	};
+}(jQuery, baltimoreCounty.utility.numericStringTools));
 
-    return {
-        /* test-code */
-        getFirstTextFromCell: getFirstTextFromCell,
-        tableSort: tableSort,
-        /* end-test-code */
-        init: init
-    };
-
-})(jQuery, baltimoreCounty.utility.numericStringTools);
-
-$(document).ready(function () {
-    baltimoreCounty.niftyTables.init();
+$(document).ready(function onReady() {
+	baltimoreCounty.niftyTables.init();
 });
+
 namespacer('baltimoreCounty');
 
 /*
@@ -6471,315 +6482,287 @@ baltimoreCounty.niftyForms = (function() {
 })();
 namespacer('baltimoreCounty');
 
-baltimoreCounty.contentFilter = (function($, utilities) {
-    
+baltimoreCounty.contentFilter = (function contentFilterWrapper($, utilities) {
+	var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content';
+	var DEFAULT_SEARCH_BOX_SELECTOR = '.bc-filter-form .bc-filter-form-filter';
+	var DEFAULT_ERROR_MESSAGE_SELECTOR = '.bc-filter-noResults';
+	var DEFAULT_CONTENT_TYPE = 'list';
 
-    var DEFAULT_WRAPPER_SELECTOR = '.bc-filter-content',
-        DEFAULT_SEARCH_BOX_SELECTOR = '.bc-filter-form .bc-filter-form-filter',
-        DEFAULT_CLEAR_BUTTON_SELECTOR = '.bc-filter-form .bc-filter-form-clearButton',
-        DEFAULT_ERROR_MESSAGE_SELECTOR = '.bc-filter-noResults',
-        DEFAULT_CONTENT_TYPE = 'list',
-
-        /*
+	/*
          * Initialize the filter, and activate it.
          */
-        init = function(options) {
+	function init(options) {
+		options = options || {}; // eslint-disable-line no-param-reassign
 
-            options = options || {};
+		var wrapperSelector = options.wrapper || DEFAULT_WRAPPER_SELECTOR;
+		var searchBoxSelector = options.searchBox || DEFAULT_SEARCH_BOX_SELECTOR;
+		var errorMessageSelector = options.errorMessage || DEFAULT_ERROR_MESSAGE_SELECTOR;
+		var contentType = options.contentType || DEFAULT_CONTENT_TYPE;
+		var $wrapper = safeLoad(wrapperSelector);
+		var $searchBox = safeLoad(searchBoxSelector);
+		var $errorMessage = safeLoad(errorMessageSelector);
+		var $clearIcon = $('.icon-clear');
 
-            var wrapperSelector = options.wrapper || DEFAULT_WRAPPER_SELECTOR,
-                searchBoxSelector = options.searchBox || DEFAULT_SEARCH_BOX_SELECTOR,
-                clearButtonSelector = options.clearButton || DEFAULT_CLEAR_BUTTON_SELECTOR,
-                errorMessageSelector = options.errorMessage || DEFAULT_ERROR_MESSAGE_SELECTOR,
-                contentType = options.contentType || DEFAULT_CONTENT_TYPE,
-                $wrapper = safeLoad(wrapperSelector),
-                $searchBox = safeLoad(searchBoxSelector),
-                $errorMessage = safeLoad(errorMessageSelector),
-				$clearIcon = $('.icon-clear');
+		$errorMessage.hide();
 
-            $errorMessage.hide();
-
-            $searchBox.on('keyup', function(eventObject) {
-                utilities.debounce(function() {
-                    var criteria = $(eventObject.currentTarget).val();
-                    if (criteria.length) {
-                        showIcon('clear');
-                    } else {
-                        showIcon('search');
-                    }
-
-                    switch (contentType) {
-                        case 'table':
-                            filterTable($wrapper, criteria, $errorMessage);
-                            break;
-                        case 'list':
-                            filterList($wrapper, criteria, $errorMessage);
-                            break;
-                    }
-                }, 100);   
-            });
-            
-            $searchBox.closest('form').on('submit', function(e) {
-                return false;
-            });
-
-             $clearIcon.on('click', function() {
-                clearFilter($wrapper, $searchBox, $errorMessage, function() {
+		$searchBox.on('keyup', function onKeyUp(eventObject) {
+			utilities.debounce(function debounceWrapper() {
+				var criteria = $(eventObject.currentTarget).val();
+				if (criteria.length) {
+					showIcon('clear');
+				} else {
 					showIcon('search');
-				});
-            });
-        },  
+				}
 
-		showIcon = function(iconType, callback) {
-			setTimeout(function() {
-				var $iconSearch = $('.icon-search'),
-					$iconClear = $('.icon-clear'),
-					animationDuration = 150,
-					animationPropertiesOut = { 
-						top: 0,
-						opacity: 0
-					},
-					animationPropertiesIn = { 
-						top: '25px',
-						opacity: 1
-					};
-					
-				
-				if (iconType === 'search' && $iconClear.is(':visible')) {
-					$iconClear.animate(animationPropertiesOut, animationDuration, function() {
-						$iconSearch.animate(animationPropertiesIn, animationDuration, function() {
-							if (typeof(callback) === 'function')
-								callback();
-						});
+				switch (contentType) {
+				case 'table':
+					filterTable($wrapper, criteria, $errorMessage);
+					break;
+				case 'list':
+					filterList($wrapper, criteria, $errorMessage);
+					break;
+				default:
+					break;
+				}
+			}, 100);
+		});
+
+		$searchBox.closest('form').on('submit', function onSubmit() {
+			return false;
+		});
+
+		$clearIcon.on('click', function onClick() {
+			clearFilter($wrapper, $searchBox, $errorMessage, function callback() {
+				showIcon('search');
+			});
+		});
+	}
+
+	function showIcon(iconType, callback) {
+		setTimeout(function setTimeoutWrapper() {
+			var $iconSearch = $('.icon-search');
+			var $iconClear = $('.icon-clear');
+			var animationDuration = 150;
+			var animationPropertiesOut = {
+				top: 0,
+				opacity: 0
+			};
+			var animationPropertiesIn = {
+				top: '25px',
+				opacity: 1
+			};
+
+
+			if (iconType === 'search' && $iconClear.is(':visible')) {
+				$iconClear.animate(animationPropertiesOut, animationDuration,
+					function animateOutsideWrapper() {
+						$iconSearch.animate(animationPropertiesIn, animationDuration,
+							function animateInsideWrapper() {
+								if (typeof (callback) === 'function') { callback(); }
+							});
 					});
-				}
-				
-				if (iconType === 'clear' && $iconSearch.is(':visible')) {
-					$iconSearch.animate(animationPropertiesOut, animationDuration, function() {
-						$iconClear.animate(animationPropertiesIn, animationDuration, function() {
-							if (typeof(callback) === 'function')
-								callback();
-						});
-					});				
-				}
-			}, 0);
-		},
+			}
 
-        setColumnWidthToInitialWidth = function(index, item) {
-            var $columnHeader = $(item);
-            $columnHeader.width($columnHeader.width());
-        },
+			if (iconType === 'clear' && $iconSearch.is(':visible')) {
+				$iconSearch.animate(animationPropertiesOut, animationDuration,
+					function animateOutsideWrapper() {
+						$iconClear.animate(animationPropertiesIn, animationDuration,
+							function animateInsideWrapper() {
+								if (typeof (callback) === 'function') { callback(); }
+							});
+					});
+			}
+		}, 0);
+	}
 
-        safeLoad = function(selector) {
-            var $items = $(selector);
-            if ($items.length === 0)
-                throw 'No elements for "' + selector + '" were found.';
-            return $items;
-        },
 
-        /*
+	function safeLoad(selector) {
+		var $items = $(selector);
+		if ($items.length === 0) {
+			throw new Error('No elements for "' + selector + '" were found.');
+		}
+		return $items;
+	}
+
+	/*
          * Tokenized search that returns the matches found in the list or table.
          */
-        findMatches = function($wrapper, selector, criteria) {
-            var criteriaTokens = criteria.trim().toLowerCase().replace(',','').split(' '); 
+	function findMatches($wrapper, selector, criteria) {
+		var criteriaTokens = criteria.trim().toLowerCase().replace(',', '').split(' ');
 
-            var $matches = $wrapper.find(selector).filter(function(idx, element) {
-                var selectorText = $(element).text().toLowerCase().replace(',','');            
-                return criteriaTokens.every(function(tokenValue) {
-                    return selectorText.indexOf(tokenValue) > -1;
-                });
-            });
+		var $matches = $wrapper.find(selector).filter(function filterMatches(idx, element) {
+			var selectorText = $(element).text().toLowerCase().replace(',', '');
+			return criteriaTokens.every(function everyToken(tokenValue) {
+				return selectorText.indexOf(tokenValue) > -1;
+			});
+		});
 
-            return $matches;
-        },
+		return $matches;
+	}
 
-        /*
+	/*
          * Filters an unordered list based on the user's input.
          */
-        filterList = function($wrapper, criteria, $errorMessage) {
-            var $matches = findMatches($wrapper, 'ul li', criteria);
+	function filterList($wrapper, criteria, $errorMessage) {
+		var $matches = findMatches($wrapper, 'ul li', criteria);
 
-            $wrapper.find('li').not($matches).hide();
-            $matches.show();
+		$wrapper.find('li').not($matches).hide();
+		$matches.show();
 
-            var $divsWithResults = $wrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
+		var $divsWithResults = $wrapper.children('div').find('li').not('[style="display: none;"]').closest('div');
 
-            $wrapper.children('div').not($divsWithResults).hide();
-            $divsWithResults.show();
+		$wrapper.children('div').not($divsWithResults).hide();
+		$divsWithResults.show();
 
-            if ($divsWithResults.length === 0) 
-                $errorMessage.show();
-            else
-                $errorMessage.hide();
-        },
+		if ($divsWithResults.length === 0) {
+			$errorMessage.show();
+		} else {
+			$errorMessage.hide();
+		}
+	}
 
-        /*
+	/*
          * Since the current table stripes are based on :nth-child(), they'll get funky
-         * when the filter removes rows. So, let's reset the row striping when there's a search. 
-         * This is using inline styles since there's inline CSS that sets the color and 
+         * when the filter removes rows. So, let's reset the row striping when there's a search.
+         * This is using inline styles since there's inline CSS that sets the color and
          * has to be overwritten.
          */
-        resetTableStripes = function($matches, selector, color) {
-            $matches.parent().children(selector).has('td').css('background-color', color);
-        },
+	function resetTableStripes($matches, selector, color) {
+		$matches.parent().children(selector).has('td').css('background-color', color);
+	}
 
-        /*
+	/*
          * Filters an table of links and content based on the user's input.
          */
-        filterTable = function($wrapper, criteria, $errorMessage) {
-            var $matches = findMatches($wrapper, 'tr', criteria);
+	function filterTable($wrapper, criteria, $errorMessage) {
+		var $matches = findMatches($wrapper, 'tr', criteria);
 
-            $wrapper.find('tr').has('td').not($matches).hide();
-            $matches.show();
+		$wrapper.find('tr').has('td').not($matches).hide();
+		$matches.show();
 
-            if ($matches.length === 0) {
-                $errorMessage.show();
-                $wrapper.find('tr').has('th').hide();
-            } else {
-                $errorMessage.hide();
-                $wrapper.find('tr').has('th').show();
-            }
+		if ($matches.length === 0) {
+			$errorMessage.show();
+			$wrapper.find('tr').has('th').hide();
+		} else {
+			$errorMessage.hide();
+			$wrapper.find('tr').has('th').show();
+		}
 
-            resetTableStripes($matches, 'tr:visible:even', '#ebebeb');
-            resetTableStripes($matches, 'tr:visible:odd', '#fff');
-        },
+		resetTableStripes($matches, 'tr:visible:even', '#ebebeb');
+		resetTableStripes($matches, 'tr:visible:odd', '#fff');
+	}
 
-        /*
+	/*
          * Clears the filter and displays all nodes in the list.
          */
-        clearFilter = function($wrapper, $searchbox, $errorMessage, callback) {
-            var $everythingWeFilter = $wrapper.find('li, div, tr');
-			$everythingWeFilter.show();
-            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
-            resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
-            $searchbox.val('');
-            $errorMessage.hide();
-			if (typeof(callback) === 'function')
-				callback();
-        };
+	function clearFilter($wrapper, $searchbox, $errorMessage, callback) {
+		var $everythingWeFilter = $wrapper.find('li, div, tr');
+		$everythingWeFilter.show();
+		resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:even', '#ebebeb');
+		resetTableStripes($everythingWeFilter.filter('tr'), 'tr:visible:odd', '#fff');
+		$searchbox.val('');
+		$errorMessage.hide();
+		if (typeof (callback) === 'function') {
+			callback();
+		}
+	}
 
-    /* Reveal! */
+	/* Reveal! */
 
-    return {
-        init: init
-    };
+	return {
+		init: init
+	};
+}(jQuery, baltimoreCounty.utility));
 
-})(jQuery, baltimoreCounty.utility);
 // Collapse the other items
 (function accordionMenu($) {
-  var clickedAccordionLevel = 0;
+	$(function onPageReady() {
+		var clickedAccordionLevel = 0;
 
-  /**
-   * Add active class to any links inside the local navigation on the page
-   */
-  function addCurrentClass($element) {
-    var pathName = window.location.pathname;
-    var elmHref = $element.attr('href');
+		// var pathName = window.location.pathname;
 
-    if (elmHref.indexOf(pathName) > -1) {
-      $element.closest('.panel').addClass('current');
-    }
-  }
+		// $('.bc-accordion-menu ul li a').each(function forEach() {
+		// 	var $navItem = $(this);
+		// 	var href = $navItem.attr('href');
 
-  /* Returns whether this is a parent or child accordion link. */
-  function getAccordionLevel($element) {
-    return $element.parents('ul').length + 1;
-  }
+		// 	if (href.indexOf(pathName) > -1) {
+		// 		$navItem
+		// 			.addClass('.current')
+		// 			.find('.collapse')
+		// 			.addClass('in');
+		// 	}
+		// });
 
-  function textNodeFilter(idx, element) {
-    if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
-      return true;
-    }
-    return false;
-  }
+		/* Opens any items that match the current URL, so the user
+			 * sees the current page as being active.
+			 */
+		$('.bc-accordion-menu ul li a').each(function eachLink(idx, item) {
+			var itemHref = item.getAttribute('href');
+			if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
+				$(item).addClass('current');
+				var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
+				$collapsables.addClass('in');
+				var $siblings = $collapsables.siblings('.accordion-collapsed');
 
-  function hideTextOnlyNodes($elm) {
-    $elm
-      .contents()
-      .filter(textNodeFilter)
-      .parent().css('display', 'none');
-  }
+				if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
+			}
+		});
 
-  function openActiveItem(idx, item) {
-    var itemHref = item.getAttribute('href');
-    var $item = $(item);
-
-    if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
-      $item.addClass('current');
-      var $collapsables = $(item).parentsUntil('.bc-accordion-menu', 'ul');
-      $collapsables.addClass('in');
-      var $siblings = $collapsables.siblings('.accordion-collapsed');
-
-      if (!$siblings.hasClass('active')) { $siblings.addClass('active'); }
-    } else {
-      addCurrentClass($item);
-    }
-  }
-
-  function toggleAccordion(e, action) {
-    var $collapsable = $(e.currentTarget);
-    var $siblings = $collapsable.siblings('.accordion-collapsed');
-    var accordionLevel = getAccordionLevel($collapsable);
-
-    if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) {
-      if (action === 'hide') {
-        $siblings.removeClass('active');
-      }
-      if (action === 'show') {
-        $siblings.addClass('active');
-      }
-    }
-  }
-
-  function onAccordionHide(e) {
-    toggleAccordion(e, 'hide');
-  }
-
-  function onAccordionShow(e) {
-    toggleAccordion(e, 'show');
-  }
-
-  function setUpCollapse(e) {
-    $(e.target).siblings('.collapse').collapse('toggle');
-    return false;
-  }
-
-  function trackAccordionLevel(e) {
-    var $currentTarget = $(e.currentTarget);
-
-    clickedAccordionLevel = getAccordionLevel($currentTarget);
-    $currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
-  }
-
-  /**
-   * When the page is ready
-   */
-  $(function() {
-		/* Opens any items that match the current URL, so the user 
-		 * sees the current page as being active. 
-		 */
-    $('.bc-accordion-menu a').each(openActiveItem);
-
-    // Hide all text-only nodes.
-    hideTextOnlyNodes($('.bc-accordion-menu .panel ul li'));
-
-    /**
-     * Events
-     */
 		/* Updates the tracked current accordion level, since Bootstrap Collapse
-		 * wasn't exactly designed for nested menus.
-		 */
-    $(document).on('click', '.bc-accordion-menu .panel .accordion-collapsed', trackAccordionLevel);
+			 * wasn't exactly designed for nested menus.
+			 */
+		$('.bc-accordion-menu .panel .accordion-collapsed').on('click', function panelCollapse(e) {
+			var $currentTarget = $(e.currentTarget);
 
-    // Set up the DIVs to expand and collapse their siblings.
-    $(document).on('click', '.bc-accordion-menu .accordion-collapsed', setUpCollapse);
+			clickedAccordionLevel = getAccordionLevel($currentTarget);
+			$currentTarget.attr('aria-expanded', !$currentTarget.attr('aria-expanded'));
+		});
 
-    /* Ensure he active accordion level's "active" css class is cleared when the menu expands. */
-    $('.bc-accordion-menu .collapse').on('show.bs.collapse', onAccordionShow);
+		/*
+			Making sure only the active accordion level's "active"
+			css class is cleared when the menu expands.
+		*/
+		$('.bc-accordion-menu .collapse').on('show.bs.collapse', function onShow() {
+			var $collapsable = $(this);
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
+			var accordionLevel = getAccordionLevel($collapsable);
 
-    /* Ensure the active accordion level's "active" css class is cleared when the menu collapses. */
-    $('.bc-accordion-menu .collapse').on('hide.bs.collapse', onAccordionHide);
-  });
+			if (accordionLevel === clickedAccordionLevel && !$siblings.hasClass('active')) { $siblings.addClass('active'); }
+		});
+
+		/*
+			Making sure only the active accordion level's "active"
+			 css class is cleared when the menu collapses.
+		*/
+		$('.bc-accordion-menu .collapse').on('hide.bs.collapse', function onHide() {
+			var $collapsable = $(this);
+			var $siblings = $collapsable.siblings('.accordion-collapsed');
+			var accordionLevel = getAccordionLevel($collapsable);
+
+			if (accordionLevel === clickedAccordionLevel && $siblings.hasClass('active')) { $siblings.removeClass('active'); }
+		});
+
+		// Hide all text-only nodes.
+		$('.bc-accordion-menu .panel ul li').contents().filter(textNodeFilter).parent()
+			.css('display', 'none');
+
+		// Set up the DIVs to expand and collapse their siblings.
+		$('.bc-accordion-menu .accordion-collapsed').on('click', function onClick(e) {
+			$(e.target).siblings('.collapse').collapse('toggle'); return false;
+		});
+
+		/* Returns whether this is a parent or child accordion link. */
+		function getAccordionLevel($element) {
+			return $element.parents('ul').length + 1;
+		}
+
+		function textNodeFilter(idx, element) {
+			if (element.nodeType === 3 && element.nodeValue.trim() !== '') {
+				return true;
+			}
+			return false;
+		}
+	});
 }(jQuery));
 
 var baltimoreCounty = baltimoreCounty || {};
