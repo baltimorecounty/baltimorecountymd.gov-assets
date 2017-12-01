@@ -381,7 +381,7 @@
 				},
 				function postError(errorData) {
 					self.isLoading = false;
-					console.log(errorData);
+					console.log(errorData); // eslint-disable-line no-console
 				});
 		};
 
@@ -471,6 +471,25 @@
 			mapServiceComposite.createMarker(map, latitude, longitude);
 		};
 
+		function hasProperty(obj, prop) {
+			if (!obj) { return false; }
+			return Object.prototype.hasOwnProperty.call(obj, prop);
+		}
+
+		self.shouldRequireLocation = function shouldRequireLocation() {
+			var categoryHasRequiresLocationProperty = hasProperty(self.category, 'requiresLocation');
+			var subCategoryyHasRequiresLocationProperty = hasProperty(self.subCategory, 'requiresLocation');
+
+			if (!categoryHasRequiresLocationProperty && !subCategoryyHasRequiresLocationProperty) {
+				return true;
+			}
+
+			if (!subCategoryyHasRequiresLocationProperty) {
+				return self.category.requiresLocation;
+			}
+			return self.subCategory.requiresLocation;
+		};
+
 		self.trackBreed = function trackBreed() {
 			angular.forEach(self.animalBreedData, function eachAnimalBreedData(breed) {
 				if (breed.id === self.petType.id) {
@@ -500,7 +519,7 @@
 		}
 
 		function clearCategoryData() {
-			self.subCategory = '';
+			self.subCategory = {};
 			self.petType = '';
 			self.otherPetType = '';
 			self.petSex = '';
@@ -513,6 +532,8 @@
 			self.descriptionOfAnimalId = 0;
 			self.descriptionOfLocationId = 0;
 			self.otherDescriptionId = 0;
+			self.longitude = 0;
+			self.latitude = 0;
 		}
 
 		function getValueForId(nameIdData, id) {
@@ -661,7 +682,7 @@
 		}
 
 		function errorHandler(err) {
-			console.log(err);
+			console.log(err); // eslint-disable-line no-console
 		}
 
 		function mapClickHandler(event) {
@@ -682,7 +703,7 @@
 						mapServiceComposite.createMarker(map, self.latitude, self.longitude);
 						self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
 					}
-				}, function error(a) {
+				}, function error() {
 					self.address = reportMapError($wrapper, addressField);
 				});
 		}
