@@ -282,6 +282,7 @@
 }, {
 	"name": "Website",
 	"id": 1024585,
+	"requiresLocation": false,
 	"types": [{
 			"name": "Broken link",
 			"id": 1024587
