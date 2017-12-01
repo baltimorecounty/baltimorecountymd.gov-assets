@@ -12,6 +12,7 @@
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
+		var ANIMALS_CATEGORY_ID = 1010169;
 
 		self.isAnimal = false;
 		self.page = 1;
@@ -226,7 +227,7 @@
 						self.zipCodeId = element.fields.zipCode;
 					}
 
-					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
+					self.isAnimal = element.id === ANIMALS_CATEGORY_ID;
 
 					$timeout(function descriptionSettingWrapper() {
 						if (element.descriptionOfAnimal) {
