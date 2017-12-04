@@ -195,6 +195,7 @@
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
+		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
 
 		self.isAnimal = false;
 		self.page = 1;
@@ -279,15 +280,6 @@
 			];
 
 			/** * Conditional fields ********* */
-
-			if (self.locationDescription) {
-				data.push({
-					name: 'Description Of Location',
-					id: self.descriptionOfLocationId,
-					value: self.locationDescription
-				});
-			}
-
 			if (self.otherDescription) {
 				data.push({
 					name: 'Other Description',
@@ -381,7 +373,7 @@
 				},
 				function postError(errorData) {
 					self.isLoading = false;
-					console.log(errorData);
+					console.log(errorData); // eslint-disable-line no-console
 				});
 		};
 
@@ -471,6 +463,25 @@
 			mapServiceComposite.createMarker(map, latitude, longitude);
 		};
 
+		function hasProperty(obj, prop) {
+			if (!obj) { return false; }
+			return Object.prototype.hasOwnProperty.call(obj, prop);
+		}
+
+		self.shouldRequireLocation = function shouldRequireLocation() {
+			var categoryHasRequiresLocationProperty = hasProperty(self.category, REQUIRES_LOCATION_PROPERTY);
+			var subCategoryyHasRequiresLocationProperty = hasProperty(self.subCategory, REQUIRES_LOCATION_PROPERTY);
+
+			if (!categoryHasRequiresLocationProperty && !subCategoryyHasRequiresLocationProperty) {
+				return true;
+			}
+
+			if (!subCategoryyHasRequiresLocationProperty) {
+				return self.category.requiresLocation;
+			}
+			return self.subCategory.requiresLocation;
+		};
+
 		self.trackBreed = function trackBreed() {
 			angular.forEach(self.animalBreedData, function eachAnimalBreedData(breed) {
 				if (breed.id === self.petType.id) {
@@ -500,7 +511,7 @@
 		}
 
 		function clearCategoryData() {
-			self.subCategory = '';
+			self.subCategory = {};
 			self.petType = '';
 			self.otherPetType = '';
 			self.petSex = '';
@@ -513,6 +524,8 @@
 			self.descriptionOfAnimalId = 0;
 			self.descriptionOfLocationId = 0;
 			self.otherDescriptionId = 0;
+			self.longitude = 0;
+			self.latitude = 0;
 		}
 
 		function getValueForId(nameIdData, id) {
@@ -661,7 +674,7 @@
 		}
 
 		function errorHandler(err) {
-			console.log(err);
+			console.log(err); // eslint-disable-line no-console
 		}
 
 		function mapClickHandler(event) {
@@ -682,7 +695,7 @@
 						mapServiceComposite.createMarker(map, self.latitude, self.longitude);
 						self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
 					}
-				}, function error(a) {
+				}, function error() {
 					self.address = reportMapError($wrapper, addressField);
 				});
 		}

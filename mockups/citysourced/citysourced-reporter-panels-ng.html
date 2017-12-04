@@ -57,7 +57,8 @@
 
 			<ol class="bc-citysourced-reporter-steps">
 				<li class="highlight">Choose a <br/>Report Type</li>
-				<li ng-class="{'highlight': reporter.page > 1}">Enter a <br/>Location</li>
+				<li ng-class="{'highlight': reporter.page > 1}" 
+					ng-show="reporter.shouldRequireLocation()">Enter a <br/>Location</li>
 				<li ng-class="{'highlight': reporter.page > 2}">Provide Your <br/>Contact Information</li>
 				<li> </li>
 			</ol>
@@ -164,7 +165,8 @@
 
 				</fieldset>
 
-				<fieldset class="panel" ng-show="reporter.page === 2">
+				<fieldset class="panel" 
+					ng-show="reporter.page === 2 && reporter.shouldRequireLocation()">
 					<legend>Add a Location</legend>
 
 					<p>Tell us where the issue is located. You can enter an address or mark the location on the map.</p>
