@@ -96,15 +96,6 @@
 			];
 
 			/** * Conditional fields ********* */
-
-			if (self.locationDescription) {
-				data.push({
-					name: 'Description Of Location',
-					id: self.descriptionOfLocationId,
-					value: self.locationDescription
-				});
-			}
-
 			if (self.otherDescription) {
 				data.push({
 					name: 'Other Description',
