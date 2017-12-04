@@ -1,26 +1,30 @@
 // Collapse the other items
+
+/*
+yeah, i think the last change was an update so that links with no children
+would would also be highlighted when they match the current page you're on.
+the behavior was supposed to be that the current page was highlighted gold,
+so you'd always know where you were in the nav
+but that didn't work if the top-level category had no children
+gotcha
+tahnks
+i knew i could count on you
+Dan Fox (dan.ian.fox@gmail.com)
+i think the update to fix that also broke the arrows
+haha
+look here: https://wwww.baltimorecountymd.gov/Agencies/animalservices/jobs.html
+that page is an example
+*/
+
+
 (function accordionMenu($) {
 	$(function onPageReady() {
 		var clickedAccordionLevel = 0;
 
-		// var pathName = window.location.pathname;
-
-		// $('.bc-accordion-menu ul li a').each(function forEach() {
-		// 	var $navItem = $(this);
-		// 	var href = $navItem.attr('href');
-
-		// 	if (href.indexOf(pathName) > -1) {
-		// 		$navItem
-		// 			.addClass('.current')
-		// 			.find('.collapse')
-		// 			.addClass('in');
-		// 	}
-		// });
-
 		/* Opens any items that match the current URL, so the user
 			 * sees the current page as being active.
 			 */
-		$('.bc-accordion-menu ul li a').each(function eachLink(idx, item) {
+		$('.bc-accordion-menu a').each(function eachLink(idx, item) {
 			var itemHref = item.getAttribute('href');
 			if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
 				$(item).addClass('current');
