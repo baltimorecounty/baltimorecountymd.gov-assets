@@ -1,22 +1,5 @@
 // Collapse the other items
 
-/*
-yeah, i think the last change was an update so that links with no children
-would would also be highlighted when they match the current page you're on.
-the behavior was supposed to be that the current page was highlighted gold,
-so you'd always know where you were in the nav
-but that didn't work if the top-level category had no children
-gotcha
-tahnks
-i knew i could count on you
-Dan Fox (dan.ian.fox@gmail.com)
-i think the update to fix that also broke the arrows
-haha
-look here: https://wwww.baltimorecountymd.gov/Agencies/animalservices/jobs.html
-that page is an example
-*/
-
-
 (function accordionMenu($) {
 	$(function onPageReady() {
 		var clickedAccordionLevel = 0;
