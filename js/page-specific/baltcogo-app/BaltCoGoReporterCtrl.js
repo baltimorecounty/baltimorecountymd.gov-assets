@@ -226,7 +226,7 @@
 						self.zipCodeId = element.fields.zipCode;
 					}
 
-					self.isAnimal = element.name.toLowerCase() === 'pets and animals';
+					self.isAnimal = !!element.isAnimal;
 
 					$timeout(function descriptionSettingWrapper() {
 						if (element.descriptionOfAnimal) {
