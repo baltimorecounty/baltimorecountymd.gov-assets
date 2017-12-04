@@ -12,6 +12,7 @@
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
+		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
 
 		self.isAnimal = false;
 		self.page = 1;
@@ -285,8 +286,8 @@
 		}
 
 		self.shouldRequireLocation = function shouldRequireLocation() {
-			var categoryHasRequiresLocationProperty = hasProperty(self.category, 'requiresLocation');
-			var subCategoryyHasRequiresLocationProperty = hasProperty(self.subCategory, 'requiresLocation');
+			var categoryHasRequiresLocationProperty = hasProperty(self.category, REQUIRES_LOCATION_PROPERTY);
+			var subCategoryyHasRequiresLocationProperty = hasProperty(self.subCategory, REQUIRES_LOCATION_PROPERTY);
 
 			if (!categoryHasRequiresLocationProperty && !subCategoryyHasRequiresLocationProperty) {
 				return true;
