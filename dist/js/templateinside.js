@@ -6675,28 +6675,15 @@ baltimoreCounty.contentFilter = (function contentFilterWrapper($, utilities) {
 }(jQuery, baltimoreCounty.utility));
 
 // Collapse the other items
+
 (function accordionMenu($) {
 	$(function onPageReady() {
 		var clickedAccordionLevel = 0;
 
-		// var pathName = window.location.pathname;
-
-		// $('.bc-accordion-menu ul li a').each(function forEach() {
-		// 	var $navItem = $(this);
-		// 	var href = $navItem.attr('href');
-
-		// 	if (href.indexOf(pathName) > -1) {
-		// 		$navItem
-		// 			.addClass('.current')
-		// 			.find('.collapse')
-		// 			.addClass('in');
-		// 	}
-		// });
-
 		/* Opens any items that match the current URL, so the user
 			 * sees the current page as being active.
 			 */
-		$('.bc-accordion-menu ul li a').each(function eachLink(idx, item) {
+		$('.bc-accordion-menu a').each(function eachLink(idx, item) {
 			var itemHref = item.getAttribute('href');
 			if (window.location.href.toLowerCase() === itemHref.toLowerCase()) {
 				$(item).addClass('current');
