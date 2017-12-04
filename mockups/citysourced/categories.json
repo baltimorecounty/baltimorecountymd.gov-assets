@@ -98,6 +98,7 @@
 }, {
 	"name": "Pets and Animals",
 	"id": 1023379,
+	"isAnimal": true,
 	"types": [{
 			"name": "Animal cruelty",
 			"id": 1023420
