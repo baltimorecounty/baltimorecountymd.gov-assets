@@ -52,6 +52,11 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
 	return concatFiles(files, 'homepage.js');
 });
 
+gulp.task('createUtililtyScript', function createUtililtyScript() {
+	var files = ['js/utility/*.js'];
+	return concatFiles(files, 'bc-utilities.js');
+});
+
 gulp.task('concatTemplateJs', function concatTemplateJs() {
 	var files = ['js/polyfills/*.js',
 		'js/utility/namespacer.js',
@@ -149,5 +154,5 @@ gulp.task('linter', function linter() {
 });
 
 gulp.task('default', ['clean-dist'], function defaultTask(callback) {
-	return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss', 'moveTemplates'], callback);
+	return runSequence(['compressPageSpecificFiles', 'compressFiles', 'sassAndCompressCss', 'moveTemplates', 'createUtililtyScript'], callback);
 });
