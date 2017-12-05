@@ -208,11 +208,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 
 		if (facilities.length === 1) { facilityHTML += '<li><a href="' + facilities[0].link + '">Book Now at ' + facilities[0].address.split(',')[0] + '</a></li>'; }
 
-		if (facilities.length === 3)
-		{
- for (var i = 0; i < facilities.length; i++)
-			{facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>';} 
-}
+		if (facilities.length === 3) {
+			for (var i = 0; i < facilities.length; i++) { facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>'; }
+		}
 
 		facilityHTML += '</ul>';
 
