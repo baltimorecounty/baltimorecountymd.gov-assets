@@ -18,6 +18,7 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		for (var i = 0; i < searchTerms.length; i += 1) {
 			var term = decodeURIComponent(searchTerms[i]);
 			term = term
+				.replace(/\?/g, '')
 				.replace(/#/g, ' ')
 				.replace(/&/g, 'and')
 				.replace(/\//g, ' ')
