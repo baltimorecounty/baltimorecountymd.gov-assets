@@ -15,21 +15,15 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		}
 
 		var searchTerms = cleanedSearchTerm.split('+');
-		for (var i = 0; i < searchTerms.length; i += 1) {
+		for (var i = 0, len = searchTerms.length; i < len; i += 1) {
 			var term = decodeURIComponent(searchTerms[i]);
-			term = term
-				.replace(/\?/g, '')
-				.replace(/#/g, ' ')
-				.replace(/&/g, 'and')
-				.replace(/\//g, ' ')
-				.replace(/\\/g, ' ');
+			term = term.replace(/[&?#\\/]/g, ' ')
+				.replace(/&/g, 'and').trim();
 
 			var encodedTerm = encodeURIComponent(term);
 			safeSearchTerms.push(encodedTerm);
 		}
-		cleanedSearchTerm = safeSearchTerms.join('+');
-
-		return cleanedSearchTerm.replace(/\+/g, '%20');
+		return safeSearchTerms.join('%20');
 	}
 
 	function getSearchResults(searchTerm, pageNumber) {
