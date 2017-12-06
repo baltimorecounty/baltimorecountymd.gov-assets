@@ -6,19 +6,39 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 	var templateSelector = '#swiftype-search-results-template';
 	var errorMessageHtml = '<p>There were no results found for this search.</p>';
 
-	function getSearchResults(searchTerm, pageNumber) {
-		var currentPageNumber = pageNumber || 1;
-		var cleanedSearchTerm = searchTerm.trim();
-
+	function cleanSearchTerm(termToClean) {
+		var cleanedSearchTerm = termToClean.trim();
+		var safeSearchTerms = [];
 		// Ensure the last character is not '+' as the the trailing space causes no results
 		if (cleanedSearchTerm[cleanedSearchTerm.length - 1] === '+') {
 			cleanedSearchTerm = cleanedSearchTerm.slice(0, -1);
 		}
 
-		cleanedSearchTerm = cleanedSearchTerm.replace(/\+/g, '%20');
+		var searchTerms = cleanedSearchTerm.split('+');
+		for (let i = 0; i < searchTerms.length; i += 1) {
+			let term = decodeURIComponent(searchTerms[i]);
+			term = term
+				.replace(/#/g, ' ')
+				.replace(/&/g, 'and')
+				.replace(/\//g, ' ')
+				.replace(/\\/g, ' ');
 
-		$.ajax(constants.keywordSearch.urls.api + cleanedSearchTerm + '/' + currentPageNumber)
-			.then(searchResultRequestSuccessHandler, searchResultRequestErrorHandler);
+			var encodedTerm = encodeURIComponent(term);
+			safeSearchTerms.push(encodedTerm);
+		}
+		cleanedSearchTerm = safeSearchTerms.join('+');
+
+		return cleanedSearchTerm.replace(/\+/g, '%20');
+	}
+
+	function getSearchResults(searchTerm, pageNumber) {
+		var currentPageNumber = pageNumber || 1;
+		var cleanedSearchTerm = cleanSearchTerm(searchTerm);
+		var requestUrl = constants.keywordSearch.urls.api + cleanedSearchTerm + '/' + currentPageNumber;
+
+		$.ajax(requestUrl)
+			.then(searchResultRequestSuccessHandler,
+				searchResultRequestErrorHandler);
 	}
 
 	function searchResultRequestErrorHandler(err) {
