@@ -47,8 +47,7 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
 		'js/text-resizer.js',
 		'js/flickr-feed.js',
 		'js/county-news-snippet.js',
-		'js/homepage-template.js',
-		'js/template-events.js'];
+		'js/homepage-template.js'];
 	return concatFiles(files, 'homepage.js');
 });
 
