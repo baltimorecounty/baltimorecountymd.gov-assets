@@ -246,7 +246,7 @@
 			if (!isLocationRequired) {
 				self.latitude = CONSTANTS.locations.courtHouse.latitude;
 				self.longitude = CONSTANTS.locations.courtHouse.longitude;
-				self.page += pageToShow;
+				self.page = pageToShow;
 			}
 
 			$timeout(mapResize, 500);
