@@ -427,7 +427,7 @@
 			if (validatePanel()) {
 				self.page += 1;
 
-				if (self.page === 2 && self.category.name === 'Website') {
+				if (self.page === 2 && self.category.name === 'Website Issue') {
 					self.latitude = CONSTANTS.locations.courtHouse.latitude;
 					self.longitude = CONSTANTS.locations.courtHouse.longitude;
 					self.page = 3;
