@@ -337,7 +337,7 @@
 		}
 
 		function clearCategoryData() {
-			self.subCategory = {};
+			self.subCategory = null;
 			self.petType = '';
 			self.otherPetType = '';
 			self.petSex = '';
