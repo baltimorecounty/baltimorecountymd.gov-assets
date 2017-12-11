@@ -245,14 +245,6 @@
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
 
-		function skipLocationPage(pageToShow) {
-			self.latitude = CONSTANTS.locations.courtHouse.latitude;
-			self.longitude = CONSTANTS.locations.courtHouse.longitude;
-			self.page = pageToShow;
-
-			$timeout(mapResize, 500);
-		}
-
 		function navigateFormSteps(steps) {
 			self.page += steps;
 			var isLocation = isLocationPage();
@@ -263,6 +255,14 @@
 				var pageToShow = self.page + steps;
 				skipLocationPage(pageToShow);
 			}
+		}
+
+		function skipLocationPage(pageToShow) {
+			self.latitude = CONSTANTS.locations.courtHouse.latitude;
+			self.longitude = CONSTANTS.locations.courtHouse.longitude;
+			self.page = pageToShow;
+
+			$timeout(mapResize, 500);
 		}
 
 		self.nextClick = function nextClick() {
