@@ -260,7 +260,9 @@
 				if (isPageTwo) {
 					skipLocationPanel(3);
 				}
-			} else { $scope.citySourcedReporterForm.$setSubmitted(); }
+			} else {
+				$scope.citySourcedReporterForm.$setSubmitted();
+			}
 		};
 
 		self.prevClick = function prevClick() {
