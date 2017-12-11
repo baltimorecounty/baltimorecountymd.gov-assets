@@ -438,14 +438,16 @@
 				var pageToShow = self.page + steps;
 				skipLocationPage(pageToShow);
 			}
+
+			if (isLocation) {
+				$timeout(mapResize, 500);
+			}
 		}
 
 		function skipLocationPage(pageToShow) {
 			self.latitude = CONSTANTS.locations.courtHouse.latitude;
 			self.longitude = CONSTANTS.locations.courtHouse.longitude;
 			self.page = pageToShow;
-
-			$timeout(mapResize, 500);
 		}
 
 		self.nextClick = function nextClick() {
