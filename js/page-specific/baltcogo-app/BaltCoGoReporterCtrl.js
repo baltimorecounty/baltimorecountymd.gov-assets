@@ -240,7 +240,7 @@
 			});
 		};
 
-		function skipLocationPanel(pageToShow) {
+		function skipLocationPage(pageToShow) {
 			var isLocationRequired = self.shouldRequireLocation();
 
 			if (!isLocationRequired) {
@@ -258,7 +258,7 @@
 				var isPageTwo = self.page === 2;
 
 				if (isPageTwo) {
-					skipLocationPanel(3);
+					skipLocationPage(3);
 				}
 			} else {
 				$scope.citySourcedReporterForm.$setSubmitted();
@@ -270,7 +270,7 @@
 			var isPageTwo = self.page === 2;
 
 			if (isPageTwo) {
-				skipLocationPanel(1);
+				skipLocationPage(1);
 			}
 		};
 
