@@ -423,36 +423,37 @@
 			});
 		};
 
-		function setupLocation(targetPage) {
+		function skipLocationPanel(pageToShow) {
 			var isLocationRequired = self.shouldRequireLocation();
-			var isPageTwo = self.page === 2;
 
-			if (isPageTwo && !isLocationRequired) {
+			if (!isLocationRequired) {
 				self.latitude = CONSTANTS.locations.courtHouse.latitude;
 				self.longitude = CONSTANTS.locations.courtHouse.longitude;
-				self.page = targetPage;
+				self.page = pageToShow;
 			}
 
-			if (isPageTwo) {
-				$timeout(mapResize, 500);
-			}
+			$timeout(mapResize, 500);
 		}
 
 		self.nextClick = function nextClick() {
 			if (validatePanel()) {
 				self.page += 1;
+				var isPageTwo = self.page === 2;
 
-				setupLocation(3);
-			} else { $scope.citySourcedReporterForm.$setSubmitted(); }
+				if (isPageTwo) {
+					skipLocationPanel(3);
+				}
+			} else {
+				$scope.citySourcedReporterForm.$setSubmitted();
+			}
 		};
 
 		self.prevClick = function prevClick() {
 			self.page -= 1;
+			var isPageTwo = self.page === 2;
 
-			setupLocation(1);
-
-			if (self.page === 2) {
-				$timeout(mapResize, 500);
+			if (isPageTwo) {
+				skipLocationPanel(1);
 			}
 		};
 
