@@ -241,13 +241,9 @@
 		};
 
 		function skipLocationPage(pageToShow) {
-			var isLocationRequired = self.shouldRequireLocation();
-
-			if (!isLocationRequired) {
-				self.latitude = CONSTANTS.locations.courtHouse.latitude;
-				self.longitude = CONSTANTS.locations.courtHouse.longitude;
-				self.page = pageToShow;
-			}
+			self.latitude = CONSTANTS.locations.courtHouse.latitude;
+			self.longitude = CONSTANTS.locations.courtHouse.longitude;
+			self.page = pageToShow;
 
 			$timeout(mapResize, 500);
 		}
@@ -255,9 +251,9 @@
 		self.nextClick = function nextClick() {
 			if (validatePanel()) {
 				self.page += 1;
-				var isPageTwo = self.page === 2;
+				var isLocationRequired = self.page === 2 && self.shouldRequireLocation();
 
-				if (isPageTwo) {
+				if (!isLocationRequired) {
 					skipLocationPage(3);
 				}
 			} else {
@@ -267,9 +263,9 @@
 
 		self.prevClick = function prevClick() {
 			self.page -= 1;
-			var isPageTwo = self.page === 2;
+			var isLocationRequired = self.page === 2 && self.shouldRequireLocation();
 
-			if (isPageTwo) {
+			if (!isLocationRequired) {
 				skipLocationPage(1);
 			}
 		};
