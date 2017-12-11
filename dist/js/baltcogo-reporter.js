@@ -196,6 +196,7 @@
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
 		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
+		var LOCATION_PAGE_NUMBER = 2;
 
 		self.isAnimal = false;
 		self.page = 1;
@@ -423,38 +424,40 @@
 			});
 		};
 
-		function skipLocationPanel(pageToShow) {
-			var isLocationRequired = self.shouldRequireLocation();
+		function isLocationPage() {
+			return self.page === LOCATION_PAGE_NUMBER;
+		}
 
-			if (!isLocationRequired) {
-				self.latitude = CONSTANTS.locations.courtHouse.latitude;
-				self.longitude = CONSTANTS.locations.courtHouse.longitude;
-				self.page = pageToShow;
-			}
+		function skipLocationPage(pageToShow) {
+			self.latitude = CONSTANTS.locations.courtHouse.latitude;
+			self.longitude = CONSTANTS.locations.courtHouse.longitude;
+			self.page = pageToShow;
 
 			$timeout(mapResize, 500);
 		}
 
+		function navigateFormSteps(steps) {
+			self.page += steps;
+			var isLocation = isLocationPage();
+			var isLocationRequired = self.shouldRequireLocation();
+			var shouldSkipLocation = isLocation && !isLocationRequired;
+
+			if (shouldSkipLocation) {
+				var pageToShow = self.page + steps;
+				skipLocationPage(pageToShow);
+			}
+		}
+
 		self.nextClick = function nextClick() {
 			if (validatePanel()) {
-				self.page += 1;
-				var isPageTwo = self.page === 2;
-
-				if (isPageTwo) {
-					skipLocationPanel(3);
-				}
+				navigateFormSteps(1);
 			} else {
 				$scope.citySourcedReporterForm.$setSubmitted();
 			}
 		};
 
 		self.prevClick = function prevClick() {
-			self.page -= 1;
-			var isPageTwo = self.page === 2;
-
-			if (isPageTwo) {
-				skipLocationPanel(1);
-			}
+			navigateFormSteps(-1);
 		};
 
 		self.setLocation = function setLocation(sender, longitude, latitude) {
