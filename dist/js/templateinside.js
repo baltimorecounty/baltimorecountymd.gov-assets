@@ -6001,7 +6001,7 @@ baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handl
 	 * @param {string} searchTerm 
 	 */
 	var search = function search(searchTerm, maxMatches) {
-		if (!searchData || !searchData.length) {
+		if (!searchTerm || !searchTerm.length) {
 			throw Error('Module "keywordSearch" is not initialized.');
 		}
 
