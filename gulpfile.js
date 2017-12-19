@@ -43,7 +43,6 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
 		'js/lib/handlebars.js',
 		'js/lib/picturefill.min.js',
 		'js/constants.js',
-		'js/keyword-search.js',
 		'js/text-resizer.js',
 		'js/flickr-feed.js',
 		'js/county-news-snippet.js',
