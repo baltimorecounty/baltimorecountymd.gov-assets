@@ -36,6 +36,24 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 				searchResultRequestErrorHandler);
 	}
 
+	function postClickThroughData(searchTerm, id, destinationUrl) {
+		var cleanedSearchTerm = cleanSearchTerm(searchTerm);
+		var requestUrl = constants.keywordSearch.urls.trackClickThrough + cleanedSearchTerm + '/' + id;
+
+		$.ajax({
+			type: 'POST',
+			url: requestUrl
+		})
+			.then(function onThen() {
+				postClickThroughSuccess(destinationUrl);
+			},
+			searchResultRequestErrorHandler);
+	}
+
+	function postClickThroughSuccess(destinationUrl) {
+		window.location = destinationUrl;
+	}
+
 	function searchResultRequestErrorHandler(err) {
 		console.error(err); // eslint-disable-line no-console
 	}
@@ -44,11 +62,13 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		var highlight = result.highlight.body || result.highlight.sections || result.highlight.title;
 		var title = result.title;
 		var url = result.url;
+		var id = result.id;
 
 		return {
 			highlight: highlight,
 			title: title,
-			url: url
+			url: url,
+			id: id
 		};
 	}
 
@@ -141,16 +161,29 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		}
 	}
 
+	function trackClickThrough(clickEvent) {
+		var $target = $(clickEvent.currentTarget);
+		var searchTerm = window.location.search.replace('?q=', '');
+		var id = $target.attr('data-id');
+		var destinationUrl = $target.attr('href');
+
+		postClickThroughData(searchTerm, id, destinationUrl);
+	}
+
+
 	return {
 		/* test-code */
 		calculateLastResultNumber: calculateLastResultNumber,
 		calculateFirstResultNumber: calculateFirstResultNumber,
 		buildPageLinks: buildPageLinks,
 		/* end-test-code */
-		init: init
+		init: init,
+		trackClickThrough: trackClickThrough
 	};
 }(jQuery, baltimoreCounty.utility.querystringer, Handlebars, baltimoreCounty.constants));
 
 $(function initialize() {
+	$(document).on('click', '.search-results-display a', baltimoreCounty.pageSpecific.swiftypeSearchResults.trackClickThrough);
+
 	baltimoreCounty.pageSpecific.swiftypeSearchResults.init();
 });
