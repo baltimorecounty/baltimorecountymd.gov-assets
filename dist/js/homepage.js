@@ -5162,7 +5162,7 @@ baltimoreCounty.constants = (function constants() {
 		urls: {
 			api: rootUrl + '/api/search/',
 			searchTerms: '/sebin/m/l/searchTerms.json',
-			trackClickThrough: '/api/trackclickthrough/'
+			trackClickThrough: rootUrl + '/api/trackclickthrough/'
 		}
 	};
 
