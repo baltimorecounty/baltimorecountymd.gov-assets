@@ -5161,7 +5161,8 @@ baltimoreCounty.constants = (function constants() {
 	var keywordSearch = {
 		urls: {
 			api: rootUrl + '/api/search/',
-			searchTerms: '/sebin/m/l/searchTerms.json'
+			searchTerms: '/sebin/m/l/searchTerms.json',
+			trackClickThrough: '/api/trackclickthrough/'
 		}
 	};
 
