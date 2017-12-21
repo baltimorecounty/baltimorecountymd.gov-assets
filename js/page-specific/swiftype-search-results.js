@@ -40,9 +40,14 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		var cleanedSearchTerm = cleanSearchTerm(searchTerm);
 		var requestUrl = constants.keywordSearch.urls.trackClickThrough + cleanedSearchTerm + '/' + id;
 
-		$.ajax(requestUrl)
-			.then(function() { postClickThroughSuccess(destinationUrl) },
-				searchResultRequestErrorHandler);
+		$.ajax({
+			type: 'POST',
+			url: requestUrl
+		})
+			.then(function onThen() {
+				postClickThroughSuccess(destinationUrl);
+			},
+			searchResultRequestErrorHandler);
 	}
 
 	function postClickThroughSuccess(destinationUrl) {
@@ -57,11 +62,13 @@ baltimoreCounty.pageSpecific.swiftypeSearchResults = (function swiftypeSearchRes
 		var highlight = result.highlight.body || result.highlight.sections || result.highlight.title;
 		var title = result.title;
 		var url = result.url;
+		var id = result.id;
 
 		return {
 			highlight: highlight,
 			title: title,
-			url: url
+			url: url,
+			id: id
 		};
 	}
 
