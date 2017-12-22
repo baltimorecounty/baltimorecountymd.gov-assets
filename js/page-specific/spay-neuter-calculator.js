@@ -113,7 +113,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	var readForm = function readForm() {
 		var formData = {
 			isResident: $residentField.length ? getRadioButtonValue($residentField) : isResident,
-			isPublicAssistance: $publicAssistanceField.length ? getRadioButtonValue($publicAssistanceField) : isPublicAssistance,
+			isPublicAssistance: $publicAssistanceField.length ?
+				getRadioButtonValue($publicAssistanceField) : isPublicAssistance,
 			isCatPitBull: $catPitBullField.length ? getRadioButtonValue($catPitBullField) : isCatPitBull,
 			zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode
 		};
