@@ -80,7 +80,11 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	 */
 	var validationClickHandler = function validationClickHandler(e) {
 		var $current = $(e.target);
-		if (baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($current)) { clearErrorNotification($current); } else { errorNotification($current); }
+		if (baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($current)) {
+			clearErrorNotification($current);
+		} else {
+			errorNotification($current);
+		}
 	};
 
 	/**
@@ -88,7 +92,11 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	 */
 	var validationKeyupHandler = function validationKeyupHandler(e) {
 		var $current = $(e.target);
-		if (baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($current, textInputValidationRegExp)) { clearErrorNotification($current); } else { errorNotification($current); }
+		if (baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($current, textInputValidationRegExp)) { // eslint-disable-line max-len
+			clearErrorNotification($current);
+		} else {
+			errorNotification($current);
+		}
 	};
 
 	/*
@@ -99,7 +107,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	};
 
 	/*
-		* Renders the error notification message specified in the form element's "data-validation-message" attribute.
+		* Renders the error notification message specified in the
+		form element's "data-validation-message" attribute.
 		*/
 	var errorNotification = function errorNotification($fieldWithError) {
 		var $closestDiv = $fieldWithError.closest('div');
