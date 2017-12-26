@@ -4,11 +4,14 @@ namespacer('baltimoreCounty.pageSpecific');
  * Spaying and Neutering calculator module.
  * Used on http://www.baltimorecountymd.gov/Agencies/health/animalservices/spayneuter.html
  */
-baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
+baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculator($) {
 	'use strict';
 
 	var zipsDundalk = [];
 	var zipsSwap = [];
+	var eligibleCatZips = ['21227', '21228', '21244', '21207'];
+
+
 	var facilityList = {
 		baldwin: {
 			address: 'Baldwin, 13800 Manor Road',
@@ -28,19 +31,21 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	var $residentField = $('#spayNeuterForm input[name=isBaltimoreCountyResident]');
 	var $publicAssistanceField = $('#spayNeuterForm input[name=isPublicAssistance]');
 	var $catPitBullField = $('#spayNeuterForm input[name=isCatPitBull]');
+	var $isForCatField = $('#spayNeuterForm input[name=isForCat]');
 	var $zipCodeField = $('#spayNeuterForm #zipCode');
 	var $spayNeuterFormButton = $('#spayNeuterFormButton');
 	var $spayNeuterFormResults = $('#spayNeuterFormResults');
 	var isResident = false;
 	var isPublicAssistance = false;
 	var isCatPitBull = false;
+	var isForCat = false;
 	var zipCode = '';
 	var textInputValidationRegExp = /^\d{5}$/;
 
 	/*
 		* Form validation!
 		*/
-	var isValid = function () {
+	var isValid = function isValid() {
 		var validationErrorFlag = false;
 
 		if ($zipCodeField.is(':visible') && !baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($zipCodeField, textInputValidationRegExp)) {
@@ -54,10 +59,10 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Attaches validation to form field events so we can vlidate on the fly.
 		*/
-	var setupValidation = function ($form) {
+	var setupValidation = function setupValidation($form) {
 		var $formInputs = $form.find('input');
 
-		for (var i = 0; i < $formInputs.length; i++) {
+		for (var i = 0; i < $formInputs.length; i += 1) {
 			var $input = $($formInputs[i]);
 			var inputType = $input.attr('type');
 
@@ -68,6 +73,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 			case 'text':
 				$input.on('keyup', validationKeyupHandler);
 				break;
+			default:
+				break;
 			}
 		}
 	};
@@ -75,30 +82,39 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/**
 	 * Handles the input "click" validation events.
 	 */
-	var validationClickHandler = function (e) {
+	var validationClickHandler = function validationClickHandler(e) {
 		var $current = $(e.target);
-		if (baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($current)) { clearErrorNotification($current); } else { errorNotification($current); }
+		if (baltimoreCounty.utility.formValidator.requiredFieldRadioValidator($current)) {
+			clearErrorNotification($current);
+		} else {
+			errorNotification($current);
+		}
 	};
 
 	/**
 	 * Handles the input "keyup" validation events.
 	 */
-	var validationKeyupHandler = function (e) {
+	var validationKeyupHandler = function validationKeyupHandler(e) {
 		var $current = $(e.target);
-		if (baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($current, textInputValidationRegExp)) { clearErrorNotification($current); } else { errorNotification($current); }
+		if (baltimoreCounty.utility.formValidator.requiredFieldPatternValidator($current, textInputValidationRegExp)) { // eslint-disable-line max-len
+			clearErrorNotification($current);
+		} else {
+			errorNotification($current);
+		}
 	};
 
 	/*
 		* Removes the error notification message.
 		*/
-	var clearErrorNotification = function ($fieldWithError) {
+	var clearErrorNotification = function clearErrorNotification($fieldWithError) {
 		$fieldWithError.closest('div').find('.required-field-error-message').remove();
 	};
 
 	/*
-		* Renders the error notification message specified in the form element's "data-validation-message" attribute.
+		* Renders the error notification message specified in the
+		form element's "data-validation-message" attribute.
 		*/
-	var errorNotification = function ($fieldWithError) {
+	var errorNotification = function errorNotification($fieldWithError) {
 		var $closestDiv = $fieldWithError.closest('div');
 		var errorMessage = $fieldWithError.attr('data-validation-message');
 		if ($closestDiv.find('.required-field-error-message').length === 0) { $closestDiv.append('<div class="required-field-error-message">' + errorMessage + '</div>'); }
@@ -107,12 +123,14 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Reads for form data and hydrates the formData model.
 		*/
-	var readForm = function () {
+	var readForm = function readForm() {
 		var formData = {
 			isResident: $residentField.length ? getRadioButtonValue($residentField) : isResident,
-			isPublicAssistance: $publicAssistanceField.length ? getRadioButtonValue($publicAssistanceField) : isPublicAssistance,
+			isPublicAssistance: $publicAssistanceField.length ?
+				getRadioButtonValue($publicAssistanceField) : isPublicAssistance,
 			isCatPitBull: $catPitBullField.length ? getRadioButtonValue($catPitBullField) : isCatPitBull,
-			zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode
+			zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode,
+			isForCat: $isForCatField.length ? getRadioButtonValue($isForCatField) : isForCat
 		};
 
 		setupValidation($spayNeuterForm);
@@ -123,7 +141,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Pulls Radio Button value safely.
 		*/
-	var getRadioButtonValue = function ($radioButton) {
+	var getRadioButtonValue = function getRadioButtonValue($radioButton) {
 		var YES_RADIO_INDEX = 0;
 
 		if ($radioButton.length === 0) { return undefined; }
@@ -136,7 +154,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Determines the fee for the procedure.
 		*/
-	var determineCost = function (formData, isDundalkZip, isSwapZip) {
+	var determineCost = function determineCost(formData, isDundalkZip, isSwapZip, isCatZip) {
 		if (!formData) { return undefined; }
 
 		var cost;
@@ -145,19 +163,19 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 			cost = 20;
 
 			if (formData.isPublicAssistance) {
-				cost = formData.isCatPitBull || isDundalkZip || isSwapZip ? 0 : 20;
-			} else {
-				cost = isDundalkZip || isSwapZip ? 0 : 20;
+				return formData.isCatPitBull || isDundalkZip || isSwapZip ? 0 : 20;
+			} else if (!formData.isPublicAssistance && formData.isForCat && isCatZip) {
+				return 0;
 			}
+			return isDundalkZip || isSwapZip ? 0 : 20;
 		}
-
 		return cost;
 	};
 
 	/*
 		* Selects the facility based on cost and ZIP code.
 		*/
-	var facilityPicker = function (cost, isPublicAssistance, isDundalkZip, isSwapZip) {
+	var facilityPicker = function facilityPicker(cost, isPublicAssistance, isDundalkZip, isSwapZip) {
 		var facilityArr = [];
 
 		if (typeof cost === 'undefined') { return facilityArr; }
@@ -185,7 +203,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Builds the HTML for the discount message.
 		*/
-	var buildDiscountMessageHTML = function (facilities, cost) {
+	var buildDiscountMessageHTML = function buildDiscountMessageHTML(facilities, cost) {
 		if (typeof cost === 'undefined') { return '<p>We\'re sorry. Only County residents are eligible for discount spay or neuter procedures.</p>'; }
 
 		if (facilities.length === 1 && facilities[0] === facilityList.dundalk) { return '<p>Good news! You\'re eligible for a <strong>free procedure</strong> at our Dundalk facility at 7702 Dunmanway.</p>'; }
@@ -200,16 +218,20 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Builds the HTML for the facility message.
 		*/
-	var buildFacilityListHTML = function (facilities) {
+	var buildFacilityListHTML = function buildFacilityListHTML(facilities) {
 		if (!facilities || facilities.length === 0) { return ''; }
 
 		var facilityHTML = '';
 		facilityHTML += '<ul>';
 
-		if (facilities.length === 1) { facilityHTML += '<li><a href="' + facilities[0].link + '">Book Now at ' + facilities[0].address.split(',')[0] + '</a></li>'; }
+		if (facilities.length === 1) {
+			facilityHTML += '<li><a href="' + facilities[0].link + '">Book Now at ' + facilities[0].address.split(',')[0] + '</a></li>';
+		}
 
 		if (facilities.length === 3) {
-			for (var i = 0; i < facilities.length; i++) { facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>'; }
+			for (var i = 0; i < facilities.length; i++) {
+				facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>';
+			}
 		}
 
 		facilityHTML += '</ul>';
@@ -220,11 +242,12 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/*
 		* Pulls everything together, and calculated the procedure cost and locations.
 		*/
-	var calculate = function () {
+	var calculate = function calculate() {
 		var formData = readForm();
 		var isDundalkZip = zipsDundalk.indexOf(formData.zipCode) > -1;
 		var isSwapZip = zipsSwap.indexOf(formData.zipCode) > -1;
-		var cost = determineCost(formData, isDundalkZip, isSwapZip);
+		var isCatZip = eligibleCatZips.indexOf(formData.zipCode) > -1;
+		var cost = determineCost(formData, isDundalkZip, isSwapZip, isCatZip);
 		var facilities = facilityPicker(cost, formData.isPublicAssistance, isDundalkZip, isSwapZip);
 		var discountMessageHTML = buildDiscountMessageHTML(facilities, cost);
 		var facilityListHTML = buildFacilityListHTML(facilities);
@@ -235,7 +258,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/**
 	 * Displays the final judgement of the calculator.
 	 */
-	var displayResults = function (discountMessageHTML, facilityListHTML) {
+	var displayResults = function displayResults(discountMessageHTML, facilityListHTML) {
 		$spayNeuterFormResults.removeClass('alert-success alert-warning');
 		$spayNeuterFormResults.addClass(facilityListHTML ? 'alert-success' : 'alert-warning').attr('role', 'alert');
 		$spayNeuterFormResults.html(discountMessageHTML + facilityListHTML);
@@ -251,43 +274,51 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 	/**
 	 * Sets the visibility of the target, and fires a callback when done.
 	 */
-	var setVisibility = function ($target, shouldHide, callback) {
+	var setVisibility = function setVisibility($target, shouldHide, callback) {
 		var ANIMATION_DURATION = 300;
 		var visibilityFilterSelector = shouldHide ? ':hidden' : ':visible';
 		var $formControlWrapper = $target.closest('.bc-form-control');
 
-		callback = callback || function () {};
-
 		if ($formControlWrapper.is(visibilityFilterSelector)) {
-			callback();
+			if (callback && typeof callback === 'function') {
+				callback();
+			}
 			return;
 		}
 
 		$formControlWrapper.attr('aria-hidden', shouldHide);
 
-		if (shouldHide) { $formControlWrapper.fadeOut(ANIMATION_DURATION, callback); } else { $formControlWrapper.fadeIn(ANIMATION_DURATION, callback); }
+		if (shouldHide) {
+			$formControlWrapper.fadeOut(ANIMATION_DURATION, callback);
+		} else {
+			$formControlWrapper.fadeIn(ANIMATION_DURATION, callback);
+		}
 	};
 
 	/**
 	 * Clears all hidden form elements, so they're not already filled out when they're revealed.
 	 * This is really just a safeguard for anyone who gets click-happy.
 	 */
-	var clearEverythingOnTheFormAfterThis = function ($target) {
+	var clearEverythingOnTheFormAfterThis = function clearEverythingOnTheFormAfterThis($target) {
 		var targetIndex = $spayNeuterFormInputElements.index($target);
 
-		$spayNeuterFormInputElements.map(function (index, item) {
+		$spayNeuterFormInputElements.map(function mapElms(index, item) {
 			var $item = $(item);
 
-			if ($spayNeuterFormInputElements.index(item) > targetIndex) { $item.val('').removeAttr('checked'); }
+			if ($spayNeuterFormInputElements.index(item) > targetIndex) {
+				$item.val('').removeAttr('checked');
+			}
 		});
 	};
 
 	/**
 	 * Event binding.
 	 */
-	var init = function () {
+	var init = function init() {
 		var YES_RADIO_INDEX = 0;
 		var NO_RADIO_INDEX = 1;
+
+		/* eslint-disable */
 
 		$residentField.eq(YES_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
@@ -315,6 +346,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 				});
 			});
 		});
+
 		$publicAssistanceField.eq(YES_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
@@ -325,16 +357,18 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 				});
 			});
 		});
+
 		$publicAssistanceField.eq(NO_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
-				setVisibility($zipCodeField, false, function () {
-					setVisibility($spayNeuterFormButton, false, function () {
-						setVisibility($catPitBullField, true);
+				setVisibility($zipCodeField, true, function () {
+					setVisibility($spayNeuterFormButton, true, function () {
+						setVisibility($isForCatField, false);
 					});
 				});
 			});
 		});
+
 		$catPitBullField.eq(YES_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
@@ -345,6 +379,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 				});
 			});
 		});
+		
 		$catPitBullField.eq(NO_RADIO_INDEX).on('click', function () {
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($zipCodeField, false, function () {
@@ -352,9 +387,27 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 				});
 			});
 		});
-		$spayNeuterFormButton.on('click', function () {
-			calculate();
+
+		$isForCatField.eq(YES_RADIO_INDEX).on('click', function (event) {
+			clearEverythingOnTheFormAfterThis(event.target);
+			setVisibility($spayNeuterFormResults, true, function () {
+				setVisibility($zipCodeField, false, function() {
+					setVisibility($spayNeuterFormButton, false);
+				});
+			});
 		});
+
+		$isForCatField.eq(NO_RADIO_INDEX).on('click', function () {
+			setVisibility($spayNeuterFormResults, true, function () {
+				setVisibility($zipCodeField, false, function () {
+					setVisibility($spayNeuterFormButton, false);
+				});
+			});
+		});
+
+		/* eslint-enable  */
+
+		$spayNeuterFormButton.on('click', calculate);
 	};
 
 	return {
@@ -371,8 +424,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function ($) {
 /*
  * Attach the module to the form's submit button, and kill the enter button.
  */
-$(function () {
-	$('#spayNeuterForm, #spayNeuterForm input').on('keyup keypress', function (e) {
+$(function onPageReady() {
+	$('#spayNeuterForm, #spayNeuterForm input').on('keyup keypress', function onKeyPress(e) {
 		var keyCode = e.keyCode || e.which;
 		if (keyCode === 13) {
 			e.preventDefault();
