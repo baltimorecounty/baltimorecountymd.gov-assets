@@ -11,7 +11,6 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	var zipsSwap = [];
 	var eligibleCatZips = ['21227', '21228', '21244', '21207'];
 
-
 	var facilityList = {
 		baldwin: {
 			address: 'Baldwin, 13800 Manor Road',
@@ -379,7 +378,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 				});
 			});
 		});
-		
+
 		$catPitBullField.eq(NO_RADIO_INDEX).on('click', function () {
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($zipCodeField, false, function () {
