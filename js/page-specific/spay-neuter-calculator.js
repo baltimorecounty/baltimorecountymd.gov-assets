@@ -9,6 +9,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 
 	var zipsDundalk = [];
 	var zipsSwap = [];
+	var eligibleCatZips = ['21227', '21228', '21244', '21207'];
+
+
 	var facilityList = {
 		baldwin: {
 			address: 'Baldwin, 13800 Manor Road',
@@ -28,13 +31,14 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	var $residentField = $('#spayNeuterForm input[name=isBaltimoreCountyResident]');
 	var $publicAssistanceField = $('#spayNeuterForm input[name=isPublicAssistance]');
 	var $catPitBullField = $('#spayNeuterForm input[name=isCatPitBull]');
+	var $isForCatField = $('#spayNeuterForm input[name=isForCat]');
 	var $zipCodeField = $('#spayNeuterForm #zipCode');
 	var $spayNeuterFormButton = $('#spayNeuterFormButton');
 	var $spayNeuterFormResults = $('#spayNeuterFormResults');
 	var isResident = false;
 	var isPublicAssistance = false;
 	var isCatPitBull = false;
-	var isCat = false;
+	var isForCat = false;
 	var zipCode = '';
 	var textInputValidationRegExp = /^\d{5}$/;
 
@@ -125,7 +129,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			isPublicAssistance: $publicAssistanceField.length ?
 				getRadioButtonValue($publicAssistanceField) : isPublicAssistance,
 			isCatPitBull: $catPitBullField.length ? getRadioButtonValue($catPitBullField) : isCatPitBull,
-			zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode
+			zipCode: $zipCodeField.length ? $zipCodeField.val() : zipCode,
+			isForCat: $isForCatField.length ? getRadioButtonValue($isForCatField) : isForCat
 		};
 
 		setupValidation($spayNeuterForm);
@@ -149,7 +154,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	/*
 		* Determines the fee for the procedure.
 		*/
-	var determineCost = function determineCost(formData, isDundalkZip, isSwapZip) {
+	var determineCost = function determineCost(formData, isDundalkZip, isSwapZip, isCatZip) {
 		if (!formData) { return undefined; }
 
 		var cost;
@@ -158,12 +163,12 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			cost = 20;
 
 			if (formData.isPublicAssistance) {
-				cost = formData.isCatPitBull || isDundalkZip || isSwapZip ? 0 : 20;
-			} else {
-				cost = isDundalkZip || isSwapZip ? 0 : 20;
+				return formData.isCatPitBull || isDundalkZip || isSwapZip ? 0 : 20;
+			} else if (!formData.isPublicAssistance && formData.isForCat && isCatZip) {
+				return 0;
 			}
+			return isDundalkZip || isSwapZip ? 0 : 20;
 		}
-
 		return cost;
 	};
 
@@ -219,10 +224,14 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 		var facilityHTML = '';
 		facilityHTML += '<ul>';
 
-		if (facilities.length === 1) { facilityHTML += '<li><a href="' + facilities[0].link + '">Book Now at ' + facilities[0].address.split(',')[0] + '</a></li>'; }
+		if (facilities.length === 1) {
+			facilityHTML += '<li><a href="' + facilities[0].link + '">Book Now at ' + facilities[0].address.split(',')[0] + '</a></li>';
+		}
 
 		if (facilities.length === 3) {
-			for (var i = 0; i < facilities.length; i++) { facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>'; }
+			for (var i = 0; i < facilities.length; i++) {
+				facilityHTML += '<li><a href="' + facilities[i].link + '">' + facilities[i].address + '</a></li>';
+			}
 		}
 
 		facilityHTML += '</ul>';
@@ -237,7 +246,8 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 		var formData = readForm();
 		var isDundalkZip = zipsDundalk.indexOf(formData.zipCode) > -1;
 		var isSwapZip = zipsSwap.indexOf(formData.zipCode) > -1;
-		var cost = determineCost(formData, isDundalkZip, isSwapZip);
+		var isCatZip = eligibleCatZips.indexOf(formData.zipCode) > -1;
+		var cost = determineCost(formData, isDundalkZip, isSwapZip, isCatZip);
 		var facilities = facilityPicker(cost, formData.isPublicAssistance, isDundalkZip, isSwapZip);
 		var discountMessageHTML = buildDiscountMessageHTML(facilities, cost);
 		var facilityListHTML = buildFacilityListHTML(facilities);
@@ -336,6 +346,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 				});
 			});
 		});
+
 		$publicAssistanceField.eq(YES_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
@@ -346,16 +357,18 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 				});
 			});
 		});
+
 		$publicAssistanceField.eq(NO_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
-				setVisibility($zipCodeField, false, function () {
-					setVisibility($spayNeuterFormButton, false, function () {
-						setVisibility($catPitBullField, true);
+				setVisibility($zipCodeField, true, function () {
+					setVisibility($spayNeuterFormButton, true, function () {
+						setVisibility($isForCatField, false);
 					});
 				});
 			});
 		});
+
 		$catPitBullField.eq(YES_RADIO_INDEX).on('click', function (event) {
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
@@ -366,7 +379,25 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 				});
 			});
 		});
+		
 		$catPitBullField.eq(NO_RADIO_INDEX).on('click', function () {
+			setVisibility($spayNeuterFormResults, true, function () {
+				setVisibility($zipCodeField, false, function () {
+					setVisibility($spayNeuterFormButton, false);
+				});
+			});
+		});
+
+		$isForCatField.eq(YES_RADIO_INDEX).on('click', function (event) {
+			clearEverythingOnTheFormAfterThis(event.target);
+			setVisibility($spayNeuterFormResults, true, function () {
+				setVisibility($zipCodeField, false, function() {
+					setVisibility($spayNeuterFormButton, false);
+				});
+			});
+		});
+
+		$isForCatField.eq(NO_RADIO_INDEX).on('click', function () {
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($zipCodeField, false, function () {
 					setVisibility($spayNeuterFormButton, false);
@@ -376,9 +407,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 
 		/* eslint-enable  */
 
-		$spayNeuterFormButton.on('click', function onBtnClick() {
-			calculate();
-		});
+		$spayNeuterFormButton.on('click', calculate);
 	};
 
 	return {
