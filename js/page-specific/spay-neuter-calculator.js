@@ -324,8 +324,10 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($spayNeuterFormButton, true, function () {
 					setVisibility($zipCodeField, true, function () {
-						setVisibility($catPitBullField, true, function () {
-							setVisibility($publicAssistanceField, false);
+						setVisibility($isForCatField, true, function () {
+							setVisibility($catPitBullField, true, function () {
+								setVisibility($publicAssistanceField, false);
+							});
 						});
 					});
 				});
@@ -336,9 +338,11 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($spayNeuterFormButton, true, function () {
 					setVisibility($zipCodeField, true, function () {
-						setVisibility($catPitBullField, true, function () {
-							setVisibility($publicAssistanceField, true, function () {
-								calculate();
+						setVisibility($isForCatField, true, function () {
+							setVisibility($catPitBullField, true, function () {
+								setVisibility($publicAssistanceField, true, function () {
+									calculate();
+								});
 							});
 						});
 					});
@@ -351,7 +355,9 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($spayNeuterFormButton, true, function () {
 					setVisibility($zipCodeField, true, function () {
-						setVisibility($catPitBullField, false);
+						setVisibility($isForCatField, true, function () {
+							setVisibility($catPitBullField, false);
+						});
 					});
 				});
 			});
