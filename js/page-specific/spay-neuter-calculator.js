@@ -174,7 +174,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 	/*
 		* Selects the facility based on cost and ZIP code.
 		*/
-	var facilityPicker = function facilityPicker(cost, isPublicAssistance, isDundalkZip, isSwapZip) {
+	var facilityPicker = function facilityPicker(cost, isPublicAssistance, isDundalkZip, isSwapZip, isCatZip) {
 		var facilityArr = [];
 
 		if (typeof cost === 'undefined') { return facilityArr; }
@@ -184,7 +184,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			return facilityArr;
 		}
 
-		if (isSwapZip) {
+		if (isSwapZip || isCatZip) {
 			facilityArr.push(facilityList.swap);
 			return facilityArr;
 		}
@@ -247,7 +247,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 		var isSwapZip = zipsSwap.indexOf(formData.zipCode) > -1;
 		var isCatZip = eligibleCatZips.indexOf(formData.zipCode) > -1;
 		var cost = determineCost(formData, isDundalkZip, isSwapZip, isCatZip);
-		var facilities = facilityPicker(cost, formData.isPublicAssistance, isDundalkZip, isSwapZip);
+		var facilities = facilityPicker(cost, formData.isPublicAssistance, isDundalkZip, isSwapZip, isCatZip);
 		var discountMessageHTML = buildDiscountMessageHTML(facilities, cost);
 		var facilityListHTML = buildFacilityListHTML(facilities);
 
@@ -367,10 +367,12 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 			clearEverythingOnTheFormAfterThis(event.target);
 			setVisibility($spayNeuterFormResults, true, function () {
 				setVisibility($zipCodeField, true, function () {
-					setVisibility($spayNeuterFormButton, true, function () {
-						setVisibility($isForCatField, false);
+					setVisibility($catPitBullField, true, function () {
+						setVisibility($spayNeuterFormButton, true, function () {
+							setVisibility($isForCatField, false);
+						});
 					});
-				});
+			});
 			});
 		});
 
