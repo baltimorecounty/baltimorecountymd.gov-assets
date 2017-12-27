@@ -406,7 +406,7 @@ baltimoreCounty.pageSpecific.spayNeuterCalculator = (function spayNeuterCalculat
 
 		$isForCatField.eq(NO_RADIO_INDEX).on('click', function () {
 			setVisibility($spayNeuterFormResults, true, function () {
-				setVisibility($zipCodeField, false, function () {
+				setVisibility($zipCodeField, true, function () {
 					setVisibility($spayNeuterFormButton, false);
 				});
 			});
