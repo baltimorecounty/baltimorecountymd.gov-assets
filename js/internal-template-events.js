@@ -1,15 +1,59 @@
-(function ($) {
-  function ratePage() {
-    var urlElm = document.getElementById('url');
-    
-    if (urlElm) {
-        urlElm.value = window.location.href;
-    }
+(function onTemplateEventsInit($) {
+	var resizeTimer;
+	var windowWidth;
 
-    if ($('input#website').val().length) {
-      return false;
-    }
-  }
-  /*Submit url to rate form*/
-  $(document).on('submit', '#RateThisPageForm', ratePage);
-})(jQuery);
+	function $getSearchContainer(width) {
+		return isMobile(width)
+			? $('#search-container')
+			: $('#internal-search-container');
+	}
+
+	function isMobile(width) {
+		var mediaWidth = 990;
+		var scrollBar = 15;
+		return width < mediaWidth - scrollBar;
+	}
+
+	function onPageRating() { // eslint-disable-line consistent-return
+		var urlElm = document.getElementById('url');
+
+		if (urlElm) {
+			urlElm.value = window.location.href;
+		}
+
+		if ($('input#website').val().length) {
+			return false;
+		}
+	}
+
+	function onSearchReady() {
+		windowWidth = $(window).width();
+		repositionSearchBox(windowWidth);
+	}
+
+	function onWindowResize() {
+		var $window = $(window);
+		var newWindowWidth = $window.width();
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function waitForResizeToFinish() {
+			if (newWindowWidth !== windowWidth) {
+				repositionSearchBox(newWindowWidth);
+				windowWidth = newWindowWidth;
+			}
+		}, 100);
+	}
+
+	function repositionSearchBox(currentWindowWidth) {
+		var $targetContainer = $getSearchContainer(currentWindowWidth);
+		var searchFormHtml = $('#search-form').detach();
+
+		$targetContainer.append(searchFormHtml);
+	}
+
+	$(document).ready(onSearchReady);
+
+	/* Submit url to rate form */
+	$(document).on('submit', '#RateThisPageForm', onPageRating);
+
+	$(window).on('resize', onWindowResize);
+}(jQuery));
