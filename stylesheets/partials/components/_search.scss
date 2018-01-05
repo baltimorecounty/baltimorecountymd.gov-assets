@@ -88,9 +88,9 @@
 }
 
 @media only screen and (max-width: 991px) {
-  .search-container.inside-template {
-    height: 60px;
-  }
+  	.search-container {
+		margin: 0px auto !important;
+	}
 }
 
 @media only screen and (max-width: 461px) {
@@ -100,9 +100,9 @@
 		}
 	}
 
-  .search-container.inside-template {
-    height: 40px;
-  }
+//   .search-container.inside-template {
+//     height: 40px;
+//   }
   .search-form .search-button{
     padding: 11px 5px;
   }
