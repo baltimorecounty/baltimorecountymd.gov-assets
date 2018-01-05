@@ -32,3 +32,12 @@
 .gssb_a table, .gssb_a table tr, .gssb_a table tr td {
   padding: 2.5px 5px !important;
 }
+
+@media only screen and (max-width: 991px) {
+    .search-container {
+        margin: 0px auto;
+    }
+    .search-container.inside-template {
+        height: auto;
+    }
+}
