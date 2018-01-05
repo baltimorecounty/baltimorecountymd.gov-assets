@@ -1,5 +1,4 @@
 button {
-
     background: $gold;
     cursor: pointer;
     font-family: $default-font-family;
@@ -35,4 +34,11 @@ input[type=button][disabled],
 input[type=submit][disabled], 
 button[disabled] {
     color: #999;
+}
+
+.contentButton[disabled],
+.contentButton[disabled]:hover {
+	border-color: #ddd;
+	color: #999;
+    background: #ddd;
 }
