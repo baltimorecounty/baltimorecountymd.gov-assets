@@ -26,15 +26,15 @@
 	}
 
 	function onReady() {
-		var type = getURLParameter('type') === 'null' ? 'all' : getURLParameter('type');
+		var petType = getURLParameter('type') === 'null' ? 'all' : getURLParameter('type');
 
-		if (type !== 'all') {
+		if (petType !== 'all') {
 			var $adoptedPets = $(tabSelector + ' li');
 			$adoptedPets.find('a.active').removeClass('active');
-			$adoptedPets.find('a[data-type=' + type + ']').addClass('active');
+			$adoptedPets.find('a[data-type=' + petType + ']').addClass('active');
 		}
 
-		adoptedPets.Show(type, function () {
+		adoptedPets.Show(petType, function () {
 			// If there is hash, scroll to that element
 			if (window.location.hash) {
 				document.getElementById(window.location.hash.replace('#', '')).scrollIntoView(true);
@@ -45,7 +45,7 @@
 	function onTabClick(e) {
 		e.preventDefault();
 		var $this = $(e.currentTarget);
-		var type = $this.data('type').toLowerCase();
+		var petType = $this.data('type').toLowerCase();
 
 		// Remove active tab
 		$this.parent().parent().find('a').removeClass('active');
@@ -57,7 +57,7 @@
 		$('.' + listClass).css('height', 900000000);
 
 		// Show pets of the tab you selected
-		adoptedPets.Show(type, function () {
+		adoptedPets.Show(petType, function () {
 			$('.' + listClass).removeAttr('style');
 		});
 	}
