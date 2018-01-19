@@ -31,7 +31,7 @@
 		if (petType !== 'all') {
 			var $adoptedPets = $(tabSelector + ' li');
 			$adoptedPets.find('a.active').removeClass('active');
-			$adoptedPets.find('a[data-type=' + type + ']').addClass('active');
+			$adoptedPets.find('a[data-type=' + petType + ']').addClass('active');
 		}
 
 		adoptedPets.Show(petType, function () {
