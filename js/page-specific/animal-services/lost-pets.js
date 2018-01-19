@@ -37,7 +37,10 @@
 		adoptedPets.Show(petType, function () {
 			// If there is hash, scroll to that element
 			if (window.location.hash) {
-				document.getElementById(window.location.hash.replace('#', '')).scrollIntoView(true);
+				const elm = document.getElementById(window.location.hash.replace('#', ''));
+				if (elm) {
+					elm.scrollIntoView(true);
+				}
 			}
 		});
 	}
