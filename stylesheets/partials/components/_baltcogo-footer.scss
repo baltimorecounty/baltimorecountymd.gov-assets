@@ -1,0 +1,41 @@
+.baltcogo-list,
+.baltcogo-main-md li {
+	float: left;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+	.baltcogo-list,
+	.baltcogo-main-md li {
+		padding: 0px 0px 5px 0px;
+		float: none;
+	}
+}
+
+@media (max-width: 991px) and (min-width: 767px) {
+	.baltcogo-main-md {
+		padding-left: 0px;
+	}
+}
+
+@media (max-width: 767px) {
+	.baltcogo-main-md {
+		padding-left: 0px;
+	}
+}
+
+@media (min-width: 992px) {
+	.baltcogo-main-md {
+		padding-left: 95px;
+	}
+}
+
+.baltcogo-wrapper {
+	padding-left: 0px;
+	padding-bottom: 10px;
+}
+
+.baltcogo-listwrpr {
+	padding-left: 0px;
+}
