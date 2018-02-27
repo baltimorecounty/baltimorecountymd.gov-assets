@@ -18,6 +18,13 @@ html {
 	box-sizing: border-box;
 }
 
+body {
+	position: static !important;
+}
+
+#header {
+	position: relative;
+}
 
 /*Remove IOS Broder Radius*/
 

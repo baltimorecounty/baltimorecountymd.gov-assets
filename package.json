@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Static assets (CSS and JS) for the baltimorecountymd.gov website.",
   "main": "gulpfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "smartbanner.js": "^1.9.1"
+  },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "chai": "^4.1.2",
