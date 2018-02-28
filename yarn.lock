@@ -2831,9 +2831,9 @@ joi@^8.4.2:
     moment "2.x.x"
     topo "2.x.x"
 
-jquery@^1.11.1:
-  version "1.12.4"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-1.12.4.tgz#01e1dfba290fe73deba77ceeacb0f9ba2fec9e0c"
+jquery@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.0"
@@ -2971,6 +2971,10 @@ karma-chrome-launcher@^2.0.0:
   dependencies:
     fs-access "^1.0.0"
     which "^1.2.1"
+
+karma-firefox-launcher@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/karma-firefox-launcher/-/karma-firefox-launcher-1.1.0.tgz#2c47030452f04531eb7d13d4fc7669630bb93339"
 
 karma-jasmine-jquery-2@^0.1.1:
   version "0.1.1"
