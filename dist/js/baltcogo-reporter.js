@@ -1,8 +1,12 @@
-(function() {
+'use strict';
+
+(function () {
 	'use strict';
 
 	angular.module('baltcogoApp', []);
 })();
+'use strict';
+
 (function constantsWrapper(app, baltCoGoConstants) {
 	'use strict';
 
@@ -30,7 +34,8 @@
 	};
 
 	app.constant('CONSTANTS', constants);
-}(angular.module('baltcogoApp'), baltimoreCounty.constants.baltCoGo));
+})(angular.module('baltcogoApp'), baltimoreCounty.constants.baltCoGo);
+'use strict';
 
 /* eslint global-require: 0 */
 
@@ -66,31 +71,27 @@
 		};
 
 		var reverseGeocode = function reverseGeocode(latitude, longitude, onSuccess, onError) {
-			$http.get(CONSTANTS.urls.geocodeServer + '/reverseGeocode?location=%7B%22x%22%3A' + longitude + '%2C+%22y%22%3A' + latitude + '%7D&f=pjson')
-				.then(onSuccess, onError);
+			$http.get(CONSTANTS.urls.geocodeServer + '/reverseGeocode?location=%7B%22x%22%3A' + longitude + '%2C+%22y%22%3A' + latitude + '%7D&f=pjson').then(onSuccess, onError);
 		};
 
 		var suggestAddresses = function suggestAddresses(enteredAddress, callback) {
 			var encodedAddress = encodeURIComponent(enteredAddress);
 
-			$http.get(CONSTANTS.urls.suggestions + encodedAddress).then(
-				function success(addressData) {
-					var results = [];
+			$http.get(CONSTANTS.urls.suggestions + encodedAddress).then(function success(addressData) {
+				var results = [];
 
-					angular.forEach(addressData.data, function forEachAddress(address) {
-						results.push({
-							address: address.StreetAddress + ', ' + address.City + ', ' + address.Zip,
-							longitude: address.Longitude,
-							latitude: address.Latitude
-						});
+				angular.forEach(addressData.data, function forEachAddress(address) {
+					results.push({
+						address: address.StreetAddress + ', ' + address.City + ', ' + address.Zip,
+						longitude: address.Longitude,
+						latitude: address.Latitude
 					});
+				});
 
-					callback(results);
-				},
-				function error(err) {
-					console.log(err);
-				}
-			);
+				callback(results);
+			}, function error(err) {
+				console.log(err);
+			});
 		};
 
 		var pan = function pan(map, latitude, longitude) {
@@ -116,8 +117,8 @@
 			suggestAddresses: suggestAddresses
 		};
 	}
-}(angular.module('baltcogoApp')));
-
+})(angular.module('baltcogoApp'));
+'use strict';
 
 (function reportServiceWrapper(app) {
 	'use strict';
@@ -132,27 +133,19 @@
 				}
 			};
 
-			$http.post(CONSTANTS.urls.createReport, data, postOptions)
-				.then(
-					function success(response) {
-						successCallback(response.data);
-					},
-					function error(err) {
-						errorCallback(err);
-					}
-				);
+			$http.post(CONSTANTS.urls.createReport, data, postOptions).then(function success(response) {
+				successCallback(response.data);
+			}, function error(err) {
+				errorCallback(err);
+			});
 		}
 
 		function getById(reportId, successCallback, errorCallback) {
-			$http.get(CONSTANTS.urls.getReport + reportId)
-				.then(
-					function success(response) {
-						successCallback(response.data);
-					},
-					function error(err) {
-						errorCallback(err);
-					}
-				);
+			$http.get(CONSTANTS.urls.getReport + reportId).then(function success(response) {
+				successCallback(response.data);
+			}, function error(err) {
+				errorCallback(err);
+			});
 		}
 
 		function getNearby(settings, successCallback, errorCallback) {
@@ -162,15 +155,11 @@
 				}
 			};
 
-			$http.post(CONSTANTS.urls.getReportLatLng, settings, postOptions)
-				.then(
-					function success(response) {
-						successCallback(response.data);
-					},
-					function error(err) {
-						errorCallback(err);
-					}
-				);
+			$http.post(CONSTANTS.urls.getReportLatLng, settings, postOptions).then(function success(response) {
+				successCallback(response.data);
+			}, function error(err) {
+				errorCallback(err);
+			});
 		}
 
 		return {
@@ -179,19 +168,15 @@
 			getNearby: getNearby
 		};
 	}
-}(angular.module('baltcogoApp')));
+})(angular.module('baltcogoApp'));
+'use strict';
 
 (function BaltCoGoReporterCtrl(app, querystringer, bcFormat) {
 	'use strict';
 
 	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
 
-	function reporterController($http,
-		$scope,
-		$timeout,
-		mapServiceComposite,
-		reportService,
-		CONSTANTS) {
+	function reporterController($http, $scope, $timeout, mapServiceComposite, reportService, CONSTANTS) {
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
@@ -235,7 +220,9 @@
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 
 		self.fileReportClick = function fileReportClick() {
-			if (!validatePanel()) { return; }
+			if (!validatePanel()) {
+				return;
+			}
 
 			/** * Static fields ********* */
 
@@ -243,42 +230,33 @@
 				name: 'Category',
 				id: self.category.id,
 				value: self.category.name
-			},
-			{
+			}, {
 				name: 'SubCategory',
 				id: self.subCategory.id,
 				value: self.subCategory.name
-			},
-			{
+			}, {
 				name: 'Description',
 				id: self.descriptionId,
 				value: self.description
-			},
-			{
+			}, {
 				name: 'Latitude',
 				value: self.latitude
-			},
-			{
+			}, {
 				name: 'Longitude',
 				value: self.longitude
-			},
-			{
+			}, {
 				name: 'FirstName',
 				value: self.firstName
-			},
-			{
+			}, {
 				name: 'LastName',
 				value: self.lastName
-			},
-			{
+			}, {
 				name: 'Email',
 				value: self.email
-			},
-			{
+			}, {
 				name: 'DeviceNumber',
 				value: bcFormat('phoneNumber', self.deviceNumber, 'xxx-xxx-xxxx')
-			}
-			];
+			}];
 
 			/** * Conditional fields ********* */
 			if (self.otherDescription) {
@@ -366,16 +344,14 @@
 			self.isLoading = true;
 			self.isDone = true;
 
-			reportService.post(data,
-				function postSuccess(responseData) {
-					self.isLoading = false;
-					self.isSuccess = true;
-					self.issueId = JSON.parse(responseData).CsResponse.ReportId;
-				},
-				function postError(errorData) {
-					self.isLoading = false;
-					console.log(errorData); // eslint-disable-line no-console
-				});
+			reportService.post(data, function postSuccess(responseData) {
+				self.isLoading = false;
+				self.isSuccess = true;
+				self.issueId = JSON.parse(responseData).CsResponse.ReportId;
+			}, function postError(errorData) {
+				self.isLoading = false;
+				console.log(errorData); // eslint-disable-line no-console
+			});
 		};
 
 		self.loadSubCategories = function loadSubCategories() {
@@ -417,7 +393,6 @@
 							self.otherDescriptionId = element.otherDescription;
 						}
 					}, 0);
-
 
 					self.descriptionId = element.description;
 				}
@@ -473,7 +448,9 @@
 		};
 
 		function hasProperty(obj, prop) {
-			if (!obj) { return false; }
+			if (!obj) {
+				return false;
+			}
 			return Object.prototype.hasOwnProperty.call(obj, prop);
 		}
 
@@ -580,7 +557,7 @@
 						formControl.$setTouched();
 					}
 
-					if ((isLatitude || isLongitude || isAddress)) {
+					if (isLatitude || isLongitude || isAddress) {
 						isAddressForm = true;
 
 						if (hasInvalidAddress) {
@@ -625,11 +602,9 @@
 				var addressParts = self.address.trim().split(',');
 				var addressPartToSearch = addressParts[0];
 
-				mapServiceComposite
-					.suggestAddresses(addressPartToSearch,
-						function displayAutoCompleteResults(autoCompleteResults) {
-							self.autocompleteResults = autoCompleteResults;
-						});
+				mapServiceComposite.suggestAddresses(addressPartToSearch, function displayAutoCompleteResults(autoCompleteResults) {
+					self.autocompleteResults = autoCompleteResults;
+				});
 			} else {
 				self.autocompleteResults = [];
 			}
@@ -694,19 +669,18 @@
 			self.latitude = event.latLng.lat();
 			self.longitude = event.latLng.lng();
 
-			mapServiceComposite
-				.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
-					$wrapper.removeClass('error');
+			mapServiceComposite.reverseGeocode(self.latitude, self.longitude, function reverseGeoCodeLatLng(response) {
+				$wrapper.removeClass('error');
 
-					if (response.data.error) {
-						self.address = reportMapError($wrapper, addressField);
-					} else {
-						mapServiceComposite.createMarker(map, self.latitude, self.longitude);
-						self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
-					}
-				}, function error() {
+				if (response.data.error) {
 					self.address = reportMapError($wrapper, addressField);
-				});
+				} else {
+					mapServiceComposite.createMarker(map, self.latitude, self.longitude);
+					self.address = response.data.address.Street.toLowerCase() + ', ' + response.data.address.City.toLowerCase() + ', ' + response.data.address.State.toUpperCase();
+				}
+			}, function error() {
+				self.address = reportMapError($wrapper, addressField);
+			});
 		}
 
 		function reportMapError($wrapper, addressField) {
@@ -730,4 +704,4 @@
 			}
 		}
 	}
-}(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format));
+})(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format);
