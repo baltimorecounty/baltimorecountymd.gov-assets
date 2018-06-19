@@ -241,8 +241,8 @@
 
 			var data = [{
 				name: 'Category',
-				id: self.category.id,
-				value: self.category.name
+				id: hasProperty(self.subCategory, 'parentId') ? self.subCategory.parentId : self.category.id,
+				value: hasProperty(self.subCategory, 'parentName') ? self.subCategory.parentName : self.category.name
 			},
 			{
 				name: 'SubCategory',
