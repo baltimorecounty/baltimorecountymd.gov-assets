@@ -88,7 +88,8 @@
 		},
 		{
 			"name": "Tall grass and weeds in yard",
-			"id": 1023413
+			"id": 1023413,
+			"note": "Grass and <a href=\"https://en.wikipedia.org/wiki/Weed\" title=\"Learn more about weeds.\">Weeds</a> must be at least 12 inches tall in order for the County to take action. Only submit your report for grass and weeds 12 inches or more."
 		},
 		{
 			"name": "Other code complaint",
