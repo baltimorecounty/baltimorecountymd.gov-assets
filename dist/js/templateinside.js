@@ -5862,12 +5862,19 @@ baltimoreCounty.constants = (function constants() {
 				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
 				suggestions: rootUrl + '/api/gis/addressLookup/'
 			},
+			// json: {
+			// 	animalBreeds: '/sebin/y/a/animal-breeds.json',
+			// 	animalColors: '/sebin/u/u/animal-colors.json',
+			// 	animalTypes: '/sebin/a/e/animal-types.json',
+			// 	categories: '/sebin/q/m/categories.json',
+			// 	petTypes: '/sebin/m/a/pet-types.json'
+			// }
 			json: {
-				animalBreeds: '/sebin/y/a/animal-breeds.json',
-				animalColors: '/sebin/u/u/animal-colors.json',
-				animalTypes: '/sebin/a/e/animal-types.json',
-				categories: '/sebin/q/m/categories.json',
-				petTypes: '/sebin/m/a/pet-types.json'
+				animalBreeds: 'animal-breeds.json',
+				animalColors: 'animal-colors.json',
+				animalTypes: 'animal-types.json',
+				categories: 'categories.json',
+				petTypes: 'pet-types.json'
 			}
 		},
 		locations: {
