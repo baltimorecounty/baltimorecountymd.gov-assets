@@ -8,6 +8,9 @@
 	<link href="/dist/css/inside-responsive.min.css" rel="stylesheet" />
 	<link href="/dist/css/citysourced/citysourced-reporter.min.css" rel="stylesheet" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="//www.baltimorecountymd.gov/sebin/n/r/BACOstyles.css" rel="stylesheet" />
+	<link href="//www.baltimorecountymd.gov/sebin/h/f/inside-responsive.css?v=1.14.1" rel="stylesheet" />
+
 	<!--[if lte IE 9]>
 	<link href="/dist/css/citysourced/citysourced-reporter-ie9.min.css" rel="stylesheet" />
     <![endif]-->
@@ -15,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-aria.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-sanitize.min.js"></script>
 	<script src="http://maps.google.com/maps/api/js?key=AIzaSyAqazsw3wPSSxOFVmij32C_LIhBSuyUNi8&libraries=places"></script>
 
 	<script src="/dist/js/templateinside.min.js"></script>
@@ -57,7 +61,7 @@
 
 			<ol class="bc-citysourced-reporter-steps">
 				<li class="highlight">Choose a <br/>Report Type</li>
-				<li ng-class="{'highlight': reporter.page > 1}" 
+				<li ng-class="{'highlight': reporter.page > 1}"
 					ng-show="reporter.shouldRequireLocation()">Enter a <br/>Location</li>
 				<li ng-class="{'highlight': reporter.page > 2}">Provide Your <br/>Contact Information</li>
 				<li> </li>
@@ -88,6 +92,10 @@
 							required>
 							<option value="">-- Please select a sub-category --</option>
 						</select>
+						<div class="alert-information" role="alert" ng-if="reporter.subCategory.note">
+							<i class="fa fa-icon fa-info-circle"></i>
+							<p ng-bind-html="reporter.subCategory.note | safeHtml"></p>
+						</div>
 						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.subCategories.$dirty" ng-show="citySourcedReporterForm.subCategories.$error.required">Please select a category for your report.</p>
 					</div>
 
@@ -165,7 +173,7 @@
 
 				</fieldset>
 
-				<fieldset class="panel" 
+				<fieldset class="panel"
 					ng-show="reporter.page === 2 && reporter.shouldRequireLocation()">
 					<legend>Add a Location</legend>
 
