@@ -92,8 +92,8 @@
 							required>
 							<option value="">-- Please select a sub-category --</option>
 						</select>
-						<div class="alert-information" role="alert" ng-if="reporter.subCategory.note">
-							<i class="fa fa-icon fa-info-circle"></i>
+						<div class="alert-information bc_alert" role="alert" ng-if="reporter.subCategory.note">
+							<i class="fa fa-icon fa-2x fa-info-circle"></i>
 							<p ng-bind-html="reporter.subCategory.note | safeHtml"></p>
 						</div>
 						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.subCategories.$dirty" ng-show="citySourcedReporterForm.subCategories.$error.required">Please select a category for your report.</p>
