@@ -92,7 +92,7 @@
 							required>
 							<option value="">-- Please select a sub-category --</option>
 						</select>
-						<div class="alert-information bc_alert" role="alert" ng-if="reporter.subCategory.note">
+						<div class="alert-information bc_alert" id="baltcogo-note-alert" role="alert" ng-if="reporter.subCategory.note">
 							<i class="fa fa-icon fa-2x fa-info-circle"></i>
 							<p ng-bind-html="reporter.subCategory.note | safeHtml"></p>
 						</div>
