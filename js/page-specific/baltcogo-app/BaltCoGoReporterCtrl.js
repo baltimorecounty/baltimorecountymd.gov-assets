@@ -55,7 +55,7 @@
 		angular.element(document).on('click', '#baltcogo-note-alert a', function onNoteLinkClick(clickEvent) {
 			clickEvent.preventDefault();
 			var destinationUrl = $(this).attr('href');
-			var subCategoryLink = $window.location.href + '?categoryID=' + self.subCategory.id;
+			var subCategoryLink = $window.location.origin + $window.location.pathname + '?categoryID=' + self.subCategory.id;
 			$window.history.pushState({}, self.subCategory.name, subCategoryLink);
 
 			window.location = destinationUrl;
