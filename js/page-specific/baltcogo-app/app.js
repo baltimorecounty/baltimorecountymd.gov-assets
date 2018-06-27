@@ -1,5 +1,5 @@
-(function() {
+(function () {
 	'use strict';
 
-	angular.module('baltcogoApp', []);
-})();
+	angular.module('baltcogoApp', ['ngAnimate']);
+}());
