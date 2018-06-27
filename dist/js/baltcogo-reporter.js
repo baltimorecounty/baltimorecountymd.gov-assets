@@ -1,8 +1,9 @@
-(function() {
+(function () {
 	'use strict';
 
-	angular.module('baltcogoApp', []);
-})();
+	angular.module('baltcogoApp', ['ngAnimate']);
+}());
+
 (function safeHtmlFilter(app) {
 	app.filter('safeHtml', ['$sce', safeHtml]);
 
