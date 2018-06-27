@@ -52,17 +52,14 @@
 		angular.element(document).on('keyup', '#address', autocompleteHandler);
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
 
-		angular.element(document).on('click', '#baltcogo-note-alert a', onNoteLinkClick);
-
-
-		var onNoteLinkClick = function onNoteLinkClick(clickEvent) {
+		angular.element(document).on('click', '#baltcogo-note-alert a', function onNoteLinkClick(clickEvent) {
 			clickEvent.preventDefault();
 			var destinationUrl = $(this).attr('href');
 			var subCategoryLink = $window.location.href + '?categoryID=' + self.subCategory.id;
 			$window.history.pushState({}, self.subCategory.name, subCategoryLink);
 
 			window.location = destinationUrl;
-		};
+		});
 
 		self.fileReportClick = function fileReportClick() {
 			if (!validatePanel()) { return; }
