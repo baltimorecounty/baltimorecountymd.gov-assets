@@ -245,15 +245,7 @@
 		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
 		angular.element(document).on('keyup', '#address', autocompleteHandler);
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
-
-		angular.element(document).on('click', '#baltcogo-note-alert a', function onNoteLinkClick(clickEvent) {
-			clickEvent.preventDefault();
-			var destinationUrl = $(this).attr('href');
-			var subCategoryLink = $window.location.origin + $window.location.pathname + '?categoryID=' + self.subCategory.id;
-			$window.history.pushState({}, self.subCategory.name, subCategoryLink);
-
-			window.location = destinationUrl;
-		});
+		angular.element(document).on('click', '#baltcogo-note-alert a', onNoteClick);
 
 		self.fileReportClick = function fileReportClick() {
 			if (!validatePanel()) { return; }
@@ -445,6 +437,7 @@
 			});
 		};
 
+
 		function isLocationPage() {
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
@@ -463,6 +456,15 @@
 			if (isLocation) {
 				$timeout(mapResize, 500);
 			}
+		}
+
+		function onNoteClick(clickEvent) {
+			clickEvent.preventDefault();
+			var destinationUrl = $(this).attr('href');
+			var subCategoryLink = $window.location.origin + $window.location.pathname + '?categoryID=' + self.subCategory.id;
+			$window.history.pushState({}, self.subCategory.name, subCategoryLink);
+
+			window.location = destinationUrl;
 		}
 
 		function skipLocationPage(pageToShow) {
