@@ -110,12 +110,18 @@
 			.bc_alert {
 				margin: 20px auto 10px;
 
-				&.ng-enter {
+				&.ng-enter,
+				&.ng-leave {
 					transition:0.5s linear all;
+				}
+
+				&.ng-enter,
+				&.ng-leave.ng-leave-active {
   					opacity:0;
 				}
 
-				&.ng-enter.ng-enter-active {
+				&.ng-enter.ng-enter-active,
+				.ng-leave {
 					opacity: 1;
 				}
 			}
