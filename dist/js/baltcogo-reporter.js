@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	angular.module('baltcogoApp', ['ngAnimate']);
+	angular.module('baltcogoApp', []);
 }());
 
 (function safeHtmlFilter(app) {
