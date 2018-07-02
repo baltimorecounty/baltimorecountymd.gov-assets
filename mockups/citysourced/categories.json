@@ -36,25 +36,24 @@
             },
             {
                 "name": "Electrical",
-				"id": 6666,
-				"parentId": 3333,
+				"id": 1024843,
+				"parentId": 1024837,
 				"parentName": "Building and Development (Electrical)"
             },
             {
                 "name": "Grading",
-				"id": 1111,
-				"parentId": 9999,
+				"id": 1024844,
+				"parentId": 1024839,
 				"parentName": "Building and Development (Grading)"
             },
             {
                 "name": "Plumbing",
-				"id": 2222,
-				"parentId": 8888,
+				"id": 1024845,
+				"parentId": 1024839,
 				"parentName": "Building and Development (Plumbing)"
             }
         ],
         "description": 1024819,
-        "descriptionOfLocation": 1024820,
         "fields": {
             "streetAddress": 1024821,
             "city": 1024822,
