@@ -60,8 +60,8 @@
 
 			var data = [{
 				name: 'Category',
-				id: self.category.id,
-				value: self.category.name
+				id: hasProperty(self.subCategory, 'parentId') ? self.subCategory.parentId : self.category.id,
+				value: hasProperty(self.subCategory, 'parentName') ? self.subCategory.parentName : self.category.name
 			},
 			{
 				name: 'SubCategory',
@@ -70,7 +70,7 @@
 			},
 			{
 				name: 'Description',
-				id: self.descriptionId,
+				id: self.subCategory.description || self.descriptionId,
 				value: self.description
 			},
 			{
@@ -156,26 +156,26 @@
 				});
 			}
 
-			if (self.streetAddress) {
+			if (self.streetAddress || self.subCategory.streetAddress) {
 				data.push({
 					name: 'Complainant Address',
-					id: self.streetAddressId,
+					id: self.subCategory.streetAddress || self.streetAddressId,
 					value: self.streetAddress
 				});
 			}
 
-			if (self.city) {
+			if (self.city || self.subCategory.city) {
 				data.push({
 					name: 'Complainant City',
-					id: self.cityId,
+					id: self.subCategory.city || self.cityId,
 					value: self.city
 				});
 			}
 
-			if (self.zipCode) {
+			if (self.zipCode || self.subCategory.zipCode) {
 				data.push({
 					name: 'Complainant Zip Code',
-					id: self.zipCodeId,
+					id: self.subCategory.zipCode || self.zipCodeId,
 					value: self.zipCode
 				});
 			}

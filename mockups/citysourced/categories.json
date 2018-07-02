@@ -1,310 +1,364 @@
-[{
-	"name": "Budget and Finance",
-	"id": 1023380,
-	"types": [{
-			"name": "Bids, disbursements and vendors",
-			"id": 1024925
-		},
-		{
-			"name": "Parking, red light and speed camera violations",
-			"id": 1024930
-		},
-		{
-			"name": "Personal injury and property claims",
-			"id": 1024932
-		},
-		{
-			"name": "Property taxes",
-			"id": 1024934
-		},
-		{
-			"name": "Other budget and finance problems",
-			"id": 1024937
-		}
-	],
-	"description": 1024808
-}, {
-	"name": "Building and Development",
-	"id": 1024816,
-	"types": [{
-		"name": "Building without a permit",
-		"id": 1024818
-	}],
-	"description": 1024819,
-	"descriptionOfLocation": 1024820,
-	"fields": {
-		"streetAddress": 1024821,
-		"city": 1024822,
-		"zipCode": 1024823
+[
+	{
+		"name": "Budget and Finance",
+		"id": 1023380,
+		"types": [
+			{
+				"name": "Bids, disbursements and vendors",
+				"id": 1024925
+			},
+			{
+				"name": "Parking, red light and speed camera violations",
+				"id": 1024930
+			},
+			{
+				"name": "Personal injury and property claims",
+				"id": 1024932
+			},
+			{
+				"name": "Property taxes",
+				"id": 1024934
+			},
+			{
+				"name": "Other budget and finance problems",
+				"id": 1024937
+			}
+		],
+		"description": 1024808
 	},
-	"states": [{
-		"name": "MD",
-		"id": 1023615
-	}]
-}, {
-	"name": "Neighborhood",
-	"id": 1023378,
-	"fields": {
-		"streetAddress": 1023588,
-		"city": 1023589,
-		"zipCode": 1023591
+	{
+		"name": "Building and Development Issue",
+		"id": 1024816,
+		"types": [
+			{
+				"name": "Building without a permit",
+				"id": 1024818
+			},
+			{
+				"name": "Electrical work without a permit",
+				"id": 1024843,
+				"parentId": 1024837,
+				"parentName": "Building and Development (Electrical)",
+				"streetAddress": 1024853,
+				"city": 1024856,
+				"zipCode": 1024859,
+				"description": 1024849
+			},
+			{
+				"name": "Grading work without a permit",
+				"id": 1024844,
+				"parentId": 1024838,
+				"parentName": "Building and Development (Grading)",
+				"streetAddress": 1024854,
+				"city": 1024857,
+				"zipCode": 1024860,
+				"description": 1024847
+			},
+			{
+				"name": "Plumbing work without a permit",
+				"id": 1024845,
+				"parentId": 1024839,
+				"parentName": "Building and Development (Plumbing)",
+				"streetAddress": 1024855,
+				"city": 1024858,
+				"zipCode": 1024861,
+				"description": 1024848
+			}
+		],
+		"description": 1024819,
+		"fields": {
+			"streetAddress": 1024821,
+			"city": 1024822,
+			"zipCode": 1024823
+		},
+		"states": [
+			{
+				"name": "MD",
+				"id": 1023615
+			}
+		]
 	},
-	"states": [{
-		"name": "MD",
-		"id": 1023615
-	}],
-	"description": 1024810,
-	"types": [{
-			"name": "Abandoned Vehicle (unregistered and/or inoperable)",
-			"id": 1023415
-		}, {
-			"name": "Excessive animal feces in neighbor's yard",
-			"id": 1023417
+	{
+		"name": "Neighborhood",
+		"id": 1023378,
+		"fields": {
+			"streetAddress": 1023588,
+			"city": 1023589,
+			"zipCode": 1023591
 		},
-		{
-			"name": "Failure to maintain plumbing system in a rental home",
-			"id": 1024825
-		},
-		{
-			"name": "Failure to provide carbon monoxide detectors in a rental home",
-			"id": 1024824
-		},
-
-		{
-			"name": "Graffiti",
-			"id": 1023414
-		},
-		{
-			"name": "Junk, trash, or debris on private property",
-			"id": 1023412
-		},
-		{
-			"name": "Poor living conditions in a rental home",
-			"id": 1024826
-		},
-		{
-			"name": "Rats",
-			"id": 1024584
-		},
-		{
-			"name": "Tall grass and weeds in yard",
-			"id": 1023413,
-			"note": "Grass and <a href=\"https://en.wikipedia.org/wiki/Weed\" title=\"Learn more about weeds.\">Weeds</a> must be at least 12 inches tall in order for the County to take action. Only submit your report for grass and weeds 12 inches or more."
-		},
-		{
-			"name": "Other code complaint",
-			"id": 1023418
-		}
-	]
-}, {
-	"name": "Pets and Animals",
-	"id": 1023379,
-	"isAnimal": true,
-	"types": [{
-			"name": "Animal cruelty",
-			"id": 1023420
-		},
-		{
-			"name": "Animal caught in a trap",
-			"id": 1023421
-		},
-		{
-			"name": "Animal shows signs of rabies",
-			"id": 1023422
-		},
-		{
-			"name": "Animals in vacant property",
-			"id": 1023423
-		},
-		{
-			"name": "Bite from a pet",
-			"id": 1023424
-		},
-		{
-			"name": "Dangerous dog",
-			"id": 1023425
-		},
-		{
-			"name": "Dead animal pickup",
-			"id": 1023426
-		},
-		{
-			"name": "Excessive barking",
-			"id": 1023427
-		},
-		{
-			"name": "Menacing animal",
-			"id": 1023428
-		},
-		{
-			"name": "Nuisance animal",
-			"id": 1023429
-		},
-		{
-			"name": "Pet out of yard or roaming",
-			"id": 1023431
-		},
-		{
-			"name": "Pet waste was left in my yard",
-			"id": 1023432
-		},
-		{
-			"name": "Sick or injured animal",
-			"id": 1023433
-		},
-		{
-			"name": "Stray pet found and needs pickup",
-			"id": 1023434
-		},
-		{
-			"name": "Wildlife complaint",
-			"id": 1023435
-		},
-		{
-			"name": "Other animal complaint",
-			"id": 1023430
-		}
-	],
-	"fields": {
-		"streetAddress": 1023529,
-		"city": 1023530,
-		"zipCode": 1023532
+		"states": [
+			{
+				"name": "MD",
+				"id": 1023615
+			}
+		],
+		"description": 1024810,
+		"types": [
+			{
+				"name": "Abandoned Vehicle (unregistered and/or inoperable)",
+				"id": 1023415
+			},
+			{
+				"name": "Excessive animal feces in neighbor's yard",
+				"id": 1023417
+			},
+			{
+				"name": "Failure to maintain plumbing system in a rental home",
+				"id": 1024825
+			},
+			{
+				"name": "Failure to provide carbon monoxide detectors in a rental home",
+				"id": 1024824
+			},
+			{
+				"name": "Graffiti",
+				"id": 1023414
+			},
+			{
+				"name": "Junk, trash, or debris on private property",
+				"id": 1023412
+			},
+			{
+				"name": "Poor living conditions in a rental home",
+				"id": 1024826
+			},
+			{
+				"name": "Rats",
+				"id": 1024584
+			},
+			{
+				"name": "Tall grass and weeds in yard",
+				"id": 1023413
+			},
+			{
+				"name": "Other code complaint",
+				"id": 1023418
+			}
+		]
 	},
-	"states": [{
-		"name": "MD",
-		"id": 1023615
-	}],
-	"descriptionOfAnimal": 1023524,
-	"descriptionOfLocation": 1023525,
-	"description": 1024807
-
-}, {
-	"name": "Roads and Sidewalks",
-	"id": 1023376,
-	"description": 1024811,
-	"types": [{
-			"name": "Adopt-a-Road inquiry",
-			"id": 1023393
+	{
+		"name": "Pets and Animals",
+		"id": 1023379,
+		"isAnimal": true,
+		"types": [
+			{
+				"name": "Animal cruelty",
+				"id": 1023420
+			},
+			{
+				"name": "Animal caught in a trap",
+				"id": 1023421
+			},
+			{
+				"name": "Animal shows signs of rabies",
+				"id": 1023422
+			},
+			{
+				"name": "Animals in vacant property",
+				"id": 1023423
+			},
+			{
+				"name": "Bite from a pet",
+				"id": 1023424
+			},
+			{
+				"name": "Dangerous dog",
+				"id": 1023425
+			},
+			{
+				"name": "Dead animal pickup",
+				"id": 1023426
+			},
+			{
+				"name": "Excessive barking",
+				"id": 1023427
+			},
+			{
+				"name": "Menacing animal",
+				"id": 1023428
+			},
+			{
+				"name": "Nuisance animal",
+				"id": 1023429
+			},
+			{
+				"name": "Pet out of yard or roaming",
+				"id": 1023431
+			},
+			{
+				"name": "Pet waste was left in my yard",
+				"id": 1023432
+			},
+			{
+				"name": "Sick or injured animal",
+				"id": 1023433
+			},
+			{
+				"name": "Stray pet found and needs pickup",
+				"id": 1023434
+			},
+			{
+				"name": "Wildlife complaint",
+				"id": 1023435
+			},
+			{
+				"name": "Other animal complaint",
+				"id": 1023430
+			}
+		],
+		"fields": {
+			"streetAddress": 1023529,
+			"city": 1023530,
+			"zipCode": 1023532
 		},
-		{
-			"name": "Flooded road",
-			"id": 1023400
-		},
-		{
-			"name": "Icy conditions",
-			"id": 1023395
-		},
-		{
-			"name": "Overgrown trees or bushes near roadway",
-			"id": 1023404
-		},
-		{
-			"name": "Paving or re-paving needed",
-			"id": 1023397
-		},
-		{
-			"name": "Pothole",
-			"id": 1023398
-		},
-		{
-			"name": "Sidewalk or curb repair needed",
-			"id": 1023401
-		},
-		{
-			"name": "Street cleaning needed",
-			"id": 1023403
-		},
-		{
-			"name": "Tall grass or weeds near roadway",
-			"id": 1023396
-		},
-		{
-			"name": "Trash on roadside",
-			"id": 1023399
-		},
-		{
-			"name": "Trash in roadside stream",
-			"id": 1023402
-		},
-		{
-			"name": "Other road or sidewalk complaint",
-			"id": 1023394
-		}
-	]
-}, {
-	"name": "Trash and Recycling",
-	"id": 1023375,
-	"description": 1024812,
-	"types": [{
-			"name": "Can or lid lost or damaged",
-			"id": 1023389
-		},
-		{
-			"name": "Property damage during collection",
-			"id": 1023390
-		},
-		{
-			"name": "Recycling not collected",
-			"id": 1023386
-		},
-		{
-			"name": "Request to start new collection",
-			"id": 1023388
-		},
-		{
-			"name": "Trash not collected",
-			"id": 1023385
-		},
-		{
-			"name": "Yard waste not collected",
-			"id": 1023387
-		},
-		{
-			"name": "Other trash and recycling problem",
-			"id": 1023391
-		}
-	]
-}, {
-	"name": "Unregistered Rental Property",
-	"id": 1024827,
-	"description": 1024830,
-	"states": [{
-		"name": "MD",
-		"id": 1023615
-	}],
-	"fields": {
-		"streetAddress": 1024831,
-		"city": 1024832,
-		"zipCode": 1024833
+		"states": [
+			{
+				"name": "MD",
+				"id": 1023615
+			}
+		],
+		"descriptionOfAnimal": 1023524,
+		"descriptionOfLocation": 1023525,
+		"description": 1024807
 	},
-	"types": [{
-		"name": "Unregistered rental property",
-		"id": 1024829
-	}]
-}, {
-	"name": "Website",
-	"id": 1024585,
-	"requiresLocation": false,
-	"types": [{
-			"name": "Broken link",
-			"id": 1024587
+	{
+		"name": "Roads and Sidewalks",
+		"id": 1023376,
+		"description": 1024811,
+		"types": [
+			{
+				"name": "Adopt-a-Road inquiry",
+				"id": 1023393
+			},
+			{
+				"name": "Flooded road",
+				"id": 1023400
+			},
+			{
+				"name": "Icy conditions",
+				"id": 1023395
+			},
+			{
+				"name": "Overgrown trees or bushes near roadway",
+				"id": 1023404
+			},
+			{
+				"name": "Paving or re-paving needed",
+				"id": 1023397
+			},
+			{
+				"name": "Pothole",
+				"id": 1023398
+			},
+			{
+				"name": "Sidewalk or curb repair needed",
+				"id": 1023401
+			},
+			{
+				"name": "Street cleaning needed",
+				"id": 1023403
+			},
+			{
+				"name": "Tall grass or weeds near roadway",
+				"id": 1023396
+			},
+			{
+				"name": "Trash on roadside",
+				"id": 1023399
+			},
+			{
+				"name": "Trash in roadside stream",
+				"id": 1023402
+			},
+			{
+				"name": "Other road or sidewalk complaint",
+				"id": 1023394
+			}
+		]
+	},
+	{
+		"name": "Trash and Recycling",
+		"id": 1023375,
+		"description": 1024812,
+		"types": [
+			{
+				"name": "Can or lid lost or damaged",
+				"id": 1023389
+			},
+			{
+				"name": "Property damage during collection",
+				"id": 1023390
+			},
+			{
+				"name": "Recycling not collected",
+				"id": 1023386
+			},
+			{
+				"name": "Request to start new collection",
+				"id": 1023388
+			},
+			{
+				"name": "Trash not collected",
+				"id": 1023385
+			},
+			{
+				"name": "Yard waste not collected",
+				"id": 1023387
+			},
+			{
+				"name": "Other trash and recycling problem",
+				"id": 1023391
+			}
+		]
+	},
+	{
+		"name": "Unregistered Rental Property",
+		"id": 1024827,
+		"description": 1024830,
+		"states": [
+			{
+				"name": "MD",
+				"id": 1023615
+			}
+		],
+		"fields": {
+			"streetAddress": 1024831,
+			"city": 1024832,
+			"zipCode": 1024833
 		},
-		{
-			"name": "Typo/Misspelling",
-			"id": 1024588
-		},
-		{
-			"name": "Out of date information",
-			"id": 1024589
-		},
-		{
-			"name": "Technical error message",
-			"id": 1024590
-		},
-		{
-			"name": "Other website problem",
-			"id": 1024591
-		}
-	],
-	"description": 1024813
-}]
+		"types": [
+			{
+				"name": "Unregistered rental property",
+				"id": 1024829
+			}
+		]
+	},
+	{
+		"name": "Website Issue",
+		"id": 1024585,
+		"requiresLocation": false,
+		"types": [
+			{
+				"name": "Broken link",
+				"id": 1024587
+			},
+			{
+				"name": "Typo/Misspelling",
+				"id": 1024588
+			},
+			{
+				"name": "Out of date information",
+				"id": 1024589
+			},
+			{
+				"name": "Technical error message",
+				"id": 1024590
+			},
+			{
+				"name": "Other website problem",
+				"id": 1024591
+			}
+		],
+		"description": 1024813
+	}
+]
