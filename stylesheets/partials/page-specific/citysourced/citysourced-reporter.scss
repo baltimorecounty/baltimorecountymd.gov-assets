@@ -36,18 +36,18 @@
                 position: relative;
                 -moz-box-sizing: content-box;
                 -webkit-box-sizing: content-box;
-                box-sizing: content-box;               
+                box-sizing: content-box;
 
                 &:after, &:before {
                     content: "";
                     height: 0;
-                    position: absolute;                
+                    position: absolute;
                     width: 0;
                 }
 
                 &:after {
                     border-top: 35px solid transparent;
-                    border-bottom: 35px solid transparent;  
+                    border-bottom: 35px solid transparent;
                     border-left: 15px solid $lightest-gray;
                     right: -15px;
                     top: 0;
@@ -55,7 +55,7 @@
 
                 &:before {
                     border-top: 35px solid $lightest-gray;
-                    border-bottom: 35px solid $lightest-gray;  
+                    border-bottom: 35px solid $lightest-gray;
                     border-left: 15px solid transparent;
                     left: -15px;
                     top: 0;
@@ -88,10 +88,10 @@
 
                 &:before {
                     border-top-color: $gold;
-                    border-bottom-color: $gold;  
+                    border-bottom-color: $gold;
                 }
             }
-        }    
+        }
 
         h2:first-child {
             margin-top: 1em;
@@ -107,6 +107,10 @@
         form {
             position: relative;
 
+			.bc_alert {
+				margin: 20px auto 10px;
+			}
+
             fieldset {
 
                 label {
@@ -116,16 +120,16 @@
                 select, input, textarea, label, p {
                     display: block;
                     margin: 1em 0 0;
-                }              
+                }
 
                 select, input, textarea {
                     border: 1px solid $img-border-gray;
-                }              
+                }
 
                 div > select:first-child, label + select, label + textarea, label + input, input + input {
                     margin-top: .25em;
                 }
-				
+
                 p {
                     padding-right: 20px;
                 }
@@ -142,10 +146,10 @@
 						position: absolute;
 						width: 100%;
 						z-index: 200;
-	
+
 						li {
 							border-bottom: 1px solid $lightest-gray;
-							padding: 0;							
+							padding: 0;
 
 							&:hover {
 								background-color: $lightest-gray;
@@ -245,7 +249,7 @@
     #mainContent {
         .bc-citysourced-reporter {
             ol {
-                display: block; 
+                display: block;
                 padding-right: 1em;
                 list-style-type: decimal;
                 list-style-position: inside;
@@ -263,8 +267,8 @@
                         display: none;
                     }
 
-                    br { 
-                        display: none; 
+                    br {
+                        display: none;
                     }
                 }
 
