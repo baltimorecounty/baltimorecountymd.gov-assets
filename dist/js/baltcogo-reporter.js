@@ -1,8 +1,19 @@
-(function() {
+(function () {
 	'use strict';
 
 	angular.module('baltcogoApp', []);
-})();
+}());
+
+(function safeHtmlFilter(app) {
+	app.filter('safeHtml', ['$sce', safeHtml]);
+
+	function safeHtml($sce) {
+		return function (val) {
+			return $sce.trustAsHtml(val);
+		};
+	}
+}(angular.module('baltcogoApp')));
+
 (function constantsWrapper(app, baltCoGoConstants) {
 	'use strict';
 
@@ -184,14 +195,15 @@
 (function BaltCoGoReporterCtrl(app, querystringer, bcFormat) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', '$window', reporterController]);
 
 	function reporterController($http,
 		$scope,
 		$timeout,
 		mapServiceComposite,
 		reportService,
-		CONSTANTS) {
+		CONSTANTS,
+		$window) {
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
@@ -233,6 +245,7 @@
 		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
 		angular.element(document).on('keyup', '#address', autocompleteHandler);
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
+		angular.element(document).on('click', '#baltcogo-note-alert a', onNoteClick);
 
 		self.fileReportClick = function fileReportClick() {
 			if (!validatePanel()) { return; }
@@ -424,6 +437,7 @@
 			});
 		};
 
+
 		function isLocationPage() {
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
@@ -442,6 +456,15 @@
 			if (isLocation) {
 				$timeout(mapResize, 500);
 			}
+		}
+
+		function onNoteClick(clickEvent) {
+			clickEvent.preventDefault();
+			var destinationUrl = $(this).attr('href');
+			var subCategoryLink = $window.location.origin + $window.location.pathname + '?categoryID=' + self.subCategory.id;
+			$window.history.pushState({}, self.subCategory.name, subCategoryLink);
+
+			window.location = destinationUrl;
 		}
 
 		function skipLocationPage(pageToShow) {
