@@ -26,6 +26,7 @@ gulp.task('clean-dist', function cleanDist() {
 
 gulp.task('concatBaltCoGoAppJs', function concatBaltCoGoAppJs() {
 	var files = ['js/page-specific/baltcogo-app/app.js',
+		'js/page-specific/baltcogo-app/filters/**/*.js',
 		'js/page-specific/baltcogo-app/constants/**/*.js',
 		'js/page-specific/baltcogo-app/services/**/*.js',
 		'js/page-specific/baltcogo-app/*Ctrl.js'];
@@ -67,6 +68,7 @@ gulp.task('concatTemplateJs', function concatTemplateJs() {
 		'js/bc-google-analytics-custom-events.js',
 		'js/lib/slick.min.js',
 		'js/lib/review.js',
+		'js/lib/smartbanner.min.js',
 		'js/constants.js',
 		'js/keyword-search.js',
 		'js/internal-carousel.js',

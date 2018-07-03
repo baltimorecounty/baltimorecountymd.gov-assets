@@ -8,7 +8,7 @@
 @import "vendor/slick-carousel";
 @import "vendor/reView";
 
-/* Base*/	
+/* Base*/
 @import "partials/base/grid";
 @import "partials/base/typography";
 @import "partials/base/header";
@@ -24,6 +24,8 @@
 @import "partials/components/fullSite";
 @import "partials/components/skipNav";
 @import "partials/components/social";
+
+@import "components/alerts";
 
 /*Homepage Specific*/
 @import "partials/homepage/body";
@@ -46,7 +48,7 @@ Fix for the google custome search autocomplete positioning.
 We only want this fix on the hompage
 */
 .gssb_c {
-	
+
 	z-index: 5000;
 	left: 50% !important;
 	-webkit-transform: translateX(-50%) !important;

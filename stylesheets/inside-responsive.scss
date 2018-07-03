@@ -2,7 +2,7 @@
 @import "partials/base/normalize";
 //@import "modules/formReset";
 /* Partials */
-@import "partials/base/base";	
+@import "partials/base/base";
 @import "partials/base/typography";
 @import "partials/base/page";
 @import "partials/base/header";
@@ -13,6 +13,7 @@
 
 @import "partials/components/autocomplete";
 @import "vendor/slick-carousel";
+@import "vendor/smartbanner";
 
 @import "partials/components/alert";
 @import "partials/components/social";
@@ -42,6 +43,8 @@
 @import "partials/components/collapse";
 @import "partials/components/accordionMenu";
 @import "partials/components/photoGallery";
+
+@import "components/alerts";
 
 /*@import "partials/components/forms";*/
 @import "partials/components/formControls";

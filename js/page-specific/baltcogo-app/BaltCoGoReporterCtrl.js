@@ -1,14 +1,15 @@
 (function BaltCoGoReporterCtrl(app, querystringer, bcFormat) {
 	'use strict';
 
-	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', reporterController]);
+	app.controller('BaltCoGoReporterCtrl', ['$http', '$scope', '$timeout', 'mapServiceComposite', 'reportService', 'CONSTANTS', '$window', reporterController]);
 
 	function reporterController($http,
 		$scope,
 		$timeout,
 		mapServiceComposite,
 		reportService,
-		CONSTANTS) {
+		CONSTANTS,
+		$window) {
 		var self = this;
 		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
@@ -50,6 +51,7 @@
 		angular.element(document).on('keyup keypress', '#citysourced-reporter-form', preventSubmitOnEnterPressHandler);
 		angular.element(document).on('keyup', '#address', autocompleteHandler);
 		angular.element(window).on('keydown', autocompleteResultButtonKeyboardNavigationHandler);
+		angular.element(document).on('click', '#baltcogo-note-alert a', onNoteClick);
 
 		self.fileReportClick = function fileReportClick() {
 			if (!validatePanel()) { return; }
@@ -58,8 +60,8 @@
 
 			var data = [{
 				name: 'Category',
-				id: self.category.id,
-				value: self.category.name
+				id: hasProperty(self.subCategory, 'parentId') ? self.subCategory.parentId : self.category.id,
+				value: hasProperty(self.subCategory, 'parentName') ? self.subCategory.parentName : self.category.name
 			},
 			{
 				name: 'SubCategory',
@@ -68,7 +70,7 @@
 			},
 			{
 				name: 'Description',
-				id: self.descriptionId,
+				id: self.subCategory.description || self.descriptionId,
 				value: self.description
 			},
 			{
@@ -154,26 +156,26 @@
 				});
 			}
 
-			if (self.streetAddress) {
+			if (self.streetAddress || self.subCategory.streetAddress) {
 				data.push({
 					name: 'Complainant Address',
-					id: self.streetAddressId,
+					id: self.subCategory.streetAddress || self.streetAddressId,
 					value: self.streetAddress
 				});
 			}
 
-			if (self.city) {
+			if (self.city || self.subCategory.city) {
 				data.push({
 					name: 'Complainant City',
-					id: self.cityId,
+					id: self.subCategory.city || self.cityId,
 					value: self.city
 				});
 			}
 
-			if (self.zipCode) {
+			if (self.zipCode || self.subCategory.zipCode) {
 				data.push({
 					name: 'Complainant Zip Code',
-					id: self.zipCodeId,
+					id: self.subCategory.zipCode || self.zipCodeId,
 					value: self.zipCode
 				});
 			}
@@ -241,6 +243,7 @@
 			});
 		};
 
+
 		function isLocationPage() {
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
@@ -259,6 +262,15 @@
 			if (isLocation) {
 				$timeout(mapResize, 500);
 			}
+		}
+
+		function onNoteClick(clickEvent) {
+			clickEvent.preventDefault();
+			var destinationUrl = $(this).attr('href');
+			var subCategoryLink = $window.location.origin + $window.location.pathname + '?categoryID=' + self.subCategory.id;
+			$window.history.pushState({}, self.subCategory.name, subCategoryLink);
+
+			window.location = destinationUrl;
 		}
 
 		function skipLocationPage(pageToShow) {
