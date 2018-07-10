@@ -1,3 +1,4 @@
+@import "stylesheets/partials/bootstrap/variables";
 @import "stylesheets/modules/all";
 
 .sr-only {
@@ -286,4 +287,10 @@
             }
         }
     }
+}
+
+@media screen and (max-width: $screen-xs) {
+	.bc_alert i {
+		font-size: .9em;
+	}
 }
