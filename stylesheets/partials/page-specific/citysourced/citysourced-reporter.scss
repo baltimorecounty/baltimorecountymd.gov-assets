@@ -290,7 +290,12 @@
 }
 
 @media screen and (max-width: $screen-xs) {
-	.bc_alert i {
-		font-size: .9em;
+	.bc_alert {
+		p {
+			font-size: .9em;
+		}
+		i {
+			font-size: 1.33em;
+		}
 	}
 }
