@@ -9,10 +9,12 @@ baltimoreCounty.constants = (function constants() {
 	var baltCoGo = {
 		urls: {
 			api: {
-				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				geocodeServer:
+                    '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
 				createReport: rootUrl + '/api/baltcogo/createreport',
 				getReport: rootUrl + '/api/citysourced/getreport',
-				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				getReportLatLng:
+                    rootUrl + '/api/citysourced/getreportsbylatlng',
 				suggestions: rootUrl + '/api/gis/addressLookup/'
 			},
 			json: {
@@ -28,14 +30,6 @@ baltimoreCounty.constants = (function constants() {
 				latitude: 39.4001526,
 				longitude: -76.6074448
 			}
-		}
-	};
-
-	var keywordSearch = {
-		urls: {
-			api: rootUrl + '/api/search/',
-			searchTerms: '/sebin/m/l/searchTerms.json',
-			trackClickThrough: rootUrl + '/api/trackclickthrough/'
 		}
 	};
 
