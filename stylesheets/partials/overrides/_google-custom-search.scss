@@ -1,3 +1,103 @@
+.reviseddate {
+    display: none;
+}
+
+.gsc-result .gs-title {
+    height: auto;
+}
+
+.cse .gsc-webResult.gsc-result,
+.gsc-webResult.gsc-result,
+.gsc-imageResult-classic,
+.gsc-imageResult-column {
+    margin-bottom: 0 !important;
+}
+
+.gs-result .gs-webResult a.gs-title:link {
+    color: #002280 !important;
+}
+
+table .t {
+    width: 400px;
+}
+
+#cse,
+#cse-search-results {
+    max-width: 100%;
+    width: 100%;
+}
+
+.gsc-resultsHeader {
+    clear: none !important;
+}
+
+.cse .gsc-control-cse,
+.gsc-control-cse {
+    padding: 0 !important;
+}
+
+.gsc-control-cse .gs-result .gs-title,
+.gsc-control-cse .gs-result .gs-title * {
+    font-family: Patua One;
+    font-size: 22px !important;
+    font-weight: normal;
+    color: #002280 !important;
+    font-weight: normal;
+    margin: 0 0 15px;
+}
+
+.gsc-control-cse .gs-spelling {
+    margin: 0 0 10px;
+    text-decoration: none !important;
+}
+
+.gs-webResult .gs-snippet,
+.gs-imageResult .gs-snippet,
+.gs-fileFormatType {
+    line-height: 1.5em;
+    padding: 0;
+}
+
+table.gsc-branding td,
+table.gsc-branding,
+table.gcsc-branding td,
+table.gcsc-branding {
+    display: none;
+}
+
+.gsc-webResult:after {
+    display: inline !important;
+}
+
+.gsc-table-result,
+.gs-promotion-table {
+    margin: 10px 0 !important;
+    padding: 0 0 20px;
+    border-bottom: 1px dotted #666;
+}
+
+.gsc-webResult.gsc-result.gsc-promotion {
+    border-bottom: 1px dotted #666;
+    margin: 0 0 10px;
+}
+
+.gs-webResult .gs-snippet,
+.gs-imageResult .gs-snippet,
+.gs-fileFormatType {
+    color: #444;
+    font-size: 1.25em !important;
+    line-height: 1.7em !important;
+    margin: 0 0 15px;
+}
+
+#mainContent .gsc-selected-option-container {
+    width: 100% !important;
+}
+
+.gsc-result .gs-title {
+    height: auto !important;
+}
+
 .gsc-control-cse .gs-result .gs-title:first-child {
     margin-top: 15px !important;
 }
@@ -40,4 +140,13 @@
 .gsc-result-info {
     padding-left: 0 !important;
     padding-right: 0 !important;
+}
+
+.gs-title,
+.gs-title * {
+    text-decoration: none !important;
+}
+
+.gs-title:hover {
+    text-decoration: underline !important;
 }
