@@ -41,7 +41,6 @@ baltimoreCounty.constants = (function constants() {
 
 	return {
 		baltCoGo: baltCoGo,
-		keywordSearch: keywordSearch,
 		keyCodes: keyCodes
 	};
 }());
