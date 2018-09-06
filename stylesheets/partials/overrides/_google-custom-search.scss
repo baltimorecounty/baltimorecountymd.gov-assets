@@ -47,8 +47,10 @@ table .t {
 }
 
 .gsc-control-cse .gs-spelling {
-    margin: 0 0 10px;
+    margin: 10px 0;
+    padding: 0;
     text-decoration: none !important;
+    max-height: 25px;
 }
 
 .gs-webResult .gs-snippet,
