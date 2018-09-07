@@ -1,7 +1,9 @@
 /*Modules*/
+
 @import "partials/base/normalize";
 //@import "modules/formReset";
 /* Partials */
+
 @import "partials/base/base";
 @import "partials/base/typography";
 @import "partials/base/page";
@@ -10,11 +12,9 @@
 @import "partials/base/brand";
 @import "partials/base/footer";
 @import "partials/base/image";
-
 @import "partials/components/autocomplete";
 @import "vendor/slick-carousel";
 @import "vendor/smartbanner";
-
 @import "partials/components/alert";
 @import "partials/components/social";
 @import "partials/components/textResizer";
@@ -31,8 +31,8 @@
 @import "partials/homepage/carousel";
 @import "partials/components/carousel-internal";
 @import "partials/components/imageLink";
-
 /* Bootstrap elements */
+
 @import "partials/bootstrap/variables";
 @import "partials/bootstrap/mixins";
 @import "partials/bootstrap/insideGrid";
@@ -43,47 +43,47 @@
 @import "partials/components/collapse";
 @import "partials/components/accordionMenu";
 @import "partials/components/photoGallery";
-
 @import "components/alerts";
-
 /*@import "partials/components/forms";*/
-@import "partials/components/formControls";
 
+@import "partials/components/formControls";
 @import "partials/inside/rateForm";
 @import "partials/homepage/search";
 @import "partials/inside/search";
-
 @import "vendor/reView";
-
 .agency-page img {
-	border: none;
-	padding: 0;
-	margin: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
 }
+
 #main-content {
-	max-width: 1200px;
+    max-width: 1200px;
 }
+
 #maincontainer #calloutarea p {
-  margin: 10px 0 15px;
+    margin: 10px 0 15px;
 }
 
 #centerContent {
-	width: 100% !important;
- 	a {
-		text-decoration: underline !important;
-	}
-}
-.secondary-nav .secondary-nav-list {
-	padding: 14px 0;
+    width: 100% !important;
+    a {
+        text-decoration: underline !important;
+    }
 }
 
+.secondary-nav .secondary-nav-list {
+    padding: 14px 0;
+}
 
 textarea,
 input[type="search"],
 input[type="text"],
 input[type="button"],
 input[type="submit"] {
-		-webkit-appearance: none;
-     -webkit-border-radius: 0;
-     border-radius: 0;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
 }
+
+@import 'partials/overrides/google-custom-search';
