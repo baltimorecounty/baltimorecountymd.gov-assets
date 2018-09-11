@@ -28,7 +28,9 @@
 
 	function onSearchReady() {
 		windowWidth = $(window).width();
-		repositionSearchBox(windowWidth);
+		if (isMobile(windowWidth)) {
+			repositionSearchBox(windowWidth);
+		}
 	}
 
 	function onWindowResize() {
@@ -45,7 +47,7 @@
 
 	function repositionSearchBox(currentWindowWidth) {
 		var $targetContainer = $getSearchContainer(currentWindowWidth);
-		var searchFormHtml = $('#search-form').detach();
+		var searchFormHtml = $('.gsc-control-searchbox-only').closest('div').detach();
 
 		$targetContainer.append(searchFormHtml);
 	}
