@@ -6044,9 +6044,13 @@ $(function() {
 
 	function repositionSearchBox(currentWindowWidth) {
 		var $targetContainer = $getSearchContainer(currentWindowWidth);
-		var searchFormHtml = $('.gsc-control-searchbox-only').closest('div').detach();
-
-		$targetContainer.append(searchFormHtml);
+		var intervalCheck = setInterval(function () {
+			if ($getSearchContainer.length && $('.gsc-control-searchbox-only').length) {
+				clearInterval(intervalCheck);
+				var searchFormHtml = $('.gsc-control-searchbox-only').closest('div').detach();
+				$targetContainer.append(searchFormHtml);
+			}
+		}, 100);
 	}
 
 	$(document).ready(onSearchReady);
