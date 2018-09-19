@@ -156,7 +156,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 
 	/**
 	 * Turns the querystring key/value pairs into a dictionary.
-	 * 
+	 *
 	 * Important: All of the returned dictionary's keys will be lower-cased.
 	 */
     var getAsDictionary = function() {
@@ -166,7 +166,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
                 qsArray = qs.split('&'),
                 qsDict = {};
 
-            for (var i = 0; i < qsArray.length; i++) {            
+            for (var i = 0; i < qsArray.length; i++) {
                 var KEY = 0,
                     VALUE = 1,
                     keyValueArr = qsArray[i].split('='),
@@ -179,10 +179,18 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
         }
 
         return false;
-    };
+	};
+
+	var getUrlParameter = function(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	};
 
     return {
-        getAsDictionary: getAsDictionary
+		getAsDictionary: getAsDictionary,
+		getUrlParameter: getUrlParameter
     };
 
 })();
@@ -5136,10 +5144,12 @@ baltimoreCounty.constants = (function constants() {
 	var baltCoGo = {
 		urls: {
 			api: {
-				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				geocodeServer:
+                    '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
 				createReport: rootUrl + '/api/baltcogo/createreport',
 				getReport: rootUrl + '/api/citysourced/getreport',
-				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				getReportLatLng:
+                    rootUrl + '/api/citysourced/getreportsbylatlng',
 				suggestions: rootUrl + '/api/gis/addressLookup/'
 			},
 			json: {
@@ -5158,14 +5168,6 @@ baltimoreCounty.constants = (function constants() {
 		}
 	};
 
-	var keywordSearch = {
-		urls: {
-			api: rootUrl + '/api/search/',
-			searchTerms: '/sebin/m/l/searchTerms.json',
-			trackClickThrough: rootUrl + '/api/trackclickthrough/'
-		}
-	};
-
 	var keyCodes = {
 		arrowUp: 30,
 		arrowDown: 40,
@@ -5174,7 +5176,6 @@ baltimoreCounty.constants = (function constants() {
 
 	return {
 		baltCoGo: baltCoGo,
-		keywordSearch: keywordSearch,
 		keyCodes: keyCodes
 	};
 }());
@@ -5457,3 +5458,38 @@ var ShowNews = (function($) {
     window.onload = deferImages;
 
 })(jQuery, Flickr);
+
+(function TemplateEvents($, TextResizer) {
+	function onDocumentReady() {
+		var textResizer = new TextResizer({
+			listClass: 'resizer-list'
+		});
+	}
+
+	function searchButtonClicked(e) {
+		var val = $('.search-input').val();
+
+		if (val.length === 0) {
+			e.preventDefault();
+		}
+	}
+
+	function toggleMobileNavigation(e) {
+		e.preventDefault();
+		$('.primary-nav, .secondary-nav').toggleClass('mobile-menu-visible');
+	}
+
+	/**
+   * Stuff to kick off when the template is loaded
+   */
+	$(document).ready(onDocumentReady);
+
+	/**
+   * Events
+   */
+	/* Toggle hamburger menu */
+	$(document).on('click', '.hamburger-btn', toggleMobileNavigation);
+
+	/* Prevent a search with no text */
+	$(document).on('click', '.search-button', searchButtonClicked);
+}(jQuery, TextResizer));

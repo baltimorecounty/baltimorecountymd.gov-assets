@@ -430,7 +430,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
 
 	/**
 	 * Turns the querystring key/value pairs into a dictionary.
-	 * 
+	 *
 	 * Important: All of the returned dictionary's keys will be lower-cased.
 	 */
     var getAsDictionary = function() {
@@ -440,7 +440,7 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
                 qsArray = qs.split('&'),
                 qsDict = {};
 
-            for (var i = 0; i < qsArray.length; i++) {            
+            for (var i = 0; i < qsArray.length; i++) {
                 var KEY = 0,
                     VALUE = 1,
                     keyValueArr = qsArray[i].split('='),
@@ -453,10 +453,18 @@ baltimoreCounty.utility.querystringer = (function(undefined) {
         }
 
         return false;
-    };
+	};
+
+	var getUrlParameter = function(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	};
 
     return {
-        getAsDictionary: getAsDictionary
+		getAsDictionary: getAsDictionary,
+		getUrlParameter: getUrlParameter
     };
 
 })();
@@ -5856,10 +5864,12 @@ baltimoreCounty.constants = (function constants() {
 	var baltCoGo = {
 		urls: {
 			api: {
-				geocodeServer: '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
+				geocodeServer:
+                    '//bcgis.baltimorecountymd.gov/arcgis/rest/services/Geocoders/CompositeGeocode_CS/GeocodeServer',
 				createReport: rootUrl + '/api/baltcogo/createreport',
 				getReport: rootUrl + '/api/citysourced/getreport',
-				getReportLatLng: rootUrl + '/api/citysourced/getreportsbylatlng',
+				getReportLatLng:
+                    rootUrl + '/api/citysourced/getreportsbylatlng',
 				suggestions: rootUrl + '/api/gis/addressLookup/'
 			},
 			json: {
@@ -5878,14 +5888,6 @@ baltimoreCounty.constants = (function constants() {
 		}
 	};
 
-	var keywordSearch = {
-		urls: {
-			api: rootUrl + '/api/search/',
-			searchTerms: '/sebin/m/l/searchTerms.json',
-			trackClickThrough: rootUrl + '/api/trackclickthrough/'
-		}
-	};
-
 	var keyCodes = {
 		arrowUp: 30,
 		arrowDown: 40,
@@ -5894,228 +5896,9 @@ baltimoreCounty.constants = (function constants() {
 
 	return {
 		baltCoGo: baltCoGo,
-		keywordSearch: keywordSearch,
 		keyCodes: keyCodes
 	};
 }());
-
-namespacer('baltimoreCounty');
-
-baltimoreCounty.keywordSearch = (function keywordSearch($, sessionStorage, Handlebars, constants) {
-	'use strict';
-
-	var searchData;
-	var maxResultCount = 5;
-
-	var documentClickHandler = function documentClickHandler() {
-		var $searchResults = $('#header-search-results');
-
-		if ($searchResults.is(':visible')) {
-			$searchResults.hide();
-		}
-	};
-
-	/**
-	 * Highlights the matched term in the results.
-	 * 
-	 * @param {String} searchTerm 
-	 * @param {Array<Term, Order>} matches 
-	 */
-	var highlightMatches = function highlightMatches(searchTerm, matches) {
-		var highlightedMatches = [];
-
-		matches.forEach(function forEachTopFiveMatch(match) {
-			var highlightedMatch = $.extend({}, match);
-			highlightedMatch.Term = highlightedMatch.Term.replace(searchTerm, '<strong>' + searchTerm + '</strong>');
-			highlightedMatches.push(highlightedMatch);
-		});
-
-		return highlightedMatches;
-	};
-
-	var init = function init(callback, injectedSearchData) {
-		if (injectedSearchData) {
-			searchData = injectedSearchData;
-		} else if (sessionStorage && sessionStorage.searchData) {
-			searchData = JSON.parse(sessionStorage.searchData);
-		} else {
-			$.ajax(constants.keywordSearch.urls.searchTerms)
-				.then(onDataLoadedHandler);
-		}
-
-		if (typeof callback !== 'undefined') {
-			callback();
-		}
-	};
-
-
-	/**
-	 * Handles the loaded data and puts it in session storage in the browser.
-	 * 
-	 * @param {Array<Term, Order>} data 
-	 */
-	var onDataLoadedHandler = function onDataLoadedHandler(data) {
-		searchData = data;
-		sessionStorage.setItem('searchData', JSON.stringify(data));
-	};
-
-	/**
-	 * Matches the almighty Google's autocomplete rules
-	 * 
-	 * @param {string} searchTerm 
-	 * @param {Array<Term, Order>} matches 
-	 */
-	var orderByNameThenPopularity = function orderByNameThenPopularity(searchTerm, matches) {
-		if (matches.length === 0 || matches.length === 1) {
-			return matches;
-		}
-
-		var orderedMatches = [];
-
-		matches.forEach(function eachMatch(match) {
-			if (Object.prototype.hasOwnProperty.call(match, 'Term')) {
-				if (match.Term.indexOf(searchTerm) === 0) {
-					orderedMatches.push(match);
-				}
-			}
-		});
-
-		matches.forEach(function eachMatch(match) {
-			if (match.Term.indexOf(searchTerm) !== 0) {
-				orderedMatches.push(match);
-			}
-		});
-
-		return orderedMatches;
-	};
-
-	/**
-	 * Stops the browser window from scrolling when the up and down
-	 * arrows are used on the search results.
-	 */
-	var scrollStoppingKeydownHandler = function scrollStoppingKeydownHandler(event) {
-		var keyCode = event.which || event.keyCode;
-
-		if ([constants.keyCodes.arrowUp, constants.keyCodes.arrowDown].indexOf(keyCode) !== -1) {
-			event.preventDefault();
-		}
-	};
-
-	/**
-	 * Does the actual searching.
-	 * 
-	 * @param {string} searchTerm 
-	 */
-	var search = function search(searchTerm, maxMatches) {
-		if (!searchData || !searchData.length) {
-			throw Error('Module "keywordSearch" is not initialized.');
-		}
-
-		var allMatches = [];
-		var lowerCaseSearchTerm = searchTerm.toLowerCase();
-
-		if (typeof lowerCaseSearchTerm === 'string' && lowerCaseSearchTerm.trim().length > 0) {
-			searchData.forEach(function forEach(element) {
-				if (Object.prototype.hasOwnProperty.call(element, 'Term')) {
-					if (element.Term.toLowerCase().indexOf(lowerCaseSearchTerm) > -1) {
-						allMatches.push(element);
-					}
-				}
-			});
-		}
-
-		var topOrderedMatches = orderByNameThenPopularity(lowerCaseSearchTerm, allMatches)
-			.slice(0, maxMatches);
-		var topHighlightedOrderedMatches = highlightMatches(lowerCaseSearchTerm, topOrderedMatches);
-
-		return topHighlightedOrderedMatches;
-	};
-
-	/**
-	 * Handler for the searchBox Keyup event
-	 * @param {Event} event 
-	 */
-	var searchBoxKeyupHandler = function searchBoxKeyupHandler(event) {
-		var keyCode = event.which || event.keyCode;
-		var $target = $(event.currentTarget);
-		var searchTerm = $target.val();
-		var maxResults = event.data.maxResultCount;
-		var $searchResults = $('#header-search-results');
-		var areSearchResultsVisible = $searchResults.find('li').is(':visible');
-		var $allSearchResults = $searchResults.find('li');
-
-		if (keyCode === constants.keyCodes.arrowDown && areSearchResultsVisible) {
-			$allSearchResults.first().trigger('focus');
-			return;
-		}
-
-		if (keyCode === constants.keyCodes.arrowUp && areSearchResultsVisible) {
-			$allSearchResults.last().trigger('focus');
-			return;
-		}
-
-		var matches = search(searchTerm, maxResults);
-		var $source = $('#search-results-template');
-		var template = Handlebars.compile($source.html());
-		var html = template(matches);
-
-		$searchResults.html(html);
-		$searchResults.show();
-	};
-
-	/**
-	 * Handles the keyboard navigation for the search results.
-	 * 
-	 * @param {Event} event 
-	 */
-	var searchSuggestionsClickKeyupHandler = function searchSuggestionsClickHandler(event) {
-		var $searchBox = $(event.data.searchBoxSelector);
-		var keyCode = event.which || event.keyCode;
-		var $searchResults = $('#header-search-results');
-		var $target = $(event.currentTarget);
-
-		if (event.type === 'click' || keyCode === constants.keyCodes.enter) {
-			$searchBox.val($target.text());
-			$searchResults.hide();
-			$searchBox.closest('form').trigger('submit');
-			return;
-		}
-
-		if (keyCode === constants.keyCodes.arrowUp && $target.is('li')) {
-			if ($target.is(':first-child')) {
-				$searchBox.trigger('focus');
-			} else {
-				$target.prev().trigger('focus');
-			}
-
-			return;
-		}
-
-		if (keyCode === constants.keyCodes.arrowDown && $target.is('li')) {
-			if ($target.is(':last-child')) {
-				$searchBox.trigger('focus');
-			} else {
-				$target.next().trigger('focus');
-			}
-		}
-	};
-
-	$(document).on('keyup', '#q', { maxResultCount: maxResultCount }, searchBoxKeyupHandler);
-	$(document).on('click keyup', '#header-search-results li', { searchBoxSelector: '#q' }, searchSuggestionsClickKeyupHandler);
-	$(document).on('keydown', '#header-search-results li', { searchBoxSelector: '#q' }, scrollStoppingKeydownHandler);
-	$(document).on('keydown', '#q', scrollStoppingKeydownHandler);
-	$(document).on('click', documentClickHandler);
-
-	return {
-		init: init,
-		search: search,
-		orderByNameThenPopularity: orderByNameThenPopularity
-	};
-}(jQuery, sessionStorage, Handlebars, baltimoreCounty.constants));
-
-$(function init() {
-	baltimoreCounty.keywordSearch.init();
-});
 
 namespacer('baltimoreCounty');
 
@@ -6222,6 +6005,29 @@ $(function() {
 			: $('#internal-search-container');
 	}
 
+	function initGoogleSearch() {
+		(function() {
+			var cx = '007558505509255245046:qqwcx9uroqk';
+			var gcse = document.createElement('script');
+			gcse.type = 'text/javascript';
+			gcse.async = true;
+			gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+			gcse.onload = function() {
+			  var getElmInterval = setInterval(function() {
+				var searchInput = document.querySelectorAll('.gsib_a input.gsc-input');
+
+				if (searchInput && searchInput[0]) {
+				  clearInterval(getElmInterval);
+				  searchInput[0].placeholder = "Search for agencies, services and more...";
+				}
+			  }, 100);
+
+			};
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(gcse, s);
+		  })();
+	}
+
 	function isMobile(width) {
 		var mediaWidth = 990;
 		var scrollBar = 15;
@@ -6242,7 +6048,9 @@ $(function() {
 
 	function onSearchReady() {
 		windowWidth = $(window).width();
-		repositionSearchBox(windowWidth);
+		if (isMobile(windowWidth)) {
+			repositionSearchBox(windowWidth);
+		}
 	}
 
 	function onWindowResize() {
@@ -6259,10 +6067,16 @@ $(function() {
 
 	function repositionSearchBox(currentWindowWidth) {
 		var $targetContainer = $getSearchContainer(currentWindowWidth);
-		var searchFormHtml = $('#search-form').detach();
-
-		$targetContainer.append(searchFormHtml);
+		var intervalCheck = setInterval(function () {
+			if ($getSearchContainer.length && $('.gsc-control-searchbox-only').length) {
+				clearInterval(intervalCheck);
+				var searchFormHtml = $('.gsc-control-searchbox-only').closest('div').detach();
+				$targetContainer.append(searchFormHtml);
+			}
+		}, 100);
 	}
+
+	initGoogleSearch();
 
 	$(document).ready(onSearchReady);
 
