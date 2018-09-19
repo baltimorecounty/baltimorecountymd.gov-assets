@@ -1,12 +1,13 @@
 .bc_alert {
 	display: flex;
-	align-items: baseline;
+	align-items: flex-start;
 
 	i {
 		padding: 0 10px 0 0;
 	}
 
 	p {
+		flex-basis: 100%; /* HACK FOR IE11 - https://stackoverflow.com/questions/35111090/text-in-a-flex-container-doesnt-wrap-in-ie11 */
 		margin: 0 !important;
 	}
 }
