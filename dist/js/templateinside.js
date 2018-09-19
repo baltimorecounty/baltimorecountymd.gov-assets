@@ -6005,6 +6005,29 @@ $(function() {
 			: $('#internal-search-container');
 	}
 
+	function initGoogleSearch() {
+		(function() {
+			var cx = '007558505509255245046:qqwcx9uroqk';
+			var gcse = document.createElement('script');
+			gcse.type = 'text/javascript';
+			gcse.async = true;
+			gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+			gcse.onload = function() {
+			  var getElmInterval = setInterval(function() {
+				var searchInput = document.querySelectorAll('.gsib_a input.gsc-input');
+
+				if (searchInput && searchInput[0]) {
+				  clearInterval(getElmInterval);
+				  searchInput[0].placeholder = "Search for agencies, services and more...";
+				}
+			  }, 100);
+
+			};
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(gcse, s);
+		  })();
+	}
+
 	function isMobile(width) {
 		var mediaWidth = 990;
 		var scrollBar = 15;
@@ -6025,7 +6048,9 @@ $(function() {
 
 	function onSearchReady() {
 		windowWidth = $(window).width();
-		repositionSearchBox(windowWidth);
+		if (isMobile(windowWidth)) {
+			repositionSearchBox(windowWidth);
+		}
 	}
 
 	function onWindowResize() {
@@ -6042,10 +6067,16 @@ $(function() {
 
 	function repositionSearchBox(currentWindowWidth) {
 		var $targetContainer = $getSearchContainer(currentWindowWidth);
-		var searchFormHtml = $('#search-form').detach();
-
-		$targetContainer.append(searchFormHtml);
+		var intervalCheck = setInterval(function () {
+			if ($getSearchContainer.length && $('.gsc-control-searchbox-only').length) {
+				clearInterval(intervalCheck);
+				var searchFormHtml = $('.gsc-control-searchbox-only').closest('div').detach();
+				$targetContainer.append(searchFormHtml);
+			}
+		}, 100);
 	}
+
+	initGoogleSearch();
 
 	$(document).ready(onSearchReady);
 

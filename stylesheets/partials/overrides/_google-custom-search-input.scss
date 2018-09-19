@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+}
+
+.search-button,
+.gsc-search-button-v2 {
+    background: #feb30c !important;
+    cursor: pointer !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    border: 1px solid #666 !important;
+    border-radius: 0 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 14.96px !important;
+	font-weight: 700 !important;
+	margin: 0 !important;
+    padding: 9.5px 10px !important
+}
+
+.gsc-search-button-v2 {
+    position: relative;
+    svg {
+        display: none;
+        width: 100%;
+    }
+    &:before {
+        content: "Search";
+        display: block;
+    }
+}
+
+.search-box {
+    position: relative;
+}
+
+.site-search-table {
+    border-collapse: separate;
+    padding: 0;
+    width: 100%;
+}
+
+.site-search-input-col {
+    width: 100%;
+    padding-right: 12px;
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+.site-search {
+    width: 100%;
+}
+
+.gsc-control-searchbox-only {
+	font-size: 16.32px !important;
+	position: relative;
+}
+
+.search-internal {
+	::-webkit-input-placeholder,
+    ::-moz-placeholder,
+    :-ms-input-placeholder,
+    :-moz-placeholder {
+        font-size: 16.32px !important;
+    }
+}
+/* Google Overrides */
+
+// Input
+input.gsc-input {
+    font-size: 16px !important;
+    background: none !important;
+    text-indent: 0 !important;
+}
+
+.gsib_a:focus-within {
+    outline: -webkit-focus-ring-color auto 5px !important;
+    outline-color: -webkit-focus-ring-color !important;
+    outline-style: auto !important;
+    outline-width: 5px !important;
+}
+
+.gsib_a {
+    padding: 9px !important;
+}
+
+.gsst_b {
+    padding: 0 !important;
+}
+
+table.gsc-search-box td.gsc-input {
+    padding-right: 7.5px !important;
+}
+
+form.gsc-search-box {
+    margin-bottom: 0 !important;
+}
+
+td.gsib_b {
+    position: absolute;
+    right: 81px;
+    top: 9px;
+    z-index: 99999999;
+}
+
+.gsst_a .gscb_a,
+.gsst_a .gscb_a:hover {
+	color: lighten($dark-gray, 20%) !important;
+}
