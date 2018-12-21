@@ -65,7 +65,7 @@
 				<li ng-class="{'highlight': reporter.page > 1}"
 					ng-show="reporter.shouldRequireLocation() && !reporter.subCategory.shouldDisableForm">Enter a <br/>Location</li>
 				<li ng-class="{'highlight': reporter.page > 2}" ng-show="!reporter.subCategory.shouldDisableForm">Provide Your <br/>Contact Information</li>
-				<li ng-show="!reporter.subCategory.shouldDisableForm"> </li>
+				<li> </li>
 			</ol>
 
 			<form novalidate id="citysourced-reporter-form" name="citySourcedReporterForm" ng-submit="reporter.fileReportClick()">
