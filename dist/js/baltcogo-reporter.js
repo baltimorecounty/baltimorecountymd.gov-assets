@@ -431,22 +431,10 @@
 						}
 					}, 0);
 
-
 					self.descriptionId = element.description;
 				}
-				if (self.id.startsWith("D"))
-                {
-                    disableFormElements();
-                }
 			});
 		};
-
-		function disableFormElements()
-        {
-            self.buttonNext.disabled = true;
-            self.description.disabled = true;
-        }
-
 		function isLocationPage() {
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
