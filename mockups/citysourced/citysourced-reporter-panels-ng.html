@@ -249,7 +249,7 @@
 					</div>
 				</fieldset>
 
-				<input type="button" class="seButton" ng-if="reporter.page > 1 " id="prevButton" value="Previous" ng-click="reporter.prevClick()" />
+				<input type="button" class="seButton" ng-if="reporter.page > 1" id="prevButton" value="Previous" ng-click="reporter.prevClick()" />
 				<input type="button" class="seButton pull-right" ng-if="reporter.page < 3" ng-show="!reporter.subCategory.shouldDisableForm" id="nextButton" value="Next" ng-click="reporter.nextClick()" />
 				<input type="submit" class="seButton pull-right" ng-if="reporter.page === 3" id="fileReportButton" value="File Your Report" />
 			</form>

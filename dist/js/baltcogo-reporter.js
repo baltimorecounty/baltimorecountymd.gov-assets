@@ -435,6 +435,7 @@
 				}
 			});
 		};
+		
 		function isLocationPage() {
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
