@@ -60,12 +60,12 @@
 
 		<div class="bc-citysourced-reporter" ng-show="!reporter.isDone">
 
-			<ol class="bc-citysourced-reporter-steps" ng-show="!reporter.subCategory.shouldDisableForm">
+			<ol class="bc-citysourced-reporter-steps" >
 				<li class="highlight">Choose a <br/>Report Type</li>
 				<li ng-class="{'highlight': reporter.page > 1}"
-					ng-show="reporter.shouldRequireLocation()">Enter a <br/>Location</li>
-				<li ng-class="{'highlight': reporter.page > 2}">Provide Your <br/>Contact Information</li>
-				<li> </li>
+					ng-show="reporter.shouldRequireLocation() && !reporter.subCategory.shouldDisableForm">Enter a <br/>Location</li>
+				<li ng-class="{'highlight': reporter.page > 2}" ng-show="!reporter.subCategory.shouldDisableForm">Provide Your <br/>Contact Information</li>
+				<li ng-show="!reporter.subCategory.shouldDisableForm"> </li>
 			</ol>
 
 			<form novalidate id="citysourced-reporter-form" name="citySourcedReporterForm" ng-submit="reporter.fileReportClick()">
