@@ -31,3 +31,12 @@ You will need to do these steps the first time you setup the project.
 
 1. Open terminal or command prompt to the root of your local repository
 2. Run the ``karma start`` command
+
+### Pushing Code To Dev/Test
+1. Make changes to any files in js root or CSS root
+2. Commit changes with comment specific to bug fix
+3. Run Gulp
+4. Copy files to Site Executive from your dist folder to coresponding files. 
+    i.e. Made Changes to BaltCoGoReporterCtrl.js => gulp => dist\baltcogp-reporter.js is copied over to SE
+    i.e. Modified homepage.scss page => gulp => dit\homepage.min.css is copied over to SE 
+5. Commit compiled pages after gulp with comment "Rebuild" 
