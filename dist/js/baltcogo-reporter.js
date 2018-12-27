@@ -756,6 +756,6 @@
 
 		function isNumeric(n) {
 			return !isNaN(parseFloat(n)) && isFinite(n);
-		  }
+		}
 	}
 }(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format));
