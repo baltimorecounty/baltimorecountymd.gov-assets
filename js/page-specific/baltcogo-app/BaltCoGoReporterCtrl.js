@@ -11,7 +11,14 @@
 		CONSTANTS,
 		$window) {
 		var self = this;
-		var categoryId = querystringer.getAsDictionary().categoryid * 1;
+		var categoryId;
+
+		if(isNumeric(querystringer.getAsDictionary().categoryid)){
+			categoryId = querystringer.getAsDictionary().categoryid * 1;
+		}
+		else{
+			categoryId = querystringer.getAsDictionary().categoryid;
+		}
 		var map;
 		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
 		var LOCATION_PAGE_NUMBER = 2;
@@ -558,5 +565,9 @@
 				event.preventDefault();
 			}
 		}
+
+		function isNumeric(n) {
+			return !isNaN(parseFloat(n)) && isFinite(n);
+		  }
 	}
 }(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format));
