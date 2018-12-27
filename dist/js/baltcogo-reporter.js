@@ -205,14 +205,8 @@
 		CONSTANTS,
 		$window) {
 		var self = this;
-		var categoryId;
-
-		if(isNumeric(querystringer.getAsDictionary().categoryid)){
-			categoryId = querystringer.getAsDictionary().categoryid * 1;
-		}
-		else{
-			categoryId = querystringer.getAsDictionary().categoryid;
-		}
+		var categoryIdQueryParam = querystringer.getAsDictionary().categoryid;
+		var categoryId = isNumeric(categoryIdQueryParam) ? categoryIdQueryParam * 1 : categoryIdQueryParam;
 		var map;
 		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
 		var LOCATION_PAGE_NUMBER = 2;
