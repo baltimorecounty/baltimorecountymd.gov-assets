@@ -63,7 +63,7 @@
 			<ol class="bc-citysourced-reporter-steps" >
 				<li class="highlight">Choose a <br/>Report Type</li>
 				<li ng-class="{'highlight': reporter.page > 1}"
-					ng-show="reporter.shouldRequireLocation() && !reporter.subCategory.shouldDisableForm">Enter a <br/>Location</li>
+					ng-show="reporter.shouldRequireLocation() || !reporter.subCategory.shouldDisableForm">Enter a <br/>Location</li>
 				<li ng-class="{'highlight': reporter.page > 2}" ng-show="!reporter.subCategory.shouldDisableForm">Provide Your <br/>Contact Information</li>
 				<li> </li>
 			</ol>
