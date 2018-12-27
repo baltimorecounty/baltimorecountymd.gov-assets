@@ -192,10 +192,6 @@
 	}
 }(angular.module('baltcogoApp')));
 
-function isNumeric(n) {
-	return !isNaN(parseFloat(n)) && isFinite(n);
-  }
-
 (function BaltCoGoReporterCtrl(app, querystringer, bcFormat) {
 	'use strict';
 
@@ -209,15 +205,7 @@ function isNumeric(n) {
 		CONSTANTS,
 		$window) {
 		var self = this;
-		var categoryId;
-
-		if(isNumeric(querystringer.getAsDictionary().categoryid)){
-			categoryId = querystringer.getAsDictionary().categoryid * 1;
-		}
-		else{
-			categoryId = querystringer.getAsDictionary().categoryid;
-		}
-		
+		var categoryId = querystringer.getAsDictionary().categoryid * 1;
 		var map;
 		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
 		var LOCATION_PAGE_NUMBER = 2;
@@ -447,7 +435,7 @@ function isNumeric(n) {
 				}
 			});
 		};
-
+		
 		function isLocationPage() {
 			return self.page === LOCATION_PAGE_NUMBER;
 		}
