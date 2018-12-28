@@ -60,11 +60,11 @@
 
 		<div class="bc-citysourced-reporter" ng-show="!reporter.isDone">
 
-			<ol class="bc-citysourced-reporter-steps">
+			<ol class="bc-citysourced-reporter-steps" >
 				<li class="highlight">Choose a <br/>Report Type</li>
 				<li ng-class="{'highlight': reporter.page > 1}"
-					ng-show="reporter.shouldRequireLocation()">Enter a <br/>Location</li>
-				<li ng-class="{'highlight': reporter.page > 2}">Provide Your <br/>Contact Information</li>
+					ng-show="reporter.shouldRequireLocation() && !reporter.subCategory.shouldDisableForm">Enter a <br/>Location</li>
+				<li ng-class="{'highlight': reporter.page > 2}" ng-show="!reporter.subCategory.shouldDisableForm">Provide Your <br/>Contact Information</li>
 				<li> </li>
 			</ol>
 
@@ -167,8 +167,8 @@
 					</div>
 
 					<div class="cs-form-control" ng-class="{ 'error': citySourcedReporterForm.description.$dirty &&  citySourcedReporterForm.description.$invalid }">
-						<label for="description">Service Request Description</label>
-						<textarea id="description" name="description" data-cs-id="{{ reporter.descriptionId }}" ng-model="reporter.description" aria-required="true" required></textarea>
+						<label for="description" ng-show="!reporter.subCategory.shouldDisableForm">Service Request Description</label>
+						<textarea id="description" name="description" data-cs-id="{{ reporter.descriptionId }}"ng-show="!reporter.subCategory.shouldDisableForm" ng-model="reporter.description" aria-required="true" required></textarea>
 						<p role="alert" class="error-message" ng-if="citySourcedReporterForm.description.$dirty" ng-show="citySourcedReporterForm.description.$error.required">Please enter a description for your report.</p>
 					</div>
 
@@ -250,7 +250,7 @@
 				</fieldset>
 
 				<input type="button" class="seButton" ng-if="reporter.page > 1" id="prevButton" value="Previous" ng-click="reporter.prevClick()" />
-				<input type="button" class="seButton pull-right" ng-if="reporter.page < 3" id="nextButton" value="Next" ng-click="reporter.nextClick()" />
+				<input type="button" class="seButton pull-right" ng-if="reporter.page < 3" ng-show="!reporter.subCategory.shouldDisableForm" id="nextButton" value="Next" ng-click="reporter.nextClick()" />
 				<input type="submit" class="seButton pull-right" ng-if="reporter.page === 3" id="fileReportButton" value="File Your Report" />
 			</form>
 		</div>
