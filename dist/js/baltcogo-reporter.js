@@ -205,7 +205,8 @@
 		CONSTANTS,
 		$window) {
 		var self = this;
-		var categoryId = querystringer.getAsDictionary().categoryid * 1;
+		var categoryIdQueryParam = querystringer.getAsDictionary().categoryid;
+		var categoryId = isNumeric(categoryIdQueryParam) ? categoryIdQueryParam * 1 : categoryIdQueryParam;
 		var map;
 		var REQUIRES_LOCATION_PROPERTY = 'requiresLocation';
 		var LOCATION_PAGE_NUMBER = 2;
@@ -751,6 +752,10 @@
 			if (keyCode === 13) {
 				event.preventDefault();
 			}
+		}
+
+		function isNumeric(n) {
+			return !isNaN(parseFloat(n)) && isFinite(n);
 		}
 	}
 }(angular.module('baltcogoApp'), baltimoreCounty.utility.querystringer, baltimoreCounty.utility.format));
