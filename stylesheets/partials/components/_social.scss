@@ -24,7 +24,7 @@ $icon-sprite: "/sebin/r/r/social-icons-sprite.png ";
 		text-decoration: none;
 
 		height: 38px;
-		width: 38px;	
+		width: 38px;
 	}
 }
 .social-media-list-item-facebook {
@@ -93,6 +93,14 @@ $icon-sprite: "/sebin/r/r/social-icons-sprite.png ";
 		&:hover {
 			background-position: -152px -111px;
 		}
+	}
+
+	.social-media-list-gold .social-media-list-item-instagram {
+		background-position: -189px -74px;
+	}
+
+	.social-media-list-gold .social-media-list-item-instagram:hover {
+		background-position: -189px -111px;
 	}
 }
 @media only screen and (max-width: 1200px) {
