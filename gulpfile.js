@@ -46,7 +46,6 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
         'js/lib/slick.min.js',
         'js/lib/handlebars.js',
         'js/lib/picturefill.min.js',
-        'js/constants.js',
         'js/text-resizer.js',
         'js/flickr-feed.js',
         'js/county-news-snippet.js',
@@ -59,6 +58,11 @@ gulp.task('concatHomepageJs', function concatHomepageJs() {
 gulp.task('createUtililtyScript', function createUtililtyScript() {
     var files = ['js/utility/*.js'];
     return concatFiles(files, 'bc-utilities.js');
+});
+
+gulp.task('createConstantsTemplate', function createConstantsTemplate() {
+    var files = ['js/constants.js'];
+    return concatFiles(files, 'bc-constants.js');
 });
 
 gulp.task('concatTemplateJs', function concatTemplateJs() {
@@ -75,7 +79,6 @@ gulp.task('concatTemplateJs', function concatTemplateJs() {
         'js/lib/slick.min.js',
         'js/lib/review.js',
         'js/lib/smartbanner.min.js',
-        'js/constants.js',
         'js/internal-carousel.js',
         'js/mobile-search.js',
         'js/template-events.js',
@@ -197,7 +200,8 @@ gulp.task('default', ['clean-dist'], function defaultTask(callback) {
             'compressFiles',
             'sassAndCompressCss',
             'moveTemplates',
-            'createUtililtyScript'
+            'createUtililtyScript',
+            'createConstantsTemplate'
         ],
         callback
     );
