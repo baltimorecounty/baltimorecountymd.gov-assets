@@ -24,10 +24,10 @@ Builds the app for dev and or production to the `dist` folder. It does the follo
 
 Note: When building for production ensure any constants files are pointing to production values.
 
-1. Compile and minfiy all sass stylesheets to css and place them in the 'dist/css' folder
+1. Compile and minify all sass stylesheets to css and place them in the 'dist/css' folder
 2. Create Homepage and Template js files into the 'dist/js' folder
-3. Copy and minfiy Homepage and Template js files into the 'dist/js' folder
-4. Copy and minfiy page-specific js files into the 'dist/js/page-specific' folder
+3. Copy and minify Homepage and Template js files into the 'dist/js' folder
+4. Copy and minify page-specific js files into the 'dist/js/page-specific' folder
 
 *You may need to configure node for proxy, [here's](http://jjasonclark.com/how-to-setup-node-behind-web-proxy/) how.
 
@@ -40,6 +40,6 @@ Note: When building for production ensure any constants files are pointing to pr
 1. Make changes to any files in js root or CSS root
 2. Commit changes with comment specific to bug fix
 3. Run Gulp
-4. Copy files to Site Executive from your dist folder to coresponding files.
+4. Copy files to Site Executive from your dist folder to corresponding files.
     i.e. Made Changes to BaltCoGoReporterCtrl.js => gulp => dist\baltcogp-reporter.js is copied over to SE
     i.e. Modified homepage.scss page => gulp => dit\homepage.min.css is copied over to SE
