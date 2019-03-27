@@ -6,6 +6,8 @@ Assets used on the [Baltimore County Website](https://www.baltimorecountymd.gov/
 ### Setup
 You will need to do these steps the first time you setup the project.
 
+### `npm install`
+
 1. [Clone this repository](https://help.github.com/articles/working-with-repositories/)
 2. Install [Node](https://nodejs.org/download/)
 3. Install [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
@@ -14,11 +16,13 @@ You will need to do these steps the first time you setup the project.
 6. Run ``npm install -g karma-cli`` to install the Karma command-line interface for running unit tests.
 7. Run ``npm install phantomjs-prebuilt karma-phantomjs-launcher --save-dev`` to install the PhantomJS headless browser for unit testing.
 
-### Build
-1. Open terminal or command prompt to the root of your local repository
-2. Run the ``gulp`` command
+## Build
 
-**This process above will do the following.**
+### `gulp`
+
+Builds the app for dev and or production to the `dist` folder. It does the following:
+
+Note: When building for production ensure any constants files are pointing to production values.
 
 1. Compile and minfiy all sass stylesheets to css and place them in the 'dist/css' folder
 2. Create Homepage and Template js files into the 'dist/js' folder
@@ -36,7 +40,6 @@ You will need to do these steps the first time you setup the project.
 1. Make changes to any files in js root or CSS root
 2. Commit changes with comment specific to bug fix
 3. Run Gulp
-4. Copy files to Site Executive from your dist folder to coresponding files. 
+4. Copy files to Site Executive from your dist folder to coresponding files.
     i.e. Made Changes to BaltCoGoReporterCtrl.js => gulp => dist\baltcogp-reporter.js is copied over to SE
-    i.e. Modified homepage.scss page => gulp => dit\homepage.min.css is copied over to SE 
-5. Commit compiled pages after gulp with comment "Rebuild" 
+    i.e. Modified homepage.scss page => gulp => dit\homepage.min.css is copied over to SE
