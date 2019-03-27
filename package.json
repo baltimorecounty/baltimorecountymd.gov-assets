@@ -43,7 +43,7 @@
     "sinon": "^3.3.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run"
+    "test": "karma start --single-run"
   },
   "repository": {
     "type": "git",
