@@ -78,7 +78,6 @@ gulp.task('concatTemplateJs', function concatTemplateJs() {
         'js/bc-google-analytics-custom-events.js',
         'js/lib/slick.min.js',
         'js/lib/review.js',
-       // 'js/lib/smartbanner.min.js',
         'js/internal-carousel.js',
         'js/mobile-search.js',
         'js/template-events.js',
