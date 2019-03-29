@@ -6,6 +6,8 @@
           <p class="pet-info"><strong class="pet-info-label">Species</strong> {{toProperCase Species}}</p>
           <p class="pet-info"><strong class="pet-info-label">Breed</strong> {{toProperCase Breed}}</p>
           <p class="pet-info"><strong class="pet-info-label">Color</strong> {{toProperCase Color}}</p>
+          {{#if Weight}}<p class="pet-info"><strong class="pet-info-label">Weight</strong> <span
+				  className="pet-info-value">{{Weight}} {{WeightUnits}}</span></p>{{/if}}
           <p class="pet-info"><strong class="pet-info-label">Sex</strong> {{Sex}}</p>
           <p class="pet-info"><strong class="pet-info-label">Spayed/Neutered</strong> {{#if Altered}}{{Altered}}{{else}}Unknown{{/if}}</p>
           <p class="pet-info"><strong class="pet-info-label">Shelter Arrival</strong> {{formatShelterArrival ShelterArrival}}</p>
