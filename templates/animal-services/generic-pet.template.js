@@ -22,7 +22,7 @@
 		{{#if Age}}<p class="pet-info"><strong class="pet-info-label">Age</strong> <span
 				className="pet-info-value">{{formatTimeIntervalString Age AgeUnit}}</span></p>{{/if}}
 		{{#if Weight}}<p class="pet-info"><strong class="pet-info-label">Weight</strong> <span
-				className="pet-info-value">{{Weight}} {{WeightUnit}}</span></p>{{/if}}
+				className="pet-info-value">{{Weight}} {{WeightUnits}}</span></p>{{/if}}
 		<p class="pet-info"><strong class="pet-info-label">Spayed/Neutered</strong> <span
 				className="pet-info-value">{{#if Altered}}{{Altered}}{{else}}Unknown{{/if}}</span></p>
 		<p class="pet-info"><strong class="pet-info-label">Shelter Arrival</strong> <span
