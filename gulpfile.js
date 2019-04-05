@@ -38,7 +38,6 @@ gulp.task('concatBaltCoGoAppJs', function concatBaltCoGoAppJs() {
 gulp.task('concatHomepageJs', function concatHomepageJs() {
     var files = [
         'js/polyfills/*.js',
-        'js/utility/namespacer.js',
         'js/utility/cdnFallback.js',
         'js/utility/querystringer.js',
         'js/utility/jsonTools.js',
@@ -61,7 +60,10 @@ gulp.task('createUtililtyScript', function createUtililtyScript() {
 });
 
 gulp.task('createConstantsTemplate', function createConstantsTemplate() {
-    var files = ['js/constants.js'];
+    var files = [
+		'js/utility/namespacer.js',
+		'js/constants.js'
+	];
     return concatFiles(files, 'bc-constants.js');
 });
 
