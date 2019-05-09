@@ -555,6 +555,12 @@ input#mce-EMAIL {display : inline;width : 215px;}
 .nav-list table br {display: none; }
 .nav-list table a {background-color:#ebebeb;color: #333;display: block;margin: 0;padding: 5px 15px; }
 .nav-list table a:hover {background-color:#feb30c;margin: 0;padding: 5px 15px;display: block;text-decoration: underline;}
+.nav-contact {margin-top: 25px;background-color: #ebebeb;}
+.nav-contact ul li:last-child {border-bottom: none;}
+.nav-contact li {display: inline-block;width: 100%;margin: 0 0 20px;padding: 0 0 15px;border-bottom: 4px solid #fff;}
+.nav-contact li a {padding: 0!important;}
+.nav-contact li a:hover {background-color: transparent!important;}
+.nav-contact li.title {border-bottom: 20px solid #fff;}
 .column-1 a {text-decoration:none;}
 .column-2 {/*padding-right: 30px; padding-left: 27px;*/ min-height:100%;}
 .column-2 {background: transparent;}
