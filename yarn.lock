@@ -4941,9 +4941,9 @@ slice-ansi@1.0.0:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
 
-smartbanner.js@^1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/smartbanner.js/-/smartbanner.js-1.9.1.tgz#2a0d630f65e18b1eab9cbc13c7d50e789ba85178"
+smartbanner.js@^1.14.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/smartbanner.js/-/smartbanner.js-1.14.1.tgz#5b17764957315ea0906c90f8ac1633951de2ecab"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
