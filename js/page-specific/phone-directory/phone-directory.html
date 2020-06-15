@@ -1,230 +1,111 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head id="Head1">
+<head id="Head1">
     <title>
-      Baltimore County Employee Phone Directory
+        Baltimore County Employee Phone Directory
     </title>
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-      type="text/javascript"
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
+            type="text/javascript"
     ></script>
-    <!-- page head text -->
-
-    <script type="text/javascript">
-      var jQuery = $.noConflict(true);
-    </script>
-
-    <script
-      type="text/javascript"
-      src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.min.js"
+    <script type="text/javascript"
+            src="./phone-directory.js"
     ></script>
-    <script type="text/javascript">
-      var pageCount = 0;
-      var jQuery_1_5_1 = $.noConflict(true);
-
-      function __onPrevPage() {
-        for (var i = 1; i <= pageCount; i++) {
-          if (document.getElementById("Page" + i).style.display == "block") {
-            document.getElementById("Page" + i).style.display = "none";
-            document.getElementById("Page" + (i - 1)).style.display = "block";
-            break;
-          }
-        }
-        setNextPrevious(i - 1);
-      }
-
-      function setNextPrevious(pageNum) {
-        if (pageNum < pageCount)
-          document.getElementById("Next").style.display = "block";
-        else document.getElementById("Next").style.display = "None";
-
-        if (pageNum > 1)
-          document.getElementById("Previous").style.display = "block";
-        else document.getElementById("Previous").style.display = "None";
-      }
-
-      function validateForm() {
-        var firstName = jQuery_1_5_1.trim(
-          document.getElementById("txtFirst").value
-        );
-        var lastName = jQuery_1_5_1.trim(
-          document.getElementById("txtLast").value
-        );
-        if (firstName == "" && lastName == "") {
-          alert(
-            "If Searching all Agencies, You must enter at least one letter of the last name or one letter of the first name"
-          );
-          return false;
-        } else {
-          return true;
-        }
-      }
-
-      function __onNextPage() {
-        for (var i = 1; i <= pageCount; i++) {
-          if (document.getElementById("Page" + i).style.display == "block") {
-            document.getElementById("Page" + i).style.display = "none";
-            document.getElementById("Page" + (i + 1)).style.display = "block";
-            break;
-          }
-        }
-        setNextPrevious(i + 1);
-      }
-
-      jQuery_1_5_1(document).ready(function () {
-        //alert("ready");
-        jQuery.support.cors = true; // force cross-site scripting (as of jQuery 1.5)
-
-        jQuery_1_5_1("#submit").click(function (submitEvent) {
-          submitEvent.preventDefault();
-          $("#btnClear").click(function () {
-            event.preventDefault();
-            $("#BACO_table,#prevNext,#output center").hide();
-            $("#txtLast").val("");
-            $("#txtFirst").val("");
-            $("#ddlAgency").val("0");
-          });
-
-          //Hide next previous button incase they were visible from a previous search
-          document.getElementById("Next").style.display = "None";
-          document.getElementById("Previous").style.display = "None";
-          //alert("2");
-          if (validateForm()) {
-            //alert("3");
-            jQuery_1_5_1("#output").text("");
-            dataString =
-              jQuery_1_5_1(this).closest("form").serialize() +
-              "&formId=" +
-              jQuery_1_5_1(this).closest("form").attr("id");
-            //alert(dataString);
-
-            jQuery_1_5_1.ajax({
-              url:
-                "https://phonedirectorydev.baltimorecountymd.gov/PhoneDir/ProcessPhoneDirSearchForm",
-              data: dataString,
-              type: "GET",
-              dataType: "jsonp",
-              jsonpCallback: "formatJsonpResult", //,
-            });
-          } //end of if ValidForm
-        });
-      });
-
-      function formatJsonpResult(jsonpResult) {
-        //alert(jsonpResult.ResponseError.length + " - " + jsonpResult.ResponseStatus + " - " + jsonpResult.ResponseError);
-
-        if (
-          jsonpResult.ResponseError.length > 0 &&
-          jsonpResult.ResponseStatus == 0
-        ) {
-          //alert("output = " + jQuery_1_5_1('#output').text);
-
-          jQuery_1_5_1("#output").append(jsonpResult.ResponseError);
-
-          //alert("output = " + jQuery_1_5_1('#output').text);
-
-          //this element is actually being returned as part of the JSON Result
-          if (document.getElementById("page_count"))
-            pageCount = document.getElementById("page_count").value;
-
-          if (pageCount > 1) {
-            jQuery_1_5_1("#Next").show();
-          }
-        }
-        if (
-          jsonpResult.ResponseError.length == 0 &&
-          jsonpResult.ResponseStatus == 0
-        ) {
-          jQuery_1_5_1("#output").append(
-            "<font color='red'><center>No records found matching your search criteria</center></font>"
-          );
-        }
-        if (
-          jsonpResult.ResponseError.length > 0 &&
-          jsonpResult.ResponseStatus < 0
-        ) {
-          jQuery_1_5_1("#output").append(
-            "<font color='red'><center>Error: " +
-              jsonpResult.ResponseError +
-              "</center></font>"
-          );
-        }
-        $("#BACO_table,#prevNext").show();
-      }
-    </script>
-  </head>
-  <body>
-    <form method="post" action="" id="phoneDirForm">
-      <div class="mainContent row">
-        <style type="text/css">
-          div.form {
+    <style type="text/css">
+        div.form {
             width: 80%;
             margin: 0 0 20px;
             background-color: #ebebeb;
             padding: 10px;
-          }
-          div.fieldContain {
+        }
+
+        div.fieldContain {
             margin-bottom: 10px;
-          }
-          div.fieldContain span.label {
-            /*display: inline-block;*/
-            width: 20%;
-            margin: 0 10px 0 0;
-            color: #444;
-          }
-          #prevNext {
+        }
+
+            div.fieldContain span.label {
+                width: 20%;
+                margin: 0 10px 0 0;
+                color: #444;
+            }
+
+        #prevNext {
             display: none;
-          }
-          div.fieldContain input,
-          div.fieldContain select {
+        }
+
+        div.fieldContain input,
+        div.fieldContain select {
             border-width: 2px;
             border-style: Groove;
             height: 26px;
             width: 75%;
             max-width: 325px;
-          }
-          div.buttonContain {
+        }
+
+        div.buttonContain {
             margin-bottom: 10px;
-          }
-          #BACO_table {
+        }
+
+        #BACO_table {
             background: none repeat scroll 0 0 #ffffff;
             border-collapse: collapse;
             font-family: Arial, Helvetica, sans-serif;
-
             margin: 10px 10px 10px 0;
             text-align: left;
             width: 85%;
             display: none;
-          }
-          #BACO_table img {
-            max-width: 100%;
-          }
+        }
 
-          #BACO_table td {
-            border-top: 1px dotted #999999;
-            color: #000000;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1em;
-            padding: 10px 0;
-          }
-          #BACO_table tbody tr:hover td {
-            background-color: #ebebeb;
-            color: #000000;
-          }
-          .BACOTableHeader {
+            #BACO_table img {
+                max-width: 100%;
+            }
+
+            #BACO_table td {
+                border-top: 1px dotted #999999;
+                color: #000000;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1em;
+                padding: 10px 0;
+            }
+
+            #BACO_table tbody tr:hover td {
+                background-color: #ebebeb;
+                color: #000000;
+            }
+
+        .BACOTableHeader {
             border-bottom: 2px solid #c51110;
             color: #000000;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 14px;
             font-weight: bold;
             padding: 10px 8px;
-          }
-          #BACO_table tbody tr:hover td.BACOTableHeader {
-            background-color: #ffffff;
-          }
-        </style>
+        }
 
+        #BACO_table tbody tr:hover td.BACOTableHeader {
+            background-color: #ffffff;
+        }
+
+        #btnSubmit {
+            color: DarkBlue;
+            width: auto;
+            height: 24px;
+        }
+
+        #btnClear {
+            color: DarkBlue;
+            height: 24px;
+            width: auto;
+            background: none repeat scroll 0 0 transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+  <body>
+    <form method="post" action="" id="phoneDirForm">
+      <div class="mainContent row">
         <div class="form">
           <div class="seachMessage">
             <p>
@@ -232,14 +113,13 @@
             </p>
           </div>
           <div class="fieldContain">
-            <span id="Span1" class="label">Last Name</span
+            <span id="lblLast" class="label">Last Name</span
             ><input
               name="txtLast"
               type="text"
               id="txtLast"
               tabindex="1"
               class="txtFields"
-              style="display: ;"
             />
           </div>
 
@@ -249,96 +129,65 @@
               name="txtFirst"
               type="text"
               id="txtFirst"
-              tabindex="1"
+              tabindex="2"
               class="txtFields"
             />
           </div>
           <div class="fieldContain">
-            <span id="Label4" class="label">Department</span>
-            <select id="ddlAgency" name="ddlAgency">
-              <option value="0">All Departments</option>
-              <option value="91">Administrative Hearing</option>
-              <option value="4">Administrative Office</option>
-              <option value="34">Aging</option>
-              <option value="51">Appeals</option>
-              <option value="84">Assessment Appeals</option>
-              <option value="80">Assessments Dept.</option>
-              <option value="50">Auditor</option>
-              <option value="49">Budget</option>
-              <option value="83">CSA</option>
-              <option value="86">Child Care</option>
-              <option value="2">Circuit Court</option>
-              <option value="7">Communications</option>
-              <option value="82">Community Colleges</option>
-              <option value="12">Community Conservation</option>
-              <option value="38">Cooperative Extension Serv.</option>
-              <option value="8">Corrections</option>
-              <option value="48">County Council</option>
-              <option value="75">Court Clerk</option>
-              <option value="74">Credit Union</option>
-              <option value="42">DEPS</option>
-              <option value="88">District Court</option>
-              <option value="52">Economic Development</option>
-              <option value="35">Education</option>
-              <option value="5">Elections</option>
-              <option value="1">Executive Office</option>
-              <option value="79">Farm Bureau</option>
-              <option value="16">Fire Department</option>
-              <option value="30">Health Dept.</option>
-              <option value="89">Human Resource Admin.</option>
-              <option value="13">Human Resources</option>
-              <option value="69">Information Technology</option>
-              <option value="85">Juvenile Justice</option>
-              <option value="11">Law Office</option>
-              <option value="37">Library</option>
-              <option value="20">Liquor License</option>
-              <option value="87">Local Management</option>
-              <option value="72">N/A</option>
-              <option value="3">Orphans Court</option>
-              <option value="71">Parole/Probation</option>
-              <option value="73">People's Counsel</option>
-              <option value="17">Permits Approvals and Inspections</option>
-              <option value="6">Planning</option>
-              <option value="15">Police Department</option>
-              <option value="70">Public Works</option>
-              <option value="39">Recreation and Parks</option>
-              <option value="78">Register of Wills</option>
-              <option value="76">Revenue Authority</option>
-              <option value="18">Sheriff's Office</option>
-              <option value="31">Social Services</option>
-              <option value="77">Soil Conservation</option>
-              <option value="81">State of Maryland</option>
-              <option value="9">State's Attorney</option>
-              <option value="62">Workforce Development</option>
+            <span id="lblDept" class="label">Department</span>
+            <select id="ddlAgency" name="ddlAgency" tabindex="3">
+                <option value="0">All Departments</option>
+                <option value="911 Center">911 Center</option>
+                <option value="Administrative Hearings">Administrative Hearings</option>
+                <option value="Aging">Aging</option>
+                <option value="Baltimore County Public Schools">Baltimore County Public Schools</option>
+                <option value="Board of Appeals">Board of Appeals</option>
+                <option value="Budget and Finance">Budget and Finance</option>
+                <option value="Circuit Court">Circuit Court</option>
+                <option value="Corrections">Corrections</option>
+                <option value="County Auditors">County Auditors</option>
+                <option value="County Council">County Council</option>
+                <option value="Custom Logic Design Vendor">Custom Logic Design Vendor</option>
+                <option value="Economic and Workforce Development">Economic and Workforce Development</option>
+                <option value="Elections">Elections</option>
+                <option value="Environmental Protection and Sustainability">Environmental Protection and Sustainability</option>
+                <option value="Executive Office">Executive Office</option>
+                <option value="Fire">Fire</option>
+                <option value="Health">Health</option>
+                <option value="Human Resources">Human Resources</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Law">Law</option>
+                <option value="Liquor Board">Liquor Board</option>
+                <option value="Local Management Board">Local Management Board</option>
+                <option value="Office of Administrative Hearings">Office of Administrative Hearings</option>
+                <option value="Office of Housing">Office of Housing</option>
+                <option value="Orphan&#39;s Court">Orphan&#39;s Court</option>
+                <option value="Permits, Approvals and Inspections">Permits, Approvals and Inspections</option>
+                <option value="Planning">Planning</option>
+                <option value="Police">Police</option>
+                <option value="Property Management">Property Management</option>
+                <option value="Public Works">Public Works</option>
+                <option value="Recreation and Parks">Recreation and Parks</option>
+                <option value="Sheriff&#39;s Office">Sheriff&#39;s Office</option>
+                <option value="Social Services">Social Services</option>
+                <option value="State&#39;s Attorney&#39;s Office">State&#39;s Attorney&#39;s Office</option>
             </select>
           </div>
           <div class="buttonContain">
             <input
+              id="btnSubmit"
               name="submit"
-              type="button"
-              id="submit"
-              style="width: auto;"
-              tabindex="5"
-              height="24px"
-              forecolor="DarkBlue"
+              type="submit"
               value="Submit"
+              tabindex="4"
             />
             <input
-              type="submit"
-              name="btnClear"
-              value="Clear"
               id="btnClear"
+              name="btnClear"
+              type="button"
+              value="Clear"
               tabindex="5"
               class="btnWidths"
-              style="
-                color: DarkBlue;
-                height: 24px;
-                width: auto;
-                background: none repeat scroll 0 0 transparent;
-                border: none;
-                cursor: pointer;
-                text-decoration: underline;
-              "
             />
           </div>
         </div>
@@ -351,9 +200,6 @@
                     <th>
                       Name
                     </th>
-                    <th style="display: none;">
-                      Mail Stop
-                    </th>
                     <th>
                       Telephone
                     </th>
@@ -365,18 +211,15 @@
                     <td>&nbsp;</td>
                     <td style="display: none;">&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td>&nbsp;</td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
                     <td style="display: none;">&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td>&nbsp;</td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
                     <td style="display: none;">&nbsp;</td>
-                    <td>&nbsp;</td>
                     <td>&nbsp;</td>
                   </tr>
                 </tbody>
