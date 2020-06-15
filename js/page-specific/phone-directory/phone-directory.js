@@ -2,56 +2,38 @@ var jQuery = $.noConflict(true);
 var pageCount = 0;
 
 function __onPrevPage() {
-    for (var i = 1; i <= pageCount; i++) {
-        if (document.getElementById("Page" + i).style.display == "block") {
-            document.getElementById("Page" + i).style.display = "none";
-            document.getElementById("Page" + (i - 1)).style.display = "block";
-            break;
-        }
-    }
-    setNextPrevious(i - 1);
+    setNextPrevious(-1);
 }
 
-function setNextPrevious(pageNum) {
-    if (pageNum < pageCount) {
-        document.getElementById("Next").style.display = "block";
-    } else {
-        document.getElementById("Next").style.display = "None";
-    }
+function __onNextPage() {
+    setNextPrevious(1);
+}
 
-    if (pageNum > 1) {
-        document.getElementById("Previous").style.display = "block";
-    } else {
-        document.getElementById("Previous").style.display = "None";
+function setNextPrevious(offset) {
+    var currentPageNum = 0;
+    for (var i = 1; i <= pageCount; i++) {
+        if (document.getElementById("Page" + i).style.display == "block") {
+            currentPageNum = i;
+        }
     }
+    var newPageNum = currentPageNum + offset;
+    document.getElementById("Page" + currentPageNum).style.display = "none";
+    document.getElementById("Page" + newPageNum).style.display = "block";
+
+    jQuery('#Next').toggle(newPageNum < pageCount);
+    jQuery('#Previous').toggle(newPageNum > 1);
 }
 
 function validateForm() {
-    var firstName = jQuery.trim(
-        document.getElementById("txtFirst").value
-    );
-    var lastName = jQuery.trim(
-        document.getElementById("txtLast").value
-    );
+    var firstName = jQuery('#txtFirst').val().trim();
+    var lastName = jQuery('#txtLast').val().trim();
     if (firstName == "" && lastName == "") {
         alert(
             "If Searching all Agencies, You must enter at least one letter of the last name or one letter of the first name"
         );
         return false;
-    } else {
-        return true;
     }
-}
-
-function __onNextPage() {
-    for (var i = 1; i <= pageCount; i++) {
-        if (document.getElementById("Page" + i).style.display == "block") {
-            document.getElementById("Page" + i).style.display = "none";
-            document.getElementById("Page" + (i + 1)).style.display = "block";
-            break;
-        }
-    }
-    setNextPrevious(i + 1);
+    return true;
 }
 
 jQuery(document).ready(function () {
@@ -61,8 +43,7 @@ jQuery(document).ready(function () {
         submitEvent.preventDefault();
 
         //Hide next previous button incase they were visible from a previous search
-        document.getElementById("Next").style.display = "None";
-        document.getElementById("Previous").style.display = "None";
+        jQuery('#Next,#Previous').hide();
         if (validateForm()) {
             jQuery("#output").text("");
             dataString =
@@ -91,8 +72,6 @@ jQuery(document).ready(function () {
 
 function formatJsonpResult(jsonpResult) {
 
-    console.log(jsonpResult);
-
     if (
         jsonpResult.ResponseError.length > 0 &&
         jsonpResult.ResponseStatus == 0
@@ -102,22 +81,21 @@ function formatJsonpResult(jsonpResult) {
 
 
         //this element is actually being returned as part of the JSON Result
-        if (document.getElementById("page_count"))
+        if (document.getElementById("page_count")) {
             pageCount = document.getElementById("page_count").value;
+        }
 
         if (pageCount > 1) {
             jQuery("#Next").show();
         }
-    }
-    if (
+    } else if (
         jsonpResult.ResponseError.length == 0 &&
         jsonpResult.ResponseStatus == 0
     ) {
         jQuery("#output").append(
             "<font color='red'><center>No records found matching your search criteria</center></font>"
         );
-    }
-    if (
+    } else if (
         jsonpResult.ResponseError.length > 0 &&
         jsonpResult.ResponseStatus < 0
     ) {
