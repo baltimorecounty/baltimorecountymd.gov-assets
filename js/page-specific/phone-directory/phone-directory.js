@@ -64,8 +64,7 @@ jQuery(document).ready(function () {
     jQuery("#btnClear").click(function (clearEvent) {
         clearEvent.preventDefault();
         jQuery("#BACO_table,#prevNext,#output center").hide();
-        jQuery("#txtLast").val("");
-        jQuery("#txtFirst").val("");
+        jQuery("#txtLast,#txtFirst").val("");
         jQuery("#ddlAgency").val("0");
     });
 });
