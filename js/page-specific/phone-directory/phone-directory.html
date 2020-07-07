@@ -1,108 +1,100 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1">
+  <head id="Head1">
     <title>
-        Baltimore County Employee Phone Directory
+      Baltimore County Employee Phone Directory
     </title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
+    <!-- Enable for local testing
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
             type="text/javascript"
-    ></script>
-    <script type="text/javascript"
-            src="./phone-directory.js"
-    ></script>
+        ></script>
+        <script type="text/javascript" src="./phone-directory.js"></script>
+    -->
     <style type="text/css">
-        div.form {
-            width: 80%;
-            margin: 0 0 20px;
-            background-color: #ebebeb;
-            padding: 10px;
-        }
+      div.form {
+        width: 80%;
+        margin: 0 0 20px;
+        background-color: #ebebeb;
+        padding: 10px;
+      }
 
-        div.fieldContain {
-            margin-bottom: 10px;
-        }
+      div.fieldContain {
+        margin-bottom: 10px;
+      }
 
-            div.fieldContain span.label {
-                width: 20%;
-                margin: 0 10px 0 0;
-                color: #444;
-            }
+      div.fieldContain span.label {
+        width: 20%;
+        margin: 0 10px 0 0;
+        color: #444;
+      }
 
-        #prevNext {
-            display: none;
-        }
+      #prevNext {
+        display: none;
+      }
 
-        div.fieldContain input,
-        div.fieldContain select {
-            border-width: 2px;
-            border-style: Groove;
-            height: 26px;
-            width: 75%;
-            max-width: 325px;
-        }
+      div.fieldContain input,
+      div.fieldContain select {
+        width: 75%;
+        max-width: 325px;
+      }
 
-        div.buttonContain {
-            margin-bottom: 10px;
-        }
+      div.buttonContain {
+        margin-bottom: 10px;
+      }
 
-        #BACO_table {
-            background: none repeat scroll 0 0 #ffffff;
-            border-collapse: collapse;
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 10px 10px 10px 0;
-            text-align: left;
-            width: 85%;
-            display: none;
-        }
+      #BACO_table {
+        background: none repeat scroll 0 0 #ffffff;
+        border-collapse: collapse;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 10px 10px 10px 0;
+        text-align: left;
+        width: 85%;
+        display: none;
+      }
 
-            #BACO_table img {
-                max-width: 100%;
-            }
+      #BACO_table img {
+        max-width: 100%;
+      }
 
-            #BACO_table td {
-                border-top: 1px dotted #999999;
-                color: #000000;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 1em;
-                padding: 10px 0;
-            }
+      #BACO_table td {
+        border-top: 1px dotted #999999;
+        color: #000000;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1em;
+        padding: 10px 0;
+      }
 
-            #BACO_table tbody tr:hover td {
-                background-color: #ebebeb;
-                color: #000000;
-            }
+      #BACO_table tbody tr:hover td {
+        background-color: #ebebeb;
+        color: #000000;
+      }
 
-        .BACOTableHeader {
-            border-bottom: 2px solid #c51110;
-            color: #000000;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 10px 8px;
-        }
+      .BACOTableHeader {
+        border-bottom: 2px solid #c51110;
+        color: #000000;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 8px;
+      }
 
-        #BACO_table tbody tr:hover td.BACOTableHeader {
-            background-color: #ffffff;
-        }
-
-        #btnSubmit {
-            color: DarkBlue;
-            width: auto;
-            height: 24px;
-        }
-
-        #btnClear {
-            color: DarkBlue;
-            height: 24px;
-            width: auto;
-            background: none repeat scroll 0 0 transparent;
-            border: none;
-            cursor: pointer;
-            text-decoration: underline;
-        }
+      #BACO_table tbody tr:hover td.BACOTableHeader {
+        background-color: #ffffff;
+      }
+      .contact-btn {
+        display: inline-block;
+        width: auto !important;
+      }
+      .clear-btn {
+        background: #c5c5c5 !important;
+      }
+      .clear-btn:hover {
+        background: #cccccc !important;
+      }
     </style>
-</head>
+  </head>
   <body>
     <form method="post" action="" id="phoneDirForm">
       <div class="mainContent row">
@@ -133,62 +125,83 @@
               class="txtFields"
             />
           </div>
-          <div class="fieldContain">
+          <div class="fieldContain" style="margin-bottom: 15px;">
             <span id="lblDept" class="label">Department</span>
             <select id="ddlAgency" name="ddlAgency" tabindex="3">
-                <option value="0">All Departments</option>
-                <option value="911 Center">911 Center</option>
-                <option value="Administrative Hearings">Administrative Hearings</option>
-                <option value="Aging">Aging</option>
-                <option value="Baltimore County Public Schools">Baltimore County Public Schools</option>
-                <option value="Board of Appeals">Board of Appeals</option>
-                <option value="Budget and Finance">Budget and Finance</option>
-                <option value="Circuit Court">Circuit Court</option>
-                <option value="Corrections">Corrections</option>
-                <option value="County Auditors">County Auditors</option>
-                <option value="County Council">County Council</option>
-                <option value="Custom Logic Design Vendor">Custom Logic Design Vendor</option>
-                <option value="Economic and Workforce Development">Economic and Workforce Development</option>
-                <option value="Elections">Elections</option>
-                <option value="Environmental Protection and Sustainability">Environmental Protection and Sustainability</option>
-                <option value="Executive Office">Executive Office</option>
-                <option value="Fire">Fire</option>
-                <option value="Health">Health</option>
-                <option value="Human Resources">Human Resources</option>
-                <option value="Information Technology">Information Technology</option>
-                <option value="Law">Law</option>
-                <option value="Liquor Board">Liquor Board</option>
-                <option value="Local Management Board">Local Management Board</option>
-                <option value="Office of Administrative Hearings">Office of Administrative Hearings</option>
-                <option value="Office of Housing">Office of Housing</option>
-                <option value="Orphan&#39;s Court">Orphan&#39;s Court</option>
-                <option value="Permits, Approvals and Inspections">Permits, Approvals and Inspections</option>
-                <option value="Planning">Planning</option>
-                <option value="Police">Police</option>
-                <option value="Property Management">Property Management</option>
-                <option value="Public Works">Public Works</option>
-                <option value="Recreation and Parks">Recreation and Parks</option>
-                <option value="Sheriff&#39;s Office">Sheriff&#39;s Office</option>
-                <option value="Social Services">Social Services</option>
-                <option value="State&#39;s Attorney&#39;s Office">State&#39;s Attorney&#39;s Office</option>
+              <option value="0">All Departments</option>
+              <option value="911 Center">911 Center</option>
+              <option value="Administrative Hearings"
+                >Administrative Hearings</option
+              >
+              <option value="Aging">Aging</option>
+              <option value="Baltimore County Public Schools"
+                >Baltimore County Public Schools</option
+              >
+              <option value="Board of Appeals">Board of Appeals</option>
+              <option value="Budget and Finance">Budget and Finance</option>
+              <option value="Circuit Court">Circuit Court</option>
+              <option value="Corrections">Corrections</option>
+              <option value="County Auditors">County Auditors</option>
+              <option value="County Council">County Council</option>
+              <option value="Custom Logic Design Vendor"
+                >Custom Logic Design Vendor</option
+              >
+              <option value="Economic and Workforce Development"
+                >Economic and Workforce Development</option
+              >
+              <option value="Elections">Elections</option>
+              <option value="Environmental Protection and Sustainability"
+                >Environmental Protection and Sustainability</option
+              >
+              <option value="Executive Office">Executive Office</option>
+              <option value="Fire">Fire</option>
+              <option value="Health">Health</option>
+              <option value="Human Resources">Human Resources</option>
+              <option value="Information Technology"
+                >Information Technology</option
+              >
+              <option value="Law">Law</option>
+              <option value="Liquor Board">Liquor Board</option>
+              <option value="Local Management Board"
+                >Local Management Board</option
+              >
+              <option value="Office of Administrative Hearings"
+                >Office of Administrative Hearings</option
+              >
+              <option value="Office of Housing">Office of Housing</option>
+              <option value="Orphan&#39;s Court">Orphan&#39;s Court</option>
+              <option value="Permits, Approvals and Inspections"
+                >Permits, Approvals and Inspections</option
+              >
+              <option value="Planning">Planning</option>
+              <option value="Police">Police</option>
+              <option value="Property Management">Property Management</option>
+              <option value="Public Works">Public Works</option>
+              <option value="Recreation and Parks">Recreation and Parks</option>
+              <option value="Sheriff&#39;s Office">Sheriff&#39;s Office</option>
+              <option value="Social Services">Social Services</option>
+              <option value="State&#39;s Attorney&#39;s Office"
+                >State&#39;s Attorney&#39;s Office</option
+              >
             </select>
           </div>
           <div class="buttonContain">
-            <input
+            <button
               id="btnSubmit"
               name="submit"
+              class="seButton contact-btn"
               type="submit"
-              value="Submit"
-              tabindex="4"
-            />
-            <input
+            >
+              Submit
+            </button>
+            <button
               id="btnClear"
               name="btnClear"
+              class="seButton contact-btn clear-btn"
               type="button"
-              value="Clear"
-              tabindex="5"
-              class="btnWidths"
-            />
+            >
+              Clear
+            </button>
           </div>
         </div>
         <div class="results">
