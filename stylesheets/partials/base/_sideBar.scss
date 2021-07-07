@@ -1,0 +1,31 @@
+.nav-contact {
+    margin-top: 25px;
+    background-color: #ebebeb;
+
+    ul{
+        li{
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+
+    li {
+        display: inline-block;
+        width: 100%;
+        margin: 0 0 20px;
+        padding: 0 0 15px;
+        border-bottom: 4px solid #fff;
+        a {
+            padding: 0!important;
+            
+            &:hover{
+                background-color: transparent!important;
+            }
+        }
+        &.title {
+            border-bottom: 20px solid #fff;
+        }
+    
+    }
+}
