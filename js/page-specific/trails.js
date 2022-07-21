@@ -153,7 +153,7 @@ require([
         trailTemplate += "{{#.}}";
         trailTemplate += "{{#attributes}}";
         trailTemplate += "<div id='trail{{PARK_ID}}{{OBJECTID}}' data-object-id='{{OBJECTID}}' class=\"trail tab-pane\">";
-        trailTemplate += "<h4 class=\"trail-name\">{{TRAIL_NAME}}<\/h4>";
+        trailTemplate += "<h3 class=\"trail-name\">{{TRAIL_NAME}}<\/h3>";
         trailTemplate += "<p class=\"trail-desc\">{{TRAIL_DESC}}<\/p>";
         trailTemplate += "<p class=\"trail-type\"><strong>Type:</strong> {{TRAIL_TYPE}}<\/p>";
         trailTemplate += "<div class=\"trail-map\"><\/div>";
