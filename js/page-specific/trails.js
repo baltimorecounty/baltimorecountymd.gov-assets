@@ -92,7 +92,7 @@ require([
                 trails: [],
                 attachs: []
             },
-            coalitionMessage = "<a href='/Agencies/health/coalition/lhc.html' title='Learn more about the Baltimore County Health Colation'><img src='/sebin/e/t/coalitionapproved.gif' alt='This walking trail location is Health Coalition approved.' /></a>";
+            coalitionMessage = "<a href='/boards-commissions/health/local-health-improvement' title='Learn more about the Baltimore County Health Colation'><img src='/sebin/e/t/coalitionapproved.gif' alt='This walking trail location is Health Coalition approved.' /></a>";
 
         parkInfoWindowTemplate = function (desc) {
             return "<div id='info' class='park-info'><p>" + desc + "</p>" +
