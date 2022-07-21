@@ -831,7 +831,7 @@ require([
                         return low + " to " + high;
                     },
                     currentPage: page || 0,
-                    recordsPerPage: 5
+                    recordsPerPage: 10
                 };
 
                 if (pageInfo.currentPage > pageInfo.totalPages()) {
