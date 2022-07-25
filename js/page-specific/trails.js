@@ -908,7 +908,8 @@ require([
         $(document).on('click', '.js-show-records', function (evt) {
             evt.preventDefault();
             var $this = $(evt.target),
-                recordsPerPage = $this.text();
+                recordsPerPage = $this.attr('data-show-results');
+                // recordsPerPage = $this.text();
 
             $('.js-show-records button').removeClass('active');
 
