@@ -596,7 +596,9 @@ require([
                 //Page is loading cotent as you go to it and it makes it look choppy
                 var exists = $(anchor).html().length;
 
-                anchor = anchor.replace("#", "");
+                // anchor = anchor.replace("#", "");
+                // fix to allow bottom pagination to have different IDs from the top, but if bottom pagination is clicked, it will match the top id so the scroll into view will still work
+                anchor = "page-" + parseInt(anchor.replace(/[^0-9.]/g, ""))
                 var obj = document.getElementById(anchor);
                 obj.scrollIntoView();
 
@@ -746,7 +748,7 @@ require([
             checkHash = function (pageNumber) {
                 var anchor = window.location.hash,
                     $hash = $(anchor),
-                    totalPages = pageInfo.totalPages();
+                    totalPages = pageInfo.totalPages()
 
                 //Make sure anchor exists and anchor is to a park
                 if (anchor) {
@@ -775,6 +777,7 @@ require([
             },
             createPagingLinks = function (totalPages, currentPage) {
                 var html = "",
+                    htmlBottom = "",
                     start,
                     end;
 
@@ -792,9 +795,11 @@ require([
                 for (var i = start; i < end; i++) {
                     var pageNum = i + 1;
                     html += "<button class='btn btn-default js-page-btn page-" + pageNum + "' id='page-" + pageNum + "'>" + pageNum + "</button>";
+                    htmlBottom += "<button class='btn btn-default js-page-btn page-" + pageNum + "'id='page-0" + pageNum + "'>" + pageNum + "</button>";
                 }
 
                 $('.paging-numbers').html(html);
+                $('.paging-numbers-bottom').html(htmlBottom);
 
                 updatePageControls(currentPage);
 
