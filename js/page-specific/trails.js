@@ -598,7 +598,7 @@ require([
 
                 // anchor = anchor.replace("#", "");
                 // fix to allow bottom pagination to have different IDs from the top, but if bottom pagination is clicked, it will match the top id so the scroll into view will still work
-                anchor = "page-" + parseInt(anchor.replace(/[^0-9.]/g, ""))
+                anchor = "page-" + parseInt(anchor.replace(/[^0-9.]/g, ""));
                 var obj = document.getElementById(anchor);
                 obj.scrollIntoView();
 
@@ -748,7 +748,7 @@ require([
             checkHash = function (pageNumber) {
                 var anchor = window.location.hash,
                     $hash = $(anchor),
-                    totalPages = pageInfo.totalPages()
+                    totalPages = pageInfo.totalPages();
 
                 //Make sure anchor exists and anchor is to a park
                 if (anchor) {
